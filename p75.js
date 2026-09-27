@@ -1,5 +1,6 @@
 /* Point75 site add-ons: disclaimer, sentiment poll + comments, levels,
-   Editor's picks, "All essays" fix, and Listen (read aloud). */
+   Editor's picks, "All essays" fix, Listen (read aloud), and copy protection.
+   Content © Rahul Saxena. All rights reserved. */
 (function () {
   // ---------- Settings ----------
   var TENANT_ID = 'NgvHdCEMvUY';                          // FastComments
@@ -22,7 +23,35 @@
     'purposes only. Nothing on this blog constitutes financial, investment, tax, or legal advice. ' +
     'Please do your own research and consult a qualified professional before making any financial decisions.';
 
+  var YEAR = new Date().getFullYear();
+  var COPYRIGHT = '&copy; ' + YEAR + ' Rahul Saxena. All rights reserved. No part of these essays may be ' +
+    'copied, reproduced or republished without written permission.';
+
   var GOLD = '#c9a227';
+
+  // ---------- Copy protection (a deterrent: it stops casual copying, not screenshots) ----------
+  var PROTECTED = '.page__blocks .text-box, .block-blog-header, .blog-list-item';
+  (function protect() {
+    var st = document.createElement('style');
+    st.textContent = '.page__blocks .text-box, .page__blocks .text-box *, .block-blog-header, .block-blog-header *,' +
+      '.blog-list-item, .blog-list-item * { -webkit-user-select:none !important; user-select:none !important; -webkit-touch-callout:none !important }' +
+      '.page__blocks img { -webkit-user-drag:none; user-drag:none }';
+    document.head.appendChild(st);
+    function inside(t) { return t && t.closest && (t.closest(PROTECTED) || (t.tagName === 'IMG' && t.closest('.page__blocks'))); }
+    document.addEventListener('contextmenu', function (e) { if (inside(e.target)) e.preventDefault(); });
+    document.addEventListener('dragstart', function (e) { if (inside(e.target)) e.preventDefault(); });
+    document.addEventListener('selectstart', function (e) { if (inside(e.target)) e.preventDefault(); });
+    // If text gets copied anyway, the clipboard receives a notice instead of the essay
+    document.addEventListener('copy', function (e) {
+      var sel = window.getSelection && window.getSelection();
+      var node = sel && sel.anchorNode;
+      if (node && node.nodeType === 3) node = node.parentNode;
+      if (!inside(node) || !e.clipboardData) return;
+      e.preventDefault();
+      e.clipboardData.setData('text/plain', '\u00a9 ' + YEAR + ' Rahul Saxena. All rights reserved. ' +
+        'Read this essay at ' + location.href.split('?')[0]);
+    });
+  })();
 
   // ---------- FastComments loader ----------
   var queue = [], loading = false;
@@ -274,7 +303,8 @@
     if (!disc) {
       target.appendChild(band('p75d',
         (isPost ? '<a href="/" style="color:' + GOLD + ';text-decoration:none;font-weight:600">&larr; All essays</a><div style="height:14px"></div>' : '') +
-        '<div style="border-left:3px solid ' + GOLD + ';padding-left:14px">' + DISCLAIMER + '</div>'));
+        '<div style="border-left:3px solid ' + GOLD + ';padding-left:14px">' + DISCLAIMER + '</div>' +
+        '<div style="margin-top:12px;color:#9a9a9a;font-size:13px">' + COPYRIGHT + '</div>'));
     }
 
     if (isPost && !comments) {
