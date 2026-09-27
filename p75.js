@@ -58,10 +58,23 @@
     return b;
   }
 
-  // ---------- Listen (read aloud with the reader's device voice) ----------
+  // ---------- Listen ----------
+  // Recorded narration (opening theme + warm American voice) lives in the GitHub repo's audio folder.
+  // Posts not listed here fall back to the reader's device voice.
+  var AUDIO_BASE = 'https://cdn.jsdelivr.net/gh/rahulmsaxena/point75-site@main/audio/';
+  var RECORDED = {
+    '/let-the-fed-be-fed': 1,
+    '/the-anxiety-trade': 1,
+    '/bond-martinis-shaken-not-stirred': 1,
+    '/the-machine-that-doesnt-need-cheap-money': 1,
+    '/the-welfare-state-was-always-a-ticking-clock': 1,
+    '/right-fear-wrong-reasons-copy': 1
+  };
+
   var canSpeak = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
   var synth = canSpeak ? window.speechSynthesis : null;
   var speaking = false, paused = false;
+  var aud = null, audPath = null;
 
   function pickVoice() {
     var voices = synth.getVoices().filter(function (v) { return /^en(-|_|$)/i.test(v.lang); });
@@ -121,35 +134,95 @@
     renderListen();
   }
 
+  function fmt(sec) {
+    if (!isFinite(sec)) return '0:00';
+    sec = Math.floor(sec); return Math.floor(sec / 60) + ':' + ('0' + sec % 60).slice(-2);
+  }
+
   function btn(label, action) {
     return '<button type="button" data-p75="' + action + '" style="background:transparent;color:' + GOLD +
-      ';border:1.5px solid ' + GOLD + ';border-radius:18px;padding:6px 16px;font-family:inherit;font-weight:600;font-size:14px;line-height:1.2;cursor:pointer;margin-right:8px">' +
+      ';border:1.5px solid ' + GOLD + ';border-radius:18px;padding:6px 16px;font-family:inherit;font-weight:600;font-size:14px;line-height:1.2;cursor:pointer;margin:0 4px">' +
       label + '</button>';
+  }
+
+  function stopAll() {
+    if (aud) { aud.pause(); aud.currentTime = 0; }
+    if (synth && speaking) synth.cancel();
+    speaking = false; paused = false;
   }
 
   function renderListen() {
     var bar = document.querySelector('.p75l');
     if (!bar) return;
-    var html;
-    if (!speaking) html = btn('&#9654;&nbsp; Listen to this essay', 'play');
-    else if (paused) html = btn('&#9654;&nbsp; Resume', 'resume') + btn('&#9632;&nbsp; Stop', 'stop');
-    else html = btn('&#10074;&#10074;&nbsp; Pause', 'pause') + btn('&#9632;&nbsp; Stop', 'stop');
-    bar.firstChild.innerHTML = html;
+    var box = bar.firstChild, html;
+    if (bar.getAttribute('data-mode') === 'audio') {
+      var playing = aud && !aud.paused, started = aud && (aud.currentTime > 0 || playing);
+      if (!started) {
+        html = btn('&#9654;&nbsp; Listen to this essay' + (aud && isFinite(aud.duration) ? ' &middot; ' + Math.round(aud.duration / 60) + ' min' : ''), 'aplay');
+      } else {
+        html = '<div style="display:flex;align-items:center;gap:12px;max-width:560px;margin:0 auto">' +
+          btn(playing ? '&#10074;&#10074;' : '&#9654;', playing ? 'apause' : 'aplay') +
+          '<div data-p75="seek" style="flex:1;height:6px;background:#333;border-radius:3px;cursor:pointer;position:relative">' +
+          '<div class="p75prog" style="height:100%;width:' + (aud.duration ? aud.currentTime / aud.duration * 100 : 0) + '%;background:' + GOLD + ';border-radius:3px"></div></div>' +
+          '<span class="p75time" style="color:#bbb;font-size:13px;min-width:92px;text-align:right">' + fmt(aud.currentTime) + ' / ' + fmt(aud.duration) + '</span>' +
+          btn('&#9632;', 'astop') + '</div>';
+      }
+    } else {
+      if (!speaking) html = btn('&#9654;&nbsp; Listen to this essay', 'play');
+      else if (paused) html = btn('&#9654;&nbsp; Resume', 'resume') + btn('&#9632;&nbsp; Stop', 'stop');
+      else html = btn('&#10074;&#10074;&nbsp; Pause', 'pause') + btn('&#9632;&nbsp; Stop', 'stop');
+    }
+    box.innerHTML = html;
   }
 
-  function addListen(target) {
-    if (!canSpeak || document.querySelector('.p75l')) return;
+  function tick() {  // update progress without rebuilding the buttons
+    var p = document.querySelector('.p75l .p75prog'), t = document.querySelector('.p75l .p75time');
+    if (p && aud && aud.duration) p.style.width = (aud.currentTime / aud.duration * 100) + '%';
+    if (t && aud) t.textContent = fmt(aud.currentTime) + ' / ' + fmt(aud.duration);
+  }
+
+  function addListen(target, path) {
+    if (document.querySelector('.p75l')) return;
+    var recorded = !!RECORDED[path];
+    if (!recorded && !canSpeak) return;
     var header = document.querySelector('.block-blog-header');
     var headerSection = header && header.closest('section');
     var bar = document.createElement('div');
     bar.className = 'p75l';
+    bar.setAttribute('data-mode', recorded ? 'audio' : 'speech');
     bar.style.cssText = 'width:100%;box-sizing:border-box;padding:16px;background:#111214';
     bar.innerHTML = '<div style="max-width:800px;margin:0 auto;text-align:center"></div>';
+
+    if (recorded && audPath !== path) {
+      if (aud) aud.pause();
+      aud = new Audio(AUDIO_BASE + path.replace(/^\//, '') + '.mp3');
+      aud.preload = 'metadata';
+      audPath = path;
+      aud.addEventListener('loadedmetadata', renderListen);
+      aud.addEventListener('play', renderListen);
+      aud.addEventListener('pause', renderListen);
+      aud.addEventListener('ended', function () { aud.currentTime = 0; renderListen(); });
+      aud.addEventListener('timeupdate', tick);
+      aud.addEventListener('error', function () {  // recording missing: use the device voice instead
+        var b2 = document.querySelector('.p75l');
+        if (b2 && canSpeak) { b2.setAttribute('data-mode', 'speech'); renderListen(); }
+      });
+    }
+
     bar.addEventListener('click', function (e) {
+      var seek = e.target.closest('[data-p75="seek"]');
+      if (seek && aud && aud.duration) {
+        var r = seek.getBoundingClientRect();
+        aud.currentTime = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)) * aud.duration;
+        tick(); return;
+      }
       var b = e.target.closest('button[data-p75]');
       if (!b) return;
       var a = b.getAttribute('data-p75');
-      if (a === 'play') startSpeaking();
+      if (a === 'aplay') aud.play();
+      else if (a === 'apause') aud.pause();
+      else if (a === 'astop') { aud.pause(); aud.currentTime = 0; renderListen(); }
+      else if (a === 'play') startSpeaking();
       else if (a === 'pause') { synth.pause(); paused = true; renderListen(); }
       else if (a === 'resume') { synth.resume(); paused = false; renderListen(); }
       else if (a === 'stop') stopSpeaking();
@@ -170,7 +243,7 @@
       if (comments) comments.remove();
       if (listen) listen.remove();
       disc = comments = null;
-      if (speaking) stopSpeaking();
+      stopAll();
       lastPath = path;
     }
 
@@ -196,7 +269,7 @@
     var target = document.querySelector('.page__blocks') || document.querySelector('main') || document.body;
     var isPost = path !== '/';
 
-    if (isPost) addListen(target);
+    if (isPost) addListen(target, path);
 
     if (!disc) {
       target.appendChild(band('p75d',
@@ -226,6 +299,7 @@
   }
 
   if (canSpeak) { synth.getVoices(); window.addEventListener('pagehide', function () { synth.cancel(); }); }
+  window.addEventListener('pagehide', function () { if (aud) aud.pause(); });
   setInterval(update, 1000);
   update();
 })();
