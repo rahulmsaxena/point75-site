@@ -379,6 +379,12 @@
 
     if (isPost) addListen(target, path);
     if (isPost) applyTldr(target, path);
+    // On posts with a TL;DR, hide the description under the title (it repeats the opening line).
+    // It still shows on the homepage cards and in search results.
+    if (isPost) {
+      var desc = document.querySelector('.block-blog-header .block-blog-header__description');
+      if (desc) desc.style.display = TLDR[path] ? 'none' : '';
+    }
 
     if (!disc) {
       target.appendChild(band('p75d',
