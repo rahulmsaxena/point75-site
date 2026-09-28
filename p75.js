@@ -288,8 +288,10 @@
     if (!summary || !secs.length) return;
 
     if (!box) {
-      var mins = (document.querySelector('.block-blog-header .blog-list-item-meta__subtitle') || {}).textContent || '';
-      mins = (mins.match(/(\d+)\s*min/) || [])[1];
+      var mins = null;
+      [].forEach.call(document.querySelectorAll('.block-blog-header .blog-list-item-meta__subtitle span'), function (sp) {
+        var m = sp.textContent.match(/^\s*(\d+)\s*min/); if (m) mins = m[1];
+      });
       box = document.createElement('div');
       box.className = 'p75t';
       box.style.cssText = 'width:100%;box-sizing:border-box;padding:4px 16px 24px;background:#111214';
