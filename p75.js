@@ -292,13 +292,15 @@
       [].forEach.call(document.querySelectorAll('.block-blog-header .blog-list-item-meta__subtitle span'), function (sp) {
         var m = sp.textContent.match(/^\s*(\d+)\s*min/); if (m) mins = m[1];
       });
+      var bodyP = document.querySelector('.page__blocks .text-box p');
+      var font = bodyP ? getComputedStyle(bodyP).fontFamily : 'inherit';
       box = document.createElement('div');
       box.className = 'p75t';
       box.style.cssText = 'width:100%;box-sizing:border-box;padding:4px 16px 24px;background:#111214';
       box.innerHTML = '<div style="max-width:720px;margin:0 auto;border:1px solid ' + GOLD + ';border-left:4px solid ' + GOLD +
         ';border-radius:6px;padding:18px 22px;background:#16171a">' +
         '<div style="color:' + GOLD + ';font-weight:700;letter-spacing:.12em;font-size:12px;margin-bottom:8px">TL;DR</div>' +
-        '<div style="color:#ede8dc;font-size:17px;line-height:1.65">' + summary + '</div></div>';
+        '<div style="color:#ede8dc;font-size:17px;line-height:1.65;font-family:' + font.replace(/"/g, "'") + '">' + summary + '</div></div>';
       var listen = document.querySelector('.p75l');
       var anchor = listen && listen.parentNode === target ? listen : null;
       if (!anchor) { var h = document.querySelector('.block-blog-header'); anchor = h && h.closest('section'); }
@@ -306,7 +308,8 @@
 
       more = document.createElement('div');
       more.className = 'p75m';
-      more.style.cssText = 'width:100%;box-sizing:border-box;padding:0 16px 36px;background:#111214;text-align:center';
+      more.style.cssText = 'position:relative;z-index:2;width:100%;box-sizing:border-box;margin-top:-140px;padding:110px 16px 36px;' +
+        'background:linear-gradient(to bottom, rgba(17,18,20,0) 0%, rgba(17,18,20,.85) 45%, #111214 70%);text-align:center';
       more.innerHTML = '<button type="button" style="background:' + GOLD + ';color:#111;border:0;border-radius:22px;padding:11px 26px;' +
         'font-family:inherit;font-weight:700;font-size:15px;cursor:pointer">Continue reading &darr;' + (mins ? ' &middot; ' + mins + ' min' : '') + '</button>';
       more.querySelector('button').addEventListener('click', function () {
@@ -322,10 +325,9 @@
     // Fold (or unfold) the essay; re-applied every tick because the site can re-render sections
     secs.forEach(function (sec, i) {
       if (expanded[path]) {
-        sec.style.maxHeight = ''; sec.style.overflow = ''; sec.style.webkitMaskImage = ''; sec.style.maskImage = ''; sec.style.display = '';
+        sec.style.maxHeight = ''; sec.style.overflow = ''; sec.style.display = '';
       } else if (i === 0) {
-        sec.style.maxHeight = '260px'; sec.style.overflow = 'hidden';
-        sec.style.webkitMaskImage = sec.style.maskImage = 'linear-gradient(to bottom, #000 35%, transparent 100%)';
+        sec.style.maxHeight = '420px'; sec.style.overflow = 'hidden';
       } else {
         sec.style.display = 'none';
       }
