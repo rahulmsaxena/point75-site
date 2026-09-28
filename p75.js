@@ -1,5 +1,5 @@
 /* Point75 site add-ons: disclaimer, sentiment poll + comments, levels,
-   Editor's picks, "All essays" fix, Listen (read aloud), and copy protection.
+   Editor's picks, "All essays" fix, Listen (read aloud), TL;DR summaries, and copy protection.
    Content © Rahul Saxena. All rights reserved. */
 (function () {
   // ---------- Settings ----------
@@ -19,6 +19,17 @@
   // Editor's picks
   var PICKS = ['/let-the-fed-be-fed', '/the-welfare-state-was-always-a-ticking-clock'];
 
+  // TL;DR summaries. Posts listed here open summary-first, with the full essay folded under "Continue reading".
+  var TLDR = {
+    '/let-the-fed-be-fed': "The U.S. now spends over $1 trillion a year just on interest, which gives politicians every reason to pressure the Fed to keep rates low. History shows how that ends: Arthur Burns gave in and got a decade of inflation, while Paul Volcker held firm and broke it. The real fix is a Congress that stops overspending. <em>So does today's Fed have Volcker's nerve?</em>",
+    '/the-anxiety-trade': "Oil near $95, 10-year yields at 4.8%, and a trillion-dollar AI spending spree all look scary, especially when strung together into one doomsday story. But they're separate, real risks, not a countdown clock. The market is sorting AI winners from losers exactly as it should. <em>Uncertain isn't the same as doomed, so what's actually worth watching?</em>",
+    '/right-fear-wrong-reasons-copy': "Everyone is watching AI stocks and the next Fed meeting, but the real warning signs are in the financial system's plumbing. Consumers are tapped out, big investors are avoiding long-term bonds, young workers are stuck behind boomers who can't afford to retire, and high mortgage rates have frozen housing. <em>Add it up, and the word that comes out isn't \u201csoft landing.\u201d</em>",
+    '/the-machine-that-doesnt-need-cheap-money': "The Fed just raised rates, yet AI spending keeps growing because Big Tech pays for it with its own cash, not borrowed money. That has turned chips into a bargaining chip between the U.S. and China, while Europe absorbs an energy shock from the Iran war and the BRICS nations slowly gain influence. <em>Right now these forces are pushing everyone toward the negotiating table, but for how long?</em>",
+    '/bond-martinis-shaken-not-stirred': "Long-term Treasury yields are climbing, and the comforting idea that \u201cthe economy grows faster than our debt costs\u201d is getting harder to believe. Higher yields lock the government into paying more interest for years, squeeze Big Tech's AI borrowing, and help explain gold's rally. <em>It's not a five-alarm fire yet, but the ingredients for stagflation are on the table.</em>",
+    '/the-welfare-state-was-always-a-ticking-clock': "Welfare promises were made when many workers supported each retiree. Japan is down to about two, and the U.S. faces soaring healthcare costs and nearly $40 trillion in debt. Now AI could wipe out jobs just as those bills peak, forcing governments to spend even more, and opening a window for China. <em>Is this just another cycle, or a countdown?</em>"
+  };
+  var expanded = {};   // posts the reader has opened in full, by path
+
   var DISCLAIMER = '<b>Disclaimer:</b> The views expressed here are my own and are for informational ' +
     'purposes only. Nothing on this blog constitutes financial, investment, tax, or legal advice. ' +
     'Please do your own research and consult a qualified professional before making any financial decisions.';
@@ -30,11 +41,11 @@
   var GOLD = '#c9a227';
 
   // ---------- Copy protection (a deterrent: it stops casual copying, not screenshots) ----------
-  var PROTECTED = '.page__blocks .text-box, .block-blog-header, .blog-list-item';
+  var PROTECTED = '.page__blocks .text-box, .block-blog-header, .blog-list-item, .p75t';
   (function protect() {
     var st = document.createElement('style');
     st.textContent = '.page__blocks .text-box, .page__blocks .text-box *, .block-blog-header, .block-blog-header *,' +
-      '.blog-list-item, .blog-list-item * { -webkit-user-select:none !important; user-select:none !important; -webkit-touch-callout:none !important }' +
+      '.blog-list-item, .blog-list-item *, .p75t, .p75t * { -webkit-user-select:none !important; user-select:none !important; -webkit-touch-callout:none !important }' +
       '.page__blocks img { -webkit-user-drag:none; user-drag:none }';
     document.head.appendChild(st);
     function inside(t) { return t && t.closest && (t.closest(PROTECTED) || (t.tagName === 'IMG' && t.closest('.page__blocks'))); }
@@ -261,6 +272,65 @@
     renderListen();
   }
 
+  // ---------- TL;DR: summary first, full essay folded under "Continue reading" ----------
+  function articleSections(target) {
+    var header = document.querySelector('.block-blog-header');
+    var headerSection = header && header.closest('section');
+    return [].filter.call(target.children, function (el) {
+      return el.tagName === 'SECTION' && el !== headerSection && !/\bp75/.test(el.className) && el.querySelector('.text-box');
+    });
+  }
+
+  function applyTldr(target, path) {
+    var summary = TLDR[path];
+    var box = document.querySelector('.p75t'), more = document.querySelector('.p75m');
+    var secs = articleSections(target);
+    if (!summary || !secs.length) return;
+
+    if (!box) {
+      var mins = (document.querySelector('.block-blog-header .blog-list-item-meta__subtitle') || {}).textContent || '';
+      mins = (mins.match(/(\d+)\s*min/) || [])[1];
+      box = document.createElement('div');
+      box.className = 'p75t';
+      box.style.cssText = 'width:100%;box-sizing:border-box;padding:4px 16px 24px;background:#111214';
+      box.innerHTML = '<div style="max-width:720px;margin:0 auto;border:1px solid ' + GOLD + ';border-left:4px solid ' + GOLD +
+        ';border-radius:6px;padding:18px 22px;background:#16171a">' +
+        '<div style="color:' + GOLD + ';font-weight:700;letter-spacing:.12em;font-size:12px;margin-bottom:8px">TL;DR</div>' +
+        '<div style="color:#ede8dc;font-size:17px;line-height:1.65">' + summary + '</div></div>';
+      var listen = document.querySelector('.p75l');
+      var anchor = listen && listen.parentNode === target ? listen : null;
+      if (!anchor) { var h = document.querySelector('.block-blog-header'); anchor = h && h.closest('section'); }
+      target.insertBefore(box, anchor ? anchor.nextSibling : secs[0]);
+
+      more = document.createElement('div');
+      more.className = 'p75m';
+      more.style.cssText = 'width:100%;box-sizing:border-box;padding:0 16px 36px;background:#111214;text-align:center';
+      more.innerHTML = '<button type="button" style="background:' + GOLD + ';color:#111;border:0;border-radius:22px;padding:11px 26px;' +
+        'font-family:inherit;font-weight:700;font-size:15px;cursor:pointer">Continue reading &darr;' + (mins ? ' &middot; ' + mins + ' min' : '') + '</button>';
+      more.querySelector('button').addEventListener('click', function () {
+        expanded[path] = true;
+        applyTldr(target, path);
+        var first = articleSections(target)[0];
+        if (first) first.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      var last = secs[secs.length - 1];
+      target.insertBefore(more, last.nextSibling);
+    }
+
+    // Fold (or unfold) the essay; re-applied every tick because the site can re-render sections
+    secs.forEach(function (sec, i) {
+      if (expanded[path]) {
+        sec.style.maxHeight = ''; sec.style.overflow = ''; sec.style.webkitMaskImage = ''; sec.style.maskImage = ''; sec.style.display = '';
+      } else if (i === 0) {
+        sec.style.maxHeight = '260px'; sec.style.overflow = 'hidden';
+        sec.style.webkitMaskImage = sec.style.maskImage = 'linear-gradient(to bottom, #000 35%, transparent 100%)';
+      } else {
+        sec.style.display = 'none';
+      }
+    });
+    if (expanded[path] && more) more.remove();
+  }
+
   // ---------- Main loop (the site swaps pages without reloading) ----------
   var lastPath = null;
   function update() {
@@ -271,6 +341,8 @@
       if (disc) disc.remove();
       if (comments) comments.remove();
       if (listen) listen.remove();
+      var t0 = document.querySelector('.p75t'), m0 = document.querySelector('.p75m');
+      if (t0) t0.remove(); if (m0) m0.remove();
       disc = comments = null;
       stopAll();
       lastPath = path;
@@ -299,6 +371,7 @@
     var isPost = path !== '/';
 
     if (isPost) addListen(target, path);
+    if (isPost) applyTldr(target, path);
 
     if (!disc) {
       target.appendChild(band('p75d',
