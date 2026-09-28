@@ -308,8 +308,7 @@
 
       more = document.createElement('div');
       more.className = 'p75m';
-      more.style.cssText = 'position:relative;z-index:2;width:100%;box-sizing:border-box;margin-top:-140px;padding:110px 16px 36px;' +
-        'background:linear-gradient(to bottom, rgba(17,18,20,0) 0%, rgba(17,18,20,.85) 45%, #111214 70%);text-align:center';
+      more.style.cssText = 'width:100%;box-sizing:border-box;padding:8px 16px 40px;background:#111214;text-align:center';
       more.innerHTML = '<button type="button" style="background:' + GOLD + ';color:#111;border:0;border-radius:22px;padding:11px 26px;' +
         'font-family:inherit;font-weight:700;font-size:15px;cursor:pointer">Continue reading &darr;' + (mins ? ' &middot; ' + mins + ' min' : '') + '</button>';
       more.querySelector('button').addEventListener('click', function () {
@@ -326,8 +325,12 @@
     secs.forEach(function (sec, i) {
       if (expanded[path]) {
         sec.style.maxHeight = ''; sec.style.overflow = ''; sec.style.display = '';
+        sec.style.webkitMaskImage = ''; sec.style.maskImage = '';
       } else if (i === 0) {
         sec.style.maxHeight = '420px'; sec.style.overflow = 'hidden';
+        // fade the teaser into the page; the dark backdrop keeps the faded part from showing white
+        sec.style.webkitMaskImage = sec.style.maskImage = 'linear-gradient(to bottom, #000 45%, transparent 100%)';
+        target.style.backgroundColor = '#111214';
       } else {
         sec.style.display = 'none';
       }
