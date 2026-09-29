@@ -10,9 +10,9 @@ def prep(t):
     t = re.sub(r'\$(\d[\d,.]*)', r'\1 dollars', t)
     t = re.sub(r'(\d)%', r'\1 percent', t)
     t = re.sub(r'(\d{4})–(\d{2})\b', r'\1 to \2', t)
-    t = t.replace('12-0', '12 to 0')
+    t = t.replace('12-0', '12 to 0').replace(' & ', ' and ')
     for a,b in [('FOMC','F O M C'),('WTI','W T I'),('AWS','A W S'),('ECB','E C B'),('GDP','G D P'),('UAE','U A E'),
-                ('H200','H 200'),('MI325X','M I 325 X'),('AMD','A M D'),('capex','cap-ex'),('LLM','L L M')]:
+                ('H200','H 200'),('MI325X','M I 325 X'),('AMD','A M D'),('capex','cap-ex'),('LLM','L L M'),('IG','I G'),('ROI','R O I')]:
         t = re.sub(r'\b%s\b' % re.escape(a), b, t)
     t = re.sub(r'\bAI\b', 'A.I.', t)
     t = re.sub(r'\bUS\b', 'U.S.', t)

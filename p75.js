@@ -13,7 +13,8 @@
     '/bond-martinis-shaken-not-stirred': 'Medium',
     '/the-machine-that-doesnt-need-cheap-money': 'Medium',
     '/the-welfare-state-was-always-a-ticking-clock': 'Medium',
-    '/right-fear-wrong-reasons-copy': 'Advanced'
+    '/right-fear-wrong-reasons-copy': 'Advanced',
+    '/nightmare-on-bond-street': 'Medium'
   };
 
   // Editor's picks
@@ -26,6 +27,7 @@
     '/right-fear-wrong-reasons-copy': "Everyone is watching AI stocks and the next Fed meeting, but the real warning signs are in the financial system's plumbing. Consumers are tapped out, big investors are avoiding long-term bonds, young workers are stuck behind boomers who can't afford to retire, and high mortgage rates have frozen housing. <em>Add it up, and the word that comes out isn't \u201csoft landing.\u201d</em>",
     '/the-machine-that-doesnt-need-cheap-money': "The Fed just raised rates, yet AI spending keeps growing because Big Tech pays for it with its own cash, not borrowed money. That has turned chips into a bargaining chip between the U.S. and China, while Europe absorbs an energy shock from the Iran war and the BRICS nations slowly gain influence. <em>Right now these forces are pushing everyone toward the negotiating table, but for how long?</em>",
     '/bond-martinis-shaken-not-stirred': "Long-term Treasury yields are climbing, and the comforting idea that \u201cthe economy grows faster than our debt costs\u201d is getting harder to believe. Higher yields lock the government into paying more interest for years, squeeze Big Tech's AI borrowing, and help explain gold's rally. <em>It's not a five-alarm fire yet, but the ingredients for stagflation are on the table.</em>",
+    '/nightmare-on-bond-street': "Bonds, the \u201csafe\u201d corner of finance, just had a scary stretch: the 30-year Treasury yield touched levels last seen in 2007 as U.S. debt crossed $40 trillion. The Treasury's answer, bigger bond buybacks, is a few billion dollars thrown at a $30 trillion market, and the Fed is staying quiet. Higher yields don't stay on Wall Street; they show up in mortgages, loans and prices. <em>So how long will this Halloween last?</em>",
     '/the-welfare-state-was-always-a-ticking-clock': "Welfare promises were made when many workers supported each retiree. Japan is down to about two, and the U.S. faces soaring healthcare costs and nearly $40 trillion in debt. Now AI could wipe out jobs just as those bills peak, forcing governments to spend even more, and opening a window for China. <em>Is this just another cycle, or a countdown?</em>"
   };
   var expanded = {};   // posts the reader has opened in full, by path
@@ -108,7 +110,8 @@
     '/bond-martinis-shaken-not-stirred': 1,
     '/the-machine-that-doesnt-need-cheap-money': 1,
     '/the-welfare-state-was-always-a-ticking-clock': 1,
-    '/right-fear-wrong-reasons-copy': 1
+    '/right-fear-wrong-reasons-copy': 1,
+    '/nightmare-on-bond-street': 1
   };
 
   var canSpeak = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
