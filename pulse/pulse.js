@@ -28,13 +28,14 @@
     '.p75pulse .big{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:58px;line-height:1;margin:6px 0 4px}' +
     '.p75pulse .verdict{font-size:19px;font-weight:700;margin-bottom:10px}' +
     '.p75pulse .hint{color:var(--muted);font-size:13px;line-height:1.5}' +
-    '.p75pulse .ecg{background:#050807;border:1px solid #16261d;border-radius:10px;overflow:hidden;position:relative;margin-top:12px}' +
-    '.p75pulse .ecg svg{display:block;width:100%;height:auto}' +
-    '.p75pulse .ecg .trace{animation:p75scroll var(--dur,3s) linear infinite}' +
-    '@keyframes p75scroll{from{transform:translateX(0)}to{transform:translateX(var(--shift,-300px))}}' +
-    '.p75pulse .heart{animation:p75beat var(--beat,1s) ease-out infinite;transform-origin:center;transform-box:fill-box}' +
-    '@keyframes p75beat{0%{transform:scale(1.08);opacity:1}35%{transform:scale(1);opacity:.8}100%{transform:scale(1);opacity:.75}}' +
-    '@media (prefers-reduced-motion:reduce){.p75pulse .ecg .trace,.p75pulse .heart{animation:none}.p75pulse .hg{transition:none!important}}' +
+    '.p75pulse .sg{margin-top:6px}' +
+    '.p75pulse .big .of{font-size:18px;color:var(--muted);margin-left:8px;font-family:inherit}' +
+    '.p75pulse .sgbar{position:relative;height:8px;border-radius:4px;background:#26272b;margin-top:14px}' +
+    '.p75pulse .sgbar i{position:absolute;top:0;bottom:0;opacity:.35}' +
+    '.p75pulse .sgbar i:first-child{border-radius:4px 0 0 4px}.p75pulse .sgbar i:nth-child(4){border-radius:0 4px 4px 0}' +
+    '.p75pulse .sgbar b{position:absolute;top:-5px;width:4px;height:18px;margin-left:-2px;border-radius:2px;background:#fff}' +
+    '.p75pulse .sgscale{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-top:6px}' +
+    '@media (prefers-reduced-motion:reduce){.p75pulse .hg{transition:none!important}}' +
     '.p75pulse .hg{transition:y 1.6s cubic-bezier(.2,.8,.2,1),height 1.6s cubic-bezier(.2,.8,.2,1)}' +
     // why lists
     '.p75pulse .why{display:grid;grid-template-columns:1fr 1fr;gap:18px}' +
@@ -125,46 +126,15 @@
     '</svg>';
   }
 
-  // ---------- Heart monitor (stress) ----------
-  function ecg(stress) {
-    var col = stressColor(stress);
-    var bpm = Math.round(60 + stress * 0.35);         // a real resting-to-anxious range: 60 (calm) to 95 bpm (panic)
-    var speed = 170;                                  // sweep speed, px per second (steady, like a bedside monitor)
-    var period = speed * 60 / bpm;                    // px between beats
-    var amp = 62 + stress * 0.18;                     // modest height change; the color and number carry the reading
-    var base = 175, W = 600, beats = Math.ceil(W / period), L = beats * period;
-    function beat(x0, i) {
-      var j = stress > 80 ? ((i * 37) % 7 - 3) * 0.8 : 0; // slight irregularity at high stress
-      var p = period;
-      return ' L' + (x0 + p * .18) + ',' + base +
-        ' Q' + (x0 + p * .23) + ',' + (base - 9) + ' ' + (x0 + p * .28) + ',' + base +            // P wave
-        ' L' + (x0 + p * .36) + ',' + base + ' L' + (x0 + p * .39) + ',' + (base + 8) +
-        ' L' + (x0 + p * .43) + ',' + (base - amp - j) + ' L' + (x0 + p * .47) + ',' + (base + 18 + amp * .12) + // QRS
-        ' L' + (x0 + p * .50) + ',' + base + ' L' + (x0 + p * .58) + ',' + base +
-        ' Q' + (x0 + p * .64) + ',' + (base - 18) + ' ' + (x0 + p * .76) + ',' + base +    // T wave
-        ' L' + (x0 + p) + ',' + base;
-    }
-    var d = 'M0,' + base;
-    for (var i = 0; i < beats * 2; i++) d += beat(i * period, i);
-    var dur = (beats * 60 / bpm).toFixed(2);
-    var grid = '';
-    for (var gx = 0; gx <= W; gx += 20) grid += '<line x1="' + gx + '" x2="' + gx + '" y1="0" y2="300" stroke="#0f2a1c" stroke-width="' + (gx % 100 ? .6 : 1.2) + '"/>';
-    for (var gy = 0; gy <= 300; gy += 20) grid += '<line x1="0" x2="' + W + '" y1="' + gy + '" y2="' + gy + '" stroke="#0f2a1c" stroke-width="' + (gy % 100 ? .6 : 1.2) + '"/>';
-    return '<div class="ecg"><svg viewBox="0 0 800 300" role="img" aria-label="Stress heart monitor reading ' + stress + '">' +
-      '<defs><linearGradient id="p75fade" x1="0" x2="1"><stop offset="0" stop-color="#050807" stop-opacity="1"/><stop offset=".12" stop-color="#050807" stop-opacity="0"/>' +
-      '<stop offset=".9" stop-color="#050807" stop-opacity="0"/><stop offset="1" stop-color="#050807" stop-opacity=".9"/></linearGradient>' +
-      '<filter id="p75glow" x="-10%" y="-30%" width="120%" height="160%"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>' +
-      '<clipPath id="p75clip"><rect width="' + W + '" height="300"/></clipPath></defs>' +
-      grid +
-      '<g clip-path="url(#p75clip)"><path class="trace" style="--dur:' + dur + 's;--shift:-' + L + 'px" d="' + d + '" fill="none" stroke="' + col + '" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" filter="url(#p75glow)"/></g>' +
-      '<rect width="' + W + '" height="300" fill="url(#p75fade)"/>' +
-      '<line x1="' + W + '" x2="' + W + '" y1="0" y2="300" stroke="#16261d" stroke-width="2"/>' +
-      '<text x="622" y="62" font-size="17" font-weight="700" letter-spacing="3" fill="' + col + '" font-family="Manrope,sans-serif">STRESS</text>' +
-      '<text x="616" y="168" font-size="98" font-weight="700" fill="' + col + '" font-family="Manrope,sans-serif" filter="url(#p75glow)">' + stress + '</text>' +
-      '<path class="heart" style="--beat:' + (60 / bpm).toFixed(2) + 's" d="M762,50 c-5,-10 -21,-8 -21,4 c0,9 12,16 21,24 c9,-8 21,-15 21,-24 c0,-12 -16,-14 -21,-4z" fill="' + col + '"/>' +
-      '<text x="622" y="212" font-size="18" fill="#7fa58f" font-family="Manrope,sans-serif">of 100 · ' + bpm + ' bpm</text>' +
-      '<text x="622" y="246" font-size="15" fill="#4d6b5a" font-family="Manrope,sans-serif">0 calm · 100 panic</text>' +
-    '</svg></div>';
+  // ---------- Stress gauge (static) ----------
+  function stressGauge(stress) {
+    var col = stressColor(stress), pos = Math.max(0, Math.min(100, stress));
+    var zones = [[0, 30, '#2BD17E'], [30, 55, '#B8D43A'], [55, 75, '#F2A33A'], [75, 100, '#FF4D4D']];
+    return '<div class="sg" role="img" aria-label="Stress reading ' + stress + ' out of 100">' +
+      '<div class="big num" style="color:' + col + '">' + stress + '<span class="of">/ 100</span></div>' +
+      '<div class="sgbar">' + zones.map(function (z) { return '<i style="left:' + z[0] + '%;width:' + (z[1] - z[0]) + '%;background:' + z[2] + '"></i>'; }).join('') +
+      '<b style="left:' + pos + '%"></b></div>' +
+      '<div class="sgscale"><span>Calm</span><span>Elevated</span><span>Panic</span></div></div>';
   }
 
   // ---------- Sparkline with hover ----------
@@ -224,10 +194,10 @@
         '<div class="reading"><div class="big num" style="color:' + bullColor(b.score) + '">' + (b.score > 0 ? '+' : '') + (b.score != null ? b.score : '–') + '</div>' +
         '<div class="verdict" style="color:' + bullColor(b.score) + '">' + esc(b.label || 'No reading') + '</div>' +
         '<div class="hint"><b style="color:' + BULL + '">Blue</b> = bullish for bonds (prices up, yields down). <b style="color:' + BEAR + '">Red</b> = bearish (prices down, yields up). Scale runs from −100 to +100.</div></div></div></div>' +
-      '<div class="card"><h3>Stress monitor</h3>' + (s.score != null ? ecg(s.score) : '') +
+      '<div class="card"><h3>Stress monitor</h3>' + (s.score != null ? stressGauge(s.score) : '') +
         '<div style="margin-top:auto;padding-top:16px">' +
         '<div class="verdict" style="margin:0;color:' + stressColor(s.score) + '">' + esc(s.label || '') + '</div>' +
-        '<div class="hint" style="margin:4px 0 12px">The faster and sharper the heartbeat, the more stressed the bond market. Biggest drivers right now:</div>' +
+        '<div class="hint" style="margin:4px 0 12px">Higher means more strain in funding, volatility and credit. Biggest drivers right now:</div>' +
         (s.components || []).slice().sort(function (x, y) { return y.pct * y.weight - x.pct * x.weight; }).slice(0, 3).map(function (c) {
           return '<div style="display:grid;grid-template-columns:1fr 34px;gap:10px;align-items:center;font-size:13px;margin-top:7px"><div>' + esc(c.name) +
             '<div class="bar" style="margin-top:5px"><i style="width:' + Math.max(3, c.pct) + '%;background:' + stressColor(c.pct) + '"></i></div></div>' +
