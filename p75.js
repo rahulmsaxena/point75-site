@@ -4,7 +4,7 @@
 (function () {
   // ---------- Settings ----------
   var TENANT_ID = 'NgvHdCEMvUY';                          // FastComments
-  var EXCLUDED  = ['/news', '/bondsummary', '/about'];    // no add-ons on these pages
+  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-dictionary'];    // no add-ons on these pages
 
   // Difficulty level per post
   var LEVELS = {
@@ -372,6 +372,19 @@
     // Hide the floating "All essays" button when there's no room beside the text
     var back = document.getElementById('p75-back'), para = document.querySelector('.page__blocks p');
     if (back && para) back.style.visibility = para.getBoundingClientRect().left < 160 ? 'hidden' : '';
+
+    // Education pages (/education and its guides) are drawn by education.js from the same GitHub folder
+    var EDU = ['/education', '/bond-dictionary'];
+    if (EDU.indexOf(path) > -1) {
+      if (window.P75EDU) window.P75EDU.render(path);
+      else if (!document.getElementById('p75edu-js')) {
+        var ej = document.createElement('script'); ej.id = 'p75edu-js';
+        ej.src = 'https://cdn.jsdelivr.net/gh/rahulmsaxena/point75-site@main/education/education.js?v=' + Math.floor(Date.now() / 36e5);
+        ej.onload = function () { update(); };
+        document.body.appendChild(ej);
+      }
+      return;
+    } else if (window.P75EDU) window.P75EDU.clear();
 
     if (EXCLUDED.indexOf(path) > -1) return;
     var target = document.querySelector('.page__blocks') || document.querySelector('main') || document.body;
