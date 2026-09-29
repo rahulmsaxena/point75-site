@@ -4,7 +4,7 @@
 (function () {
   // ---------- Settings ----------
   var TENANT_ID = 'NgvHdCEMvUY';                          // FastComments
-  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-dictionary'];    // no add-ons on these pages
+  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-history', '/bond-dictionary'];    // no add-ons on these pages
 
   // Difficulty level per post
   var LEVELS = {
@@ -396,7 +396,7 @@
       path !== '/' && EXCLUDED.indexOf(path) === -1 && !!document.querySelector('.block-blog-header'));
 
     // Education pages (/education and its guides) are drawn by education.js from the same GitHub folder
-    var EDU = ['/education', '/bond-dictionary'];
+    var EDU = ['/education', '/bond-history', '/bond-dictionary'];
     if (EDU.indexOf(path) > -1) {
       if (window.P75EDU) window.P75EDU.render(path);
       else if (!document.getElementById('p75edu-js')) {

@@ -67,6 +67,29 @@
     ["Yield to maturity", "YTM", "The total yearly return you'd earn if you bought a bond today at its current price and held it until it matures, counting both its interest and any gain or loss on price.", ""],
     ["Zero-coupon bond", "zero", "A bond that pays no interest along the way. You buy it at a deep discount and get the full face value back at maturity; the difference is your return.", "Pay $780 today, get $1,000 back in five years."]
   ];
+
+  // History of bonds: [when, headline, plain-English story]
+  var HISTORY = [
+    ["c. 2000–1700 BC", "Debt written in clay", "In ancient Mesopotamia, loans of grain and silver were recorded on clay tablets, with the amount, the interest and the date to repay. Around 1754 BC the Code of Hammurabi even capped interest rates. The idea of a written promise to repay with interest is more than 3,500 years old."],
+    ["1100s–1262", "Venice invents the tradeable government bond", "To pay for its wars, Venice forced wealthy citizens to lend it money. In 1262 it bundled those loans into one fund, the Monte, paying a steady 5% a year. The claims could be bought and sold, and a lively market for them grew up around the Rialto, making this one of the first real secondary markets for government debt."],
+    ["1300s–1400s", "Italian city-states follow", "Florence and Genoa built their own public debt funds. Genoa's Casa di San Giorgio, founded in 1407, managed the city's debts and collected taxes to pay bondholders, an early version of a debt office."],
+    ["1648", "The bond that still pays", "A Dutch water board, Lekdijk Bovendams, borrowed money to maintain its dikes and promised to pay interest forever. One of these bonds is now kept at Yale University, and it still collects interest today, more than 375 years later."],
+    ["1694", "The Bank of England is born to lend to the Crown", "Short of money for war with France, England created the Bank of England, whose first job was to lend the government £1.2 million. Government borrowing became organised, regular and trusted, a big reason Britain could outspend its rivals."],
+    ["1751", "Consols: the never-ending bond", "Britain rolled many older debts into a single perpetual bond called the consol, which paid interest with no end date. Consols financed wars for two centuries, and the government finally repaid the last of them in 2015."],
+    ["1790–1792", "America earns its credit", "Treasury Secretary Alexander Hamilton had the new federal government take on the states' Revolutionary War debts and issue new bonds, building the country's credit from scratch. In 1792 traders signed the Buttonwood Agreement under a tree on Wall Street; government bonds were among the first things they traded."],
+    ["1909", "Bonds get report cards", "John Moody began publishing letter grades for railroad bonds, the start of the credit ratings still used today by Moody's, S&P and Fitch."],
+    ["1917–1919", "Everyone becomes a bondholder", "To pay for World War I, the U.S. sold Liberty Bonds directly to the public with parades, posters and movie stars. Millions of ordinary Americans owned a bond for the first time."],
+    ["1929", "The first Treasury bills", "The U.S. Treasury began selling short-term bills at auction, creating the ultra-safe, short-dated debt that today anchors the whole financial system."],
+    ["1951", "The Fed gets its independence", "During and after World War II, the Fed held interest rates down to keep government borrowing cheap. The 1951 Treasury–Fed Accord ended that, freeing the Fed to set rates for the economy rather than for the Treasury."],
+    ["1981", "Yields hit their peak", "To break runaway inflation, Paul Volcker's Fed pushed rates to record highs. The 10-year Treasury yield reached nearly 16%, then began a four-decade decline that made bonds one of the best investments of a generation."],
+    ["1980s", "Junk bonds and the modern market", "Riskier companies began borrowing directly from investors through high-yield “junk” bonds. New tools such as zero-coupon bonds and mortgage-backed securities turned bonds into a vast, fast-moving market."],
+    ["1997", "Protection against inflation", "The U.S. began issuing TIPS, Treasury bonds whose value rises with inflation, giving savers a safe way to protect their buying power."],
+    ["2008–2014", "Quantitative easing", "After the financial crisis, central banks bought trillions of dollars of bonds to push interest rates down and keep money flowing. The bond market and central banks became more intertwined than ever."],
+    ["2014–2021", "Paying to lend", "In Europe and Japan, yields fell below zero. At the peak, investors held well over $15 trillion of bonds that were guaranteed to lose money if held to maturity, something unthinkable for most of history."],
+    ["2022", "The great bond reset", "With inflation back, central banks raised rates at the fastest pace in decades. Bond prices fell sharply, and 2022 became one of the worst years for bond investors on record."],
+    ["Today", "A $40 trillion question", "U.S. federal debt has crossed $40 trillion, and interest costs now rival the biggest items in the budget. The oldest question in finance is back: who lends, at what price, and on what trust?"]
+  ];
+
   TERMS.sort(function (a, b) { return a[0].localeCompare(b[0]); });
 
   var CSS =
@@ -101,6 +124,13 @@
     '.p75edu .card p{color:var(--muted);font-size:14px;line-height:1.55;margin:0}' +
     '.p75edu .card .go{color:var(--gold);font-weight:700;font-size:14px;margin-top:14px;display:inline-block}' +
     '.p75edu .card.soon{opacity:.55}' +
+    '.p75edu .tl{position:relative;margin:26px 0 0;padding-left:28px;border-left:2px solid var(--line)}' +
+    '.p75edu .ev{position:relative;padding:0 0 30px}' +
+    '.p75edu .ev:before{content:"";position:absolute;left:-35px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--ink);border:2px solid var(--gold)}' +
+    '.p75edu .ev .when{color:var(--gold);font-weight:700;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase}' +
+    '.p75edu .ev h3{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:21px;margin:4px 0 6px;color:var(--cream)}' +
+    '.p75edu .ev p{margin:0;font-size:15px;line-height:1.7;color:#d9d4c8}' +
+    '.p75edu .next{display:inline-block;margin-top:10px;color:var(--gold);font-weight:700;text-decoration:none;font-size:15px}' +
     '.p75edu .text,.p75edu .text *{-webkit-user-select:none;user-select:none}' +
     '@media (max-width:600px){.p75edu h1{font-size:30px}.p75edu .term h3{font-size:18px}}';
 
@@ -120,10 +150,25 @@
     return '<div class="wrap text"><div class="eyebrow">Education</div><h1>Learn the language of bonds</h1>' +
       '<p class="lead">Short, plain-English guides to the ideas behind the essays, so you can follow the argument without a finance degree.</p>' +
       '<div class="cards">' +
+        '<a class="card" href="/bond-history"><div class="eyebrow">Guide</div><h3>A Short History of Bonds</h3>' +
+          '<p>From clay tablets in Mesopotamia to a $40 trillion U.S. debt: how lending to governments shaped the world.</p><span class="go">Read the history &rarr;</span></a>' +
         '<a class="card" href="/bond-dictionary"><div class="eyebrow">Guide</div><h3>Bond Dictionary</h3>' +
           '<p>' + TERMS.length + ' bond terms explained in everyday language, from basis points to yield curves.</p><span class="go">Open the dictionary &rarr;</span></a>' +
         '<div class="card soon"><div class="eyebrow">Coming soon</div><h3>More guides</h3><p>New explainers will appear here as they are written.</p></div>' +
       '</div>' + foot() + '</div>';
+  }
+
+
+  function history() {
+    var h = '<div class="wrap text"><div class="eyebrow"><a href="/education" style="color:inherit;text-decoration:none">Education</a></div>' +
+      '<h1>A Short History of Bonds</h1><p class="lead">People have been lending to kings, cities and countries for thousands of years. ' +
+      'Here is how a promise written in clay became the world’s largest financial market.</p><div class="tl">';
+    HISTORY.forEach(function (e) {
+      h += '<div class="ev"><div class="when">' + esc(e[0]) + '</div><h3>' + esc(e[1]) + '</h3><p>' + esc(e[2]) + '</p></div>';
+    });
+    return h + '</div><a class="next" href="/bond-dictionary">New to the jargon? Open the Bond Dictionary &rarr;</a>' +
+      '<p class="foot">Dates and figures are rounded for readability; this is a simplified overview for learning, not financial advice.<br>&copy; ' +
+      new Date().getFullYear() + ' Rahul Saxena. All rights reserved.</p></div>';
   }
 
   function dictionary() {
@@ -170,11 +215,11 @@
     once();
     host = document.createElement('div');
     host.className = 'p75edu'; host.setAttribute('data-path', path);
-    host.innerHTML = path === '/education' ? landing() : dictionary();
+    host.innerHTML = path === '/education' ? landing() : path === '/bond-history' ? history() : dictionary();
     var blocks = main.querySelector('.page__blocks');
     if (blocks) blocks.appendChild(host); else main.appendChild(host);
 
-    if (path !== '/education') {
+    if (path === '/bond-dictionary') {
       renderTerms(host, '');
       var search = host.querySelector('.search');
       search.style.top = headerHeight() + 'px';
