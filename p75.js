@@ -50,6 +50,9 @@
     st.id = 'p75-nav';
     st.textContent = '@media (max-width:920px){' +
       '.block-header-layout-mobile__dropdown{background:#111214!important}' +
+      // logo: 86px was too small to read the byline; 160px keeps it balanced with the menu button
+      M + '.block-header-logo{width:160px!important;height:34px!important;max-width:46vw!important}' +
+      M + '.block-header-logo__image{width:100%!important;height:100%!important;object-fit:contain!important;object-position:left center!important}' +
       M + '.block-header__nav{padding:12px 28px 40px!important;width:100%;box-sizing:border-box}' +
       M + '.block-header__nav-links{gap:0!important;text-align:left!important;align-items:stretch!important;width:100%;padding:0!important;margin:0!important}' +
       L.trim() + '>.block-header-item{border-bottom:1px solid rgba(255,255,255,.07);width:100%}' +
