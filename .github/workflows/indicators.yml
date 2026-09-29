@@ -5,6 +5,11 @@ on:
     - cron: "17 14 * * 1-5"   # weekdays ~9:17 AM Central, after most 8:30 AM ET releases
     - cron: "17 21 * * 1-5"   # weekdays ~4:17 PM Central, picks up late-morning releases
   workflow_dispatch: {}
+  push:                        # first run happens as soon as this lands on main
+    branches: [main]
+    paths:
+      - tools/indicators.py
+      - .github/workflows/indicators.yml
 
 permissions:
   contents: write
