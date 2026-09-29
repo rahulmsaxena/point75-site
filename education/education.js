@@ -206,7 +206,7 @@
     '.p75edu .tag.ig{background:rgba(46,204,113,.15);color:#6fdc9c}.p75edu .tag.hy{background:rgba(231,76,60,.15);color:#f08a7e}.p75edu .tag.df{background:#333;color:#bbb}' +
     '.p75edu .note{margin-top:14px;color:var(--muted);font-size:14px;line-height:1.65}' +
     '@media (max-width:600px){.p75edu table{font-size:13px}.p75edu td,.p75edu th{padding:9px 5px}}' +
-    '.p75edu .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:10px 0 8px;padding:22px;border-radius:16px;' +
+    '.p75edu .tiles{width:100%;box-sizing:border-box;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:10px 0 8px;padding:22px;border-radius:16px;' +
       'background:radial-gradient(120% 90% at 50% 0%,#1d2a3f 0%,#151b26 55%,#121418 100%);border:1px solid #243247}' +
     '.p75edu .tile{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 8px 12px;border-radius:12px;cursor:pointer;text-decoration:none;' +
       'background:rgba(255,255,255,.02);border:1px solid transparent;transition:transform .25s,border-color .25s,background .25s}' +
