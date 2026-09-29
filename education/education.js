@@ -206,6 +206,15 @@
     '.p75edu .tag.ig{background:rgba(46,204,113,.15);color:#6fdc9c}.p75edu .tag.hy{background:rgba(231,76,60,.15);color:#f08a7e}.p75edu .tag.df{background:#333;color:#bbb}' +
     '.p75edu .note{margin-top:14px;color:var(--muted);font-size:14px;line-height:1.65}' +
     '@media (max-width:600px){.p75edu table{font-size:13px}.p75edu td,.p75edu th{padding:9px 5px}}' +
+    '.p75edu .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:10px 0 8px;padding:22px;border-radius:16px;' +
+      'background:radial-gradient(120% 90% at 50% 0%,#1d2a3f 0%,#151b26 55%,#121418 100%);border:1px solid #243247}' +
+    '.p75edu .tile{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 8px 12px;border-radius:12px;cursor:pointer;text-decoration:none;' +
+      'background:rgba(255,255,255,.02);border:1px solid transparent;transition:transform .25s,border-color .25s,background .25s}' +
+    '.p75edu .tile svg{width:86px;height:86px;transition:transform .35s;filter:drop-shadow(0 6px 14px rgba(224,181,58,.18))}' +
+    '.p75edu .tile span{color:var(--cream);font-weight:600;font-size:13.5px;text-align:center;line-height:1.3}' +
+    '.p75edu .tile:hover{transform:translateY(-3px);border-color:rgba(201,162,39,.45);background:rgba(201,162,39,.06)}' +
+    '.p75edu .tile:hover svg{transform:scale(1.08) rotate(-2deg)}' +
+    '@media (max-width:600px){.p75edu .tiles{gap:8px;padding:14px}.p75edu .tile svg{width:56px;height:56px}.p75edu .tile span{font-size:12px}}' +
     '.p75edu .text,.p75edu .text *{-webkit-user-select:none;user-select:none}' +
     '@media (max-width:600px){.p75edu h1{font-size:30px}.p75edu .term h3{font-size:18px}}';
 
@@ -249,12 +258,57 @@
   }
 
 
+
+  // ---------- Icon tiles for the Classification page (original SVG drawings) ----------
+  var DEFS = '<defs>' +
+    '<radialGradient id="pg" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#FFE9A8"/><stop offset=".45" stop-color="#E0B53A"/><stop offset="1" stop-color="#8A6512"/></radialGradient>' +
+    '<radialGradient id="pb" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#BFE6FF"/><stop offset=".45" stop-color="#3B9BE0"/><stop offset="1" stop-color="#16456E"/></radialGradient>' +
+    '<radialGradient id="po" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#FFD1A6"/><stop offset=".45" stop-color="#F07A2A"/><stop offset="1" stop-color="#8C3A0B"/></radialGradient>' +
+    '<filter id="gl" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>' +
+    '</defs>';
+  var ICONS = {
+    treasury: '<g filter="url(#gl)"><path d="M18 34 L50 18 L82 34 Z" fill="url(#pg)"/><rect x="20" y="36" width="60" height="5" rx="1.5" fill="url(#pg)"/>' +
+      '<rect x="25" y="44" width="7" height="26" rx="2" fill="url(#pb)"/><rect x="38" y="44" width="7" height="26" rx="2" fill="url(#pb)"/>' +
+      '<rect x="55" y="44" width="7" height="26" rx="2" fill="url(#pb)"/><rect x="68" y="44" width="7" height="26" rx="2" fill="url(#pb)"/>' +
+      '<rect x="16" y="72" width="68" height="7" rx="2" fill="url(#pg)"/></g>',
+    muni: '<g filter="url(#gl)"><rect x="14" y="44" width="16" height="36" rx="2" fill="url(#pb)"/><rect x="34" y="30" width="18" height="50" rx="2" fill="url(#pg)"/>' +
+      '<rect x="56" y="38" width="14" height="42" rx="2" fill="url(#pb)"/><rect x="73" y="52" width="13" height="28" rx="2" fill="url(#po)"/>' +
+      '<g fill="#111214" opacity=".55"><rect x="39" y="37" width="3" height="4"/><rect x="45" y="37" width="3" height="4"/><rect x="39" y="47" width="3" height="4"/><rect x="45" y="47" width="3" height="4"/><rect x="39" y="57" width="3" height="4"/><rect x="45" y="57" width="3" height="4"/></g></g>',
+    agency: '<g filter="url(#gl)"><path d="M50 16 L78 28 V50 C78 66 66 78 50 84 C34 78 22 66 22 50 V28 Z" fill="url(#pb)"/>' +
+      '<path d="M36 54 L50 42 L64 54 V66 H36 Z" fill="url(#pg)"/><rect x="47" y="57" width="6" height="9" fill="#111214" opacity=".5"/></g>',
+    corporate: '<g filter="url(#gl)"><rect x="30" y="18" width="40" height="64" rx="3" fill="url(#pg)"/>' +
+      '<g fill="#111214" opacity=".5"><rect x="36" y="26" width="8" height="6" rx="1"/><rect x="56" y="26" width="8" height="6" rx="1"/><rect x="36" y="38" width="8" height="6" rx="1"/><rect x="56" y="38" width="8" height="6" rx="1"/><rect x="36" y="50" width="8" height="6" rx="1"/><rect x="56" y="50" width="8" height="6" rx="1"/><rect x="45" y="66" width="10" height="16" rx="1"/></g>' +
+      '<circle cx="76" cy="26" r="9" fill="url(#pb)"/></g>',
+    highyield: '<g filter="url(#gl)"><circle cx="50" cy="52" r="26" fill="url(#po)" opacity=".9"/>' +
+      '<path d="M54 22 L36 56 H49 L44 82 L66 44 H53 Z" fill="url(#pg)" stroke="#FFF1C2" stroke-width="1"/></g>',
+    mbs: '<g filter="url(#gl)"><path d="M16 50 L30 38 L44 50 V66 H16 Z" fill="url(#pb)"/><path d="M36 42 L50 30 L64 42 V58 H36 Z" fill="url(#pg)"/>' +
+      '<path d="M56 50 L70 38 L84 50 V66 H56 Z" fill="url(#po)"/><rect x="14" y="70" width="72" height="6" rx="3" fill="url(#pg)"/>' +
+      '<path d="M22 80 H78" stroke="#E0B53A" stroke-width="2" stroke-dasharray="3 4"/></g>',
+    tranches: '<g filter="url(#gl)"><rect x="22" y="20" width="56" height="14" rx="5" fill="url(#pg)"/><rect x="22" y="38" width="56" height="14" rx="5" fill="url(#pb)"/>' +
+      '<rect x="22" y="56" width="56" height="14" rx="5" fill="url(#po)"/><circle cx="50" cy="80" r="4" fill="#E0B53A"/>' +
+      '<path d="M50 70 V76" stroke="#E0B53A" stroke-width="2"/></g>',
+    privateequity: '<g filter="url(#gl)"><rect x="18" y="36" width="64" height="40" rx="6" fill="url(#pb)"/><path d="M38 36 V29 a4 4 0 0 1 4 -4 H58 a4 4 0 0 1 4 4 V36" fill="none" stroke="#E0B53A" stroke-width="4"/>' +
+      '<rect x="18" y="50" width="64" height="5" fill="#111214" opacity=".35"/><circle cx="50" cy="53" r="7" fill="url(#pg)"/></g>',
+    ratings: '<g filter="url(#gl)"><circle cx="50" cy="44" r="26" fill="url(#pg)"/><path d="M36 64 L30 86 L42 80 L48 90 L50 68" fill="url(#pb)"/><path d="M64 64 L70 86 L58 80 L52 90 L50 68" fill="url(#pb)"/>' +
+      '<text x="50" y="51" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#3a2a05">AAA</text></g>'
+  };
+  // [icon, label, section to jump to]
+  var TILES = [
+    ['treasury', 'U.S. Treasuries', 's0'], ['muni', 'Municipal Bonds', 's1'], ['agency', 'Agency Bonds', 's1'],
+    ['corporate', 'Corporate Bonds', 's2'], ['highyield', 'High-Yield (Junk)', 's2'], ['mbs', 'Mortgage-Backed', 's3'],
+    ['tranches', 'CBOs, CLOs & CDOs', 's4'], ['privateequity', 'Private Equity Debt', 's5'], ['ratings', 'Bond Ratings', 'ratings']
+  ];
+  function tiles() {
+    return '<div class="tiles">' + TILES.map(function (t) {
+      return '<a class="tile" data-go="' + t[2] + '"><svg viewBox="0 0 100 100" aria-hidden="true">' + DEFS + ICONS[t[0]] + '</svg><span>' + t[1] + '</span></a>';
+    }).join('') + '</div>';
+  }
+
   function types() {
     var h = '<div class="wrap text"><div class="eyebrow"><a href="/education" style="color:inherit;text-decoration:none">Education</a></div>' +
       '<h1>Classification of Bonds</h1><p class="lead">Not all bonds are alike. Here are the main families, who issues them, what backs them, ' +
-      'and how the rating agencies grade them.</p><nav class="toc">';
-    TYPES.forEach(function (t, i) { h += '<a data-go="s' + i + '">' + esc(t[0]) + '</a>'; });
-    h += '<a data-go="ratings">Bond ratings</a></nav>';
+      'and how the rating agencies grade them.</p><nav class="toc">' + tiles();
+    h += '</nav>';
     TYPES.forEach(function (t, i) {
       h += '<section class="sec" id="p75-s' + i + '"><h2>' + esc(t[0]) + '</h2><p class="intro">' + esc(t[1]) + '</p>';
       t[2].forEach(function (x) { h += '<div class="term"><h3>' + esc(x[0]) + '</h3><p>' + esc(x[1]) + '</p></div>'; });
