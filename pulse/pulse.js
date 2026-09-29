@@ -33,7 +33,7 @@
     '.p75pulse .ecg .trace{animation:p75scroll var(--dur,3s) linear infinite}' +
     '@keyframes p75scroll{from{transform:translateX(0)}to{transform:translateX(var(--shift,-300px))}}' +
     '.p75pulse .heart{animation:p75beat var(--beat,1s) ease-out infinite;transform-origin:center;transform-box:fill-box}' +
-    '@keyframes p75beat{0%{transform:scale(1.25);opacity:1}40%{transform:scale(1);opacity:.75}100%{transform:scale(1);opacity:.75}}' +
+    '@keyframes p75beat{0%{transform:scale(1.08);opacity:1}35%{transform:scale(1);opacity:.8}100%{transform:scale(1);opacity:.75}}' +
     '@media (prefers-reduced-motion:reduce){.p75pulse .ecg .trace,.p75pulse .heart{animation:none}.p75pulse .hg{transition:none!important}}' +
     '.p75pulse .hg{transition:y 1.6s cubic-bezier(.2,.8,.2,1),height 1.6s cubic-bezier(.2,.8,.2,1)}' +
     // why lists
@@ -128,19 +128,20 @@
   // ---------- Heart monitor (stress) ----------
   function ecg(stress) {
     var col = stressColor(stress);
-    var bpm = Math.round(56 + stress * 0.9);          // calmer market = slower heart
-    var period = Math.max(64, 150 - stress);          // px between beats
-    var amp = 38 + stress * 0.42;                     // taller spikes when stressed
+    var bpm = Math.round(60 + stress * 0.35);         // a real resting-to-anxious range: 60 (calm) to 95 bpm (panic)
+    var speed = 170;                                  // sweep speed, px per second (steady, like a bedside monitor)
+    var period = speed * 60 / bpm;                    // px between beats
+    var amp = 62 + stress * 0.18;                     // modest height change; the color and number carry the reading
     var base = 175, W = 600, beats = Math.ceil(W / period), L = beats * period;
     function beat(x0, i) {
-      var j = stress > 70 ? ((i * 37) % 11 - 5) * 0.9 : 0; // slight irregularity at high stress
+      var j = stress > 80 ? ((i * 37) % 7 - 3) * 0.8 : 0; // slight irregularity at high stress
       var p = period;
       return ' L' + (x0 + p * .18) + ',' + base +
         ' Q' + (x0 + p * .23) + ',' + (base - 9) + ' ' + (x0 + p * .28) + ',' + base +            // P wave
         ' L' + (x0 + p * .36) + ',' + base + ' L' + (x0 + p * .39) + ',' + (base + 8) +
         ' L' + (x0 + p * .43) + ',' + (base - amp - j) + ' L' + (x0 + p * .47) + ',' + (base + 18 + amp * .12) + // QRS
         ' L' + (x0 + p * .50) + ',' + base + ' L' + (x0 + p * .58) + ',' + base +
-        ' Q' + (x0 + p * .66) + ',' + (base - 16 - stress * .08) + ' ' + (x0 + p * .74) + ',' + base +    // T wave
+        ' Q' + (x0 + p * .64) + ',' + (base - 18) + ' ' + (x0 + p * .76) + ',' + base +    // T wave
         ' L' + (x0 + p) + ',' + base;
     }
     var d = 'M0,' + base;
@@ -152,10 +153,10 @@
     return '<div class="ecg"><svg viewBox="0 0 800 300" role="img" aria-label="Stress heart monitor reading ' + stress + '">' +
       '<defs><linearGradient id="p75fade" x1="0" x2="1"><stop offset="0" stop-color="#050807" stop-opacity="1"/><stop offset=".12" stop-color="#050807" stop-opacity="0"/>' +
       '<stop offset=".9" stop-color="#050807" stop-opacity="0"/><stop offset="1" stop-color="#050807" stop-opacity=".9"/></linearGradient>' +
-      '<filter id="p75glow" x="-10%" y="-30%" width="120%" height="160%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>' +
+      '<filter id="p75glow" x="-10%" y="-30%" width="120%" height="160%"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>' +
       '<clipPath id="p75clip"><rect width="' + W + '" height="300"/></clipPath></defs>' +
       grid +
-      '<g clip-path="url(#p75clip)"><path class="trace" style="--dur:' + dur + 's;--shift:-' + L + 'px" d="' + d + '" fill="none" stroke="' + col + '" stroke-width="2.4" stroke-linejoin="round" filter="url(#p75glow)"/></g>' +
+      '<g clip-path="url(#p75clip)"><path class="trace" style="--dur:' + dur + 's;--shift:-' + L + 'px" d="' + d + '" fill="none" stroke="' + col + '" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" filter="url(#p75glow)"/></g>' +
       '<rect width="' + W + '" height="300" fill="url(#p75fade)"/>' +
       '<line x1="' + W + '" x2="' + W + '" y1="0" y2="300" stroke="#16261d" stroke-width="2"/>' +
       '<text x="622" y="62" font-size="17" font-weight="700" letter-spacing="3" fill="' + col + '" font-family="Manrope,sans-serif">STRESS</text>' +
