@@ -442,7 +442,7 @@
       '.coupon-embed .st-t{flex:0 0 118px;scroll-snap-align:start}.coupon-embed .st-go{font-size:.84rem}.coupon-embed .st-long{display:none}}' +
     '@media (min-width:621px){.coupon-embed .st-short{display:none}}' +
     '@media (max-width:620px){.coupon-embed .ce-hero-narrative{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}}';
-  NEWS_CSS += '.coupon-embed .p75-searchrow{margin:0 0 1.6rem}.coupon-embed .p75-searchrow input[type="search"]{display:block;box-sizing:border-box}' +
+  NEWS_CSS += '.coupon-embed .p75-searchrow{margin:0 0 .8rem}.coupon-embed .p75-searchrow + .ce-controls{margin-bottom:1.6rem!important}.coupon-embed .p75-searchrow input[type="search"]{display:block;box-sizing:border-box}' +
     '.coupon-embed .p75-sr-note{font:600 .8rem Manrope,system-ui,sans-serif;color:var(--dim);margin-top:6px;min-height:1em}';
   // Put the headline search near the top (it filters the list further down), and bring the results into view as people type
   function moveSearch(d, frame) {
@@ -452,9 +452,11 @@
     var row = d.createElement('div'); row.id = 'p75-searchrow'; row.className = 'p75-searchrow';
     var note = d.createElement('div'); note.className = 'p75-sr-note'; note.setAttribute('aria-live', 'polite');
     anchor.insertAdjacentElement('afterend', row); row.appendChild(input); row.appendChild(note);
+    // the date / region / source filters and Refresh follow the search box, above the day's Treasury note
+    var controls = d.querySelector('.coupon-embed .ce-controls'); if (controls) row.insertAdjacentElement('afterend', controls);
     var t = 0, count = d.querySelector('.coupon-embed .ce-count');
     function toResults() {
-      var list = d.querySelector('.coupon-embed .ce-controls'); if (!list) return;
+      var list = d.querySelector('.coupon-embed #coupon-content') || d.querySelector('.coupon-embed .ce-controls'); if (!list) return;
       var top = frame.getBoundingClientRect().top + window.pageYOffset + list.getBoundingClientRect().top - headerHeightSafe() - 8;
       if (Math.abs(window.pageYOffset - top) > 40) window.scrollTo({ top: top, behavior: 'smooth' });
     }
