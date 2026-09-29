@@ -403,8 +403,9 @@
     '.coupon-embed .ce-rate-desc{font-size:.84rem!important;line-height:1.5!important}' +
     // one label style everywhere (matches the Pulse card titles)
     '.coupon-embed .ce-tenor-label,.coupon-embed .ce-mini-stat .ce-tenor-label,.coupon-embed .ce-rate-name,.coupon-embed .ce-rates-title{' +
-      'font-family:Manrope,system-ui,sans-serif!important;font-size:.72rem!important;font-weight:700!important;letter-spacing:.12em!important;text-transform:uppercase!important}' +
+      'font-family:Manrope,system-ui,sans-serif!important;font-size:.86rem!important;font-weight:700!important;letter-spacing:.08em!important;text-transform:uppercase!important;margin-bottom:.4rem!important}' +
     '.coupon-embed .ce-tenor-label,.coupon-embed .ce-rates-title{color:var(--gold)!important}' +
+    '.coupon-embed .ce-rate-head{flex-direction:column!important;align-items:flex-start!important;gap:2px!important;margin-bottom:.45rem!important}.coupon-embed .ce-rate-name{white-space:nowrap;margin-bottom:0!important}.coupon-embed .ce-rate-tag{text-align:left!important}' +
     '.coupon-embed .ce-mini-stat .ce-tenor-label,.coupon-embed .ce-rate-name{color:var(--dim)!important}' +
     '.coupon-embed .ce-rate-tag,.coupon-embed .ce-rate-sub,.coupon-embed .ce-weekly,.coupon-embed .ce-article-meta,.coupon-embed .ce-masthead-meta,' +
       '.coupon-embed .ce-hero-attribution,.coupon-embed .ce-rates-src,.coupon-embed .ce-footer,.coupon-embed .ce-count{font-family:Manrope,system-ui,sans-serif!important;font-size:.76rem!important;color:var(--dim)!important}' +
