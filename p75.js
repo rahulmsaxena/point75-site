@@ -42,6 +42,21 @@
 
   var GOLD = '#c9a227';
 
+  // ---------- Essay typography on desktop: a little smaller and more refined ----------
+  (function typography() {
+    var st = document.createElement('style');
+    st.id = 'p75-type';
+    st.textContent = '@media (min-width: 920px) {' +
+      '.p75-essay .page__blocks .text-box p, .p75-essay .page__blocks .text-box li {' +
+        'font-size:17.5px !important; line-height:1.78 !important; letter-spacing:.005em !important }' +
+      '.p75-essay .page__blocks .text-box p { margin-bottom:14px !important }' +
+      '.p75-essay .page__blocks .text-box h2 { font-size:26px !important; line-height:1.3 !important; margin-top:30px !important }' +
+      '.p75-essay .page__blocks .text-box h3 { font-size:21px !important; line-height:1.35 !important }' +
+      '.p75-essay .block-blog-header__title { font-size:42px !important; line-height:1.15 !important; letter-spacing:-.01em !important }' +
+    '}';
+    document.head.appendChild(st);
+  })();
+
   // ---------- Copy protection (a deterrent: it stops casual copying, not screenshots) ----------
   var PROTECTED = '.page__blocks .text-box, .block-blog-header, .blog-list-item, .p75t';
   (function protect() {
@@ -375,6 +390,10 @@
     // Hide the floating "All essays" button when there's no room beside the text
     var back = document.getElementById('p75-back'), para = document.querySelector('.page__blocks p');
     if (back && para) back.style.visibility = para.getBoundingClientRect().left < 160 ? 'hidden' : '';
+
+    // Mark essay pages so the desktop typography applies only there
+    document.documentElement.classList.toggle('p75-essay',
+      path !== '/' && EXCLUDED.indexOf(path) === -1 && !!document.querySelector('.block-blog-header'));
 
     // Education pages (/education and its guides) are drawn by education.js from the same GitHub folder
     var EDU = ['/education', '/bond-dictionary'];
