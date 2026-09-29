@@ -315,25 +315,55 @@
     '.p75edu .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}' +
     '.p75edu .chips span{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:6px 12px;font-size:13px;color:var(--cream)}' +
     '@media (max-width:700px){.p75edu .chartbox{grid-template-columns:1fr;padding:14px}.p75edu .donut{max-width:300px;margin:0 auto;display:block}}' +
-    '.p75edu .galaxy{position:relative;margin-top:12px;border-radius:18px;overflow:hidden;border:1px solid #243247;' +
-      'background:radial-gradient(ellipse at 50% 50%,#2a0c04 0%,#140606 45%,#070507 100%)}' +
-    '.p75edu .galaxy svg{display:block;width:100%;height:auto}' +
-    '.p75edu .gx-sys{cursor:pointer}.p75edu .gx-sys circle.core{transition:r .3s}' +
-    '.p75edu .gx-sys:hover .halo{opacity:.9}.p75edu .gx-lbl{font:800 17px Manrope,sans-serif;fill:#ffffff}.p75edu .gx-sub{font:600 13px Manrope,sans-serif;fill:#e6e0d4}' +
-    '.p75edu .gx-lbl,.p75edu .gx-val,.p75edu .gx-sub{paint-order:stroke;stroke:#050507;stroke-width:4px;stroke-linejoin:round}' +
-    '.p75edu .gx-val{font:800 14px Manrope,sans-serif;fill:#ffd873}' +
-    '.p75edu .spin{animation:p75spin linear infinite;transform-box:view-box}' +
-    '@keyframes p75spin{to{transform:rotate(360deg)}}' +
-    '@keyframes p75tw{0%,100%{opacity:.25}50%{opacity:1}}.p75edu .tw{animation:p75tw 3s ease-in-out infinite}' +
-    '@media (prefers-reduced-motion:reduce){.p75edu .spin,.p75edu .tw{animation:none}}' +
-    '.p75edu .gx-back{position:absolute;top:12px;left:12px;background:rgba(17,18,20,.8);color:var(--gold);border:1px solid var(--gold);border-radius:16px;' +
-      'padding:6px 14px;font:700 13px Manrope,sans-serif;cursor:pointer;display:none}' +
-    '.p75edu .gx-hint{position:absolute;top:14px;right:16px;text-align:right;color:#f3eee2;font-weight:700;font-size:13.5px;text-shadow:0 1px 4px #000;pointer-events:none}' +
-    '.p75edu .gx-tip{position:absolute;pointer-events:none;background:rgba(14,16,24,.95);border:1px solid var(--gold);border-radius:10px;padding:10px 12px;' +
-      'max-width:240px;color:var(--cream);font-size:13px;line-height:1.5;display:none;box-shadow:0 8px 24px rgba(0,0,0,.5)}' +
-    '.p75edu .gx-tip b{font-size:15px}.p75edu .gx-tip .v{color:var(--gold);font-weight:700}' +
-    '.p75edu .planet{cursor:pointer}' +
-    '@media (max-width:600px){.p75edu .gx-lbl{font-size:26px !important}.p75edu .gx-val{font-size:20px}.p75edu .gx-sub{font-size:18px}.p75edu .gx-hint{font-size:11.5px}}' +
+    '.p75edu .solar{position:relative;margin-top:14px;border-radius:18px;overflow:hidden;border:1px solid #1f2533;padding:0 0 26px;' +
+      'background:radial-gradient(60% 40% at 85% 55%,rgba(126,44,120,.28),transparent 70%),radial-gradient(55% 35% at 12% 78%,rgba(40,90,140,.25),transparent 70%),' +
+      'radial-gradient(40% 30% at 20% 30%,rgba(150,60,110,.18),transparent 70%),linear-gradient(#0a0b12,#06070b)}' +
+    '.p75edu .sl-sky{position:absolute;inset:0;pointer-events:none}' +
+    '.p75edu .sl-sun{position:absolute;left:50%;top:-150px;width:560px;height:560px;margin-left:-280px;pointer-events:none;border-radius:50%;' +
+      'background:radial-gradient(circle,#fffbe8 0,#ffe39a 9%,#ffc35c 16%,rgba(255,170,60,.55) 24%,rgba(255,150,50,.16) 38%,transparent 62%)}' +
+    '.p75edu .sl-sun i{position:absolute;inset:-40% -40% 0;transform-origin:50% 40%;' +
+      'background:repeating-conic-gradient(from 90deg at 50% 40%,rgba(255,221,140,.16) 0 2.2deg,transparent 2.2deg 9deg);' +
+      '-webkit-mask:radial-gradient(circle at 50% 40%,#000 8%,transparent 62%);mask:radial-gradient(circle at 50% 40%,#000 8%,transparent 62%);animation:p75rays 18s ease-in-out infinite alternate}' +
+    '.p75edu .sl-sun i+i{animation-duration:26s;animation-direction:alternate-reverse;opacity:.7}' +
+    '@keyframes p75rays{from{transform:rotate(-4deg)}to{transform:rotate(4deg)}}' +
+    '.p75edu .sl-head{position:relative;text-align:center;padding:150px 20px 6px}' +
+    '.p75edu .sl-k{color:#fff3cf;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;text-shadow:0 1px 8px rgba(0,0,0,.6)}' +
+    '.p75edu .sl-big{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:40px;color:#fff;line-height:1.1;margin:4px 0 8px;text-shadow:0 2px 14px rgba(0,0,0,.55)}' +
+    '.p75edu .sl-hint{color:#e8e2d4;font-size:14.5px;line-height:1.55;max-width:440px;margin:0 auto}' +
+    '.p75edu .sl-list{position:relative;list-style:none;margin:0;padding:10px 22px 0}' +
+    '.p75edu .sl-row{margin:18px 0 0}' +
+    '.p75edu .sl-btn{display:flex;align-items:center;gap:22px;width:100%;background:none;border:1px solid transparent;border-radius:16px;padding:8px 12px;cursor:pointer;color:inherit;font:inherit;text-align:left;transition:background .25s,border-color .25s}' +
+    '.p75edu .sl-row.alt .sl-btn{flex-direction:row-reverse;text-align:right}' +
+    '.p75edu .sl-btn:hover,.p75edu .sl-row.open .sl-btn{background:rgba(255,255,255,.035);border-color:rgba(201,162,39,.35)}' +
+    '.p75edu .sl-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}' +
+    '.p75edu .sl-planet{flex:0 0 auto;width:calc(var(--d)*1px);height:calc(var(--d)*1px);display:grid;place-items:center;animation:p75bob var(--bob) ease-in-out infinite alternate}' +
+    '.p75edu .sl-planet.ringed{width:calc(var(--d)*1.65px)}' +
+    '.p75edu .sl-planet svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 10px 22px rgba(0,0,0,.55))}' +
+    '.p75edu .sl-btn:hover .sl-planet svg{filter:drop-shadow(0 0 18px rgba(255,214,120,.35)) drop-shadow(0 10px 22px rgba(0,0,0,.55))}' +
+    '@keyframes p75bob{from{transform:translateY(-4px)}to{transform:translateY(4px)}}' +
+    '.p75edu .pl-turn{animation:p75turn linear infinite}' +
+    '@keyframes p75turn{from{transform:translateX(0)}to{transform:translateX(100px)}}' +
+    '.p75edu .sl-info{display:flex;flex-direction:column;gap:2px;min-width:0}' +
+    '.p75edu .sl-sub{color:#cfc9bc;font-weight:700;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase}' +
+    '.p75edu .sl-name{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:27px;color:#fff;line-height:1.15}' +
+    '.p75edu .sl-val{font-weight:800;font-size:30px;color:#f2c94c;line-height:1.15;font-variant-numeric:tabular-nums;text-shadow:0 2px 10px rgba(0,0,0,.5)}' +
+    '.p75edu .sl-val.sm{font-size:22px}' +
+    '.p75edu .sl-what{color:#d9d3c6;font-size:13.5px}' +
+    '.p75edu .sl-more{color:var(--gold);font-weight:700;font-size:14px;margin-top:6px}' +
+    '.p75edu .sl-more b{display:inline-block;transition:transform .25s}.p75edu .sl-row.open .sl-more b{transform:rotate(180deg)}' +
+    '.p75edu .sl-moons{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin:12px 0 4px}' +
+    '.p75edu .sl-moons[hidden]{display:none}' +
+    '.p75edu .sl-moon{background:rgba(17,18,24,.88);border:1px solid #2c3140;border-radius:12px;padding:14px 16px;backdrop-filter:blur(2px)}' +
+    '.p75edu .sl-mh{display:flex;align-items:center;gap:10px}' +
+    '.p75edu .sl-dot{width:14px;height:14px;border-radius:50%;flex:0 0 auto;box-shadow:inset -3px -3px 5px rgba(0,0,0,.45),inset 2px 2px 3px rgba(255,255,255,.35)}' +
+    '.p75edu .sl-mn{color:#fff;font-weight:700;font-size:16px;flex:1;min-width:0}' +
+    '.p75edu .sl-mv{color:#f2c94c;font-weight:800;font-size:19px;font-variant-numeric:tabular-nums}' +
+    '.p75edu .sl-bar{height:5px;border-radius:3px;background:#262a33;margin:10px 0 8px;overflow:hidden}.p75edu .sl-bar i{display:block;height:100%;background:linear-gradient(90deg,#c98500,#f2c94c)}' +
+    '.p75edu .sl-moon p{margin:6px 0 0;color:#ddd8cc;font-size:14px;line-height:1.55}.p75edu .sl-asof{color:#a9a396}' +
+    '@media (prefers-reduced-motion:reduce){.p75edu .sl-sun i,.p75edu .sl-planet,.p75edu .pl-turn{animation:none}}' +
+    '@media (max-width:600px){.p75edu .sl-sun{width:420px;height:420px;margin-left:-210px;top:-120px}.p75edu .sl-head{padding-top:118px}.p75edu .sl-big{font-size:32px}' +
+      '.p75edu .sl-list{padding:6px 10px 0}.p75edu .sl-btn{gap:14px;padding:8px}.p75edu .sl-planet{width:calc(var(--d)*.62px);height:calc(var(--d)*.62px)}' +
+      '.p75edu .sl-planet.ringed{width:calc(var(--d)*1.02px)}.p75edu .sl-name{font-size:22px}.p75edu .sl-val{font-size:25px}.p75edu .sl-moons{grid-template-columns:1fr}}' +
     '.p75edu details.list{margin-top:14px}.p75edu details.list summary{color:var(--gold);cursor:pointer;font-weight:700;font-size:14px}' +
     '.p75edu .text,.p75edu .text *{-webkit-user-select:none;user-select:none}' +
     '@media (max-width:600px){.p75edu h1{font-size:30px}.p75edu .term h3{font-size:18px}}';
@@ -493,134 +523,137 @@
   }
 
 
-  // ---------- Galaxy explorer ----------
-  var W = 900, H = 560, CX = W / 2, CY = H / 2;
-  function stars(n, seed) {
-    var out = '', x = seed || 7;
-    function rnd() { x = (x * 9301 + 49297) % 233280; return x / 233280; }
-    for (var i = 0; i < n; i++) {
-      var r = rnd() < 0.9 ? 0.6 + rnd() * 0.8 : 1.4 + rnd();
-      out += '<circle cx="' + (rnd() * W).toFixed(1) + '" cy="' + (rnd() * H).toFixed(1) + '" r="' + r.toFixed(2) + '" fill="#fff" opacity="' + (0.3 + rnd() * 0.6).toFixed(2) + '"' +
-        (rnd() < 0.15 ? ' class="tw" style="animation-delay:' + (rnd() * 3).toFixed(2) + 's"' : '') + '/>';
-    }
-    return out;
-  }
   function sysTotal(sy) { return sy.planets.reduce(function (a, p) { return a + (p[1] || 0); }, 0); }
   function money(v) { return v == null ? '' : v >= 1 ? '$' + (Math.round(v * 100) / 100) + 'T' : '$' + Math.round(v * 1000) + 'B'; }
-  var GDEFS = '<defs><radialGradient id="gxcore"><stop offset="0" stop-color="#fff8e1" stop-opacity=".9"/><stop offset=".25" stop-color="#e7c46a" stop-opacity=".45"/>' +
-    '<stop offset=".6" stop-color="#6a4fb3" stop-opacity=".18"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>' +
-    '<filter id="gxglow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="6"/></filter>' +
-    '<radialGradient id="bhhaze"><stop offset="0" stop-color="#8a1c05" stop-opacity=".9"/><stop offset=".6" stop-color="#4a0d02" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>' +
-    '<radialGradient id="bhhole"><stop offset="0" stop-color="#2a0500"/><stop offset=".7" stop-color="#5a1204" stop-opacity=".95"/><stop offset="1" stop-color="#9a2a08" stop-opacity="0"/></radialGradient>' +
-    '<filter id="bhblur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="16"/></filter>' +
-    '<filter id="bhsoft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="0.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>';
 
-  function galaxyView() {
-    // A glowing, swirling accretion ring at the heart of the galaxy (inspired by the image of our galaxy's black hole)
-    var streaks = '', x = 97;
-    function rnd() { x = (x * 9301 + 49297) % 233280; return x / 233280; }
-    var cols = ['#fff1cf', '#ffd27a', '#ffb347', '#ff8a2a', '#f06418'];
-    for (var i = 0; i < 380; i++) {
-      var r0 = 56 + rnd() * 74, sweep = 0.9 + rnd() * 1.5, a0 = rnd() * Math.PI * 2, pts = [];
-      for (var j = 0; j <= 12; j++) {
-        var t = j / 12, ang = a0 + t * sweep, rr = r0 + t * (18 + rnd() * 6);   // gently spiralling outward
-        pts.push((CX + rr * Math.cos(ang) * 1.28).toFixed(1) + ' ' + (CY + rr * Math.sin(ang) * 0.92).toFixed(1));
-      }
-      // brighter on the upper-right and lower edges, like the photo
-      var bright = 0.5 + 0.5 * Math.sin(a0 + 0.9);
-      var col = cols[Math.min(4, Math.floor((1 - bright) * 4 + rnd() * 1.2))];
-      streaks += '<path d="M' + pts.join(' L') + '" fill="none" stroke="' + col + '" stroke-width="' + (0.6 + rnd() * 1.6).toFixed(2) +
-        '" stroke-linecap="round" opacity="' + (0.25 + bright * 0.6).toFixed(2) + '"/>';
+  // ---------- Solar lineup (players by group, drawn as planets under the market's sun) ----------
+  // Planet looks are original SVG drawings; each group gets a planet type. Surfaces drift slowly so the
+  // planets appear to turn; everything holds still for readers who prefer reduced motion.
+  var LOOKS = ['jupiter', 'saturn', 'earth', 'mars', 'neptune'];
+  function periodic(fn) { var s = ''; for (var k = -2; k <= 1; k++) s += fn(k * 100); return s; }   // features repeat every 100 units
+  function planetSVG(kind, id) {
+    var R = 50, clip = id + 'c', light = id + 'l', rim = id + 'r', surf = '', base = '#888', extra = '', over = '', vb = '-60 -60 120 120';
+    if (kind === 'jupiter') {
+      base = '#d9b48a';
+      var bands = [[-44, 8, '#f1dfc4'], [-33, 7, '#b77a4e'], [-24, 6, '#e8cfae'], [-16, 7, '#a8663f'], [-6, 6, '#f3e3cb'], [3, 8, '#c98d5c'],
+        [13, 6, '#efd9ba'], [21, 7, '#9b5a36'], [30, 7, '#e2c39d'], [40, 9, '#b98359']];
+      surf = bands.map(function (b) { return '<rect x="-160" y="' + b[0] + '" width="320" height="' + b[1] + '" fill="' + b[2] + '" opacity=".9"/>'; }).join('') +
+        periodic(function (o) { return '<ellipse cx="' + (o + 30) + '" cy="16" rx="11" ry="6.5" fill="#b4492c" opacity=".85"/><ellipse cx="' + (o + 30) + '" cy="16" rx="6" ry="3.4" fill="#d8744c"/>' +
+          '<path d="M' + (o - 40) + ',-18 q12,-5 24,0 t24,0" stroke="#f5e6cf" stroke-width="2.2" fill="none" opacity=".6"/>' +
+          '<path d="M' + (o - 10) + ',7 q10,4 20,0 t20,0" stroke="#8e4f2d" stroke-width="1.6" fill="none" opacity=".5"/>'; });
+    } else if (kind === 'saturn') {
+      base = '#e3cf9a'; vb = '-100 -60 200 120';
+      surf = [[-48, 14, '#efe0b4'], [-30, 9, '#cdb178'], [-18, 10, '#f3e6c2'], [-6, 8, '#d7bd86'], [4, 12, '#ecdcae'], [18, 9, '#c4a66c'], [30, 18, '#e8d6a4']]
+        .map(function (b) { return '<rect x="-160" y="' + b[0] + '" width="320" height="' + b[1] + '" fill="' + b[2] + '"/>'; }).join('') +
+        periodic(function (o) { return '<path d="M' + (o - 30) + ',-2 q15,-3 30,0 t30,0" stroke="#fff4d2" stroke-width="1.5" fill="none" opacity=".5"/>'; });
+      var ring = function (half) {
+        return '<g transform="rotate(-16)"><path d="M-92,0 A92,20 0 0,' + (half === 'back' ? 1 : 0) + ' 92,0" fill="none" stroke="#d9c08a" stroke-width="9" opacity=".75"/>' +
+          '<path d="M-78,0 A78,16 0 0,' + (half === 'back' ? 1 : 0) + ' 78,0" fill="none" stroke="#f1e2b8" stroke-width="6" opacity=".85"/>' +
+          '<path d="M-68,0 A68,13 0 0,' + (half === 'back' ? 1 : 0) + ' 68,0" fill="none" stroke="#b89c63" stroke-width="3" opacity=".7"/></g>';
+      };
+      extra = ring('back'); over = ring('front');
+    } else if (kind === 'earth') {
+      base = '#1f5fae';
+      surf = '<rect x="-160" y="-60" width="320" height="120" fill="#2067b8"/>' +
+        periodic(function (o) {
+          return '<path d="M' + (o - 38) + ',-30 c10,-8 26,-6 30,4 c3,9 -6,12 -3,22 c3,10 -9,16 -16,8 c-6,-7 -18,-6 -16,-18 c1,-8 0,-12 5,-16z" fill="#4d8f3f"/>' +
+            '<path d="M' + (o + 8) + ',-14 c9,-6 22,-2 24,8 c2,10 -4,22 -14,26 c-9,3 -8,-8 -13,-14 c-4,-6 -6,-15 3,-20z" fill="#6b9a45"/>' +
+            '<path d="M' + (o - 20) + ',18 c6,-3 14,0 13,6 c-1,6 -9,8 -14,5 c-4,-3 -3,-9 1,-11z" fill="#b69a62"/>';
+        }) +
+        '<rect x="-160" y="-60" width="320" height="10" fill="#e9f1f7"/><rect x="-160" y="50" width="320" height="10" fill="#e9f1f7"/>';
+      var clouds = periodic(function (o) {
+        return '<path d="M' + (o - 45) + ',-8 q14,-6 30,0 t32,-2" stroke="#fff" stroke-width="4" fill="none" opacity=".55" stroke-linecap="round"/>' +
+          '<path d="M' + (o - 5) + ',24 q12,-5 26,0 t22,2" stroke="#fff" stroke-width="3.5" fill="none" opacity=".5" stroke-linecap="round"/>' +
+          '<path d="M' + (o + 15) + ',-34 q10,-4 20,0" stroke="#fff" stroke-width="3" fill="none" opacity=".5" stroke-linecap="round"/>';
+      });
+      surf = '<g class="pl-turn" style="animation-duration:70s">' + surf + '</g><g class="pl-turn" style="animation-duration:48s">' + clouds + '</g>';
+    } else if (kind === 'mars') {
+      base = '#c1592f';
+      surf = '<rect x="-160" y="-60" width="320" height="120" fill="#c4603a"/>' +
+        periodic(function (o) {
+          return '<ellipse cx="' + (o - 25) + '" cy="-10" rx="18" ry="9" fill="#8f3d20" opacity=".7"/><ellipse cx="' + (o + 18) + '" cy="14" rx="14" ry="7" fill="#a14a28" opacity=".7"/>' +
+            '<ellipse cx="' + (o + 35) + '" cy="-26" rx="9" ry="5" fill="#e08a5d" opacity=".6"/><circle cx="' + (o - 5) + '" cy="30" r="3" fill="#7e3219" opacity=".7"/>';
+        }) + '<ellipse cx="0" cy="-52" rx="160" ry="8" fill="#f3dccd" opacity=".8"/>';
+    } else {
+      base = '#2f5fd0';
+      surf = [[-50, 16, '#3a6fe0'], [-30, 10, '#2c56c2'], [-16, 14, '#4a82ea'], [2, 10, '#2a50b8'], [16, 16, '#3d73e2'], [36, 20, '#2346a6']]
+        .map(function (b) { return '<rect x="-160" y="' + b[0] + '" width="320" height="' + b[1] + '" fill="' + b[2] + '"/>'; }).join('') +
+        periodic(function (o) { return '<ellipse cx="' + (o + 10) + '" cy="-4" rx="10" ry="5" fill="#1b3486" opacity=".8"/><path d="M' + (o - 30) + ',20 q10,-3 22,0" stroke="#bcd3ff" stroke-width="1.6" fill="none" opacity=".6"/>'; });
     }
-    var disk = '<ellipse cx="' + CX + '" cy="' + CY + '" rx="210" ry="150" fill="url(#bhhaze)"/>' +
-      '<ellipse cx="' + CX + '" cy="' + CY + '" rx="150" ry="108" fill="none" stroke="#ff7a1a" stroke-width="46" opacity=".55" filter="url(#bhblur)"/>' +
-      '<ellipse cx="' + (CX + 40) + '" cy="' + (CY - 40) + '" rx="95" ry="45" transform="rotate(-25 ' + (CX + 40) + ' ' + (CY - 40) + ')" fill="#ffe7a8" opacity=".35" filter="url(#bhblur)"/>' +
-      '<ellipse cx="' + (CX + 20) + '" cy="' + (CY + 70) + '" rx="85" ry="30" transform="rotate(-15 ' + (CX + 20) + ' ' + (CY + 70) + ')" fill="#ffd58a" opacity=".28" filter="url(#bhblur)"/>' +
-      '<g class="spin" style="transform-origin:' + CX + 'px ' + CY + 'px;animation-duration:90s">' +
-        '<g filter="url(#bhsoft)">' + streaks + '</g></g>' +
-      '<ellipse cx="' + CX + '" cy="' + CY + '" rx="70" ry="52" fill="url(#bhhole)"/>';
-    var arms = '';
-    var pos = [[0.14, 0.26], [0.86, 0.24], [0.87, 0.72], [0.13, 0.72], [0.50, 0.84]];
-    var maxT = Math.max.apply(null, SYSTEMS.map(sysTotal));
-    var sys = SYSTEMS.map(function (sy, k) {
-      var tot = sysTotal(sy), rad = tot ? 16 + Math.sqrt(tot / maxT) * 34 : 18;
-      var x = pos[k][0] * W, y = pos[k][1] * H;
-      return '<g class="gx-sys" data-k="' + k + '" tabindex="0" role="button" aria-label="' + esc(sy.sub) + '">' +
-        '<circle class="halo" cx="' + x + '" cy="' + y + '" r="' + (rad * 2.1) + '" fill="' + sy.color + '" opacity=".35" filter="url(#gxglow)"/>' +
-        '<circle class="core" cx="' + x + '" cy="' + y + '" r="' + rad + '" fill="' + sy.color + '"/>' +
-        '<circle cx="' + (x - rad * 0.3) + '" cy="' + (y - rad * 0.3) + '" r="' + (rad * 0.35) + '" fill="#fff" opacity=".35"/>' +
-        '<text class="gx-lbl" x="' + x + '" y="' + (y + rad + 24) + '" text-anchor="middle">' + esc(sy.name) + '</text>' +
-        '<text class="gx-val" x="' + x + '" y="' + (y + rad + 48) + '" text-anchor="middle">' + (tot ? money(tot) : 'market makers') + '</text></g>';
-    }).join('');
-    return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Galaxy of bond market players">' + GDEFS + stars(170, 11) + disk +
-      '<text class="gx-lbl" x="' + CX + '" y="' + (CY - 2) + '" text-anchor="middle" style="font-size:17px">The Bond Galaxy</text>' +
-      '<text class="gx-val" x="' + CX + '" y="' + (CY + 18) + '" text-anchor="middle">$61T U.S. bond market</text>' + sys + '</svg>';
+    var turning = kind === 'earth' ? surf : '<g class="pl-turn" style="animation-duration:' + (kind === 'jupiter' ? 60 : kind === 'saturn' ? 80 : 90) + 's">' + surf + '</g>';
+    return '<svg viewBox="' + vb + '" aria-hidden="true" focusable="false"><defs>' +
+      '<clipPath id="' + clip + '"><circle r="' + R + '"/></clipPath>' +
+      // sunlight from above: bright top, deep shadow at the bottom
+      '<radialGradient id="' + light + '" cx="42%" cy="18%" r="85%"><stop offset="0" stop-color="#fff" stop-opacity=".28"/><stop offset=".45" stop-color="#000" stop-opacity="0"/>' +
+        '<stop offset=".8" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity=".85"/></radialGradient>' +
+      '<radialGradient id="' + rim + '" r="50%"><stop offset=".86" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#bfe0ff" stop-opacity=".35"/></radialGradient>' +
+      '</defs>' + extra +
+      '<g clip-path="url(#' + clip + ')"><circle r="' + R + '" fill="' + base + '"/>' + turning + '<circle r="' + R + '" fill="url(#' + light + ')"/></g>' +
+      '<circle r="' + R + '" fill="url(#' + rim + ')"/>' + over + '</svg>';
   }
 
-  function systemView(k) {
-    var sy = SYSTEMS[k], tot = sysTotal(sy), n = sy.planets.length;
-    var maxV = Math.max.apply(null, sy.planets.map(function (p) { return p[1] || 0; })) || 1;
-    var orbits = '', planets = '';
-    sy.planets.forEach(function (p, i) {
-      var orx = 120 + i * (300 / Math.max(1, n - 1 || 1)) * 0.95, ory = orx * 0.42;
-      if (n === 1) { orx = 180; ory = 76; }
-      var pr = p[1] ? 7 + Math.sqrt(p[1] / maxV) * 24 : 11;
-      var dur = 40 + i * 18, start = (i * 137) % 360;
-      orbits += '<ellipse cx="' + CX + '" cy="' + CY + '" rx="' + orx.toFixed(1) + '" ry="' + ory.toFixed(1) + '" fill="none" stroke="#3b4a6b" stroke-dasharray="2 5"/>';
-      // planet travels its ellipse via animateMotion; paused on hover so it's easy to read
-      var path = 'M ' + (CX + orx) + ' ' + CY + ' A ' + orx + ' ' + ory + ' 0 1 1 ' + (CX - orx) + ' ' + CY + ' A ' + orx + ' ' + ory + ' 0 1 1 ' + (CX + orx) + ' ' + CY;
-      var pc = PAL[(PAL.indexOf(sy.color) + i + 1) % PAL.length];
-      planets += '<g class="planet" data-i="' + i + '" tabindex="0"><g>' +
-        '<circle r="' + (pr * 1.9) + '" fill="' + pc + '" opacity=".25" filter="url(#gxglow)"/>' +
-        '<circle r="' + pr + '" fill="' + pc + '"/><circle cx="' + (-pr * 0.3) + '" cy="' + (-pr * 0.3) + '" r="' + (pr * 0.35) + '" fill="#fff" opacity=".4"/>' +
-        '<text class="gx-lbl" y="' + (pr + 18) + '" text-anchor="middle" style="font-size:14px">' + esc(p[0]) + '</text>' +
-        (p[1] != null ? '<text class="gx-val" y="' + (pr + 34) + '" text-anchor="middle">' + money(p[1]) + '</text>' : '') +
-        '<animateMotion dur="' + dur + 's" repeatCount="indefinite" path="' + path + '" begin="-' + (dur * start / 360).toFixed(1) + 's"/></g></g>';
+  function solarView() {
+    var totals = SYSTEMS.map(sysTotal), maxT = Math.max.apply(null, totals);
+    var h = '<div class="solar"><canvas class="sl-sky" aria-hidden="true"></canvas><div class="sl-sun" aria-hidden="true"><i></i><i></i></div>' +
+      '<div class="sl-head"><div class="sl-k">The U.S. bond market</div><div class="sl-big">$61 trillion</div>' +
+      '<div class="sl-hint">Each planet is a group of players, sized by the money it manages. Tap a planet to meet its players.</div></div><ol class="sl-list">';
+    SYSTEMS.forEach(function (sy, k) {
+      var t = totals[k], d = Math.round(t ? 86 + 110 * Math.sqrt(t / maxT) : 82), kind = LOOKS[k % LOOKS.length];
+      h += '<li class="sl-row' + (k % 2 ? ' alt' : '') + '" style="--d:' + d + ';--bob:' + (5 + k) + 's">' +
+        '<button type="button" class="sl-btn" aria-expanded="false" aria-controls="sl-m' + k + '">' +
+        '<span class="sl-planet' + (kind === 'saturn' ? ' ringed' : '') + '">' + planetSVG(kind, 'pl' + k) + '</span>' +
+        '<span class="sl-info"><span class="sl-sub">' + esc(sy.sub) + '</span><span class="sl-name">' + esc(sy.name) + '</span>' +
+        '<span class="sl-val' + (t ? '' : ' sm') + '">' + (t ? money(t) : sy.planets.length + ' primary dealers') + '</span><span class="sl-what">' + (t ? esc(sy.what) : 'market makers; holdings change daily') + '</span>' +
+        '<span class="sl-more">Meet the ' + sy.planets.length + ' players <b aria-hidden="true">&#9662;</b></span></span></button>' +
+        '<div class="sl-moons" id="sl-m' + k + '" hidden>' + sy.planets.map(function (p, i) {
+          var share = p[1] && t ? Math.max(4, Math.round(p[1] / sy.planets[0][1] * 100)) : 0;
+          return '<div class="sl-moon"><div class="sl-mh"><span class="sl-dot" style="background:' + PAL[(PAL.indexOf(sy.color) + i + 1) % PAL.length] + '"></span>' +
+            '<span class="sl-mn">' + esc(p[0]) + '</span>' + (p[1] != null ? '<span class="sl-mv">' + money(p[1]) + '</span>' : '') + '</div>' +
+            (share ? '<div class="sl-bar"><i style="width:' + share + '%"></i></div>' : '') +
+            '<p>' + esc(p[3]) + (p[2] ? ' <span class="sl-asof">As of ' + esc(p[2]) + '.</span>' : '') + '</p></div>';
+        }).join('') + '</div></li>';
     });
-    return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(sy.sub) + ' solar system">' + GDEFS + stars(140, 29 + k) + orbits +
-      '<circle cx="' + CX + '" cy="' + CY + '" r="70" fill="' + sy.color + '" opacity=".35" filter="url(#gxglow)"/>' +
-      '<circle cx="' + CX + '" cy="' + CY + '" r="46" fill="' + sy.color + '"/>' +
-      '<text class="gx-lbl" x="' + CX + '" y="' + (CY - 2) + '" text-anchor="middle" style="font-size:18px">' + esc(sy.name) + '</text>' +
-      '<text class="gx-val" x="' + CX + '" y="' + (CY + 18) + '" text-anchor="middle" style="font-size:16px">' + (tot ? money(tot) : '') + '</text>' +
-      '<text class="gx-sub" x="' + CX + '" y="' + (H - 34) + '" text-anchor="middle">' + esc(sy.sub) + ' · planet size = ' + esc(sy.what) + '</text>' +
-      planets + '</svg>';
+    return h + '</ol></div>';
   }
 
-  function wireGalaxy(host) {
-    var box = host.querySelector('.galaxy'); if (!box) return;
-    var stage = box.querySelector('.gx-stage'), back = box.querySelector('.gx-back'), tip = box.querySelector('.gx-tip'), hint = box.querySelector('.gx-hint');
-    function toGalaxy() {
-      stage.innerHTML = galaxyView(); back.style.display = 'none'; tip.style.display = 'none';
-      hint.textContent = 'Tap a solar system to fly in';
-      [].forEach.call(stage.querySelectorAll('.gx-sys'), function (g) {
-        var go = function () { toSystem(+g.getAttribute('data-k')); };
-        g.addEventListener('click', go);
-        g.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
-      });
+  function wireSolar(host) {
+    var box = host.querySelector('.solar'); if (!box) return;
+    box.addEventListener('click', function (e) {
+      var b = e.target.closest('.sl-btn'); if (!b) return;
+      var m = document.getElementById(b.getAttribute('aria-controls')), open = m.hidden;
+      m.hidden = !open; b.setAttribute('aria-expanded', open); b.parentNode.classList.toggle('open', open);
+    });
+    // starfield with twinkle and a few drifting asteroids (canvas, paused when off screen or when motion is reduced)
+    var cv = box.querySelector('.sl-sky'), ctx = cv.getContext && cv.getContext('2d'); if (!ctx) return;
+    var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches, stars = [], rocks = [], w = 0, hgt = 0, seen = true, raf = 0, x = 11;
+    function rnd() { x = (x * 9301 + 49297) % 233280; return x / 233280; }
+    function size() {
+      var dpr = Math.min(2, window.devicePixelRatio || 1); w = box.clientWidth; hgt = box.clientHeight;
+      cv.width = w * dpr; cv.height = hgt * dpr; cv.style.width = w + 'px'; cv.style.height = hgt + 'px'; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      stars = []; rocks = []; var n = Math.round(w * hgt / 2600);
+      for (var i = 0; i < n; i++) stars.push({ x: rnd() * w, y: rnd() * hgt, r: rnd() < .92 ? .4 + rnd() * .8 : 1.1 + rnd() * .9, a: .25 + rnd() * .65, p: rnd() * 6.28, s: .4 + rnd() * 1.4 });
+      for (var j = 0; j < 14; j++) rocks.push({ x: rnd() * w, y: rnd() * hgt, r: .8 + rnd() * 1.8, vx: .06 + rnd() * .12, vy: .03 + rnd() * .08, c: rnd() < .5 ? '#a58f76' : '#cbb89c' });
     }
-    function toSystem(k) {
-      var sy = SYSTEMS[k];
-      stage.innerHTML = systemView(k); back.style.display = 'block';
-      hint.textContent = 'Hover over or tap a planet';
-      var svg = stage.querySelector('svg');
-      [].forEach.call(stage.querySelectorAll('.planet'), function (g) {
-        var p = sy.planets[+g.getAttribute('data-i')];
-        var show = function () {
-          svg.pauseAnimations && svg.pauseAnimations();
-          var r = g.getBoundingClientRect(), b = box.getBoundingClientRect();
-          tip.innerHTML = '<b>' + esc(p[0]) + '</b><br>' + (p[1] != null ? '<span class="v">' + money(p[1]) + '</span> ' + esc(sy.what) + (p[2] ? ' (' + esc(p[2]) + ')' : '') + '<br>' : '') + esc(p[3]);
-          tip.style.display = 'block';
-          var x = r.left - b.left + r.width / 2 + 14, y = r.top - b.top - 10;
-          x = Math.min(x, b.width - tip.offsetWidth - 8); y = Math.max(8, Math.min(y, b.height - tip.offsetHeight - 8));
-          tip.style.left = x + 'px'; tip.style.top = y + 'px';
-        };
-        var hide = function () { tip.style.display = 'none'; svg.unpauseAnimations && svg.unpauseAnimations(); };
-        g.addEventListener('mouseenter', show); g.addEventListener('mouseleave', hide);
-        g.addEventListener('click', show); g.addEventListener('focus', show); g.addEventListener('blur', hide);
-      });
+    function draw(t) {
+      ctx.clearRect(0, 0, w, hgt);
+      for (var i = 0; i < stars.length; i++) {
+        var s = stars[i], a = still ? s.a : s.a * (.65 + .35 * Math.sin(t / 900 * s.s + s.p));
+        ctx.globalAlpha = a; ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.283); ctx.fill();
+      }
+      ctx.globalAlpha = .9;
+      for (var j = 0; j < rocks.length; j++) {
+        var r = rocks[j];
+        if (!still) { r.x += r.vx; r.y += r.vy; if (r.x > w + 4) r.x = -4; if (r.y > hgt + 4) r.y = -4; }
+        ctx.fillStyle = r.c; ctx.beginPath(); ctx.ellipse(r.x, r.y, r.r * 1.3, r.r, .6, 0, 6.283); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
     }
-    back.addEventListener('click', toGalaxy);
-    toGalaxy();
+    function loop(t) { draw(t); if (!still && seen) raf = requestAnimationFrame(loop); }
+    size(); draw(0);
+    if (window.ResizeObserver) new ResizeObserver(function () { size(); draw(performance.now()); }).observe(box);
+    if (!still && window.IntersectionObserver) {
+      new IntersectionObserver(function (es) { seen = es[0].isIntersecting; cancelAnimationFrame(raf); if (seen) raf = requestAnimationFrame(loop); }).observe(box);
+    } else if (!still) raf = requestAnimationFrame(loop);
   }
 
   function players() {
@@ -633,9 +666,7 @@
       '<section class="sec"><h2>Who owns U.S. government debt?</h2><p class="intro">The $39 trillion the government owes is spread across foreign governments, the Fed, funds, banks and ordinary savers.</p>' +
       donut('p75-d2', HOLDERS, 'T', 'Federal debt') +
       '<p class="src">Source: U.S. Treasury, Federal Reserve and TIC data, compiled by Visual Capitalist (March 2026).</p></section>';
-    h += '<section class="sec"><h2>The bond galaxy: who moves the money</h2><p class="intro">Each glowing sun is a group of players, sized by the money it holds. ' +
-      'Fly into a solar system to see its biggest planets.</p><div class="galaxy"><div class="gx-stage"></div>' +
-      '<button type="button" class="gx-back">&larr; Back to the galaxy</button><div class="gx-tip"></div><div class="gx-hint"></div></div>' +
+    h += '<section class="sec"><h2>The bond solar system: who moves the money</h2><p class="intro">The market is the sun. Each planet is a group of players, sized by the money it manages. Tap a planet to meet its biggest players.</p>' + solarView() +
       '<details class="list"><summary>Show the players as a list</summary><div class="pgrid">';
     SYSTEMS.forEach(function (sy) {
       sy.planets.forEach(function (p) {
@@ -714,7 +745,7 @@
     if (path === '/bond-players') {
       wireDonut(host, 'p75-d1', SECTORS, 'U.S. bond market');
       wireDonut(host, 'p75-d2', HOLDERS, 'Federal debt');
-      wireGalaxy(host);
+      wireSolar(host);
     }
     if (path === '/bond-types') {
       host.querySelector('.toc').addEventListener('click', function (e) {
