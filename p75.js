@@ -389,6 +389,58 @@
 
   // ---------- Main loop (the site swaps pages without reloading) ----------
   var lastPath = null;
+  // ---------- News embed polish ----------
+  var NEWS_CSS =
+    '.coupon-embed{--bg:#111214!important;--bg-raised:#17181B!important;--panel-border:#2A2B2F!important;--gold:#C9A227!important;' +
+      '--paper:#EDE8DC!important;--paper-dim:#CFC9BC!important;--dim:#A9A396!important;' +
+      '--serif:"Hedvig Letters Serif",Georgia,serif!important;--mono:Manrope,system-ui,sans-serif!important;font-family:Manrope,system-ui,sans-serif!important}' +
+    '.coupon-embed .ce-masthead-title,.coupon-embed .ce-article h2{font-family:"Hedvig Letters Serif",Georgia,serif!important;font-weight:400!important}' +
+    '.coupon-embed .ce-masthead-title{font-size:2rem!important}' +
+    '.coupon-embed .ce-article h2{font-size:1.2rem!important;line-height:1.35!important}' +
+    '.coupon-embed .ce-hero-narrative,.coupon-embed .ce-article p.ce-summary,.coupon-embed .ce-rate-desc{font-family:Manrope,system-ui,sans-serif!important;color:var(--paper-dim)!important}' +
+    '.coupon-embed .ce-hero-narrative{font-size:1rem!important;line-height:1.65!important}' +
+    '.coupon-embed .ce-article p.ce-summary{font-size:.94rem!important;line-height:1.6!important}' +
+    '.coupon-embed .ce-rate-desc{font-size:.84rem!important;line-height:1.5!important}' +
+    // one label style everywhere (matches the Pulse card titles)
+    '.coupon-embed .ce-tenor-label,.coupon-embed .ce-mini-stat .ce-tenor-label,.coupon-embed .ce-rate-name,.coupon-embed .ce-rates-title{' +
+      'font-family:Manrope,system-ui,sans-serif!important;font-size:.72rem!important;font-weight:700!important;letter-spacing:.12em!important;text-transform:uppercase!important}' +
+    '.coupon-embed .ce-tenor-label,.coupon-embed .ce-rates-title{color:var(--gold)!important}' +
+    '.coupon-embed .ce-mini-stat .ce-tenor-label,.coupon-embed .ce-rate-name{color:var(--dim)!important}' +
+    '.coupon-embed .ce-rate-tag,.coupon-embed .ce-rate-sub,.coupon-embed .ce-weekly,.coupon-embed .ce-article-meta,.coupon-embed .ce-masthead-meta,' +
+      '.coupon-embed .ce-hero-attribution,.coupon-embed .ce-rates-src,.coupon-embed .ce-footer,.coupon-embed .ce-count{font-family:Manrope,system-ui,sans-serif!important;font-size:.76rem!important;color:var(--dim)!important}' +
+    // numbers: one family, tabular figures
+    '.coupon-embed .ce-big-value{font-family:"Hedvig Letters Serif",Georgia,serif!important;font-weight:400!important;font-size:2.9rem!important}' +
+    '.coupon-embed .ce-value,.coupon-embed .ce-rate-val,.coupon-embed .ce-delta{font-family:Manrope,system-ui,sans-serif!important;font-weight:700!important;font-variant-numeric:tabular-nums}' +
+    '.coupon-embed .ce-rate-sub .ce-delta,.coupon-embed .ce-mini-stat .ce-delta{font-size:.8rem!important}' +
+    '.coupon-embed .ce-article h2 a{text-decoration:none}.coupon-embed .ce-article h2 a:hover{text-decoration:underline;text-decoration-color:var(--gold)}' +
+    '.coupon-embed .ce-rate-val{font-size:1.5rem!important}.coupon-embed .ce-mini-stat .ce-value{font-size:1.25rem!important}' +
+    // controls: search gets its own full-width row with a gold rim
+    '.coupon-embed .ce-controls{gap:.75rem!important;font-family:Manrope,system-ui,sans-serif!important;font-size:.85rem!important}' +
+    '.coupon-embed .ce-controls input[type="search"]{order:-1;flex:1 1 100%!important;width:100%;height:48px;font-family:Manrope,system-ui,sans-serif!important;font-size:1rem!important;' +
+      'color:var(--paper)!important;background:#17181B url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2718%27 height=%2718%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23C9A227%27 stroke-width=%272.2%27 stroke-linecap=%27round%27%3E%3Ccircle cx=%2711%27 cy=%2711%27 r=%277%27/%3E%3Cpath d=%27m20 20-4-4%27/%3E%3C/svg%3E") no-repeat 16px center!important;' +
+      'border:1.5px solid var(--gold)!important;border-radius:10px!important;padding:0 16px 0 46px!important;box-shadow:0 0 0 3px rgba(201,162,39,.10)}' +
+    '.coupon-embed .ce-controls input[type="search"]::placeholder{color:#A9A396;opacity:1}' +
+    '.coupon-embed .ce-controls input[type="search"]:focus{outline:none!important;box-shadow:0 0 0 4px rgba(201,162,39,.28)}' +
+    '.coupon-embed .ce-controls select,.coupon-embed .ce-refresh{height:38px;font-family:Manrope,system-ui,sans-serif!important;font-size:.85rem!important;border-radius:8px!important;padding:0 .75rem!important;color:var(--paper)!important;border-color:#3A3B40!important;background-color:#17181B!important}' +
+    '.coupon-embed .ce-refresh:hover{border-color:var(--gold)!important;color:var(--gold)!important}';
+  var FONTS = 'https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif&family=Manrope:wght@400;500;700&display=swap';
+
+  function polishNews() {
+    var tries = 0;
+    (function attempt() {
+      var done = false;
+      document.querySelectorAll('iframe').forEach(function (f) {
+        var d; try { d = f.contentDocument; } catch (e) { return; }
+        if (!d || !d.querySelector('.coupon-embed')) return;
+        done = true;
+        if (d.getElementById('p75-news-polish')) return;
+        var l = d.createElement('link'); l.rel = 'stylesheet'; l.href = FONTS; d.head.appendChild(l);
+        var st = d.createElement('style'); st.id = 'p75-news-polish'; st.textContent = NEWS_CSS; d.head.appendChild(st);
+      });
+      if (!done && ++tries < 40) setTimeout(attempt, 250);
+    })();
+  }
+
   function update() {
     var path = location.pathname.replace(/\/+$/, '') || '/';
     var disc = document.querySelector('.p75d'), comments = document.querySelector('.p75c'), listen = document.querySelector('.p75l');
@@ -425,6 +477,10 @@
     // Mark essay pages so the desktop typography applies only there
     document.documentElement.classList.toggle('p75-essay',
       path !== '/' && EXCLUDED.indexOf(path) === -1 && !!document.querySelector('.block-blog-header'));
+
+    // News (/news): the Coupon briefing is a Hostinger embed (same-origin iframe). Bring it in line with
+    // the rest of the site: cream text tones, Manrope + Hedvig type, one label style, and a clear search bar.
+    if (path === '/news') polishNews();
 
     // Education pages (/education and its guides) are drawn by education.js from the same GitHub folder
     var EDU = ['/education', '/bond-history', '/bond-types', '/bond-dictionary', '/bond-players'];
