@@ -73,36 +73,36 @@
     '.p75edu{--ink:#111214;--panel:#17181B;--line:#2A2B2F;--cream:#EDE8DC;--muted:#B8B2A5;--gold:#C9A227;' +
       'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box}' +
     '.p75edu *{box-sizing:border-box}' +
-    '.p75edu .wrap{max-width:860px;margin:0 auto;padding:48px 20px 72px}' +
+    '.p75edu .wrap{max-width:760px;margin:0 auto;padding:44px 20px 72px}' +
     '.p75edu .eyebrow{color:var(--gold);letter-spacing:.14em;font-size:12px;font-weight:700;text-transform:uppercase}' +
-    '.p75edu h1{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:44px;line-height:1.1;margin:10px 0 12px;color:var(--cream)}' +
-    '.p75edu .lead{color:var(--muted);font-size:17px;line-height:1.6;margin:0 0 28px;max-width:640px}' +
+    '.p75edu h1{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:36px;line-height:1.15;margin:8px 0 10px;color:var(--cream);letter-spacing:-.01em}' +
+    '.p75edu .lead{color:var(--muted);font-size:15.5px;line-height:1.65;margin:0 0 26px;max-width:600px}' +
     '.p75edu .search{position:sticky;z-index:5;background:var(--ink);padding:12px 0 10px;border-bottom:1px solid var(--line)}' +
     '.p75edu input{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:10px;color:var(--cream);' +
-      'font:500 16px Manrope,system-ui,sans-serif;padding:13px 16px;outline:none}' +
+      'font:500 15px Manrope,system-ui,sans-serif;padding:11px 14px;outline:none}' +
     '.p75edu input:focus{border-color:var(--gold)}' +
     '.p75edu .letters{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px}' +
-    '.p75edu .letters a{color:var(--muted);text-decoration:none;font-weight:700;font-size:13px;padding:4px 7px;border-radius:5px;cursor:pointer}' +
+    '.p75edu .letters a{color:var(--muted);text-decoration:none;font-weight:700;font-size:12px;padding:3px 6px;border-radius:5px;cursor:pointer}' +
     '.p75edu .letters a:hover{color:#111;background:var(--gold)}' +
     '.p75edu .letters a.off{opacity:.25;pointer-events:none}' +
-    '.p75edu .group h2{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;color:var(--gold);font-size:28px;margin:34px 0 6px}' +
-    '.p75edu .term{border-top:1px solid var(--line);padding:18px 0}' +
-    '.p75edu .term h3{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:22px;margin:0 0 6px;color:var(--cream)}' +
-    '.p75edu .term h3 small{font-family:Manrope,sans-serif;color:var(--muted);font-size:13px;margin-left:8px}' +
-    '.p75edu .term p{margin:0;font-size:16px;line-height:1.65;color:var(--cream)}' +
-    '.p75edu .term .eg{margin-top:8px;color:var(--muted);font-size:15px}' +
+    '.p75edu .group h2{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;color:var(--gold);font-size:22px;margin:30px 0 4px}' +
+    '.p75edu .term{border-top:1px solid var(--line);padding:15px 0}' +
+    '.p75edu .term h3{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:18.5px;margin:0 0 5px;color:var(--cream)}' +
+    '.p75edu .term h3 small{font-family:Manrope,sans-serif;color:var(--muted);font-size:12px;margin-left:8px;letter-spacing:.02em}' +
+    '.p75edu .term p{margin:0;font-size:15px;line-height:1.65;color:#d9d4c8}' +
+    '.p75edu .term .eg{margin-top:6px;color:var(--muted);font-size:14px}' +
     '.p75edu .term .eg b{color:var(--gold);font-weight:600}' +
     '.p75edu .empty{color:var(--muted);padding:30px 0;display:none}' +
     '.p75edu .foot{margin-top:48px;color:#8d887e;font-size:13px;line-height:1.6;border-top:1px solid var(--line);padding-top:18px}' +
     '.p75edu .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px;margin-top:10px}' +
     '.p75edu .card{display:block;text-decoration:none;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px;color:var(--cream);transition:border-color .2s}' +
     '.p75edu a.card:hover{border-color:var(--gold)}' +
-    '.p75edu .card h3{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:22px;margin:6px 0 8px}' +
-    '.p75edu .card p{color:var(--muted);font-size:15px;line-height:1.55;margin:0}' +
+    '.p75edu .card h3{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:19px;margin:6px 0 8px}' +
+    '.p75edu .card p{color:var(--muted);font-size:14px;line-height:1.55;margin:0}' +
     '.p75edu .card .go{color:var(--gold);font-weight:700;font-size:14px;margin-top:14px;display:inline-block}' +
     '.p75edu .card.soon{opacity:.55}' +
     '.p75edu .text,.p75edu .text *{-webkit-user-select:none;user-select:none}' +
-    '@media (max-width:600px){.p75edu h1{font-size:34px}.p75edu .term h3{font-size:20px}}';
+    '@media (max-width:600px){.p75edu h1{font-size:30px}.p75edu .term h3{font-size:18px}}';
 
   function once() {
     if (document.getElementById('p75edu-css')) return;
