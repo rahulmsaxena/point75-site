@@ -417,11 +417,11 @@
     '.coupon-embed .ce-rate-val{font-size:1.5rem!important}.coupon-embed .ce-mini-stat .ce-value{font-size:1.25rem!important}' +
     // controls: search gets its own full-width row with a gold rim
     '.coupon-embed .ce-controls{gap:.75rem!important;font-family:Manrope,system-ui,sans-serif!important;font-size:.85rem!important}' +
-    '.coupon-embed .ce-controls input[type="search"]{order:-1;flex:1 1 100%!important;width:100%;height:48px;font-family:Manrope,system-ui,sans-serif!important;font-size:1rem!important;' +
+    '.coupon-embed .p75-searchrow input[type="search"],.coupon-embed .ce-controls input[type="search"]{order:-1;flex:1 1 100%!important;width:100%;height:48px;font-family:Manrope,system-ui,sans-serif!important;font-size:1rem!important;' +
       'color:var(--paper)!important;background:#17181B url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2718%27 height=%2718%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23C9A227%27 stroke-width=%272.2%27 stroke-linecap=%27round%27%3E%3Ccircle cx=%2711%27 cy=%2711%27 r=%277%27/%3E%3Cpath d=%27m20 20-4-4%27/%3E%3C/svg%3E") no-repeat 16px center!important;' +
       'border:1.5px solid var(--gold)!important;border-radius:10px!important;padding:0 16px 0 46px!important;box-shadow:0 0 0 3px rgba(201,162,39,.10)}' +
-    '.coupon-embed .ce-controls input[type="search"]::placeholder{color:#A9A396;opacity:1}' +
-    '.coupon-embed .ce-controls input[type="search"]:focus{outline:none!important;box-shadow:0 0 0 4px rgba(201,162,39,.28)}' +
+    '.coupon-embed .p75-searchrow input[type="search"]::placeholder,.coupon-embed .ce-controls input[type="search"]::placeholder{color:#A9A396;opacity:1}' +
+    '.coupon-embed .p75-searchrow input[type="search"]:focus,.coupon-embed .ce-controls input[type="search"]:focus{outline:none!important;box-shadow:0 0 0 4px rgba(201,162,39,.28)}' +
     '.coupon-embed .ce-controls select,.coupon-embed .ce-refresh{height:38px;font-family:Manrope,system-ui,sans-serif!important;font-size:.85rem!important;border-radius:8px!important;padding:0 .75rem!important;color:var(--paper)!important;border-color:#3A3B40!important;background-color:#17181B!important}' +
     '.coupon-embed .ce-refresh:hover{border-color:var(--gold)!important;color:var(--gold)!important}';
   var FONTS = 'https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif&family=Manrope:wght@400;500;700&display=swap';
@@ -440,6 +440,33 @@
     '.coupon-embed .st-c.good{color:var(--up)}.coupon-embed .st-c.bad{color:var(--down)}' +
     '@media (max-width:620px){.coupon-embed .st-row{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:4px}' +
       '.coupon-embed .st-t{flex:0 0 118px;scroll-snap-align:start}.coupon-embed .st-go{font-size:.84rem}}';
+  NEWS_CSS += '.coupon-embed .p75-searchrow{margin:0 0 1.6rem}.coupon-embed .p75-searchrow input[type="search"]{display:block;box-sizing:border-box}' +
+    '.coupon-embed .p75-sr-note{font:600 .8rem Manrope,system-ui,sans-serif;color:var(--dim);margin-top:6px;min-height:1em}';
+  // Put the headline search near the top (it filters the list further down), and bring the results into view as people type
+  function moveSearch(d, frame) {
+    if (d.getElementById('p75-searchrow')) return;
+    var input = d.querySelector('.coupon-embed .ce-controls input[type="search"]'), anchor = d.getElementById('p75-ind-strip') || d.querySelector('.coupon-embed .ce-masthead');
+    if (!input || !anchor) return;
+    var row = d.createElement('div'); row.id = 'p75-searchrow'; row.className = 'p75-searchrow';
+    var note = d.createElement('div'); note.className = 'p75-sr-note'; note.setAttribute('aria-live', 'polite');
+    anchor.insertAdjacentElement('afterend', row); row.appendChild(input); row.appendChild(note);
+    var t = 0, count = d.querySelector('.coupon-embed .ce-count');
+    function toResults() {
+      var list = d.querySelector('.coupon-embed .ce-controls'); if (!list) return;
+      var top = frame.getBoundingClientRect().top + window.pageYOffset + list.getBoundingClientRect().top - headerHeightSafe() - 8;
+      if (Math.abs(window.pageYOffset - top) > 40) window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+    input.addEventListener('input', function () {
+      clearTimeout(t);
+      t = setTimeout(function () {
+        var q = input.value.trim(), c = count ? count.textContent.split('/')[0].trim() : '';
+        note.textContent = q ? (c === '0' ? 'No headlines match.' : c + ' matching headlines below.') : '';
+        if (q) toResults();
+      }, 700);
+    });
+    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); clearTimeout(t); toResults(); input.blur(); } });
+  }
+  function headerHeightSafe() { var h = document.querySelector('header, .block-header'); return h && getComputedStyle(h).position === 'fixed' ? h.offsetHeight : 0; }
   var MON3 = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   var STRIP = [['cpi', 'CPI'], ['corepce', 'Core PCE'], ['unrate', 'Unemployment'], ['gdp', 'GDP'], ['payrolls', 'Jobs added']];
   function addStrip(d) {
@@ -475,6 +502,7 @@
         if (!d || !d.querySelector('.coupon-embed')) return;
         done = true;
         addStrip(d);
+        moveSearch(d, f);
         if (d.getElementById('p75-news-polish')) return;
         var l = d.createElement('link'); l.rel = 'stylesheet'; l.href = FONTS; d.head.appendChild(l);
         var st = d.createElement('style'); st.id = 'p75-news-polish'; st.textContent = NEWS_CSS; d.head.appendChild(st);
