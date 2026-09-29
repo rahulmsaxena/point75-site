@@ -4,7 +4,7 @@
 (function () {
   // ---------- Settings ----------
   var TENANT_ID = 'NgvHdCEMvUY';                          // FastComments
-  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-history', '/bond-types', '/bond-dictionary', '/bond-players', '/pulse', '/economic-indicators'];    // no add-ons on these pages
+  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-history', '/bond-types', '/bond-dictionary', '/bond-players', '/pulse', '/economic-indicators', '/bonds'];    // no add-ons on these pages
 
   // Difficulty level per post
   var LEVELS = {
@@ -533,6 +533,15 @@
     }
   }
 
+  // Gold "$" badge in front of the Bonds menu item
+  (function bondsBadge() {
+    if (document.getElementById('p75-bonds-badge')) return;
+    var st = document.createElement('style'); st.id = 'p75-bonds-badge';
+    st.textContent = '.block-header a[href$="/bonds"]::before{content:"$";display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;' +
+      'border:1.5px solid #C9A227;color:#C9A227;font:800 11px Manrope,system-ui,sans-serif;margin-right:6px;vertical-align:1px;box-sizing:border-box}';
+    document.head.appendChild(st);
+  })();
+
   function update() {
     var path = location.pathname.replace(/\/+$/, '') || '/';
     var disc = document.querySelector('.p75d'), comments = document.querySelector('.p75c'), listen = document.querySelector('.p75l');
@@ -598,6 +607,18 @@
       }
       return;
     } else if (window.P75PULSE) window.P75PULSE.clear();
+
+    // Bonds (/bonds) is drawn by bonds/bonds.js; data comes from news.point75.io/api/bonds
+    if (path === '/bonds') {
+      if (window.P75BONDS) window.P75BONDS.render();
+      else if (!document.getElementById('p75bonds-js')) {
+        var bj = document.createElement('script'); bj.id = 'p75bonds-js';
+        bj.src = 'https://rahulmsaxena.github.io/point75-site/bonds/bonds.js?v=' + Math.floor(Date.now() / 36e5);
+        bj.onload = function () { update(); };
+        document.body.appendChild(bj);
+      }
+      return;
+    } else if (window.P75BONDS) window.P75BONDS.clear();
 
     // Economic Indicators (/economic-indicators, under News) is drawn by indicators/indicators.js;
     // data comes from news.point75.io/api/indicators
