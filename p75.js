@@ -425,6 +425,46 @@
     '.coupon-embed .ce-controls select,.coupon-embed .ce-refresh{height:38px;font-family:Manrope,system-ui,sans-serif!important;font-size:.85rem!important;border-radius:8px!important;padding:0 .75rem!important;color:var(--paper)!important;border-color:#3A3B40!important;background-color:#17181B!important}' +
     '.coupon-embed .ce-refresh:hover{border-color:var(--gold)!important;color:var(--gold)!important}';
   var FONTS = 'https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif&family=Manrope:wght@400;500;700&display=swap';
+  // Economic indicators strip at the top of the News page (links to /economic-indicators)
+  NEWS_CSS +=
+    '.coupon-embed .p75-strip{display:block;text-decoration:none;color:inherit;background:var(--bg-raised);border:1px solid var(--panel-border);border-radius:10px;padding:14px 16px 12px;margin:0 0 1.5rem;transition:border-color .2s}' +
+    '.coupon-embed .p75-strip:hover,.coupon-embed .p75-strip:focus-visible{border-color:var(--gold);outline:none}' +
+    '.coupon-embed .st-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:10px}' +
+    '.coupon-embed .st-k{font:700 .86rem Manrope,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}' +
+    '.coupon-embed .st-go{font:700 .9rem Manrope,system-ui,sans-serif;color:var(--gold);white-space:nowrap}' +
+    '.coupon-embed .st-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}' +
+    '.coupon-embed .st-t{background:var(--bg);border:1px solid var(--panel-border);border-radius:8px;padding:9px 10px;min-width:0}' +
+    '.coupon-embed .st-l{display:block;font:700 .72rem Manrope,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
+    '.coupon-embed .st-v{display:block;font:700 1.25rem Manrope,system-ui,sans-serif;color:var(--paper);font-variant-numeric:tabular-nums;margin:2px 0 1px}' +
+    '.coupon-embed .st-c{display:block;font:600 .76rem Manrope,system-ui,sans-serif;color:var(--dim);font-variant-numeric:tabular-nums}' +
+    '.coupon-embed .st-c.good{color:var(--up)}.coupon-embed .st-c.bad{color:var(--down)}' +
+    '@media (max-width:620px){.coupon-embed .st-row{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:4px}' +
+      '.coupon-embed .st-t{flex:0 0 118px;scroll-snap-align:start}.coupon-embed .st-go{font-size:.84rem}}';
+  var MON3 = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var STRIP = [['cpi', 'CPI'], ['corepce', 'Core PCE'], ['unrate', 'Unemployment'], ['gdp', 'GDP'], ['payrolls', 'Jobs added']];
+  function addStrip(d) {
+    if (d.getElementById('p75-ind-strip')) return;
+    var head = d.querySelector('.coupon-embed .ce-masthead'); if (!head) return;
+    var a = d.createElement('a'); a.id = 'p75-ind-strip'; a.className = 'p75-strip';
+    a.href = 'https://www.point75.io/economic-indicators'; a.target = '_top';
+    a.setAttribute('aria-label', 'Economic indicators: see all');
+    head.insertAdjacentElement('afterend', a);
+    fetch('https://news.point75.io/api/indicators').then(function (r) { return r.json(); }).then(function (j) {
+      var by = {}; (j.indicators || []).forEach(function (i) { by[i.id] = i; });
+      var tiles = STRIP.map(function (t) {
+        var i = by[t[0]]; if (!i) return '';
+        var v = i.latest.value, dv = v - i.prior.value, small = Math.abs(dv) < Math.pow(10, -i.dec) / 2;
+        var cls = small || !i.bad ? '' : ((dv > 0) === (i.bad === 'up') ? ' bad' : ' good');
+        var unit = /^%/.test(i.unit) ? '%' : i.unit.indexOf('K') === 0 ? 'K' : '';
+        var fmt = function (x) { return Math.abs(x) >= 1000 ? Math.round(x).toLocaleString('en-US') : x.toFixed(i.dec); };
+        return '<div class="st-t"><span class="st-l">' + t[1] + '</span><span class="st-v">' + fmt(v) + unit + '</span>' +
+          '<span class="st-c' + (t[0] === 'payrolls' ? '' : cls) + '">' + (t[0] === 'payrolls' ? 'in ' + MON3[+i.latest.period.slice(5, 7) - 1] : small ? 'unch.' : (dv > 0 ? '▲ ' : '▼ ') + fmt(Math.abs(dv))) + '</span></div>';
+      }).join('');
+      if (!tiles) { a.remove(); return; }
+      a.innerHTML = '<div class="st-head"><span class="st-k">Economic indicators</span><span class="st-go">See all 15 &rarr;</span></div><div class="st-row">' + tiles + '</div>';
+    }).catch(function () { a.remove(); });
+  }
+
 
   function polishNews() {
     var tries = 0;
@@ -434,6 +474,7 @@
         var d; try { d = f.contentDocument; } catch (e) { return; }
         if (!d || !d.querySelector('.coupon-embed')) return;
         done = true;
+        addStrip(d);
         if (d.getElementById('p75-news-polish')) return;
         var l = d.createElement('link'); l.rel = 'stylesheet'; l.href = FONTS; d.head.appendChild(l);
         var st = d.createElement('style'); st.id = 'p75-news-polish'; st.textContent = NEWS_CSS; d.head.appendChild(st);
