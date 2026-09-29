@@ -42,6 +42,32 @@
 
   var GOLD = '#c9a227';
 
+  // ---------- Mobile menu: left-aligned list with dividers, gold active item ----------
+  (function mobileNav() {
+    if (document.getElementById('p75-nav')) return;
+    var M = '.block-header-layout-mobile ', L = M + '.block-header__nav-links ';
+    var st = document.createElement('style');
+    st.id = 'p75-nav';
+    st.textContent = '@media (max-width:920px){' +
+      '.block-header-layout-mobile__dropdown{background:#111214!important}' +
+      M + '.block-header__nav{padding:12px 28px 40px!important;width:100%;box-sizing:border-box}' +
+      M + '.block-header__nav-links{gap:0!important;text-align:left!important;align-items:stretch!important;width:100%;padding:0!important;margin:0!important}' +
+      L.trim() + '>.block-header-item{border-bottom:1px solid rgba(255,255,255,.07);width:100%}' +
+      L.trim() + '>.block-header-item>.block-header-item__label{display:block;width:100%}' +
+      L.trim() + '>.block-header-item>.block-header-item__label>.block-header-item__item{display:flex!important;justify-content:space-between!important;align-items:center;width:100%;padding:17px 0!important;margin:0!important}' +
+      L.trim() + '>.block-header-item .item-content{font-size:19px!important;font-weight:500!important;letter-spacing:.01em;color:#ECEAE4!important;margin:0!important;padding:0!important;text-decoration:none!important}' +
+      L + '.block-header-item .item-content-wrapper--active>.item-content{color:#C9A227!important}' +
+      M + '.item-content::after,' + M + '.item-content::before{display:none!important}' +
+      M + '.item-content__icon-container-wrapper{color:#C9A227!important;margin:0!important}' +
+      M + '.item-content__icon-container-wrapper svg{fill:#C9A227!important;color:#C9A227!important;width:14px;height:14px}' +
+      M + '.block-header-item__dropdown{margin:0 0 16px 2px!important;gap:0!important;align-items:flex-start!important;padding:0 0 0 16px!important;border-left:1px solid rgba(201,162,39,.45)}' +
+      M + '.block-header-item__dropdown .block-header-item__item{padding:9px 0!important;margin:0!important}' +
+      L + '.block-header-item__dropdown .block-header-item .item-content{font-size:16px!important;font-weight:400!important;color:#A9A7A1!important;margin:0!important}' +
+      L + '.block-header-item__dropdown .block-header-item .item-content-wrapper--active>.item-content{color:#C9A227!important}' +
+    '}';
+    document.head.appendChild(st);
+  })();
+
   // ---------- Essay typography on desktop: a little smaller and more refined ----------
   (function typography() {
     var st = document.createElement('style');
