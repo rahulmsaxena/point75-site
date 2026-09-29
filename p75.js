@@ -4,7 +4,7 @@
 (function () {
   // ---------- Settings ----------
   var TENANT_ID = 'NgvHdCEMvUY';                          // FastComments
-  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-history', '/bond-types', '/bond-dictionary', '/bond-players', '/pulse'];    // no add-ons on these pages
+  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-history', '/bond-types', '/bond-dictionary', '/bond-players', '/pulse', '/economic-indicators'];    // no add-ons on these pages
 
   // Difficulty level per post
   var LEVELS = {
@@ -450,6 +450,19 @@
       }
       return;
     } else if (window.P75PULSE) window.P75PULSE.clear();
+
+    // Economic Indicators (/economic-indicators, under News) is drawn by indicators/indicators.js;
+    // data comes from indicators/data.json, refreshed from FRED by a weekday GitHub Action
+    if (path === '/economic-indicators') {
+      if (window.P75IND) window.P75IND.render();
+      else if (!document.getElementById('p75ind-js')) {
+        var ij = document.createElement('script'); ij.id = 'p75ind-js';
+        ij.src = 'https://rahulmsaxena.github.io/point75-site/indicators/indicators.js?v=' + Math.floor(Date.now() / 36e5);
+        ij.onload = function () { update(); };
+        document.body.appendChild(ij);
+      }
+      return;
+    } else if (window.P75IND) window.P75IND.clear();
 
     if (EXCLUDED.indexOf(path) > -1) return;
     var target = document.querySelector('.page__blocks') || document.querySelector('main') || document.body;
