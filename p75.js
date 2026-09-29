@@ -4,7 +4,7 @@
 (function () {
   // ---------- Settings ----------
   var TENANT_ID = 'NgvHdCEMvUY';                          // FastComments
-  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-history', '/bond-types', '/bond-dictionary', '/bond-players', '/pulse', '/economic-indicators', '/bonds'];    // no add-ons on these pages
+  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-history', '/bond-types', '/bond-dictionary', '/bond-players', '/pulse', '/economic-indicators', '/bonds', '/insights'];    // no add-ons on these pages
 
   // Difficulty level per post
   var LEVELS = {
@@ -680,6 +680,18 @@
       }
       return;
     } else if (window.P75PULSE) window.P75PULSE.clear();
+
+    // Insights (/insights) is drawn by insights/insights.js from insights/insights.json
+    if (path === '/insights') {
+      if (window.P75INS) window.P75INS.render();
+      else if (!document.getElementById('p75ins-js')) {
+        var nj = document.createElement('script'); nj.id = 'p75ins-js';
+        nj.src = 'https://rahulmsaxena.github.io/point75-site/insights/insights.js?v=' + Math.floor(Date.now() / 36e5);
+        nj.onload = function () { update(); };
+        document.body.appendChild(nj);
+      }
+      return;
+    } else if (window.P75INS) window.P75INS.clear();
 
     // Bonds (/bonds) is drawn by bonds/bonds.js; data comes from news.point75.io/api/bonds
     if (path === '/bonds') {
