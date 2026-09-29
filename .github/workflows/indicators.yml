@@ -1,0 +1,46 @@
+name: Economic indicators data
+
+on:
+  schedule:
+    - cron: "17 14 * * 1-5"   # weekdays ~9:17 AM Central, after most 8:30 AM ET releases
+    - cron: "17 21 * * 1-5"   # weekdays ~4:17 PM Central, picks up late-morning releases
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: indicators-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Pull FRED series
+        run: python tools/indicators.py
+      - name: Commit if changed
+        run: |
+          python - <<'EOF'
+          import json, subprocess
+          new = json.load(open("indicators/data.json"))
+          try:
+              old = json.loads(subprocess.run(["git", "show", "HEAD:indicators/data.json"], capture_output=True, text=True, check=True).stdout)
+          except Exception:
+              old = {}
+          strip = lambda d: {k: v for k, v in d.items() if k != "generated_at"}
+          open(".changed", "w").write("1" if strip(new) != strip(old) else "0")
+          EOF
+          if [ "$(cat .changed)" = "1" ]; then
+            git config user.name "point75-bot"
+            git config user.email "actions@users.noreply.github.com"
+            git add indicators/data.json
+            git commit -m "Economic indicators: refresh data"
+            git push
+          else
+            echo "No new data"
+          fi
