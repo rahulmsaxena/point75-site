@@ -28,13 +28,7 @@
     '.p75pulse .big{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:58px;line-height:1;margin:6px 0 4px}' +
     '.p75pulse .verdict{font-size:19px;font-weight:700;margin-bottom:10px}' +
     '.p75pulse .hint{color:var(--muted);font-size:13px;line-height:1.5}' +
-    '.p75pulse .sg{margin-top:6px}' +
-    '.p75pulse .big .of{font-size:18px;color:var(--muted);margin-left:8px;font-family:inherit}' +
-    '.p75pulse .sgbar{position:relative;height:8px;border-radius:4px;background:#26272b;margin-top:14px}' +
-    '.p75pulse .sgbar i{position:absolute;top:0;bottom:0;opacity:.35}' +
-    '.p75pulse .sgbar i:first-child{border-radius:4px 0 0 4px}.p75pulse .sgbar i:nth-child(4){border-radius:0 4px 4px 0}' +
-    '.p75pulse .sgbar b{position:absolute;top:-5px;width:4px;height:18px;margin-left:-2px;border-radius:2px;background:#fff}' +
-    '.p75pulse .sgscale{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-top:6px}' +
+    '.p75pulse .sg{margin:6px auto 0;max-width:340px;width:100%}.p75pulse .sg svg{display:block;width:100%;height:auto}' +
     '@media (prefers-reduced-motion:reduce){.p75pulse .hg{transition:none!important}}' +
     '.p75pulse .hg{transition:y 1.6s cubic-bezier(.2,.8,.2,1),height 1.6s cubic-bezier(.2,.8,.2,1)}' +
     // why lists
@@ -126,15 +120,42 @@
     '</svg>';
   }
 
-  // ---------- Stress gauge (static) ----------
-  function stressGauge(stress) {
-    var col = stressColor(stress), pos = Math.max(0, Math.min(100, stress));
-    var zones = [[0, 30, '#2BD17E'], [30, 55, '#B8D43A'], [55, 75, '#F2A33A'], [75, 100, '#FF4D4D']];
-    return '<div class="sg" role="img" aria-label="Stress reading ' + stress + ' out of 100">' +
-      '<div class="big num" style="color:' + col + '">' + stress + '<span class="of">/ 100</span></div>' +
-      '<div class="sgbar">' + zones.map(function (z) { return '<i style="left:' + z[0] + '%;width:' + (z[1] - z[0]) + '%;background:' + z[2] + '"></i>'; }).join('') +
-      '<b style="left:' + pos + '%"></b></div>' +
-      '<div class="sgscale"><span>Calm</span><span>Elevated</span><span>Panic</span></div></div>';
+  // ---------- Stress gauge (arc dial, static) ----------
+  function mixHex(a, b, t) {
+    var pa = parseInt(a.slice(1), 16), pb = parseInt(b.slice(1), 16), o = '#';
+    [16, 8, 0].forEach(function (sh) {
+      var ca = (pa >> sh) & 255, cb = (pb >> sh) & 255, c = Math.round(ca + (cb - ca) * t);
+      o += (c < 16 ? '0' : '') + c.toString(16);
+    });
+    return o;
+  }
+  function arcColor(t) {
+    var st = [[0, '#2BD17E'], [.3, '#B8D43A'], [.55, '#F2A33A'], [.75, '#FF4D4D'], [1, '#FF4D4D']];
+    for (var i = 1; i < st.length; i++) if (t <= st[i][0]) return mixHex(st[i - 1][1], st[i][1], (t - st[i - 1][0]) / (st[i][0] - st[i - 1][0]));
+    return st[st.length - 1][1];
+  }
+  function stressGauge(stress, label) {
+    var cx = 160, cy = 150, r = 112, sw = 12, N = 72, v = Math.max(0, Math.min(100, stress)) / 100, col = stressColor(stress);
+    function pt(t) { var a = (135 + 270 * t) * Math.PI / 180; return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; }
+    var segs = '';
+    for (var i = 0; i < N; i++) {
+      if ((i + .5) / N > v) break;
+      var p0 = pt(i / N), p1 = pt(Math.min(v, (i + 1.15) / N));
+      segs += '<path d="M' + p0[0].toFixed(1) + ',' + p0[1].toFixed(1) + ' A' + r + ',' + r + ' 0 0 1 ' + p1[0].toFixed(1) + ',' + p1[1].toFixed(1) +
+        '" stroke="' + arcColor((i + .5) / N) + '" stroke-width="' + sw + '" fill="none"/>';
+    }
+    var s0 = pt(0), s1 = pt(1), k = pt(v);
+    return '<div class="sg"><svg viewBox="0 0 320 270" role="img" aria-label="Stress reading ' + stress + ' out of 100, ' + esc(label || '') + '">' +
+      '<path d="M' + s0[0].toFixed(1) + ',' + s0[1].toFixed(1) + ' A' + r + ',' + r + ' 0 1 1 ' + s1[0].toFixed(1) + ',' + s1[1].toFixed(1) + '" stroke="#2a2c31" stroke-width="' + sw + '" stroke-linecap="round" fill="none"/>' +
+      '<circle cx="' + s0[0].toFixed(1) + '" cy="' + s0[1].toFixed(1) + '" r="' + sw / 2 + '" fill="' + arcColor(0) + '"/>' +
+      segs +
+      '<circle cx="' + k[0].toFixed(1) + '" cy="' + k[1].toFixed(1) + '" r="11" fill="#f4f1ea" stroke="' + col + '" stroke-width="4"/>' +
+      '<text x="' + cx + '" y="' + (cy + 12) + '" text-anchor="middle" font-size="76" fill="#f4f1ea" font-family="\'Hedvig Letters Serif\',Georgia,serif">' + stress + '</text>' +
+      '<text x="' + cx + '" y="' + (cy + 44) + '" text-anchor="middle" font-size="15" font-weight="700" letter-spacing="2.5" fill="' + col + '" font-family="Manrope,sans-serif">' + esc((label || '').toUpperCase()) + '</text>' +
+      '<text x="' + cx + '" y="' + (cy + 68) + '" text-anchor="middle" font-size="12" fill="#8a8d93" font-family="Manrope,sans-serif">out of 100</text>' +
+      '<text x="' + (s0[0] + 4).toFixed(1) + '" y="' + (s0[1] + 32).toFixed(1) + '" text-anchor="middle" font-size="12" fill="#8a8d93" font-family="Manrope,sans-serif">0 · calm</text>' +
+      '<text x="' + (s1[0] - 4).toFixed(1) + '" y="' + (s1[1] + 32).toFixed(1) + '" text-anchor="middle" font-size="12" fill="#8a8d93" font-family="Manrope,sans-serif">100 · panic</text>' +
+      '</svg></div>';
   }
 
   // ---------- Sparkline with hover ----------
@@ -194,9 +215,8 @@
         '<div class="reading"><div class="big num" style="color:' + bullColor(b.score) + '">' + (b.score > 0 ? '+' : '') + (b.score != null ? b.score : '–') + '</div>' +
         '<div class="verdict" style="color:' + bullColor(b.score) + '">' + esc(b.label || 'No reading') + '</div>' +
         '<div class="hint"><b style="color:' + BULL + '">Blue</b> = bullish for bonds (prices up, yields down). <b style="color:' + BEAR + '">Red</b> = bearish (prices down, yields up). Scale runs from −100 to +100.</div></div></div></div>' +
-      '<div class="card"><h3>Stress monitor</h3>' + (s.score != null ? stressGauge(s.score) : '') +
+      '<div class="card"><h3>Stress monitor</h3>' + (s.score != null ? stressGauge(s.score, s.label) : '') +
         '<div style="margin-top:auto;padding-top:16px">' +
-        '<div class="verdict" style="margin:0;color:' + stressColor(s.score) + '">' + esc(s.label || '') + '</div>' +
         '<div class="hint" style="margin:4px 0 12px">Higher means more strain in funding, volatility and credit. Biggest drivers right now:</div>' +
         (s.components || []).slice().sort(function (x, y) { return y.pct * y.weight - x.pct * x.weight; }).slice(0, 3).map(function (c) {
           return '<div style="display:grid;grid-template-columns:1fr 34px;gap:10px;align-items:center;font-size:13px;margin-top:7px"><div>' + esc(c.name) +
