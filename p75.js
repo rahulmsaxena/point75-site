@@ -50,9 +50,11 @@
     st.id = 'p75-nav';
     st.textContent = '@media (max-width:920px){' +
       '.block-header-layout-mobile__dropdown{background:#111214!important}' +
-      // logo: 86px was too small to read the byline; 160px keeps it balanced with the menu button
-      M + '.block-header-logo{width:160px!important;height:34px!important;max-width:46vw!important}' +
-      M + '.block-header-logo__image{width:100%!important;height:100%!important;object-fit:contain!important;object-position:left center!important}' +
+      // logo: show the mark from the image at 34px tall, and draw the byline as real text
+      // (the byline baked into the image is unreadable at phone size). Image: mark+bar = left 50%.
+      M + '.block-header-logo{width:auto!important;height:34px!important;display:inline-flex!important;align-items:center!important;text-decoration:none!important}' +
+      M + '.block-header-logo__image{width:160px!important;height:34px!important;max-width:none!important;object-fit:contain!important;object-position:left center!important;clip-path:inset(0 50% 0 0);margin-right:-80px!important}' +
+      M + '.block-header-logo::after{content:"by Rahul Saxena";font-family:Manrope,"DM Sans",sans-serif;font-size:14.5px;font-weight:600;letter-spacing:.01em;color:#ECEAE4;white-space:nowrap;margin-left:9px;line-height:1}' +
       M + '.block-header__nav{padding:12px 28px 40px!important;width:100%;box-sizing:border-box}' +
       M + '.block-header__nav-links{gap:0!important;text-align:left!important;align-items:stretch!important;width:100%;padding:0!important;margin:0!important}' +
       L.trim() + '>.block-header-item{border-bottom:1px solid rgba(255,255,255,.07);width:100%}' +
