@@ -144,11 +144,13 @@
     });
     var L = ALL.filter(function (b) {
       return (!kinds.length || kinds.indexOf(b.k) > -1) && (!year || b.mat.getUTCFullYear() === year) &&
-        (month == null || b.mat.getUTCMonth() === month) && (cp == null || Math.abs(b.cp - cp) < .13);
+        (month == null || b.mat.getUTCMonth() === month) && (cp == null || Math.abs(b.cp - cp) < .06);
     });
     if (tenor != null) {
-      L = L.map(function (b) { return [Math.abs(b.yrs - tenor) + (kinds.length ? 0 : (b.k === 'T' || b.k === 'F' ? 1.5 : 0)), b]; })
-        .filter(function (x) { return x[0] < Math.max(.3, tenor * .2) + 1.5; }).sort(function (a, b) { return a[0] - b[0]; }).map(function (x) { return x[1]; });
+      var win = Math.max(tenor < 1 ? tenor * .5 : .35, tenor * .12);   // e.g. 2 year: ±0.35 yrs, 10 year: ±1.2 yrs
+      L = L.filter(function (b) { return Math.abs(b.yrs - tenor) <= win; })
+        .map(function (b) { return [Math.abs(b.yrs - tenor) + (kinds.length ? 0 : (b.k === 'T' || b.k === 'F' ? 5 : 0)), b]; })   // plain notes and bonds first
+        .sort(function (a, b) { return a[0] - b[0]; }).map(function (x) { return x[1]; });
     } else L.sort(function (a, b) { return a.mat - b.mat; });
     var bits = [];
     if (kinds.length) bits.push(kinds.map(function (k) { return KIND[k][0]; }).join(' or '));
