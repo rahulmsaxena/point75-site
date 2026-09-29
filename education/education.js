@@ -151,6 +151,80 @@
     ["D", "—", "In default: payments have been missed.", "Default"]
   ];
 
+
+  // ---------- Players page data (sources and dates shown on the page) ----------
+  // Validated categorical palette for the dark surface (fixed order, never cycled)
+  var PAL = ['#3987e5', '#d95926', '#199e70', '#c98500', '#d55181', '#008300', '#9085e9'];
+
+  // U.S. bond market by sector, $ trillions
+  var SECTORS = [
+    ['U.S. Treasuries', 31.1, 'Borrowed by the federal government to pay its bills. The deepest, most-traded bond market on earth.', 'U.S. Treasury'],
+    ['Corporate bonds', 12.1, 'Borrowed by companies of every size, from tech giants to airlines and utilities.', 'Companies'],
+    ['Mortgage-backed', 9.5, 'Pools of home loans guaranteed by Ginnie Mae, Fannie Mae and Freddie Mac (agency MBS, Dec 2025).', 'Ginnie Mae, Fannie Mae, Freddie Mac'],
+    ['Municipal bonds', 4.5, 'Borrowed by states, cities, school districts, hospitals and toll roads.', 'States and local governments'],
+    ['Agency debt', 2.2, 'Borrowed by government-sponsored agencies such as the Federal Home Loan Banks.', 'Government-sponsored agencies'],
+    ['Commercial paper', 1.5, 'Very short-term IOUs from companies and banks (approximate).', 'Companies and banks']
+  ];
+
+  // Who holds U.S. government debt, $ trillions (March 2026, total $39.0T)
+  var HOLDERS = [
+    ['Foreign investors', 9.3, 'Central banks and investors abroad.', 'Japan $1.2T · United Kingdom $0.9T · China $0.7T · others $6.5T'],
+    ['Government trust funds', 7.6, 'The government owing itself: money borrowed from trust funds.', 'Social Security $2.6T · other trust funds $5.1T'],
+    ['Mutual & pension funds', 6.6, 'The buy side and pensions, investing savers’ and retirees’ money.', 'BlackRock · Vanguard · Fidelity · PIMCO · CalPERS'],
+    ['Other U.S. holders', 5.7, 'Insurers, state and local governments, companies and hedge funds.', 'Insurance companies · hedge funds · corporate treasuries'],
+    ['Federal Reserve', 4.4, 'America’s central bank, largely from its bond-buying programs.', 'Federal Reserve System'],
+    ['Individual investors', 3.0, 'Households, including savings bonds and TreasuryDirect accounts.', 'Everyday savers'],
+    ['Banks & dealers', 2.4, 'The sell side: banks and primary dealers that make markets in Treasuries.', 'JPMorgan · Bank of America · Citi · Goldman Sachs · Morgan Stanley']
+  ];
+
+  // Big players: [name, $ trillions (total assets managed, all asset classes), note, as-of]
+  var PLAYERS = [
+    ['Buy side: asset managers', 'They invest money for savers, funds and institutions, and are among the biggest bond owners in the world.', [
+      ['BlackRock', 15.3, 'World’s largest asset manager; huge in bond ETFs (iShares). Also owns a private-credit arm, but it is not a private equity firm.', 'Jun 2026'],
+      ['Vanguard', 12.0, 'Index-fund giant; runs some of the largest bond funds.', 'Dec 2025'],
+      ['Fidelity', 7.8, 'Mutual funds, retirement accounts and bond funds.', 'Jun 2026'],
+      ['State Street', 6.3, 'Index funds and ETFs for institutions.', 'Jun 2026'],
+      ['PIMCO', 2.5, 'The best-known bond specialist.', 'Jun 2026']
+    ]],
+    ['Pension & sovereign funds', 'Long-term money for retirees and nations; big buyers of long-dated bonds.', [
+      ['Norway GPFG', 2.0, 'Norway’s oil-wealth fund (“Government Pension Fund Global”); over $2 trillion.', '2025'],
+      ['Japan GPIF', 2.0, 'Japan’s public pension fund, about ¥293 trillion.', 'Dec 2025'],
+      ['CalPERS', 0.6, 'Largest U.S. public pension, about $600 billion.', 'Dec 2025']
+    ]],
+    ['Private equity & private credit', 'They buy companies with borrowed money and increasingly lend directly, becoming major players in credit.', [
+      ['Blackstone', 1.35, 'Largest alternative asset manager: private equity, real estate and credit.', 'Jun 2026'],
+      ['Apollo', 1.05, 'Credit-focused; owns the insurer Athene.', 'Jun 2026'],
+      ['KKR', 0.796, 'Private equity pioneer; about $300 billion of it in credit.', 'Jun 2026']
+    ]]
+  ];
+  // Galaxy explorer: solar systems (groups) and planets (players). v = $ trillions (null = not sized).
+  var SYSTEMS = [
+    { name: 'Buy side', sub: 'Asset managers', color: '#3987e5', what: 'total assets managed',
+      planets: [['BlackRock', 15.3, 'Jun 2026', 'World’s largest asset manager; huge in bond ETFs (iShares). Not a private equity firm, though it owns a private-credit arm.'],
+                ['Vanguard', 12.0, 'Dec 2025', 'Index-fund giant; runs some of the largest bond funds.'],
+                ['Fidelity', 7.8, 'Jun 2026', 'Mutual funds, retirement accounts and bond funds.'],
+                ['State Street', 6.3, 'Jun 2026', 'Index funds and ETFs for institutions.'],
+                ['PIMCO', 2.5, 'Jun 2026', 'The best-known bond specialist.']] },
+    { name: 'Central banks', sub: 'Official holders of Treasuries', color: '#c98500', what: 'U.S. Treasuries held',
+      planets: [['Federal Reserve', 4.4, 'Mar 2026', 'America’s central bank, from its bond-buying programs.'],
+                ['Japan', 1.2, 'Mar 2026', 'The largest foreign holder of U.S. Treasuries.'],
+                ['United Kingdom', 0.9, 'Mar 2026', 'Includes holdings by investors based in London.'],
+                ['China', 0.7, 'Mar 2026', 'Has been trimming its Treasury holdings for years.']] },
+    { name: 'Pensions', sub: 'Pension & sovereign funds', color: '#199e70', what: 'total assets',
+      planets: [['Norway GPFG', 2.0, '2025', 'Norway’s oil-wealth fund, over $2 trillion.'],
+                ['Japan GPIF', 2.0, 'Dec 2025', 'Japan’s public pension fund, about ¥293 trillion.'],
+                ['CalPERS', 0.6, 'Dec 2025', 'Largest U.S. public pension, about $600 billion.']] },
+    { name: 'Private equity', sub: 'Private equity & private credit', color: '#d95926', what: 'total assets managed',
+      planets: [['Blackstone', 1.35, 'Jun 2026', 'Largest alternative asset manager: private equity, real estate and credit.'],
+                ['Apollo', 1.05, 'Jun 2026', 'Credit-focused; owns the insurer Athene.'],
+                ['KKR', 0.796, 'Jun 2026', 'Private equity pioneer; about $300 billion of it in credit.']] },
+    { name: 'Sell side', sub: 'Primary dealers', color: '#d55181', what: 'market makers (holdings change daily)',
+      planets: [['J.P. Morgan', null, '', 'Primary dealer: bids at every Treasury auction and makes markets.'],
+                ['Goldman Sachs', null, '', 'Primary dealer.'], ['Bank of America', null, '', 'Primary dealer.'],
+                ['Citigroup', null, '', 'Primary dealer.'], ['Morgan Stanley', null, '', 'Primary dealer.'], ['Barclays', null, '', 'Primary dealer.']] }
+  ];
+  var DEALERS = ['J.P. Morgan', 'Goldman Sachs', 'Bank of America', 'Citigroup', 'Morgan Stanley', 'Barclays', 'Wells Fargo', 'Jefferies'];
+
   TERMS.sort(function (a, b) { return a[0].localeCompare(b[0]); });
 
   var CSS =
@@ -215,6 +289,51 @@
     '.p75edu .tile:hover{transform:translateY(-3px);border-color:rgba(201,162,39,.45);background:rgba(201,162,39,.06)}' +
     '.p75edu .tile:hover svg{transform:scale(1.08) rotate(-2deg)}' +
     '@media (max-width:600px){.p75edu .tiles{gap:8px;padding:14px}.p75edu .tile svg{width:56px;height:56px}.p75edu .tile span{font-size:12px}}' +
+    '.p75edu .chartbox{display:grid;grid-template-columns:minmax(260px,340px) 1fr;gap:26px;align-items:center;margin:14px 0 6px;padding:20px;border-radius:16px;' +
+      'background:radial-gradient(120% 90% at 30% 0%,#1d2a3f 0%,#151b26 55%,#121418 100%);border:1px solid #243247}' +
+    '.p75edu .donut{width:100%;height:auto;overflow:visible}' +
+    '.p75edu .donut path{cursor:pointer;transition:transform .2s,opacity .2s;transform-origin:170px 170px}' +
+    '.p75edu .donut.hov path{opacity:.35}.p75edu .donut path.on{opacity:1;transform:scale(1.045)}' +
+    '.p75edu .ctr1{font:700 26px Manrope,sans-serif;fill:var(--cream)}.p75edu .ctr2{font:600 12px Manrope,sans-serif;fill:var(--muted);letter-spacing:.06em;text-transform:uppercase}' +
+    '.p75edu .legend{list-style:none;margin:0;padding:0}' +
+    '.p75edu .legend li{display:grid;grid-template-columns:14px 1fr auto;gap:10px;align-items:baseline;padding:8px 10px;border-radius:8px;cursor:pointer;transition:background .2s}' +
+    '.p75edu .legend li.on{background:rgba(255,255,255,.06)}' +
+    '.p75edu .legend .sw{width:12px;height:12px;border-radius:3px;align-self:center}' +
+    '.p75edu .legend .nm{color:var(--cream);font-weight:600;font-size:14px}.p75edu .legend .vl{color:var(--cream);font-weight:700;font-size:14px;white-space:nowrap}' +
+    '.p75edu .legend .dt{grid-column:2 / 4;color:var(--muted);font-size:13px;line-height:1.5;display:none}' +
+    '.p75edu .legend li.on .dt{display:block}' +
+    '.p75edu .legend .who{display:block;color:#e8d9a8;margin-top:3px}' +
+    '.p75edu .src{color:#8d887e;font-size:12.5px;margin-top:8px;line-height:1.5}' +
+    '.p75edu .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:10px}' +
+    '.p75edu .pcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}' +
+    '.p75edu .pcard .n{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:19px;color:var(--cream)}' +
+    '.p75edu .pcard .v{font-weight:700;font-size:20px;color:var(--gold);margin:4px 0 2px}' +
+    '.p75edu .pcard .v small{font-size:12px;color:var(--muted);font-weight:600;margin-left:6px}' +
+    '.p75edu .pcard .bar{height:6px;border-radius:3px;background:#262a31;margin:8px 0 10px;overflow:hidden}' +
+    '.p75edu .pcard .bar i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,#c98500,#E0B53A)}' +
+    '.p75edu .pcard p{margin:0;font-size:13.5px;line-height:1.55;color:#d9d4c8}' +
+    '.p75edu .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}' +
+    '.p75edu .chips span{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:6px 12px;font-size:13px;color:var(--cream)}' +
+    '@media (max-width:700px){.p75edu .chartbox{grid-template-columns:1fr;padding:14px}.p75edu .donut{max-width:300px;margin:0 auto;display:block}}' +
+    '.p75edu .galaxy{position:relative;margin-top:12px;border-radius:18px;overflow:hidden;border:1px solid #243247;' +
+      'background:radial-gradient(ellipse at 50% 50%,#1b2140 0%,#0d1020 55%,#07080f 100%)}' +
+    '.p75edu .galaxy svg{display:block;width:100%;height:auto}' +
+    '.p75edu .gx-sys{cursor:pointer}.p75edu .gx-sys circle.core{transition:r .3s}' +
+    '.p75edu .gx-sys:hover .halo{opacity:.9}.p75edu .gx-lbl{font:700 15px Manrope,sans-serif;fill:#f3eee2}.p75edu .gx-sub{font:500 11.5px Manrope,sans-serif;fill:#b8b2a5}' +
+    '.p75edu .gx-val{font:700 12px Manrope,sans-serif;fill:#e8d9a8}' +
+    '.p75edu .spin{animation:p75spin linear infinite;transform-box:view-box}' +
+    '@keyframes p75spin{to{transform:rotate(360deg)}}' +
+    '@keyframes p75tw{0%,100%{opacity:.25}50%{opacity:1}}.p75edu .tw{animation:p75tw 3s ease-in-out infinite}' +
+    '@media (prefers-reduced-motion:reduce){.p75edu .spin,.p75edu .tw{animation:none}}' +
+    '.p75edu .gx-back{position:absolute;top:12px;left:12px;background:rgba(17,18,20,.8);color:var(--gold);border:1px solid var(--gold);border-radius:16px;' +
+      'padding:6px 14px;font:700 13px Manrope,sans-serif;cursor:pointer;display:none}' +
+    '.p75edu .gx-hint{position:absolute;bottom:10px;left:0;right:0;text-align:center;color:#9aa3b5;font-size:12.5px;pointer-events:none}' +
+    '.p75edu .gx-tip{position:absolute;pointer-events:none;background:rgba(14,16,24,.95);border:1px solid var(--gold);border-radius:10px;padding:10px 12px;' +
+      'max-width:240px;color:var(--cream);font-size:13px;line-height:1.5;display:none;box-shadow:0 8px 24px rgba(0,0,0,.5)}' +
+    '.p75edu .gx-tip b{font-size:15px}.p75edu .gx-tip .v{color:var(--gold);font-weight:700}' +
+    '.p75edu .planet{cursor:pointer}' +
+    '@media (max-width:600px){.p75edu .gx-lbl{font-size:26px !important}.p75edu .gx-val{font-size:20px}.p75edu .gx-sub{font-size:18px}.p75edu .gx-hint{font-size:11.5px}}' +
+    '.p75edu details.list{margin-top:14px}.p75edu details.list summary{color:var(--gold);cursor:pointer;font-weight:700;font-size:14px}' +
     '.p75edu .text,.p75edu .text *{-webkit-user-select:none;user-select:none}' +
     '@media (max-width:600px){.p75edu h1{font-size:30px}.p75edu .term h3{font-size:18px}}';
 
@@ -240,6 +359,8 @@
           '<p>Treasuries, corporates, mortgage bonds, CBOs, private equity debt, and how ratings from AAA to D work.</p><span class="go">Explore the types &rarr;</span></a>' +
         '<a class="card" href="/bond-dictionary"><div class="eyebrow">Guide</div><h3>Bond Dictionary</h3>' +
           '<p>' + TERMS.length + ' bond terms explained in everyday language, from basis points to yield curves.</p><span class="go">Open the dictionary &rarr;</span></a>' +
+        '<a class="card" href="/bond-players"><div class="eyebrow">Guide</div><h3>The Players</h3>' +
+          '<p>Interactive charts of the $61 trillion U.S. bond market, who owns the national debt, and the giants who move it.</p><span class="go">Meet the players &rarr;</span></a>' +
         '<div class="card soon"><div class="eyebrow">Coming soon</div><h3>More guides</h3><p>New explainers will appear here as they are written.</p></div>' +
       '</div>' + foot() + '</div>';
   }
@@ -329,6 +450,189 @@
     return h;
   }
 
+
+  // Donut chart with hover/tap details; the legend doubles as the data table.
+  function donut(id, items, unit, centerLabel) {
+    var total = items.reduce(function (a, b) { return a + b[1]; }, 0);
+    var R = 150, r = 92, C = 170, a0 = -Math.PI / 2, paths = '';
+    items.forEach(function (it, i) {
+      var a1 = a0 + it[1] / total * Math.PI * 2, large = a1 - a0 > Math.PI ? 1 : 0;
+      var p = function (rad, ang) { return (C + rad * Math.cos(ang)).toFixed(2) + ' ' + (C + rad * Math.sin(ang)).toFixed(2); };
+      paths += '<path data-i="' + i + '" fill="' + PAL[i] + '" stroke="#151a22" stroke-width="2" d="M' + p(R, a0) + ' A' + R + ' ' + R + ' 0 ' + large + ' 1 ' + p(R, a1) +
+        ' L' + p(r, a1) + ' A' + r + ' ' + r + ' 0 ' + large + ' 0 ' + p(r, a0) + 'Z"><title>' + esc(it[0]) + ': $' + it[1] + 'T</title></path>';
+      a0 = a1;
+    });
+    var legend = items.map(function (it, i) {
+      return '<li data-i="' + i + '"><span class="sw" style="background:' + PAL[i] + '"></span><span class="nm">' + esc(it[0]) + '</span>' +
+        '<span class="vl">$' + it[1].toFixed(1) + 'T · ' + Math.round(it[1] / total * 100) + '%</span>' +
+        '<span class="dt">' + esc(it[2]) + '<span class="who">' + esc(it[3]) + '</span></span></li>';
+    }).join('');
+    return '<div class="chartbox" id="' + id + '"><svg class="donut" viewBox="0 0 340 340" role="img" aria-label="' + esc(centerLabel) + '">' + paths +
+      '<text class="ctr1" x="170" y="168" text-anchor="middle">$' + total.toFixed(1) + 'T</text>' +
+      '<text class="ctr2" x="170" y="192" text-anchor="middle">' + esc(centerLabel) + '</text></svg><ul class="legend">' + legend + '</ul></div>';
+  }
+
+  function wireDonut(host, id, items, centerLabel) {
+    var box = host.querySelector('#' + id); if (!box) return;
+    var svg = box.querySelector('svg'), total = items.reduce(function (a, b) { return a + b[1]; }, 0);
+    var t1 = svg.querySelector('.ctr1'), t2 = svg.querySelector('.ctr2');
+    function show(i) {
+      svg.classList.toggle('hov', i !== null);
+      [].forEach.call(svg.querySelectorAll('path'), function (p) { p.classList.toggle('on', +p.getAttribute('data-i') === i); });
+      [].forEach.call(box.querySelectorAll('li'), function (li) { li.classList.toggle('on', +li.getAttribute('data-i') === i); });
+      if (i === null) { t1.textContent = '$' + total.toFixed(1) + 'T'; t2.textContent = centerLabel; }
+      else { t1.textContent = '$' + items[i][1].toFixed(1) + 'T'; t2.textContent = Math.round(items[i][1] / total * 100) + '% · ' + items[i][0]; }
+    }
+    [].forEach.call(box.querySelectorAll('path, li'), function (el) {
+      var i = +el.getAttribute('data-i');
+      el.addEventListener('mouseenter', function () { show(i); });
+      el.addEventListener('click', function () { show(i); });
+    });
+    box.addEventListener('mouseleave', function () { show(null); });
+  }
+
+
+  // ---------- Galaxy explorer ----------
+  var W = 900, H = 560, CX = W / 2, CY = H / 2;
+  function stars(n, seed) {
+    var out = '', x = seed || 7;
+    function rnd() { x = (x * 9301 + 49297) % 233280; return x / 233280; }
+    for (var i = 0; i < n; i++) {
+      var r = rnd() < 0.9 ? 0.6 + rnd() * 0.8 : 1.4 + rnd();
+      out += '<circle cx="' + (rnd() * W).toFixed(1) + '" cy="' + (rnd() * H).toFixed(1) + '" r="' + r.toFixed(2) + '" fill="#fff" opacity="' + (0.3 + rnd() * 0.6).toFixed(2) + '"' +
+        (rnd() < 0.15 ? ' class="tw" style="animation-delay:' + (rnd() * 3).toFixed(2) + 's"' : '') + '/>';
+    }
+    return out;
+  }
+  function sysTotal(sy) { return sy.planets.reduce(function (a, p) { return a + (p[1] || 0); }, 0); }
+  function money(v) { return v == null ? '' : v >= 1 ? '$' + (Math.round(v * 100) / 100) + 'T' : '$' + Math.round(v * 1000) + 'B'; }
+  var GDEFS = '<defs><radialGradient id="gxcore"><stop offset="0" stop-color="#fff8e1" stop-opacity=".9"/><stop offset=".25" stop-color="#e7c46a" stop-opacity=".45"/>' +
+    '<stop offset=".6" stop-color="#6a4fb3" stop-opacity=".18"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>' +
+    '<filter id="gxglow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="6"/></filter></defs>';
+
+  function galaxyView() {
+    // spiral arms of faint dust, then the solar systems placed along them
+    var arms = '', i, t;
+    for (var a = 0; a < 2; a++) {
+      for (i = 0; i < 160; i++) {
+        t = i / 160 * 4.2;
+        var rr = 20 + t * 62, ang = t + a * Math.PI;
+        var x = CX + rr * Math.cos(ang) * 1.35, y = CY + rr * Math.sin(ang) * 0.72;
+        arms += '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="' + (1 + (i % 7) * 0.35).toFixed(2) + '" fill="' + (a ? '#9aa8ff' : '#f0d58a') + '" opacity="' + (0.08 + (1 - i / 160) * 0.25).toFixed(2) + '"/>';
+      }
+    }
+    var pos = [[0.23, 0.30], [0.76, 0.27], [0.82, 0.70], [0.20, 0.72], [0.52, 0.78]];
+    var maxT = Math.max.apply(null, SYSTEMS.map(sysTotal));
+    var sys = SYSTEMS.map(function (sy, k) {
+      var tot = sysTotal(sy), rad = tot ? 16 + Math.sqrt(tot / maxT) * 34 : 18;
+      var x = pos[k][0] * W, y = pos[k][1] * H;
+      return '<g class="gx-sys" data-k="' + k + '" tabindex="0" role="button" aria-label="' + esc(sy.sub) + '">' +
+        '<circle class="halo" cx="' + x + '" cy="' + y + '" r="' + (rad * 2.1) + '" fill="' + sy.color + '" opacity=".35" filter="url(#gxglow)"/>' +
+        '<circle class="core" cx="' + x + '" cy="' + y + '" r="' + rad + '" fill="' + sy.color + '"/>' +
+        '<circle cx="' + (x - rad * 0.3) + '" cy="' + (y - rad * 0.3) + '" r="' + (rad * 0.35) + '" fill="#fff" opacity=".35"/>' +
+        '<text class="gx-lbl" x="' + x + '" y="' + (y + rad + 24) + '" text-anchor="middle">' + esc(sy.name) + '</text>' +
+        '<text class="gx-val" x="' + x + '" y="' + (y + rad + 48) + '" text-anchor="middle">' + (tot ? money(tot) : 'market makers') + '</text></g>';
+    }).join('');
+    return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Galaxy of bond market players">' + GDEFS + stars(170, 11) +
+      '<g class="spin" style="transform-origin:' + CX + 'px ' + CY + 'px;animation-duration:240s">' + arms + '</g>' +
+      '<circle cx="' + CX + '" cy="' + CY + '" r="120" fill="url(#gxcore)"/>' +
+      '<text class="gx-lbl" x="' + CX + '" y="' + (CY - 4) + '" text-anchor="middle" style="font-size:17px">The Bond Galaxy</text>' +
+      '<text class="gx-sub" x="' + CX + '" y="' + (CY + 16) + '" text-anchor="middle">$61T U.S. bond market</text>' + sys + '</svg>';
+  }
+
+  function systemView(k) {
+    var sy = SYSTEMS[k], tot = sysTotal(sy), n = sy.planets.length;
+    var maxV = Math.max.apply(null, sy.planets.map(function (p) { return p[1] || 0; })) || 1;
+    var orbits = '', planets = '';
+    sy.planets.forEach(function (p, i) {
+      var orx = 120 + i * (300 / Math.max(1, n - 1 || 1)) * 0.95, ory = orx * 0.42;
+      if (n === 1) { orx = 180; ory = 76; }
+      var pr = p[1] ? 7 + Math.sqrt(p[1] / maxV) * 24 : 11;
+      var dur = 40 + i * 18, start = (i * 137) % 360;
+      orbits += '<ellipse cx="' + CX + '" cy="' + CY + '" rx="' + orx.toFixed(1) + '" ry="' + ory.toFixed(1) + '" fill="none" stroke="#3b4a6b" stroke-dasharray="2 5"/>';
+      // planet travels its ellipse via animateMotion; paused on hover so it's easy to read
+      var path = 'M ' + (CX + orx) + ' ' + CY + ' A ' + orx + ' ' + ory + ' 0 1 1 ' + (CX - orx) + ' ' + CY + ' A ' + orx + ' ' + ory + ' 0 1 1 ' + (CX + orx) + ' ' + CY;
+      var pc = PAL[(PAL.indexOf(sy.color) + i + 1) % PAL.length];
+      planets += '<g class="planet" data-i="' + i + '" tabindex="0"><g>' +
+        '<circle r="' + (pr * 1.9) + '" fill="' + pc + '" opacity=".25" filter="url(#gxglow)"/>' +
+        '<circle r="' + pr + '" fill="' + pc + '"/><circle cx="' + (-pr * 0.3) + '" cy="' + (-pr * 0.3) + '" r="' + (pr * 0.35) + '" fill="#fff" opacity=".4"/>' +
+        '<text class="gx-lbl" y="' + (pr + 16) + '" text-anchor="middle" style="font-size:12.5px">' + esc(p[0]) + '</text>' +
+        '<animateMotion dur="' + dur + 's" repeatCount="indefinite" path="' + path + '" begin="-' + (dur * start / 360).toFixed(1) + 's"/></g></g>';
+    });
+    return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(sy.sub) + ' solar system">' + GDEFS + stars(140, 29 + k) + orbits +
+      '<circle cx="' + CX + '" cy="' + CY + '" r="70" fill="' + sy.color + '" opacity=".35" filter="url(#gxglow)"/>' +
+      '<circle cx="' + CX + '" cy="' + CY + '" r="46" fill="' + sy.color + '"/>' +
+      '<text class="gx-lbl" x="' + CX + '" y="' + (CY - 2) + '" text-anchor="middle">' + esc(sy.name) + '</text>' +
+      '<text class="gx-val" x="' + CX + '" y="' + (CY + 15) + '" text-anchor="middle">' + (tot ? money(tot) : '') + '</text>' +
+      '<text class="gx-sub" x="' + CX + '" y="' + (H - 34) + '" text-anchor="middle">' + esc(sy.sub) + ' · planet size = ' + esc(sy.what) + '</text>' +
+      planets + '</svg>';
+  }
+
+  function wireGalaxy(host) {
+    var box = host.querySelector('.galaxy'); if (!box) return;
+    var stage = box.querySelector('.gx-stage'), back = box.querySelector('.gx-back'), tip = box.querySelector('.gx-tip'), hint = box.querySelector('.gx-hint');
+    function toGalaxy() {
+      stage.innerHTML = galaxyView(); back.style.display = 'none'; tip.style.display = 'none';
+      hint.textContent = 'Tap a solar system to fly in';
+      [].forEach.call(stage.querySelectorAll('.gx-sys'), function (g) {
+        var go = function () { toSystem(+g.getAttribute('data-k')); };
+        g.addEventListener('click', go);
+        g.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+      });
+    }
+    function toSystem(k) {
+      var sy = SYSTEMS[k];
+      stage.innerHTML = systemView(k); back.style.display = 'block';
+      hint.textContent = 'Hover over or tap a planet';
+      var svg = stage.querySelector('svg');
+      [].forEach.call(stage.querySelectorAll('.planet'), function (g) {
+        var p = sy.planets[+g.getAttribute('data-i')];
+        var show = function () {
+          svg.pauseAnimations && svg.pauseAnimations();
+          var r = g.getBoundingClientRect(), b = box.getBoundingClientRect();
+          tip.innerHTML = '<b>' + esc(p[0]) + '</b><br>' + (p[1] != null ? '<span class="v">' + money(p[1]) + '</span> ' + esc(sy.what) + (p[2] ? ' (' + esc(p[2]) + ')' : '') + '<br>' : '') + esc(p[3]);
+          tip.style.display = 'block';
+          var x = r.left - b.left + r.width / 2 + 14, y = r.top - b.top - 10;
+          x = Math.min(x, b.width - tip.offsetWidth - 8); y = Math.max(8, Math.min(y, b.height - tip.offsetHeight - 8));
+          tip.style.left = x + 'px'; tip.style.top = y + 'px';
+        };
+        var hide = function () { tip.style.display = 'none'; svg.unpauseAnimations && svg.unpauseAnimations(); };
+        g.addEventListener('mouseenter', show); g.addEventListener('mouseleave', hide);
+        g.addEventListener('click', show); g.addEventListener('focus', show); g.addEventListener('blur', hide);
+      });
+    }
+    back.addEventListener('click', toGalaxy);
+    toGalaxy();
+  }
+
+  function players() {
+    var max = 15.3;
+    var h = '<div class="wrap text"><div class="eyebrow"><a href="/education" style="color:inherit;text-decoration:none">Education</a></div>' +
+      '<h1>The Players</h1><p class="lead">Who borrows, who lends, and how big the money really is. Hover over (or tap) a slice to see who is behind it.</p>' +
+      '<section class="sec"><h2>How big is the U.S. bond market?</h2><p class="intro">About $61 trillion of U.S. bonds are outstanding. Treasuries alone are half of it.</p>' +
+      donut('p75-d1', SECTORS, 'T', 'U.S. bond market') +
+      '<p class="src">Source: SIFMA (Q2 2026); agency mortgage-backed securities as of Dec 2025. Commercial paper is approximate.</p></section>' +
+      '<section class="sec"><h2>Who owns U.S. government debt?</h2><p class="intro">The $39 trillion the government owes is spread across foreign governments, the Fed, funds, banks and ordinary savers.</p>' +
+      donut('p75-d2', HOLDERS, 'T', 'Federal debt') +
+      '<p class="src">Source: U.S. Treasury, Federal Reserve and TIC data, compiled by Visual Capitalist (March 2026).</p></section>';
+    h += '<section class="sec"><h2>The bond galaxy: who moves the money</h2><p class="intro">Each glowing sun is a group of players, sized by the money it holds. ' +
+      'Fly into a solar system to see its biggest planets.</p><div class="galaxy"><div class="gx-stage"></div>' +
+      '<button type="button" class="gx-back">&larr; Back to the galaxy</button><div class="gx-tip"></div><div class="gx-hint"></div></div>' +
+      '<details class="list"><summary>Show the players as a list</summary><div class="pgrid">';
+    SYSTEMS.forEach(function (sy) {
+      sy.planets.forEach(function (p) {
+        h += '<div class="pcard"><div class="n">' + esc(p[0]) + '</div><div class="v">' + (p[1] != null ? money(p[1]) + '<small>' + esc(p[2]) + '</small>' : '<small>' + esc(sy.sub) + '</small>') + '</div>' +
+          '<p>' + esc(sy.sub) + ': ' + esc(p[3]) + '</p></div>';
+      });
+    });
+    h += '</div></details><p class="src">Sources: company results and industry trackers (dates shown); Treasury holdings from U.S. Treasury TIC data via Visual Capitalist (Mar 2026); ' +
+      'primary dealers from the Federal Reserve Bank of New York (2026).</p></section>' +
+      '<p class="note">Figures for firms are total assets managed across all investments (stocks, bonds, property and more), not bonds alone, as reported by each firm or ' +
+      'industry trackers for the date shown. Numbers are rounded and change quarter to quarter.</p>' +
+      '<p class="foot">A simplified overview for learning, not financial advice.<br>&copy; ' + new Date().getFullYear() + ' Rahul Saxena. All rights reserved.</p></div>';
+    return h;
+  }
+
   function dictionary() {
     return '<div class="wrap"><div class="text"><div class="eyebrow"><a href="/education" style="color:inherit;text-decoration:none">Education</a></div>' +
       '<h1>Bond Dictionary</h1><p class="lead">Bond talk is full of jargon. Here is what the words actually mean, in plain English, with a quick example where it helps.</p></div>' +
@@ -373,7 +677,7 @@
     once();
     host = document.createElement('div');
     host.className = 'p75edu'; host.setAttribute('data-path', path);
-    host.innerHTML = path === '/education' ? landing() : path === '/bond-history' ? history() : path === '/bond-types' ? types() : dictionary();
+    host.innerHTML = path === '/education' ? landing() : path === '/bond-history' ? history() : path === '/bond-types' ? types() : path === '/bond-players' ? players() : dictionary();
     var blocks = main.querySelector('.page__blocks');
     if (blocks) blocks.appendChild(host); else main.appendChild(host);
 
@@ -388,6 +692,11 @@
         var y = h.getBoundingClientRect().top + window.pageYOffset - headerHeight() - search.offsetHeight - 10;
         window.scrollTo({ top: y, behavior: 'smooth' });
       });
+    }
+    if (path === '/bond-players') {
+      wireDonut(host, 'p75-d1', SECTORS, 'U.S. bond market');
+      wireDonut(host, 'p75-d2', HOLDERS, 'Federal debt');
+      wireGalaxy(host);
     }
     if (path === '/bond-types') {
       host.querySelector('.toc').addEventListener('click', function (e) {
