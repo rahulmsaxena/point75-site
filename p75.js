@@ -445,6 +445,35 @@
   NEWS_CSS += '.coupon-embed .p75-searchrow{margin:0 0 .8rem}.coupon-embed .p75-searchrow + .ce-controls{margin-bottom:1.6rem!important}.coupon-embed .p75-searchrow input[type="search"]{display:block;box-sizing:border-box}' +
     '.coupon-embed .p75-sr-note{font:600 .8rem Manrope,system-ui,sans-serif;color:var(--dim);margin-top:6px;min-height:1em}';
   // Put the headline search near the top (it filters the list further down), and bring the results into view as people type
+  // ---------- Smarter headline search ----------
+  // Matches words rather than the exact phrase, ignores word endings (volatility = volatile), knows a few
+  // market synonyms, and when today's feed has little on a topic, adds recent articles from elsewhere
+  // (news.point75.io/api/websearch).
+  NEWS_CSS +=
+    '.coupon-embed .p75-web{margin:1.4rem 0 0;padding:16px 18px;background:var(--bg-raised);border:1px solid var(--panel-border);border-radius:10px}' +
+    '.coupon-embed .p75-web .w-h{font:700 .86rem Manrope,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}' +
+    '.coupon-embed .p75-web .w-sub{font:500 .84rem Manrope,system-ui,sans-serif;color:var(--dim);margin-bottom:10px}' +
+    '.coupon-embed .p75-web .w-i{padding:12px 0;border-top:1px solid var(--panel-border)}' +
+    '.coupon-embed .p75-web .w-m{font:600 .76rem Manrope,system-ui,sans-serif;color:var(--dim);margin-bottom:3px}' +
+    '.coupon-embed .p75-web a.w-t{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:1.08rem;line-height:1.35;color:var(--paper);text-decoration:none}' +
+    '.coupon-embed .p75-web a.w-t:hover{text-decoration:underline;text-decoration-color:var(--gold)}' +
+    '.coupon-embed .p75-web p{font:400 .9rem/1.55 Manrope,system-ui,sans-serif;color:var(--paper-dim);margin:4px 0 0}' +
+    '.coupon-embed .p75-web .w-f{font:500 .74rem Manrope,system-ui,sans-serif;color:var(--dim);margin-top:10px}' +
+    '.coupon-embed li.ce-article.p75-hide{display:none!important}';
+  var STOP = ['the', 'a', 'an', 'of', 'in', 'on', 'for', 'and', 'or', 'to', 'at', 'by', 'with', 'about', 'is', 'are', 'what', 'how', 'why'];
+  var SOFT = ['market', 'markets', 'news', 'latest', 'today', 'update', 'updates', 'report'];
+  var SYN = [['volatil', 'turbul', 'turmoil', 'swing', 'vix', 'selloff', 'sell-off', 'jitter', 'rout', 'whipsaw'], ['inflat', 'cpi', 'pce', 'disinflat'],
+    ['rate', 'yield'], ['fed', 'fomc', 'powell', 'federal reserve'], ['recess', 'slowdown', 'contraction'], ['job', 'employ', 'payroll', 'labor', 'labour', 'unemploy'],
+    ['tariff', 'trade war'], ['treasur', 't-bill', 'tbill'], ['mortgage', 'housing', 'home loan'], ['deficit', 'debt ceiling', 'borrowing'], ['ecb', 'lagarde'], ['boe', 'bank of england'], ['boj', 'bank of japan']];
+  function stem(w) { var r = w.replace(/(ilities|ility|ities|ations|ation|ity|ies|ied|ing|ers|er|ed|es|e|s|ly)$/, ''); return r.length >= 3 ? r : w; }
+  function variants(w) { var st = stem(w), out = [st]; SYN.forEach(function (g) { if (g.some(function (x) { return x.indexOf(st) === 0 || st.indexOf(x) === 0; })) out = out.concat(g); }); return out; }
+  function hits(hayWords, hay, vs) {
+    return vs.some(function (v) { return v.indexOf(' ') > -1 ? hay.indexOf(v) > -1 : hayWords.some(function (h) { return h.indexOf(v) === 0 || (h.length >= 4 && v.indexOf(stem(h)) === 0); }); });
+  }
+  function ago(iso) { var t = Date.parse(iso); if (!t) return ''; var m = Math.round((Date.now() - t) / 6e4); return m < 60 ? Math.max(1, m) + 'm ago' : m < 1440 ? Math.round(m / 60) + 'h ago' : Math.round(m / 1440) + 'd ago'; }
+  function escH(x) { return String(x == null ? '' : x).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  var WEB = {};
+
   function moveSearch(d, frame) {
     if (d.getElementById('p75-searchrow')) return;
     var input = d.querySelector('.coupon-embed .ce-controls input[type="search"]'), anchor = d.getElementById('p75-ind-strip') || d.querySelector('.coupon-embed .ce-masthead');
@@ -454,21 +483,64 @@
     anchor.insertAdjacentElement('afterend', row); row.appendChild(input); row.appendChild(note);
     // the date / region / source filters and Refresh follow the search box, above the day's Treasury note
     var controls = d.querySelector('.coupon-embed .ce-controls'); if (controls) row.insertAdjacentElement('afterend', controls);
-    var t = 0, count = d.querySelector('.coupon-embed .ce-count');
+    input.placeholder = 'Search headlines, e.g. market volatility, Fed, inflation';
+    // take over filtering from the embed (its own filter only matches the exact phrase)
+    row.addEventListener('input', function (e) { if (e.target === input) { e.stopImmediatePropagation(); schedule(); } }, true);
+    var t = 0, lastQ = null, content = d.getElementById('coupon-content');
+
     function toResults() {
-      var list = d.querySelector('.coupon-embed #coupon-content') || d.querySelector('.coupon-embed .ce-controls'); if (!list) return;
+      var list = d.getElementById('coupon-content') || controls; if (!list) return;
       var top = frame.getBoundingClientRect().top + window.pageYOffset + list.getBoundingClientRect().top - headerHeightSafe() - 8;
       if (Math.abs(window.pageYOffset - top) > 40) window.scrollTo({ top: top, behavior: 'smooth' });
     }
-    input.addEventListener('input', function () {
-      clearTimeout(t);
-      t = setTimeout(function () {
-        var q = input.value.trim(), c = count ? count.textContent.split('/')[0].trim() : '';
-        note.textContent = q ? (c === '0' ? 'No headlines match.' : c + ' matching headlines below.') : '';
-        if (q) toResults();
-      }, 700);
-    });
-    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); clearTimeout(t); toResults(); input.blur(); } });
+    function webBox() {
+      var w = d.getElementById('p75-web');
+      if (!w) { w = d.createElement('div'); w.id = 'p75-web'; w.className = 'p75-web'; var c = d.getElementById('coupon-content'); if (c) c.insertAdjacentElement('afterend', w); }
+      return w;
+    }
+    function showWeb(q, found) {
+      var w = webBox(), key = q.toLowerCase();
+      w.hidden = false;
+      w.innerHTML = '<div class="w-h">More from around the web</div><div class="w-sub">' + (found ? 'Only ' + found + ' in today’s briefing, so here’s' : 'Nothing in today’s briefing, so here’s') + ' recent coverage of “' + escH(q) + '” from other outlets.</div><div class="w-sub">Searching…</div>';
+      var draw = function (j) {
+        if (input.value.trim().toLowerCase() !== key) return;
+        var items = (j && j.items) || [];
+        w.innerHTML = '<div class="w-h">More from around the web</div><div class="w-sub">' + (found ? 'Only ' + found + ' in today’s briefing, so here’s' : 'Nothing in today’s briefing, so here’s') + ' recent coverage of “' + escH(q) + '” from other outlets.</div>' +
+          (items.length ? items.map(function (a) {
+            return '<div class="w-i"><div class="w-m">' + escH(a.source) + (a.date ? ' · ' + ago(a.date) : '') + '</div><a class="w-t" href="' + escH(a.url) + '" target="_blank" rel="noopener noreferrer">' + escH(a.title) + '</a>' + (a.summary ? '<p>' + escH(a.summary) + '</p>' : '') + '</div>';
+          }).join('') + '<div class="w-f">From ' + escH((j.sources || []).join(', ') || 'news sources') + '. Links open the original publisher.</div>'
+            : '<div class="w-sub">No recent coverage found either. Try a broader word.</div>');
+      };
+      if (WEB[key]) return draw(WEB[key]);
+      fetch('https://news.point75.io/api/websearch?q=' + encodeURIComponent(q)).then(function (r) { return r.json(); })
+        .then(function (j) { WEB[key] = j; draw(j); }).catch(function () { draw({ items: [] }); });
+    }
+    function apply(scroll) {
+      var q = input.value.trim(), lis = [].slice.call(d.querySelectorAll('.coupon-embed li.ce-article')), w = d.getElementById('p75-web');
+      if (!q) { lis.forEach(function (li) { li.classList.remove('p75-hide'); }); note.textContent = ''; if (w) w.hidden = true; lastQ = q; return; }
+      var ql = ' ' + q.toLowerCase().replace(/[^a-z0-9\s-]/g, ' ') + ' ', phrase = [];
+      SYN.forEach(function (g) { g.forEach(function (x) { if (x.indexOf(' ') > -1 && ql.indexOf(' ' + x + ' ') > -1) { phrase.push(g); ql = ql.replace(' ' + x + ' ', ' '); } }); });
+      var words = ql.split(/\s+/).filter(function (x) { return x && STOP.indexOf(x) < 0; });
+      var hard = words.filter(function (x) { return SOFT.indexOf(x) < 0; }); if (!hard.length && !phrase.length) hard = words;
+      var groups = phrase.concat(hard.map(variants));
+      var scored = lis.map(function (li) {
+        var hay = [].map.call(li.querySelectorAll('span,a,p,h2'), function (e) { return e.textContent; }).join(' ').toLowerCase(), hw = hay.split(/[^a-z0-9-]+/).filter(Boolean);
+        var n = groups.filter(function (g) { return hits(hw, hay, g); }).length;
+        return [li, n];
+      });
+      var all = scored.filter(function (x) { return x[1] === groups.length; }), some = scored.filter(function (x) { return x[1] > 0; });
+      var show = all.length ? all : some, label = all.length ? '' : ' (closest matches)';
+      scored.forEach(function (x) { x[0].classList.toggle('p75-hide', show.indexOf(x) < 0); });
+      var cnt = d.querySelector('.coupon-embed .ce-count'); if (cnt) cnt.textContent = show.length + ' / ' + lis.length;
+      note.textContent = show.length ? show.length + ' matching headline' + (show.length === 1 ? '' : 's') + ' in today’s briefing' + label + '.' : 'No headlines in today’s briefing mention that.';
+      if (show.length < 3 && q.length >= 3) showWeb(q, show.length); else if (w) w.hidden = true;
+      if (scroll && q !== lastQ) toResults();
+      lastQ = q;
+    }
+    function schedule() { clearTimeout(t); t = setTimeout(function () { apply(true); }, 600); }
+    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); clearTimeout(t); apply(true); input.blur(); } });
+    // the embed re-draws the list when the date, region or source changes: re-apply the search
+    if (content && window.MutationObserver) new MutationObserver(function () { if (input.value.trim()) apply(false); }).observe(content, { childList: true });
   }
   function headerHeightSafe() { var h = document.querySelector('header, .block-header'); return h && getComputedStyle(h).position === 'fixed' ? h.offsetHeight : 0; }
   // Headlines first: the full yield and Fed-rate panels now live on /economic-indicators ("Rates today");
