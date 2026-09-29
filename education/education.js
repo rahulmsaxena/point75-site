@@ -319,15 +319,16 @@
       'background:radial-gradient(ellipse at 50% 50%,#2a0c04 0%,#140606 45%,#070507 100%)}' +
     '.p75edu .galaxy svg{display:block;width:100%;height:auto}' +
     '.p75edu .gx-sys{cursor:pointer}.p75edu .gx-sys circle.core{transition:r .3s}' +
-    '.p75edu .gx-sys:hover .halo{opacity:.9}.p75edu .gx-lbl{font:700 15px Manrope,sans-serif;fill:#f3eee2}.p75edu .gx-sub{font:500 11.5px Manrope,sans-serif;fill:#b8b2a5}' +
-    '.p75edu .gx-val{font:700 12px Manrope,sans-serif;fill:#e8d9a8}' +
+    '.p75edu .gx-sys:hover .halo{opacity:.9}.p75edu .gx-lbl{font:800 17px Manrope,sans-serif;fill:#ffffff}.p75edu .gx-sub{font:600 13px Manrope,sans-serif;fill:#e6e0d4}' +
+    '.p75edu .gx-lbl,.p75edu .gx-val,.p75edu .gx-sub{paint-order:stroke;stroke:#050507;stroke-width:4px;stroke-linejoin:round}' +
+    '.p75edu .gx-val{font:800 14px Manrope,sans-serif;fill:#ffd873}' +
     '.p75edu .spin{animation:p75spin linear infinite;transform-box:view-box}' +
     '@keyframes p75spin{to{transform:rotate(360deg)}}' +
     '@keyframes p75tw{0%,100%{opacity:.25}50%{opacity:1}}.p75edu .tw{animation:p75tw 3s ease-in-out infinite}' +
     '@media (prefers-reduced-motion:reduce){.p75edu .spin,.p75edu .tw{animation:none}}' +
     '.p75edu .gx-back{position:absolute;top:12px;left:12px;background:rgba(17,18,20,.8);color:var(--gold);border:1px solid var(--gold);border-radius:16px;' +
       'padding:6px 14px;font:700 13px Manrope,sans-serif;cursor:pointer;display:none}' +
-    '.p75edu .gx-hint{position:absolute;top:14px;right:16px;text-align:right;color:#9aa3b5;font-size:12.5px;pointer-events:none}' +
+    '.p75edu .gx-hint{position:absolute;top:14px;right:16px;text-align:right;color:#f3eee2;font-weight:700;font-size:13.5px;text-shadow:0 1px 4px #000;pointer-events:none}' +
     '.p75edu .gx-tip{position:absolute;pointer-events:none;background:rgba(14,16,24,.95);border:1px solid var(--gold);border-radius:10px;padding:10px 12px;' +
       'max-width:240px;color:var(--cream);font-size:13px;line-height:1.5;display:none;box-shadow:0 8px 24px rgba(0,0,0,.5)}' +
     '.p75edu .gx-tip b{font-size:15px}.p75edu .gx-tip .v{color:var(--gold);font-weight:700}' +
@@ -572,14 +573,15 @@
       planets += '<g class="planet" data-i="' + i + '" tabindex="0"><g>' +
         '<circle r="' + (pr * 1.9) + '" fill="' + pc + '" opacity=".25" filter="url(#gxglow)"/>' +
         '<circle r="' + pr + '" fill="' + pc + '"/><circle cx="' + (-pr * 0.3) + '" cy="' + (-pr * 0.3) + '" r="' + (pr * 0.35) + '" fill="#fff" opacity=".4"/>' +
-        '<text class="gx-lbl" y="' + (pr + 16) + '" text-anchor="middle" style="font-size:12.5px">' + esc(p[0]) + '</text>' +
+        '<text class="gx-lbl" y="' + (pr + 18) + '" text-anchor="middle" style="font-size:14px">' + esc(p[0]) + '</text>' +
+        (p[1] != null ? '<text class="gx-val" y="' + (pr + 34) + '" text-anchor="middle">' + money(p[1]) + '</text>' : '') +
         '<animateMotion dur="' + dur + 's" repeatCount="indefinite" path="' + path + '" begin="-' + (dur * start / 360).toFixed(1) + 's"/></g></g>';
     });
     return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(sy.sub) + ' solar system">' + GDEFS + stars(140, 29 + k) + orbits +
       '<circle cx="' + CX + '" cy="' + CY + '" r="70" fill="' + sy.color + '" opacity=".35" filter="url(#gxglow)"/>' +
       '<circle cx="' + CX + '" cy="' + CY + '" r="46" fill="' + sy.color + '"/>' +
-      '<text class="gx-lbl" x="' + CX + '" y="' + (CY - 2) + '" text-anchor="middle">' + esc(sy.name) + '</text>' +
-      '<text class="gx-val" x="' + CX + '" y="' + (CY + 15) + '" text-anchor="middle">' + (tot ? money(tot) : '') + '</text>' +
+      '<text class="gx-lbl" x="' + CX + '" y="' + (CY - 2) + '" text-anchor="middle" style="font-size:18px">' + esc(sy.name) + '</text>' +
+      '<text class="gx-val" x="' + CX + '" y="' + (CY + 18) + '" text-anchor="middle" style="font-size:16px">' + (tot ? money(tot) : '') + '</text>' +
       '<text class="gx-sub" x="' + CX + '" y="' + (H - 34) + '" text-anchor="middle">' + esc(sy.sub) + ' · planet size = ' + esc(sy.what) + '</text>' +
       planets + '</svg>';
   }
