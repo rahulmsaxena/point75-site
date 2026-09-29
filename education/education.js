@@ -316,7 +316,7 @@
     '.p75edu .chips span{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:6px 12px;font-size:13px;color:var(--cream)}' +
     '@media (max-width:700px){.p75edu .chartbox{grid-template-columns:1fr;padding:14px}.p75edu .donut{max-width:300px;margin:0 auto;display:block}}' +
     '.p75edu .galaxy{position:relative;margin-top:12px;border-radius:18px;overflow:hidden;border:1px solid #243247;' +
-      'background:radial-gradient(ellipse at 50% 50%,#1b2140 0%,#0d1020 55%,#07080f 100%)}' +
+      'background:radial-gradient(ellipse at 50% 50%,#2a0c04 0%,#140606 45%,#070507 100%)}' +
     '.p75edu .galaxy svg{display:block;width:100%;height:auto}' +
     '.p75edu .gx-sys{cursor:pointer}.p75edu .gx-sys circle.core{transition:r .3s}' +
     '.p75edu .gx-sys:hover .halo{opacity:.9}.p75edu .gx-lbl{font:700 15px Manrope,sans-serif;fill:#f3eee2}.p75edu .gx-sub{font:500 11.5px Manrope,sans-serif;fill:#b8b2a5}' +
@@ -327,7 +327,7 @@
     '@media (prefers-reduced-motion:reduce){.p75edu .spin,.p75edu .tw{animation:none}}' +
     '.p75edu .gx-back{position:absolute;top:12px;left:12px;background:rgba(17,18,20,.8);color:var(--gold);border:1px solid var(--gold);border-radius:16px;' +
       'padding:6px 14px;font:700 13px Manrope,sans-serif;cursor:pointer;display:none}' +
-    '.p75edu .gx-hint{position:absolute;bottom:10px;left:0;right:0;text-align:center;color:#9aa3b5;font-size:12.5px;pointer-events:none}' +
+    '.p75edu .gx-hint{position:absolute;top:14px;right:16px;text-align:right;color:#9aa3b5;font-size:12.5px;pointer-events:none}' +
     '.p75edu .gx-tip{position:absolute;pointer-events:none;background:rgba(14,16,24,.95);border:1px solid var(--gold);border-radius:10px;padding:10px 12px;' +
       'max-width:240px;color:var(--cream);font-size:13px;line-height:1.5;display:none;box-shadow:0 8px 24px rgba(0,0,0,.5)}' +
     '.p75edu .gx-tip b{font-size:15px}.p75edu .gx-tip .v{color:var(--gold);font-weight:700}' +
@@ -508,20 +508,38 @@
   function money(v) { return v == null ? '' : v >= 1 ? '$' + (Math.round(v * 100) / 100) + 'T' : '$' + Math.round(v * 1000) + 'B'; }
   var GDEFS = '<defs><radialGradient id="gxcore"><stop offset="0" stop-color="#fff8e1" stop-opacity=".9"/><stop offset=".25" stop-color="#e7c46a" stop-opacity=".45"/>' +
     '<stop offset=".6" stop-color="#6a4fb3" stop-opacity=".18"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>' +
-    '<filter id="gxglow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="6"/></filter></defs>';
+    '<filter id="gxglow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="6"/></filter>' +
+    '<radialGradient id="bhhaze"><stop offset="0" stop-color="#8a1c05" stop-opacity=".9"/><stop offset=".6" stop-color="#4a0d02" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>' +
+    '<radialGradient id="bhhole"><stop offset="0" stop-color="#2a0500"/><stop offset=".7" stop-color="#5a1204" stop-opacity=".95"/><stop offset="1" stop-color="#9a2a08" stop-opacity="0"/></radialGradient>' +
+    '<filter id="bhblur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="16"/></filter>' +
+    '<filter id="bhsoft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="0.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>';
 
   function galaxyView() {
-    // spiral arms of faint dust, then the solar systems placed along them
-    var arms = '', i, t;
-    for (var a = 0; a < 2; a++) {
-      for (i = 0; i < 160; i++) {
-        t = i / 160 * 4.2;
-        var rr = 20 + t * 62, ang = t + a * Math.PI;
-        var x = CX + rr * Math.cos(ang) * 1.35, y = CY + rr * Math.sin(ang) * 0.72;
-        arms += '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="' + (1 + (i % 7) * 0.35).toFixed(2) + '" fill="' + (a ? '#9aa8ff' : '#f0d58a') + '" opacity="' + (0.08 + (1 - i / 160) * 0.25).toFixed(2) + '"/>';
+    // A glowing, swirling accretion ring at the heart of the galaxy (inspired by the image of our galaxy's black hole)
+    var streaks = '', x = 97;
+    function rnd() { x = (x * 9301 + 49297) % 233280; return x / 233280; }
+    var cols = ['#fff1cf', '#ffd27a', '#ffb347', '#ff8a2a', '#f06418'];
+    for (var i = 0; i < 380; i++) {
+      var r0 = 56 + rnd() * 74, sweep = 0.9 + rnd() * 1.5, a0 = rnd() * Math.PI * 2, pts = [];
+      for (var j = 0; j <= 12; j++) {
+        var t = j / 12, ang = a0 + t * sweep, rr = r0 + t * (18 + rnd() * 6);   // gently spiralling outward
+        pts.push((CX + rr * Math.cos(ang) * 1.28).toFixed(1) + ' ' + (CY + rr * Math.sin(ang) * 0.92).toFixed(1));
       }
+      // brighter on the upper-right and lower edges, like the photo
+      var bright = 0.5 + 0.5 * Math.sin(a0 + 0.9);
+      var col = cols[Math.min(4, Math.floor((1 - bright) * 4 + rnd() * 1.2))];
+      streaks += '<path d="M' + pts.join(' L') + '" fill="none" stroke="' + col + '" stroke-width="' + (0.6 + rnd() * 1.6).toFixed(2) +
+        '" stroke-linecap="round" opacity="' + (0.25 + bright * 0.6).toFixed(2) + '"/>';
     }
-    var pos = [[0.23, 0.30], [0.76, 0.27], [0.82, 0.70], [0.20, 0.72], [0.52, 0.78]];
+    var disk = '<ellipse cx="' + CX + '" cy="' + CY + '" rx="210" ry="150" fill="url(#bhhaze)"/>' +
+      '<ellipse cx="' + CX + '" cy="' + CY + '" rx="150" ry="108" fill="none" stroke="#ff7a1a" stroke-width="46" opacity=".55" filter="url(#bhblur)"/>' +
+      '<ellipse cx="' + (CX + 40) + '" cy="' + (CY - 40) + '" rx="95" ry="45" transform="rotate(-25 ' + (CX + 40) + ' ' + (CY - 40) + ')" fill="#ffe7a8" opacity=".35" filter="url(#bhblur)"/>' +
+      '<ellipse cx="' + (CX + 20) + '" cy="' + (CY + 70) + '" rx="85" ry="30" transform="rotate(-15 ' + (CX + 20) + ' ' + (CY + 70) + ')" fill="#ffd58a" opacity=".28" filter="url(#bhblur)"/>' +
+      '<g class="spin" style="transform-origin:' + CX + 'px ' + CY + 'px;animation-duration:90s">' +
+        '<g filter="url(#bhsoft)">' + streaks + '</g></g>' +
+      '<ellipse cx="' + CX + '" cy="' + CY + '" rx="70" ry="52" fill="url(#bhhole)"/>';
+    var arms = '';
+    var pos = [[0.14, 0.26], [0.86, 0.24], [0.87, 0.72], [0.13, 0.72], [0.50, 0.84]];
     var maxT = Math.max.apply(null, SYSTEMS.map(sysTotal));
     var sys = SYSTEMS.map(function (sy, k) {
       var tot = sysTotal(sy), rad = tot ? 16 + Math.sqrt(tot / maxT) * 34 : 18;
@@ -533,11 +551,9 @@
         '<text class="gx-lbl" x="' + x + '" y="' + (y + rad + 24) + '" text-anchor="middle">' + esc(sy.name) + '</text>' +
         '<text class="gx-val" x="' + x + '" y="' + (y + rad + 48) + '" text-anchor="middle">' + (tot ? money(tot) : 'market makers') + '</text></g>';
     }).join('');
-    return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Galaxy of bond market players">' + GDEFS + stars(170, 11) +
-      '<g class="spin" style="transform-origin:' + CX + 'px ' + CY + 'px;animation-duration:240s">' + arms + '</g>' +
-      '<circle cx="' + CX + '" cy="' + CY + '" r="120" fill="url(#gxcore)"/>' +
-      '<text class="gx-lbl" x="' + CX + '" y="' + (CY - 4) + '" text-anchor="middle" style="font-size:17px">The Bond Galaxy</text>' +
-      '<text class="gx-sub" x="' + CX + '" y="' + (CY + 16) + '" text-anchor="middle">$61T U.S. bond market</text>' + sys + '</svg>';
+    return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Galaxy of bond market players">' + GDEFS + stars(170, 11) + disk +
+      '<text class="gx-lbl" x="' + CX + '" y="' + (CY - 2) + '" text-anchor="middle" style="font-size:17px">The Bond Galaxy</text>' +
+      '<text class="gx-val" x="' + CX + '" y="' + (CY + 18) + '" text-anchor="middle">$61T U.S. bond market</text>' + sys + '</svg>';
   }
 
   function systemView(k) {
