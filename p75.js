@@ -505,6 +505,7 @@
       var draw = function (j) {
         if (input.value.trim().toLowerCase() !== key) return;
         var items = (j && j.items) || [];
+        if (!items.length) { w.hidden = true; return; }   // nothing extra to show: keep the page clean
         w.innerHTML = '<div class="w-h">More from around the web</div><div class="w-sub">' + (found ? 'Only ' + found + ' in today’s briefing, so here’s' : 'Nothing in today’s briefing, so here’s') + ' recent coverage of “' + escH(q) + '” from other outlets.</div>' +
           (items.length ? items.map(function (a) {
             return '<div class="w-i"><div class="w-m">' + escH(a.source) + (a.date ? ' · ' + ago(a.date) : '') + '</div><a class="w-t" href="' + escH(a.url) + '" target="_blank" rel="noopener noreferrer">' + escH(a.title) + '</a>' + (a.summary ? '<p>' + escH(a.summary) + '</p>' : '') + '</div>';
