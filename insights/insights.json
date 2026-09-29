@@ -1,0 +1,110 @@
+{
+  "updated": "2026-09-29",
+  "window": "Aug 21 – Sep 24, 2026",
+  "hero": {
+    "src": "https://rahulmsaxena.github.io/point75-site/insights/hero.jpg",
+    "small": "https://rahulmsaxena.github.io/point75-site/insights/hero-sm.jpg",
+    "alt": "Surreal illustration of the bond market: melting clocks, a crystal ball of debt, a tightrope tower for the Fed, and a stack of coins labelled portfolio strategy",
+    "caption": "Illustration: an artist’s view of the market’s mood. The panels are interpretive; the views below are what each person actually said."
+  },
+  "headline": "What the biggest voices in bonds are saying",
+  "mood": "Cautious vigilance",
+  "bigPicture": [
+    "The shared view among the market’s leading voices is that the era of cheap money is over. The Federal Reserve raised rates in September because inflation has been above its 2% goal for more than five years, and the 10-year Treasury yield is now around 5.2%.",
+    "The pressure comes from supply as much as inflation. Federal debt has passed $40 trillion, the government keeps borrowing heavily, and traditional foreign buyers such as Japan and China are buying fewer Treasuries. Several of these investors say that makes buy-and-hold in long-term bonds riskier than it used to be.",
+    "They are not all bearish on bonds. BlackRock’s Rick Rieder and PIMCO see today’s yields as an opportunity, especially in high-quality and shorter-term bonds. Gundlach, Dalio and Druckenmiller warn that long-term Treasuries may not protect investors in the next downturn the way they used to."
+  ],
+  "agree": ["Rates will stay higher for longer", "Government debt is the core pressure on yields", "Quality matters more than chasing extra yield"],
+  "differ": [
+    ["Long-term Treasuries are starting to look worth owning", "PIMCO, Capital Group, and Rieder (in small amounts)"],
+    ["Long-term Treasuries may not be a safe haven next time", "Gundlach, Dalio, Druckenmiller"]
+  ],
+  "voices": [
+    {
+      "name": "Kevin Warsh", "role": "Chair, Federal Reserve", "initials": "KW", "theme": "The Fed raises rates",
+      "when": "Sep 16, 2026", "where": "FOMC statement and press conference",
+      "points": [
+        "The Fed raised its target range to 3.75%–4.00% in a unanimous 12–0 vote, citing inflation that has run above target for more than five years.",
+        "He gave no promise about further hikes, saying the Fed is committed to getting inflation down sooner.",
+        "He linked the rise in long-term yields to a strong economy, heavy corporate investment competing for capital, and geopolitical uncertainty, and said the Fed does not need to hurt the job market to succeed."
+      ],
+      "quote": "The plain fact is that inflation is too high and has been for too long.",
+      "sources": [["Press conference transcript (PDF)", "https://www.federalreserve.gov/mediacenter/files/FOMCpresconf20260916.pdf"], ["FOMC statement", "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm"]]
+    },
+    {
+      "name": "Mohamed El-Erian", "role": "Economist; former PIMCO CEO", "initials": "ME", "theme": "Buyers are drifting away",
+      "when": "Sep 4 and Sep 24, 2026", "where": "CNBC; comments reported by Benzinga",
+      "points": [
+        "He expects the global government-bond selloff to run further, because traditional big buyers of Treasuries, notably Japan and China, have been buying less.",
+        "He sees the core problem as a fiscal imbalance with no political appetite to fix it, which keeps upward pressure on borrowing costs for households and businesses.",
+        "He also cautions that investors anchored to a decade of ultra-low yields may be reacting to today’s levels with more fear than the fundamentals justify."
+      ],
+      "quote": "It has much more to do with fundamental imbalance than inflation or Fed credibility.",
+      "sources": [["CNBC, Sep 4", "https://www.cnbc.com/2026/09/04/el-erian-government-bond-selloff.html"], ["Yahoo Finance summary", "https://finance.yahoo.com/economy/policy/articles/famed-economist-mohamed-el-erian-154614710.html"], ["Benzinga, Sep 24", "https://www.benzinga.com/markets/bonds/26/09/61968162/bond-market-alarm-bells-are-ringing-but-mohamed-el-erian-says-psychology-may-be-fueling-the-fear-more-than-fundamentals"]]
+    },
+    {
+      "name": "Jeffrey Gundlach", "role": "CEO, DoubleLine", "initials": "JG", "theme": "Safe haven at risk",
+      "when": "Sep 17–18, 2026", "where": "CNBC; New York investor event",
+      "points": [
+        "He said the Fed should have raised rates by half a point, not a quarter, given its own forecast that inflation won’t reach 2% until 2029.",
+        "He warned that the next recession could trigger a fiscal crisis that pushes long-term Treasury yields up rather than down, breaking their usual role as a safe haven.",
+        "He flagged stress in bonds issued by AI companies, which have been cheapening within days of being sold, and favors shorter-duration credit over crowded big-tech exposure."
+      ],
+      "quote": "Long-term rates are going to go up because of the debt crisis…",
+      "sources": [["24/7 Wall St. (CNBC interview)", "https://247wallst.com/investing/2026/09/17/jeffrey-gundlach-says-the-fed-should-have-hiked-twice-as-much-and-ai-debt-is-already-cracking/"], ["Briefs, Sep 18", "https://www.briefs.co/news/gundlach-warns-next-recession-could-send-long-term-yields-mu/"], ["Bloomberg, Sep 17", "https://www.bloomberg.com/news/articles/2026-09-17/doubleline-s-gundlach-warns-of-fiscal-crisis-in-next-recession"]]
+    },
+    {
+      "name": "Ray Dalio", "role": "Founder, Bridgewater Associates", "initials": "RD", "theme": "A debt clock",
+      "when": "Aug 21, 2026", "where": "LinkedIn post",
+      "points": [
+        "He warned that interest costs on U.S. debt, now above $40 trillion, are crowding out other spending, and that rising yields and weaker foreign demand make the path riskier.",
+        "He put the timing of a U.S. debt crisis at roughly three years, give or take two, if nothing changes.",
+        "His suggested response is broad diversification: hold fewer bonds than usual and keep a meaningful slice in gold."
+      ],
+      "quote": "It will come in three years, give or take two…",
+      "sources": [["Yahoo Finance", "https://finance.yahoo.com/economy/policy/articles/ray-dalio-says-us-faces-114500355.html"], ["24/7 Wall St., Sep 13", "https://247wallst.com/investing/2026/09/13/ray-dalio-says-interest-costs-are-crowding-out-everything-else-heres-his-three-year-warning/"]]
+    },
+    {
+      "name": "Stanley Druckenmiller", "role": "Investor, Duquesne Family Office", "initials": "SD", "theme": "Don’t fight the market",
+      "when": "Aug 25, 2026", "where": "Wall Street Journal opinion piece",
+      "points": [
+        "He criticized the Treasury’s plan to buy back bonds to hold yields down, arguing that yields reflect growth, deficits and debt, not something policy can wish away.",
+        "He sees rising rates as a warning signal that disciplines government borrowing, and says muting that signal makes the danger worse.",
+        "His fix is to cut the deficit rather than manage bond prices."
+      ],
+      "quote": "Governments defending prices against fundamentals always lose.",
+      "sources": [["CNBC, Aug 25", "https://www.cnbc.com/2026/08/25/stanley-druckenmiller-leads-doubters-who-think-bessents-bond-ploys-will-fail.html"], ["CoinDesk, Aug 25", "https://www.coindesk.com/markets/2026/08/25/governments-defending-prices-against-fundamentals-always-lose-billionaire-investor-druckenmiller-says"]]
+    },
+    {
+      "name": "Rick Rieder", "role": "CIO of Global Fixed Income, BlackRock", "initials": "RR", "theme": "Bonds are back",
+      "when": "Sep 16, 2026", "where": "CNBC",
+      "points": [
+        "He has turned more cautious on U.S. stocks because high-quality bonds now pay enough to be a real alternative.",
+        "He favors short-term, high-quality bonds at the front of the curve and has started adding a little in long-term Treasuries.",
+        "He warns that every 1-point rise in rates adds about $100 billion a year to government interest costs, which eventually has to pull rates back down."
+      ],
+      "quote": "We're going to have a compounding debt problem in the country.",
+      "sources": [["Benzinga (corrected)", "https://www.benzinga.com/markets/bonds/26/09/61811344/blackrocks-rick-rieder-turns-cautious-on-us-stocks-warns-40-trillion-debt-is-becoming-a-compoundingproblem"]]
+    },
+    {
+      "name": "Dan Ivascyn", "role": "Group CIO, PIMCO", "initials": "DI", "theme": "Pick your spots",
+      "when": "Sep 22–24, 2026", "where": "Bloomberg",
+      "points": [
+        "PIMCO has been buying mortgage-backed and asset-backed bonds, sees company bonds as expensive, and trimmed its bet against long-term U.S. bonds once yields topped 5%.",
+        "Other large managers, including Vanguard, PGIM, Fidelity and Capital Group, are also leaning toward high-quality, shorter-term bonds and mortgage bonds, and are picky about AI-related debt.",
+        "He describes a market with a wider range of possible outcomes than usual."
+      ],
+      "quote": "Fatter tails, more extreme potential outcomes.",
+      "sources": [["BNN Bloomberg, Sep 24", "https://www.bnnbloomberg.ca/investing/2026/09/24/how-the-worlds-biggest-bond-managers-are-investing-in-a-tumultuous-market/"], ["Bloomberg, Sep 22", "https://www.bloomberg.com/news/articles/2026-09-22/pimco-trims-underweight-on-long-us-bonds-as-yields-top-5"]]
+    }
+  ],
+  "actions": [
+    ["Keep an emergency fund that earns", "Hold 3 to 6 months of essential expenses in a high-yield savings account, money-market fund or Treasury bills. At today’s rates, cash is earning around 4%."],
+    ["Pay off variable-rate debt first", "The Fed just raised rates, and credit cards and home-equity lines reset with it. Paying them down is a guaranteed return."],
+    ["Match bonds to when you need the money", "Money needed in the next few years belongs in short-term bonds or a ladder of Treasuries that mature when you need them, not in long-term bond funds."],
+    ["Know your bond fund’s duration", "Duration tells you roughly how much a fund falls when yields rise 1 point. A fund with a 15-year duration can lose about 15%. The Bonds page shows this for any Treasury."],
+    ["Favor quality over extra yield", "Most of these managers prefer Treasuries, investment-grade and mortgage bonds over high-yield debt right now. Chasing a little more income can mean taking a lot more risk."],
+    ["Diversify and stay steady", "Spread savings across stocks, bonds and cash, consider inflation-protected Treasuries (TIPS) for part of your bond money, and keep automatic investing on rather than trying to time the market."]
+  ],
+  "note": "Summaries are Point75’s plain-English readings of public comments. Quotes are exact and short; follow the links for full context. Personal finance ideas are general education, not advice for your situation."
+}
