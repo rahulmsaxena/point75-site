@@ -1,9 +1,9 @@
 /* Point75 - Economic Indicators page (/economic-indicators, under News). Loaded by p75.js;
-   data from indicators/data.json in this repo, refreshed from FRED by a weekday GitHub Action.
+   data from news.point75.io/api/indicators (fetch_indicators.py in Finance-NewsFeed-Aggregator, weekdays).
    (c) Rahul Saxena. All rights reserved. */
 (function () {
   if (window.P75IND) return;
-  var DATA = 'https://rahulmsaxena.github.io/point75-site/indicators/data.json?v=' + Math.floor(Date.now() / 36e5);
+  var DATA = 'https://news.point75.io/api/indicators';
   var GOOD = '#2BD17E', BAD = '#E5484D', FLAT = '#A9A396', GOLD = '#C9A227';
 
   var CSS =

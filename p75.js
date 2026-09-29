@@ -509,7 +509,7 @@
     } else if (window.P75PULSE) window.P75PULSE.clear();
 
     // Economic Indicators (/economic-indicators, under News) is drawn by indicators/indicators.js;
-    // data comes from indicators/data.json, refreshed from FRED by a weekday GitHub Action
+    // data comes from news.point75.io/api/indicators
     if (path === '/economic-indicators') {
       if (window.P75IND) window.P75IND.render();
       else if (!document.getElementById('p75ind-js')) {
