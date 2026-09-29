@@ -90,6 +90,67 @@
     ["Today", "A $40 trillion question", "U.S. federal debt has crossed $40 trillion, and interest costs now rival the biggest items in the budget. The oldest question in finance is back: who lends, at what price, and on what trust?"]
   ];
 
+
+  // Classification of bonds: [section title, intro, [[name, plain-English explanation], ...]]
+  var TYPES = [
+    ["U.S. Treasuries", "Debt issued by the U.S. government. Backed by the government's ability to tax, they are treated as the safest dollar investment and the benchmark every other bond is priced against.", [
+      ["Treasury bills (T-bills)", "Short-term, maturing in a year or less. They pay no interest along the way; you buy them below face value and get the full amount back at maturity."],
+      ["Treasury notes (T-notes)", "Medium-term: 2, 3, 5, 7 or 10 years. They pay interest every six months. The 10-year note is the most watched interest rate in the world."],
+      ["Treasury bonds (T-bonds)", "Long-term: 20 or 30 years, paying interest every six months. Their prices swing the most when rates move."],
+      ["TIPS", "Treasury Inflation-Protected Securities. The principal rises with inflation, so the interest you receive keeps its buying power."],
+      ["Floating-rate notes (FRNs)", "Two-year Treasuries whose interest resets every week with T-bill rates, so their price barely moves when rates change."],
+      ["STRIPS", "Treasuries split into separate pieces, one for each interest payment and one for the principal, and sold individually as zero-coupon bonds."],
+      ["Savings bonds (I bonds, EE bonds)", "Sold directly to individuals, not traded in the market. I bonds track inflation; EE bonds are guaranteed to double in value if held for 20 years."]
+    ]],
+    ["Other public-sector bonds", "Bonds from government-linked borrowers that aren't the Treasury itself.", [
+      ["Agency bonds", "Issued by government-sponsored agencies such as Fannie Mae, Freddie Mac and the Federal Home Loan Banks. Very safe, and they pay slightly more than Treasuries."],
+      ["Municipal bonds (munis)", "Issued by states, cities and local authorities. General-obligation munis are backed by taxes; revenue munis are paid from a specific project, such as a toll road. Interest is often free of federal income tax."],
+      ["Sovereign bonds", "National government debt from other countries, such as German Bunds, UK gilts or Japanese JGBs. Risk depends on the country and on the currency the bond is in."]
+    ]],
+    ["Corporate bonds", "Companies borrow from investors instead of a bank. They pay more than Treasuries because a company can go bust.", [
+      ["Investment grade", "Bonds from financially strong companies, rated BBB- or higher. Lower risk, lower yield."],
+      ["High yield (junk)", "Bonds rated below BBB-. They pay more because the risk of default is higher. Often used to fund leveraged buyouts."],
+      ["Secured vs. unsecured", "Secured bonds are backed by specific assets, such as property or equipment, that bondholders can claim in a default. Unsecured bonds (debentures) rely only on the company's promise."],
+      ["Senior vs. subordinated", "Senior bondholders are paid back first if the company fails; subordinated holders only after them, so they earn more to make up for it."],
+      ["Callable bonds", "The company can repay early, usually when rates fall, which caps your upside."],
+      ["Convertible bonds", "Bonds that can be swapped for the company's shares, giving you a slice of the upside if the stock rises."],
+      ["Commercial paper", "Very short-term company IOUs, usually under 270 days, used to cover day-to-day cash needs."]
+    ]],
+    ["Mortgage-backed securities (MBS)", "Thousands of home loans are pooled together, and investors buy bonds paid by the monthly mortgage payments flowing through the pool.", [
+      ["Agency MBS", "Guaranteed by Ginnie Mae (backed by the U.S. government) or by Fannie Mae and Freddie Mac. Credit risk is low; the main risk is timing."],
+      ["Non-agency (private-label) MBS", "Pools put together by banks without a government guarantee. These were at the center of the 2008 crisis."],
+      ["Prepayment risk", "When rates fall, homeowners refinance and pay off early, so investors get their money back just when they can only reinvest it at lower rates."],
+      ["CMOs", "Collateralized mortgage obligations split a pool's payments into slices (tranches) with different maturities and risks."],
+      ["CMBS", "The same idea for commercial property loans: offices, malls, hotels and warehouses."]
+    ]],
+    ["Asset-backed and structured bonds", "Bonds built from pools of other loans or bonds, sliced by risk.", [
+      ["ABS", "Asset-backed securities paid by pools of car loans, credit-card balances, student loans or equipment leases."],
+      ["CBO (collateralized bond obligation)", "A pool of corporate bonds, often high yield, sold to investors in tranches. The senior tranche is paid first and is safest; the equity tranche is paid last and absorbs losses first."],
+      ["CLO (collateralized loan obligation)", "The same structure built from leveraged loans to companies. Today CLOs are far larger than CBOs."],
+      ["CDO", "The umbrella name for these structures. CDOs packed with risky mortgage bonds were a major cause of the 2008 financial crisis."]
+    ]],
+    ["Private equity and private credit", "Private equity firms buy companies using a lot of borrowed money, and a whole corner of the bond market has grown up around them.", [
+      ["Buyout (LBO) debt", "When a private equity firm buys a company, most of the price is often borrowed by the company itself through high-yield bonds and leveraged loans. The company, not the firm, owes the debt."],
+      ["Private equity firm bonds", "Large listed firms such as KKR, Apollo and Blackstone issue their own corporate bonds, often rated investment grade, backed by their fee income."],
+      ["Collateralized fund obligations (CFOs)", "Bonds backed by stakes in a portfolio of private equity funds. Investors are repaid from the cash those funds distribute over time."],
+      ["NAV loans and rated feeder notes", "Borrowing against the value of a fund's holdings, or notes that let insurers invest in private funds in bond form. Newer, less transparent and harder to sell."],
+      ["Private credit", "Loans made directly by funds to companies, outside the public bond market. Fast-growing, and less regulated and less visible than traded bonds."]
+    ]]
+  ];
+
+  // Credit rating scale: [S&P / Fitch, Moody's, meaning, grade]
+  var RATINGS = [
+    ["AAA", "Aaa", "Highest quality. Extremely strong ability to repay.", "Investment grade"],
+    ["AA+ / AA / AA-", "Aa1 / Aa2 / Aa3", "Very high quality. Very strong ability to repay.", "Investment grade"],
+    ["A+ / A / A-", "A1 / A2 / A3", "High quality, but somewhat more sensitive to bad economic times.", "Investment grade"],
+    ["BBB+ / BBB / BBB-", "Baa1 / Baa2 / Baa3", "Adequate. Can repay today, but a downturn could weaken it. BBB- is the lowest investment grade.", "Investment grade"],
+    ["BB+ / BB / BB-", "Ba1 / Ba2 / Ba3", "Speculative. Faces real uncertainty; the top of “junk.”", "High yield"],
+    ["B+ / B / B-", "B1 / B2 / B3", "Highly speculative. Paying now, but vulnerable to setbacks.", "High yield"],
+    ["CCC+ / CCC / CCC-", "Caa1 / Caa2 / Caa3", "Substantial risk. Depends on things going right.", "High yield"],
+    ["CC / C", "Ca / C", "Extremely speculative; default is likely or close.", "High yield"],
+    ["D", "—", "In default: payments have been missed.", "Default"]
+  ];
+
   TERMS.sort(function (a, b) { return a[0].localeCompare(b[0]); });
 
   var CSS =
@@ -131,6 +192,20 @@
     '.p75edu .ev h3{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:21px;margin:4px 0 6px;color:var(--cream)}' +
     '.p75edu .ev p{margin:0;font-size:15px;line-height:1.7;color:#d9d4c8}' +
     '.p75edu .next{display:inline-block;margin-top:10px;color:var(--gold);font-weight:700;text-decoration:none;font-size:15px}' +
+    '.p75edu .sec{margin-top:40px}' +
+    '.p75edu .sec h2{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:26px;margin:0 0 6px;color:var(--cream)}' +
+    '.p75edu .sec .intro{color:var(--muted);font-size:15px;line-height:1.65;margin:0 0 8px}' +
+    '.p75edu .toc{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 6px}' +
+    '.p75edu .toc a{color:var(--cream);background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:6px 12px;font-size:13px;text-decoration:none;cursor:pointer}' +
+    '.p75edu .toc a:hover{border-color:var(--gold);color:var(--gold)}' +
+    '.p75edu table{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px}' +
+    '.p75edu th{color:var(--gold);text-align:left;font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:10px 8px;border-bottom:1px solid var(--line)}' +
+    '.p75edu td{padding:11px 8px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.55;color:#d9d4c8}' +
+    '.p75edu td.r{font-weight:700;color:var(--cream);white-space:nowrap}' +
+    '.p75edu .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:9px;white-space:nowrap}' +
+    '.p75edu .tag.ig{background:rgba(46,204,113,.15);color:#6fdc9c}.p75edu .tag.hy{background:rgba(231,76,60,.15);color:#f08a7e}.p75edu .tag.df{background:#333;color:#bbb}' +
+    '.p75edu .note{margin-top:14px;color:var(--muted);font-size:14px;line-height:1.65}' +
+    '@media (max-width:600px){.p75edu table{font-size:13px}.p75edu td,.p75edu th{padding:9px 5px}}' +
     '.p75edu .text,.p75edu .text *{-webkit-user-select:none;user-select:none}' +
     '@media (max-width:600px){.p75edu h1{font-size:30px}.p75edu .term h3{font-size:18px}}';
 
@@ -152,6 +227,8 @@
       '<div class="cards">' +
         '<a class="card" href="/bond-history"><div class="eyebrow">Guide</div><h3>A Short History of Bonds</h3>' +
           '<p>From clay tablets in Mesopotamia to a $40 trillion U.S. debt: how lending to governments shaped the world.</p><span class="go">Read the history &rarr;</span></a>' +
+        '<a class="card" href="/bond-types"><div class="eyebrow">Guide</div><h3>Classification of Bonds</h3>' +
+          '<p>Treasuries, corporates, mortgage bonds, CBOs, private equity debt, and how ratings from AAA to D work.</p><span class="go">Explore the types &rarr;</span></a>' +
         '<a class="card" href="/bond-dictionary"><div class="eyebrow">Guide</div><h3>Bond Dictionary</h3>' +
           '<p>' + TERMS.length + ' bond terms explained in everyday language, from basis points to yield curves.</p><span class="go">Open the dictionary &rarr;</span></a>' +
         '<div class="card soon"><div class="eyebrow">Coming soon</div><h3>More guides</h3><p>New explainers will appear here as they are written.</p></div>' +
@@ -169,6 +246,33 @@
     return h + '</div><a class="next" href="/bond-dictionary">New to the jargon? Open the Bond Dictionary &rarr;</a>' +
       '<p class="foot">Dates and figures are rounded for readability; this is a simplified overview for learning, not financial advice.<br>&copy; ' +
       new Date().getFullYear() + ' Rahul Saxena. All rights reserved.</p></div>';
+  }
+
+
+  function types() {
+    var h = '<div class="wrap text"><div class="eyebrow"><a href="/education" style="color:inherit;text-decoration:none">Education</a></div>' +
+      '<h1>Classification of Bonds</h1><p class="lead">Not all bonds are alike. Here are the main families, who issues them, what backs them, ' +
+      'and how the rating agencies grade them.</p><nav class="toc">';
+    TYPES.forEach(function (t, i) { h += '<a data-go="s' + i + '">' + esc(t[0]) + '</a>'; });
+    h += '<a data-go="ratings">Bond ratings</a></nav>';
+    TYPES.forEach(function (t, i) {
+      h += '<section class="sec" id="p75-s' + i + '"><h2>' + esc(t[0]) + '</h2><p class="intro">' + esc(t[1]) + '</p>';
+      t[2].forEach(function (x) { h += '<div class="term"><h3>' + esc(x[0]) + '</h3><p>' + esc(x[1]) + '</p></div>'; });
+      h += '</section>';
+    });
+    h += '<section class="sec" id="p75-ratings"><h2>Bond ratings: AAA to D</h2><p class="intro">Rating agencies grade how likely a borrower is to pay ' +
+      'back. S&amp;P and Fitch use letters like AAA; Moody’s uses Aaa. Everything from BBB- (Baa3) up is “investment grade”; below that is “high yield” or “junk.”</p>' +
+      '<table><thead><tr><th>S&amp;P / Fitch</th><th>Moody’s</th><th>What it means</th><th></th></tr></thead><tbody>';
+    RATINGS.forEach(function (r) {
+      var cls = r[3] === 'Investment grade' ? 'ig' : r[3] === 'Default' ? 'df' : 'hy';
+      h += '<tr><td class="r">' + esc(r[0]) + '</td><td class="r">' + esc(r[1]) + '</td><td>' + esc(r[2]) + '</td><td><span class="tag ' + cls + '">' + esc(r[3]) + '</span></td></tr>';
+    });
+    h += '</tbody></table><p class="note">Why it matters: a lower rating means the borrower must pay a higher yield to attract lenders, and many pension funds and insurers ' +
+      'may only hold investment-grade bonds. When a bond is cut from BBB- to junk, forced selling can push its price down sharply. Ratings are opinions, not guarantees: ' +
+      'in 2008 many mortgage bonds rated AAA suffered heavy losses. As of 2025, all three major agencies rated U.S. government debt one notch below AAA.</p></section>' +
+      '<a class="next" href="/bond-dictionary">Look up any term in the Bond Dictionary &rarr;</a>' +
+      '<p class="foot">A simplified overview for learning, not financial advice.<br>&copy; ' + new Date().getFullYear() + ' Rahul Saxena. All rights reserved.</p></div>';
+    return h;
   }
 
   function dictionary() {
@@ -215,7 +319,7 @@
     once();
     host = document.createElement('div');
     host.className = 'p75edu'; host.setAttribute('data-path', path);
-    host.innerHTML = path === '/education' ? landing() : path === '/bond-history' ? history() : dictionary();
+    host.innerHTML = path === '/education' ? landing() : path === '/bond-history' ? history() : path === '/bond-types' ? types() : dictionary();
     var blocks = main.querySelector('.page__blocks');
     if (blocks) blocks.appendChild(host); else main.appendChild(host);
 
@@ -229,6 +333,13 @@
         var h = host.querySelector('h2[data-letter="' + a.getAttribute('data-go') + '"]'); if (!h) return;
         var y = h.getBoundingClientRect().top + window.pageYOffset - headerHeight() - search.offsetHeight - 10;
         window.scrollTo({ top: y, behavior: 'smooth' });
+      });
+    }
+    if (path === '/bond-types') {
+      host.querySelector('.toc').addEventListener('click', function (e) {
+        var a = e.target.closest('a[data-go]'); if (!a) return;
+        var el = document.getElementById('p75-' + a.getAttribute('data-go')); if (!el) return;
+        window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - headerHeight() - 16, behavior: 'smooth' });
       });
     }
     // copy protection like the essays (the search box still works normally)
