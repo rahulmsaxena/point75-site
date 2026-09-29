@@ -432,14 +432,16 @@
     '.coupon-embed .st-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:10px}' +
     '.coupon-embed .st-k{font:700 .86rem Manrope,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}' +
     '.coupon-embed .st-go{font:700 .9rem Manrope,system-ui,sans-serif;color:var(--gold);white-space:nowrap}' +
-    '.coupon-embed .st-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}' +
+    '.coupon-embed .st-row{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}' +
     '.coupon-embed .st-t{background:var(--bg);border:1px solid var(--panel-border);border-radius:8px;padding:9px 10px;min-width:0}' +
     '.coupon-embed .st-l{display:block;font:700 .72rem Manrope,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
     '.coupon-embed .st-v{display:block;font:700 1.25rem Manrope,system-ui,sans-serif;color:var(--paper);font-variant-numeric:tabular-nums;margin:2px 0 1px}' +
     '.coupon-embed .st-c{display:block;font:600 .76rem Manrope,system-ui,sans-serif;color:var(--dim);font-variant-numeric:tabular-nums}' +
     '.coupon-embed .st-c.good{color:var(--up)}.coupon-embed .st-c.bad{color:var(--down)}' +
     '@media (max-width:620px){.coupon-embed .st-row{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:4px}' +
-      '.coupon-embed .st-t{flex:0 0 118px;scroll-snap-align:start}.coupon-embed .st-go{font-size:.84rem}}';
+      '.coupon-embed .st-t{flex:0 0 118px;scroll-snap-align:start}.coupon-embed .st-go{font-size:.84rem}.coupon-embed .st-long{display:none}}' +
+    '@media (min-width:621px){.coupon-embed .st-short{display:none}}' +
+    '@media (max-width:620px){.coupon-embed .ce-hero-narrative{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}}';
   NEWS_CSS += '.coupon-embed .p75-searchrow{margin:0 0 1.6rem}.coupon-embed .p75-searchrow input[type="search"]{display:block;box-sizing:border-box}' +
     '.coupon-embed .p75-sr-note{font:600 .8rem Manrope,system-ui,sans-serif;color:var(--dim);margin-top:6px;min-height:1em}';
   // Put the headline search near the top (it filters the list further down), and bring the results into view as people type
@@ -467,8 +469,15 @@
     input.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); clearTimeout(t); toResults(); input.blur(); } });
   }
   function headerHeightSafe() { var h = document.querySelector('header, .block-header'); return h && getComputedStyle(h).position === 'fixed' ? h.offsetHeight : 0; }
+  // Headlines first: the full yield and Fed-rate panels now live on /economic-indicators ("Rates today");
+  // the News page keeps only the day's one-paragraph Treasury note.
+  NEWS_CSS +=
+    '.coupon-embed .ce-hero-primary,.coupon-embed .ce-hero-secondary,.coupon-embed .ce-hero-attribution,.coupon-embed .ce-rates{display:none!important}' +
+    '.coupon-embed .ce-hero{padding:14px 16px!important;border-radius:10px!important;margin-bottom:1.5rem!important}' +
+    '.coupon-embed .ce-hero-narrative{margin:0!important;padding:0!important;border:0!important;font-size:.98rem!important;color:var(--paper-dim)!important}' +
+    '.coupon-embed .ce-hero-narrative:before{content:"Today in Treasuries";display:block;font:700 .86rem Manrope,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}';
   var MON3 = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  var STRIP = [['cpi', 'CPI'], ['corepce', 'Core PCE'], ['unrate', 'Unemployment'], ['gdp', 'GDP'], ['payrolls', 'Jobs added']];
+  var STRIP = [['t10', '10Y yield'], ['fedfunds', 'Fed funds'], ['cpi', 'CPI'], ['corepce', 'Core PCE'], ['unrate', 'Unemployment'], ['gdp', 'GDP']];
   function addStrip(d) {
     if (d.getElementById('p75-ind-strip')) return;
     var head = d.querySelector('.coupon-embed .ce-masthead'); if (!head) return;
@@ -480,15 +489,16 @@
       var by = {}; (j.indicators || []).forEach(function (i) { by[i.id] = i; });
       var tiles = STRIP.map(function (t) {
         var i = by[t[0]]; if (!i) return '';
+        var daily = t[0] === 't10' || t[0] === 'fedfunds';   // rates: show the date, not a month-on-month change
         var v = i.latest.value, dv = v - i.prior.value, small = Math.abs(dv) < Math.pow(10, -i.dec) / 2;
         var cls = small || !i.bad ? '' : ((dv > 0) === (i.bad === 'up') ? ' bad' : ' good');
         var unit = /^%/.test(i.unit) ? '%' : i.unit.indexOf('K') === 0 ? 'K' : '';
         var fmt = function (x) { return Math.abs(x) >= 1000 ? Math.round(x).toLocaleString('en-US') : x.toFixed(i.dec); };
         return '<div class="st-t"><span class="st-l">' + t[1] + '</span><span class="st-v">' + fmt(v) + unit + '</span>' +
-          '<span class="st-c' + (t[0] === 'payrolls' ? '' : cls) + '">' + (t[0] === 'payrolls' ? 'in ' + MON3[+i.latest.period.slice(5, 7) - 1] : small ? 'unch.' : (dv > 0 ? '▲ ' : '▼ ') + fmt(Math.abs(dv))) + '</span></div>';
+          '<span class="st-c' + (daily ? '' : cls) + '">' + (daily ? 'as of ' + MON3[+i.latest.obs.slice(5, 7) - 1] + ' ' + (+i.latest.obs.slice(8, 10)) : small ? 'unch.' : (dv > 0 ? '▲ ' : '▼ ') + fmt(Math.abs(dv))) + '</span></div>';
       }).join('');
       if (!tiles) { a.remove(); return; }
-      a.innerHTML = '<div class="st-head"><span class="st-k">Economic indicators</span><span class="st-go">See all 15 &rarr;</span></div><div class="st-row">' + tiles + '</div>';
+      a.innerHTML = '<div class="st-head"><span class="st-k">Economic indicators</span><span class="st-go"><span class="st-long">All indicators and rates </span><span class="st-short">See all </span>&rarr;</span></div><div class="st-row">' + tiles + '</div>';
     }).catch(function () { a.remove(); });
   }
 

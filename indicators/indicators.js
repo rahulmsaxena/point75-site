@@ -18,7 +18,7 @@
     '.p75ind .num{font-variant-numeric:tabular-nums}' +
     '.p75ind .tonews{display:inline-block;margin-top:14px;color:var(--gold);font-weight:700;font-size:14.5px;text-decoration:none;border:1px solid var(--gold);border-radius:99px;padding:7px 16px}' +
     '.p75ind .tonews:hover,.p75ind .tonews:focus-visible{background:rgba(201,162,39,.12);outline:none}' +
-    '.p75ind .tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:30px 0 34px}' +
+    '.p75ind .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:30px 0 34px}' +
     '.p75ind .tile{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}' +
     '.p75ind .tile .l{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}' +
     '.p75ind .tile .v{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:32px;line-height:1.1;margin:6px 0 2px}' +
@@ -49,6 +49,29 @@
     '.p75ind .foot a{color:var(--gold);text-decoration:none}' +
     '.p75ind .note{color:var(--muted);font-size:12px;line-height:1.55;margin-top:18px}' +
     '.p75ind .load{color:var(--muted);margin-top:24px}' +
+    '.p75ind .rates{margin:0 0 34px}' +
+    '.p75ind .rates h2{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:26px;margin:0 0 4px}' +
+    '.p75ind .rates .rsub{color:#DDD7CA;font-size:14.5px;line-height:1.55;margin:0 0 14px}' +
+    '.p75ind .rcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:14px}' +
+    '.p75ind .rlab{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:700}' +
+    '.p75ind .r10{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap}' +
+    '.p75ind .r10 .big{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:46px;line-height:1.05;margin-top:4px}' +
+    '.p75ind .r10 .dl{font-family:Manrope,system-ui,sans-serif;font-weight:700;font-size:15px;margin-left:10px}.p75ind .r10 .wk{color:var(--muted);font-size:13px;margin-top:4px}' +
+    '.p75ind .r10 svg{flex:1 1 220px;max-width:340px;height:70px}' +
+    '.p75ind .rnarr{color:#E4DED1;font-size:15.5px;line-height:1.65;margin:14px 0 0;padding-top:14px;border-top:1px solid var(--line)}' +
+    '.p75ind .rmini{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}' +
+    '.p75ind .rm{background:var(--ink);border:1px solid var(--line);border-radius:10px;padding:12px 14px}' +
+    '.p75ind .rm .v{font-weight:700;font-size:20px;margin:4px 0 6px}.p75ind .rm .v span{font-size:13px;margin-left:8px}' +
+    '.p75ind .rm svg{width:100%;height:34px;display:block}' +
+    '.p75ind .rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:12px}' +
+    '.p75ind .rc{background:var(--ink);border:1px solid var(--line);border-radius:10px;padding:14px 16px}' +
+    '.p75ind .rc .n{font-weight:700;font-size:13.5px;letter-spacing:.08em;text-transform:uppercase;color:#CFC9BC}' +
+    '.p75ind .rc .t{color:var(--muted);font-size:12px;margin-top:2px}' +
+    '.p75ind .rc .v{font-weight:700;font-size:24px;margin:8px 0 2px;font-variant-numeric:tabular-nums}' +
+    '.p75ind .rc .s{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;color:var(--muted)}' +
+    '.p75ind .rc p{color:#DDD7CA;font-size:14px;line-height:1.55;margin:8px 0 0}' +
+    '.p75ind .rsrc{color:var(--muted);font-size:12px;margin-top:10px}' +
+    '@media (max-width:720px){.p75ind .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.p75ind .rmini{grid-template-columns:1fr}.p75ind .r10 .big{font-size:40px}}' +
     '@media (prefers-reduced-motion:reduce){.p75ind .chev,.p75ind .tip{transition:none}}' +
     '@media (max-width:720px){.p75ind .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}' +
     '@media (max-width:560px){.p75ind .wrap{padding:30px 16px 56px}.p75ind h1{font-size:30px}.p75ind .tile .v{font-size:27px}' +
@@ -147,11 +170,12 @@
       '<p class="lede">The numbers that move bonds, in one place: inflation, growth, jobs, rates and housing. Tap a category for its indicators, then tap any indicator for its full history.</p>' +
       '<div class="asof">Updated <b>' + asof + '</b> · refreshed every weekday from FRED</div>' +
       '<a class="tonews" href="/news">Today&rsquo;s headlines &rarr;</a>';
-    h += '<div class="tiles">' + d.indicators.filter(function (i) { return i.headline; }).map(function (i) {
+    h += '<div class="tiles">' + d.indicators.filter(function (i) { return i.headline && i.id !== 'fedfunds' && i.id !== 't10'; }).map(function (i) {
       var c = change(i);
       return '<div class="tile"><div class="l">' + esc(i.headline) + '</div><div class="v num">' + fmt(i.latest.value, i.dec) + '<small>' + esc(unitShort(i.unit)) + '</small></div>' +
         '<div class="c num" style="color:' + c.col + '">' + c.txt + '<span class="p">' + period(i.latest.period, i.freq) + '</span></div></div>';
     }).join('') + '</div>';
+    h += '<section class="rates" id="p75rates" hidden></section>';
     var chev = '<svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>';
     h += '<div class="list">' + d.categories.map(function (cat) {
       return '<button class="cat" type="button" aria-expanded="false" data-c="' + cat.id + '"><span class="n">' + esc(cat.name) + '</span>' +
@@ -164,8 +188,52 @@
             '<div class="detail" id="p75d-' + i.id + '" hidden></div>';
         }).join('') + '</div>';
     }).join('') + '</div>';
-    h += '<p class="note">Changes compare the latest reading with the one before it. Green and red show whether a move is good or bad news for the economy; rates are shown in neutral. Data: Federal Reserve Bank of St. Louis (FRED) and the agencies that publish each series. Not investment advice.</p></div>';
+    h += '<p class="note">Changes compare the latest reading with the one before it. Green and red show whether a move is good or bad news for the economy. In Rates today, red means yields or rates went up and green means they came down. Data: Federal Reserve Bank of St. Louis (FRED) and the agencies that publish each series. Not investment advice.</p></div>';
     return h;
+  }
+
+  // ---------- Rates today (moved here from the News page): Treasury yields and Fed policy rates ----------
+  var NEWS_API = 'https://news.point75.io/api/news';
+  var POL = [['FFR', 'Fed funds target', 'FFR', 'The range the Fed sets for banks lending spare cash to each other overnight, unsecured.'],
+    ['EFFR', 'Effective fed funds', 'EFFR', 'What banks actually paid overnight: the volume-weighted median, published daily by the New York Fed.'],
+    ['SOFR', 'SOFR', 'Secured overnight', 'The cost of borrowing cash overnight against Treasuries. It replaced LIBOR as the dollar benchmark.'],
+    ['IORB', 'Interest on reserves', 'IORB', 'What the Fed pays banks on the reserves they park at the central bank.'],
+    ['ONRRP', 'ON RRP', 'Reverse repo', 'What the Fed pays money funds and others to park cash overnight. It sets a floor under short rates.']];
+  function bps(b) { return b == null ? '' : (Math.abs(b) < 0.5 ? 'unch.' : (b > 0 ? '▲ +' : '▼ ') + Math.round(b) + 'bp'); }
+  function bcol(b) { return b == null || Math.abs(b) < 0.5 ? FLAT : b > 0 ? BAD : GOOD; }   // higher yields = red, as on the rest of the site
+  function mini(hist, w, h) {
+    if (!hist || hist.length < 2) return '';
+    var v = hist.map(function (p) { return p.value; }), mn = Math.min.apply(null, v), mx = Math.max.apply(null, v), rg = (mx - mn) || 1;
+    var pts = v.map(function (x, i) { return (i / (v.length - 1) * w).toFixed(1) + ',' + (h - 3 - (x - mn) / rg * (h - 6)).toFixed(1); });
+    return '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none" aria-hidden="true"><path d="M' + pts.join(' L') + ' L' + w + ',' + h + ' L0,' + h + ' Z" fill="' + GOLD + '" opacity=".1"/>' +
+      '<polyline fill="none" stroke="' + GOLD + '" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round" points="' + pts.join(' ') + '"/></svg>';
+  }
+  function asof(d) { try { return new Date(d + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }); } catch (e) { return d; } }
+  function ratesHTML(s) {
+    var y = s.yields || {}, t = y.DGS10, h = '<h2>Rates today</h2><p class="rsub">Treasury yields and the Fed’s policy rates, updated every weekday.</p>';
+    if (t) {
+      h += '<div class="rcard"><div class="r10"><div><div class="rlab">US 10-year Treasury</div><div class="big num">' + t.value.toFixed(2) + '%<span class="dl" style="color:' + bcol(t.change_1d_bps) + '">' + bps(t.change_1d_bps) + ' today</span></div>' +
+        (t.change_1w_bps != null ? '<div class="wk">' + (t.change_1w_bps >= 0 ? '+' : '') + Math.round(t.change_1w_bps) + 'bp over the past week · as of ' + asof(t.date) + '</div>' : '') + '</div>' + mini(t.history, 340, 70) + '</div>' +
+        (s.narrative ? '<p class="rnarr">' + esc(s.narrative) + '</p>' : '') +
+        '<div class="rmini">' + ['DGS2', 'DGS30'].filter(function (k) { return y[k]; }).map(function (k) {
+          var m = y[k]; return '<div class="rm"><div class="rlab" style="color:#CFC9BC">' + esc(m.label) + '</div><div class="v num">' + m.value.toFixed(2) + '%<span style="color:' + bcol(m.change_1d_bps) + '">' + bps(m.change_1d_bps) + '</span></div>' + mini(m.history, 220, 34) + '</div>';
+        }).join('') + '</div></div>';
+    }
+    var r = s.policy_rates || {}, cards = POL.filter(function (p) { return r[p[0]] && typeof r[p[0]].value === 'number'; }).map(function (p) {
+      var x = r[p[0]], val = p[0] === 'FFR' && typeof x.lower === 'number' ? x.lower.toFixed(2) + '–' + x.value.toFixed(2) + '%' : x.value.toFixed(2) + '%';
+      return '<div class="rc"><div class="n">' + p[1] + '</div><div class="t">' + p[2] + '</div><div class="v num">' + val + '</div>' +
+        '<div class="s"><span style="color:' + bcol(x.change_1w_bps) + '">' + bps(x.change_1w_bps) + (x.change_1w_bps != null ? ' 1w' : '') + '</span><span>as of ' + asof(x.date) + '</span></div><p>' + p[3] + '</p></div>';
+    }).join('');
+    if (cards) h += '<div class="rcard"><div class="rlab">Fed policy and overnight funding rates</div><div class="rgrid">' + cards + '</div>' +
+      '<p class="rsrc">Source: FRED. EFFR and SOFR are published by the Federal Reserve Bank of New York.</p></div>';
+    return h;
+  }
+  function loadRates(host) {
+    var box = host.querySelector('#p75rates'); if (!box) return;
+    fetch(NEWS_API).then(function (r) { return r.json(); }).then(function (j) {
+      var s = j && j.market_snapshot; if (!s || (!s.yields && !s.policy_rates)) return;
+      box.innerHTML = ratesHTML(s); box.hidden = false;
+    }).catch(function () {});
   }
 
   function wire(host) {
@@ -203,7 +271,7 @@
     load(function (j) {
       if (!document.body.contains(host)) return;
       if (!j || !j.indicators) { host.querySelector('.load').textContent = 'Indicator data is unavailable right now. Please try again shortly.'; return; }
-      host.innerHTML = page(j); wire(host);
+      host.innerHTML = page(j); wire(host); loadRates(host);
     });
   }
   function clear() { var h = document.querySelector('.p75ind'); if (h) h.remove(); }
