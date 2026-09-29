@@ -6,17 +6,17 @@
   var BULL = '#3D8BFF', BEAR = '#E5484D', NEUT = '#9AA0A6';
 
   var CSS =
-    '.p75pulse{--ink:#111214;--panel:#17181B;--panel2:#1C1D21;--line:#2A2B2F;--cream:#EDE8DC;--muted:#A9A396;--gold:#C9A227;' +
+    '.p75pulse{--ink:#111214;--panel:#17181B;--panel2:#1C1D21;--line:#2A2B2F;--cream:#EDE8DC;--muted:#C2BCAF;--soft:#E4DED1;--gold:#C9A227;' +
       '--bull:' + BULL + ';--bear:' + BEAR + ';background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box}' +
     '.p75pulse *{box-sizing:border-box}' +
     '.p75pulse .wrap{max-width:1040px;margin:0 auto;padding:44px 20px 72px}' +
     '.p75pulse .eyebrow{color:var(--gold);letter-spacing:.14em;font-size:12px;font-weight:700;text-transform:uppercase}' +
     '.p75pulse h1{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:38px;line-height:1.12;margin:8px 0 10px;letter-spacing:-.01em}' +
-    '.p75pulse .lede{color:var(--muted);font-size:16px;line-height:1.6;max-width:680px;margin:0}' +
+    '.p75pulse .lede{color:var(--soft);font-size:16px;line-height:1.6;max-width:680px;margin:0}' +
     '.p75pulse .asof{font-size:12.5px;color:var(--muted);margin-top:10px}' +
     '.p75pulse .asof b{color:var(--cream);font-weight:600}' +
     '.p75pulse h2{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:25px;margin:54px 0 6px}' +
-    '.p75pulse h2 + .sub{color:var(--muted);font-size:14.5px;line-height:1.55;margin:0 0 18px;max-width:720px}' +
+    '.p75pulse h2 + .sub{color:var(--soft);font-size:14.5px;line-height:1.55;margin:0 0 18px;max-width:720px}' +
     // instruments
     '.p75pulse .inst{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;margin-top:30px}' +
     '.p75pulse .inst .card{display:flex;flex-direction:column}' +
@@ -27,7 +27,7 @@
     '.p75pulse .reading{flex:1;min-width:0}' +
     '.p75pulse .big{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:58px;line-height:1;margin:6px 0 4px}' +
     '.p75pulse .verdict{font-size:19px;font-weight:700;margin-bottom:10px}' +
-    '.p75pulse .hint{color:var(--muted);font-size:13px;line-height:1.5}' +
+    '.p75pulse .hint{color:var(--soft);font-size:13px;line-height:1.5}' +
     '.p75pulse .sg{margin:6px auto 0;max-width:340px;width:100%}.p75pulse .sg svg{display:block;width:100%;height:auto}' +
     '@media (prefers-reduced-motion:reduce){.p75pulse .hg{transition:none!important}}' +
     '.p75pulse .hg{transition:y 1.6s cubic-bezier(.2,.8,.2,1),height 1.6s cubic-bezier(.2,.8,.2,1)}' +
@@ -36,31 +36,31 @@
     '.p75pulse .row{display:grid;grid-template-columns:26px 1fr;gap:10px;padding:12px 0;border-top:1px solid var(--line)}' +
     '.p75pulse .row:first-of-type{border-top:0}' +
     '.p75pulse .row .nm{font-weight:700;font-size:14.5px;display:flex;justify-content:space-between;gap:10px}' +
-    '.p75pulse .row .tx{color:var(--muted);font-size:13.5px;line-height:1.5;margin-top:2px}' +
+    '.p75pulse .row .tx{color:var(--soft);font-size:13.5px;line-height:1.5;margin-top:2px}' +
     '.p75pulse .ic{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;color:#0b0c0e;margin-top:1px}' +
     '.p75pulse .bar{height:6px;border-radius:3px;background:#26272b;margin-top:8px;overflow:hidden}' +
     '.p75pulse .bar i{display:block;height:100%;border-radius:3px}' +
-    '.p75pulse .note{color:var(--muted);font-size:12px;line-height:1.5;margin-top:12px}' +
+    '.p75pulse .note{color:var(--soft);font-size:12px;line-height:1.5;margin-top:12px}' +
     // auctions
     '.p75pulse table{width:100%;border-collapse:collapse;font-size:14px}' +
     '.p75pulse th{text-align:left;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:0 10px 10px 0;border-bottom:1px solid var(--line)}' +
     '.p75pulse td{padding:11px 10px 11px 0;border-bottom:1px solid var(--line);vertical-align:top}' +
-    '.p75pulse td small{display:block;color:var(--muted);font-size:12px;margin-top:2px}' +
+    '.p75pulse td small{display:block;color:var(--soft);font-size:12px;margin-top:2px}' +
     '.p75pulse .num{font-variant-numeric:tabular-nums}' +
     '.p75pulse .pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:700;letter-spacing:.02em}' +
     '.p75pulse .up{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}' +
-    '.p75pulse .chip{border:1px solid var(--line);border-radius:99px;padding:6px 12px;font-size:13px;color:var(--muted)}' +
+    '.p75pulse .chip{border:1px solid var(--line);border-radius:99px;padding:6px 12px;font-size:13px;color:var(--soft)}' +
     '.p75pulse .chip b{color:var(--cream);font-weight:600}' +
     // stat cards
     '.p75pulse .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}' +
     '.p75pulse .stat .v{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:32px;margin:8px 0 2px}' +
     '.p75pulse .stat .c{font-size:13px;font-weight:700}' +
-    '.p75pulse .stat .d{color:var(--muted);font-size:13px;line-height:1.5;margin-top:8px}' +
+    '.p75pulse .stat .d{color:var(--soft);font-size:13px;line-height:1.5;margin-top:8px}' +
     '.p75pulse .stat .src{color:#77736a;font-size:11.5px;margin-top:10px}' +
     '.p75pulse .spark{position:relative;margin-top:12px}' +
     '.p75pulse .spark svg{display:block;width:100%;height:46px}' +
     '.p75pulse .tip{position:absolute;top:-30px;transform:translateX(-50%);background:#0b0c0e;border:1px solid var(--line);color:var(--cream);font-size:11.5px;padding:3px 8px;border-radius:6px;white-space:nowrap;pointer-events:none;opacity:0}' +
-    '.p75pulse .wire{border:1px dashed var(--line);border-radius:14px;padding:20px;color:var(--muted);font-size:14px}' +
+    '.p75pulse .wire{border:1px dashed var(--line);border-radius:14px;padding:20px;color:var(--soft);font-size:14px}' +
     '.p75pulse .foot{color:#77736a;font-size:12px;line-height:1.6;margin-top:48px;border-top:1px solid var(--line);padding-top:18px}' +
     '.p75pulse .load{color:var(--muted);padding:40px 0}' +
     '@media (max-width:980px){.p75pulse .grid{grid-template-columns:repeat(2,minmax(0,1fr))}}' +
