@@ -4,7 +4,7 @@
 (function () {
   // ---------- Settings ----------
   var TENANT_ID = 'NgvHdCEMvUY';                          // FastComments
-  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-history', '/bond-types', '/bond-dictionary', '/bond-players'];    // no add-ons on these pages
+  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-history', '/bond-types', '/bond-dictionary', '/bond-players', '/pulse'];    // no add-ons on these pages
 
   // Difficulty level per post
   var LEVELS = {
@@ -438,6 +438,18 @@
       }
       return;
     } else if (window.P75EDU) window.P75EDU.clear();
+
+    // Pulse (/pulse) is drawn by pulse/pulse.js; data comes from news.point75.io/api/pulse
+    if (path === '/pulse') {
+      if (window.P75PULSE) window.P75PULSE.render();
+      else if (!document.getElementById('p75pulse-js')) {
+        var pj = document.createElement('script'); pj.id = 'p75pulse-js';
+        pj.src = 'https://rahulmsaxena.github.io/point75-site/pulse/pulse.js?v=' + Math.floor(Date.now() / 36e5);
+        pj.onload = function () { update(); };
+        document.body.appendChild(pj);
+      }
+      return;
+    } else if (window.P75PULSE) window.P75PULSE.clear();
 
     if (EXCLUDED.indexOf(path) > -1) return;
     var target = document.querySelector('.page__blocks') || document.querySelector('main') || document.body;
