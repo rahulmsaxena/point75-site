@@ -494,21 +494,31 @@
 
 
   function polishNews() {
-    var tries = 0;
-    (function attempt() {
-      var done = false;
-      document.querySelectorAll('iframe').forEach(function (f) {
-        var d; try { d = f.contentDocument; } catch (e) { return; }
-        if (!d || !d.querySelector('.coupon-embed')) return;
-        done = true;
-        addStrip(d);
-        moveSearch(d, f);
-        if (d.getElementById('p75-news-polish')) return;
+    // The embed's iframe can appear late (Hostinger mounts it lazily) and can be re-created, so watch for it
+    // instead of polling for a fixed time. Applying is idempotent.
+    function apply(f) {
+      var d; try { d = f.contentDocument; } catch (e) { return; }
+      if (!d || !d.querySelector('.coupon-embed')) return;
+      if (!d.getElementById('p75-news-polish')) {
         var l = d.createElement('link'); l.rel = 'stylesheet'; l.href = FONTS; d.head.appendChild(l);
         var st = d.createElement('style'); st.id = 'p75-news-polish'; st.textContent = NEWS_CSS; d.head.appendChild(st);
+      }
+      addStrip(d);
+      moveSearch(d, f);
+    }
+    function scan() {
+      document.querySelectorAll('iframe').forEach(function (f) {
+        if (!f.p75News) { f.p75News = true; f.addEventListener('load', function () { apply(f); }); }
+        apply(f);
       });
-      if (!done && ++tries < 40) setTimeout(attempt, 250);
-    })();
+    }
+    scan();
+    if (!window.p75NewsObs && window.MutationObserver) {
+      window.p75NewsObs = new MutationObserver(function () {
+        if ((location.pathname.replace(/\/+$/, '') || '/') === '/news') scan();
+      });
+      window.p75NewsObs.observe(document.body, { childList: true, subtree: true });
+    }
   }
 
   function update() {
