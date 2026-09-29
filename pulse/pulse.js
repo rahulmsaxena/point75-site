@@ -35,7 +35,7 @@
     '.p75pulse .why{display:grid;grid-template-columns:1fr 1fr;gap:18px}' +
     '.p75pulse .row{display:grid;grid-template-columns:26px 1fr;gap:10px;padding:12px 0;border-top:1px solid var(--line)}' +
     '.p75pulse .row:first-of-type{border-top:0}' +
-    '.p75pulse .row .nm{font-weight:700;font-size:14.5px;display:flex;justify-content:space-between;gap:10px}' +
+    '.p75pulse .row .nm{font-weight:800;font-size:16px;color:#FFFFFF;letter-spacing:.005em;display:flex;justify-content:space-between;gap:10px}' +
     '.p75pulse .row .tx{color:var(--soft);font-size:13.5px;line-height:1.5;margin-top:2px}' +
     '.p75pulse .ic{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;color:#0b0c0e;margin-top:1px}' +
     '.p75pulse .bar{height:6px;border-radius:3px;background:#26272b;margin-top:8px;overflow:hidden}' +
