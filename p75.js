@@ -401,7 +401,7 @@
       if (window.P75EDU) window.P75EDU.render(path);
       else if (!document.getElementById('p75edu-js')) {
         var ej = document.createElement('script'); ej.id = 'p75edu-js';
-        ej.src = 'https://cdn.jsdelivr.net/gh/rahulmsaxena/point75-site@main/education/education.js?v=' + Math.floor(Date.now() / 36e5);
+        ej.src = 'https://rahulmsaxena.github.io/point75-site/education/education.js?v=' + Math.floor(Date.now() / 36e5);
         ej.onload = function () { update(); };
         document.body.appendChild(ej);
       }
