@@ -65,6 +65,11 @@
     '.p75pulse .dtlink span{color:var(--gold);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-right:10px}' +
     '.p75pulse .dtlink b{color:#fff;font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:19px;margin-right:8px}' +
     '.p75pulse .wire{border:1px dashed var(--line);border-radius:14px;padding:20px;color:var(--soft);font-size:14px}' +
+    '.p75pulse .wire.on{border:1px solid var(--line);padding:6px 20px;background:var(--panel)}' +
+    '.p75pulse .wire a.h{display:block;padding:13px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--cream)}' +
+    '.p75pulse .wire a.h:last-of-type{border-bottom:0}.p75pulse .wire a.h b{display:block;font-size:15px;font-weight:600;line-height:1.4}' +
+    '.p75pulse .wire a.h:hover b{color:var(--gold)}.p75pulse .wire a.h span{display:block;font-size:12.5px;color:var(--muted);margin-top:3px}' +
+    '.p75pulse .wire .more{display:inline-block;margin:10px 0 8px;color:var(--gold);font-weight:700;text-decoration:none;font-size:14px}' +
     '.p75pulse .foot{color:#77736a;font-size:12px;line-height:1.6;margin-top:48px;border-top:1px solid var(--line);padding-top:18px}' +
     '.p75pulse .load{color:var(--muted);padding:40px 0}' +
     '@media (max-width:980px){.p75pulse .grid{grid-template-columns:repeat(2,minmax(0,1fr))}}' +
@@ -297,11 +302,35 @@
 
     h += '<a class="dtlink" href="/debt-trap"><span>New</span><b>The debt trap</b> How much U.S. debt has to be refinanced, what it costs and who is still buying it &rarr;</a>';
 
-    h += '<h2>Live wire</h2><div class="wire">Live bond and macro headlines will appear here.</div>';
+    h += '<h2>Live wire</h2><p class="sub wire-sub">The latest bond, central-bank and macro headlines. Updated daily.</p><div class="wire" data-wire>Loading headlines…</div>';
 
     h += '<p class="foot">Pulse is built from public data: U.S. Treasury (Fiscal Data), CFTC Traders in Financial Futures, Federal Reserve Bank of New York, and FRED (Federal Reserve Bank of St. Louis), including SOFR from the Federal Reserve Bank of New York. This product uses the FRED® API but is not endorsed or certified by the Federal Reserve Bank of St. Louis. ' +
       'Signals are simple rules for education and are not financial advice.<br>&copy; ' + new Date().getFullYear() + ' Rahul Saxena. All rights reserved.</p></div>';
     return h;
+  }
+
+  // Live wire: the newest headlines from the daily news feed (news.point75.io/api/news), linking out to the source.
+  var NEWS = 'https://news.point75.io/api/news';
+  function ago(t) {
+    var m = Math.round((Date.now() - new Date(t).getTime()) / 60000);
+    if (!(m >= 0)) return '';
+    if (m < 60) return m + ' min ago';
+    if (m < 60 * 24) return Math.round(m / 60) + ' h ago';
+    return Math.round(m / 1440) + ' d ago';
+  }
+  function wire(host) {
+    var box = host.querySelector('[data-wire]'); if (!box) return;
+    var e = function (x) { return String(x == null ? '' : x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); };
+    fetch(NEWS).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+      var a = ((j && j.articles) || []).filter(function (x) { return x.title && /^https?:/.test(x.url || '') && (x.tags || []).indexOf('newsdata') === -1; })  // skip general-news wire items, keep central banks and markets
+        .sort(function (x, y) { return String(y.published_at).localeCompare(String(x.published_at)); }).slice(0, 8);
+      if (!a.length) { box.textContent = 'Headlines are unavailable right now.'; return; }
+      box.className = 'wire on';
+      box.innerHTML = a.map(function (x) {
+        return '<a class="h" href="' + e(x.url) + '" target="_blank" rel="noopener"><b>' + e(x.title) + '</b><span>' + e(x.source) +
+          (x.published_at ? ' · ' + ago(x.published_at) : '') + '</span></a>';
+      }).join('') + '<a class="more" href="/news">All of today’s headlines &rarr;</a>';
+    }).catch(function () { box.textContent = 'Headlines are unavailable right now.'; });
   }
 
   function animate(host) {
@@ -330,7 +359,7 @@
     load(function (j) {
       if (!document.body.contains(host)) return;
       if (!j || !j.gauges) { host.querySelector('.load').textContent = 'Pulse data is unavailable right now. Please try again shortly.'; return; }
-      host.innerHTML = page(j); wireSparks(host); animate(host);
+      host.innerHTML = page(j); wireSparks(host); animate(host); wire(host);
     });
   }
   function clear() { var h = document.querySelector('.p75pulse'); if (h) h.remove(); }
