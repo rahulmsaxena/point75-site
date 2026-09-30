@@ -402,6 +402,29 @@
     '@media (max-width:640px){.p75edu .fl-txt{padding:14px 16px 16px}.p75edu .fl-score{grid-template-columns:1fr}}' +
     '.p75edu details.list{margin-top:14px}.p75edu details.list summary{color:var(--gold);cursor:pointer;font-weight:700;font-size:14px}' +
     '.p75edu .text,.p75edu .text *{-webkit-user-select:none;user-select:none}' +
+    '.p75edu .cl-modes{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 18px}' +
+    '.p75edu .cl-modes button{min-height:44px;padding:0 16px;border-radius:22px;border:1px solid var(--line);background:var(--panel);color:var(--cream);font:700 14.5px Manrope,sans-serif;cursor:pointer}' +
+    '.p75edu .cl-modes button:hover{border-color:var(--gold)}' +
+    '.p75edu .cl-modes button[aria-pressed=true]{background:var(--gold);border-color:var(--gold);color:#111214}' +
+    '.p75edu .cl-fig{background:#141518;border:1px solid var(--line);border-radius:14px;padding:18px 16px 10px}' +
+    '.p75edu .cl-fig svg{display:block;width:100%;height:auto}.p75edu .cl-tall{display:none!important;max-width:420px;margin:0 auto}' +
+    '.p75edu .cl-flow{animation:clDash 1s linear infinite}@keyframes clDash{to{stroke-dashoffset:-36}}' +
+    '.p75edu .cl-steps{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:14px}' +
+    '.p75edu .cl-step{min-height:48px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--muted);cursor:pointer;font:600 13px Manrope,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:4px 2px}' +
+    '.p75edu .cl-step b{font-size:15px;color:var(--cream)}.p75edu .cl-step.on{border-color:var(--gold);background:#241f10;color:var(--gold)}' +
+    '.p75edu .cl-ctrl{display:flex;justify-content:center;gap:10px;margin-top:12px}' +
+    '.p75edu .cl-btn{width:48px;height:44px;border-radius:22px;border:1px solid var(--line);background:var(--panel);color:var(--cream);font-size:18px;cursor:pointer}' +
+    '.p75edu .cl-btn:hover{border-color:var(--gold)}' +
+    '.p75edu .cl-play{min-height:44px;padding:0 20px;border-radius:22px;border:0;background:var(--gold);color:#111214;font:700 14.5px Manrope,sans-serif;cursor:pointer}' +
+    '.p75edu .cl-panel{margin-top:16px;background:var(--panel);border:1px solid rgba(201,162,39,.4);border-radius:14px;padding:20px 22px}' +
+    '.p75edu .cl-panel h3{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:24px;margin:6px 0 8px;color:var(--cream)}' +
+    '.p75edu .cl-panel p{margin:0;font-size:16.5px;line-height:1.65;color:#e4dfd3}' +
+    '.p75edu .cl-risk{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}.p75edu .cl-risk .eyebrow{color:#e8877d}' +
+    '.p75edu .cl-risk p{font-size:15.5px;color:#d9d4c8;margin-top:4px}' +
+    '.p75edu .cl-modes button:focus-visible,.p75edu .cl-step:focus-visible,.p75edu .cl-btn:focus-visible,.p75edu .cl-play:focus-visible{outline:2px solid #e6c35a;outline-offset:2px}' +
+    '@media (max-width:600px){.p75edu .cl-wide{display:none!important}.p75edu .cl-tall{display:block!important}.p75edu .cl-fig{padding:14px 8px 8px}' +
+      '.p75edu .cl-steps{grid-template-columns:repeat(3,1fr)}.p75edu .cl-panel{padding:18px 16px}.p75edu .cl-panel h3{font-size:22px}}' +
+    '@media (prefers-reduced-motion:reduce){.p75edu .cl-flow{animation:none}}' +
     '@media (max-width:600px){.p75edu h1{font-size:30px}.p75edu .term h3{font-size:18px}}';
 
   function once() {
@@ -426,6 +449,8 @@
           '<p>From clay tablets in Mesopotamia to a $40 trillion U.S. debt: how lending to governments shaped the world.</p><span class="go">Read the history &rarr;</span></a>' +
         '<a class="card" href="/bond-types"><div class="eyebrow">Guide</div><h3>Classification of Bonds</h3>' +
           '<p>Treasuries, corporates, mortgage bonds, CBOs, private equity debt, and how ratings from AAA to D work.</p><span class="go">Explore the types &rarr;</span></a>' +
+        '<a class="card" href="/cash-logistics"><div class="eyebrow">Interactive</div><h3>Cash Logistics</h3>' +
+          '<p>Follow $1,000 from your account to the borrower, into the economy, and back to you as interest and principal.</p><span class="go">Follow the money &rarr;</span></a>' +
         '<a class="card" href="/bond-dictionary"><div class="eyebrow">Guide</div><h3>Bond Dictionary</h3>' +
           '<p>' + TERMS.length + ' bond terms explained in everyday language, from basis points to yield curves.</p><span class="go">Open the dictionary &rarr;</span></a>' +
         '<a class="card" href="/bond-players"><div class="eyebrow">Guide</div><h3>The Players</h3>' +
@@ -1093,6 +1118,141 @@
     }).join('');
   }
 
+  // ---------- Cash Logistics: follow $1,000 through a bond, step by step ----------
+  // Each mode: [label, return-path label, nodes {A..E: [role, title]}, steps: [short, title, edge, coin, active nodes, body, risk]]
+  var CASH = {
+    treasury: ['Treasury', 'Interest + principal back to you', {
+      A: ['You', 'Investor'], B: ['Middle', 'Broker / auction'], C: ['Borrower', 'U.S. Treasury'],
+      D: ['Uses the money', 'Government|spending'], E: ['Source of cash', 'Taxes + new|borrowing'] }, [
+      ['Buy', 'You buy a 10-year note', 'ab', '$1,000', 'AB', 'You place an order for a new 10-year Treasury note, through your broker or directly on TreasuryDirect.', 'Nothing yet, but your interest rate is only set at the auction, so it can differ a little from what you saw quoted.'],
+      ['Auction', 'The Treasury gets your cash', 'bc', '$1,000', 'BC', 'On settlement day your $1,000 lands in the Treasury’s account at the Federal Reserve. You now own a note that pays interest twice a year.', 'The note is yours, but its market price now moves with interest rates every day.'],
+      ['Spend', 'The money gets spent', 'cd', '$1,000', 'CD', 'Your money doesn’t sit in a vault. It pays for government spending right away: salaries, Social Security, defense and interest on older debt.', 'Nothing directly to you. This is simply where borrowed money goes.'],
+      ['Refill', 'Money flows back in', 'ec', 'Taxes', 'EC', 'Tax receipts and new bond sales keep refilling the Treasury’s account. That incoming cash is what pays bondholders like you.', 'Political fights over the debt ceiling have rattled markets before, even though payments kept flowing.'],
+      ['Coupons', 'You get paid interest', 'ca', '$20', 'CA', 'Every six months the Treasury sends $20 to your account: 20 payments over 10 years, $400 in total at a 4% coupon.', 'Sell before maturity and you get the market price, which is below $1,000 if rates have risen since you bought.'],
+      ['Maturity', 'You get your $1,000 back', 'ca', '$1,000', 'CA', 'After 10 years the Treasury repays the full $1,000 face value, usually with money raised from new borrowing.', 'Inflation: after 10 years, that $1,000 buys less than it did when you lent it.']
+    ]],
+    corporate: ['Corporate', 'Through the paying agent to your broker', {
+      A: ['You', 'Investor'], B: ['Middle', 'Broker +|underwriter'], C: ['Borrower', 'The company'],
+      D: ['Uses the money', 'Projects +|payroll'], E: ['Source of cash', 'Customer|revenue'] }, [
+      ['Buy', 'You buy a corporate bond', 'ab', '$1,000', 'AB', 'You buy a newly issued 10-year bond from a company through your broker.', 'Check the credit rating first. Lower-rated bonds pay more because default is more likely.'],
+      ['Issue', 'The company gets your cash', 'bc', '$1,000', 'BC', 'The underwriting banks pass the money to the company, minus their fee, which the company pays, not you.', 'The bond’s terms, like call dates and covenants, are fixed now. Read them.'],
+      ['Invest', 'The company puts it to work', 'cd', '$1,000', 'CD', 'The company spends the money on the business: a new plant, payroll, or paying off older, pricier debt.', 'If the investment goes badly, the company’s ability to pay you weakens.'],
+      ['Earn', 'Revenue comes back in', 'ec', 'Sales', 'EC', 'Customers pay the company. Those earnings are what cover the interest owed to bondholders.', 'A downturn can squeeze revenue, and a credit downgrade can drop your bond’s price.'],
+      ['Coupons', 'You get paid interest', 'ca', '$20', 'CA', 'Twice a year the company pays a paying agent, which routes the interest through the clearing system to your broker and into your account.', 'Default: if cash runs short, payments can stop. In bankruptcy, bondholders are paid before shareholders, but often not in full.'],
+      ['Maturity', 'You get your $1,000 back', 'ca', '$1,000', 'CA', 'At maturity the company repays the $1,000, often by selling new bonds.', 'Call risk: if rates fall, the company may repay you early, and you reinvest at lower rates.']
+    ]],
+    fund: ['Bond fund / ETF', 'Monthly payouts to you', {
+      A: ['You', 'Investor'], B: ['Middle', 'Broker'], C: ['Pool', 'Bond fund|or ETF'],
+      D: ['Uses the money', 'Hundreds of|bonds'], E: ['Source of cash', 'Coupons +|maturities'] }, [
+      ['Buy', 'You buy fund shares', 'ab', '$1,000', 'AB', 'You buy $1,000 of shares in a bond fund or ETF. You own a slice of a pool, not a single bond.', 'Nothing yet. Check the expense ratio, since it comes out of your income every year.'],
+      ['Pool', 'Your cash joins the pool', 'bc', '$1,000', 'BC', 'Your money is combined with every other investor’s at the fund’s current share price, its NAV.', 'The share price moves every day with interest rates and credit markets.'],
+      ['Invest', 'The fund buys many bonds', 'cd', '$1,000', 'CD', 'The manager spreads the pool across hundreds of bonds. That spread is the fund’s biggest advantage.', 'A few defaults barely dent a big fund, but a broad credit sell-off hits them all at once.'],
+      ['Collect', 'Interest flows into the fund', 'ec', 'Coupons', 'EC', 'Coupons and maturing bonds pour back into the fund, and the manager reinvests the maturities in new bonds.', 'When rates fall, new bonds pay less, so your income drifts down over time.'],
+      ['Income', 'You get monthly payouts', 'ca', '≈ $3', 'CA', 'The fund pays you your share of the interest, usually monthly, after its fees. You can take it as cash or reinvest it.', 'Payouts are not fixed. They rise and fall with what the fund’s bonds pay.'],
+      ['Exit', 'You sell your shares', 'ca', 'NAV', 'CA', 'A fund never matures. To get your money back you sell your shares at the current price, whenever you choose.', 'There is no guaranteed $1,000 at the end. If rates have risen, you may sell for less than you paid.']
+    ]]
+  };
+  // Two drawings of the same map: wide (desktop) and tall (phones). [viewBox w, h, node w, node h, font sizes [role, title], node positions, paths, return-label position]
+  var CASH_LAYOUT = {
+    wide: [680, 404, 140, 84, [12, 17], { A: [0, 146], B: [175, 146], C: [350, 146], D: [540, 20], E: [540, 272] }, {
+      ab: 'M140 188 L175 188', bc: 'M315 188 L350 188', cd: 'M490 168 C517 168 517 62 540 62',
+      ec: 'M540 314 C517 314 517 208 490 208', ca: 'M420 230 L420 382 L70 382 L70 230' }, [245, 362]],
+    tall: [340, 480, 150, 70, [11, 15], { A: [95, 0], B: [95, 125], C: [95, 250], D: [0, 408], E: [190, 408] }, {
+      ab: 'M170 70 L170 125', bc: 'M170 195 L170 250', cd: 'M135 320 C135 368 75 364 75 408',
+      ec: 'M265 408 C265 364 205 368 205 320', ca: 'M245 285 L326 285 L326 35 L245 35' }, [0, 0]]
+  };
+  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function cashSVG(kind, mode, step) {
+    var L = CASH_LAYOUT[kind], m = CASH[mode], s = m[3][step], W = L[0], H = L[1], nw = L[2], nh = L[3], fs = L[4];
+    var g = '';
+    Object.keys(L[6]).forEach(function (k) {
+      var on = k === s[2];
+      g += '<path d="' + L[6][k] + '" fill="none" stroke="' + (on ? '#C9A227' : '#45474d') + '" stroke-width="' + (on ? 5 : 3) +
+        '" stroke-linecap="round" stroke-linejoin="round"' + (on ? ' stroke-dasharray="11 7" class="cl-flow"' : '') + '/>';
+    });
+    Object.keys(L[5]).forEach(function (k) {
+      var p = L[5][k], on = s[4].indexOf(k) > -1, lines = m[2][k][1].split('|'), cx = p[0] + nw / 2;
+      var top = p[1] + nh / 2 - (lines.length - 1) * fs[1] * 0.6 + fs[1] * 0.35 + fs[0] * 0.55;
+      g += '<rect x="' + p[0] + '" y="' + p[1] + '" width="' + nw + '" height="' + nh + '" rx="10" fill="' + (on ? '#241f10' : '#17181B') +
+        '" stroke="' + (on ? '#C9A227' : '#2A2B2F') + '" stroke-width="' + (on ? 2 : 1.5) + '"/>' +
+        '<text x="' + cx + '" y="' + (top - fs[1] * 1.05) + '" text-anchor="middle" font-family="Manrope,sans-serif" font-size="' + fs[0] +
+        '" font-weight="700" letter-spacing="1" fill="' + (on ? '#C9A227' : '#8d887e') + '">' + esc(m[2][k][0].toUpperCase()) + '</text>';
+      lines.forEach(function (t, i) {
+        g += '<text x="' + cx + '" y="' + (top + i * fs[1] * 1.2) + '" text-anchor="middle" font-family="Manrope,sans-serif" font-size="' + fs[1] +
+          '" font-weight="700" fill="#EDE8DC">' + esc(t) + '</text>';
+      });
+    });
+    if (kind === 'wide') g += '<text x="' + L[7][0] + '" y="' + L[7][1] + '" text-anchor="middle" font-family="Manrope,sans-serif" font-size="13" letter-spacing="1" fill="#8d887e">' + esc(m[1].toUpperCase()) + '</text>';
+    var cw = s[3].length * (kind === 'wide' ? 10 : 9) + 20, ch = kind === 'wide' ? 28 : 26, id = 'cl-p-' + kind;
+    g += '<path id="' + id + '" d="' + L[6][s[2]] + '" fill="none" stroke="none"/>' +
+      '<g class="cl-coin"><rect x="' + (-cw / 2) + '" y="' + (-ch / 2) + '" width="' + cw + '" height="' + ch + '" rx="' + (ch / 2) + '" fill="#C9A227"/>' +
+      '<text y="' + (kind === 'wide' ? 5.5 : 5) + '" text-anchor="middle" font-family="Manrope,sans-serif" font-size="' + (kind === 'wide' ? 15 : 14) + '" font-weight="800" fill="#111214">' + esc(s[3]) + '</text>' +
+      (still ? '' : '<animateMotion dur="2.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines=".45 0 .55 1"><mpath href="#' + id + '"/></animateMotion>') + '</g>';
+    return '<svg class="cl-' + kind + '" viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true">' + g + '</svg>';
+  }
+
+  function cashStage(mode, step) {
+    var m = CASH[mode], s = m[3][step];
+    var dots = m[3].map(function (x, i) {
+      return '<button type="button" class="cl-step' + (i === step ? ' on' : '') + '" data-step="' + i + '" aria-current="' + (i === step ? 'step' : 'false') + '">' +
+        '<b>' + (i + 1) + '</b><span>' + esc(x[0]) + '</span></button>';
+    }).join('');
+    return '<div class="cl-fig" role="img" aria-label="' + esc('Diagram, step ' + (step + 1) + ': ' + s[1]) + '">' + cashSVG('wide', mode, step) + cashSVG('tall', mode, step) + '</div>' +
+      '<div class="cl-steps" role="group" aria-label="Steps">' + dots + '</div>' +
+      '<div class="cl-ctrl"><button type="button" class="cl-btn" data-move="-1" aria-label="Previous step">&larr;</button>' +
+      '<button type="button" class="cl-play" data-play="1">' + (cashTimer ? 'Pause' : 'Play the story') + '</button>' +
+      '<button type="button" class="cl-btn" data-move="1" aria-label="Next step">&rarr;</button></div>' +
+      '<div class="cl-panel" aria-live="polite"><div class="eyebrow">Step ' + (step + 1) + ' of 6</div><h3>' + esc(s[1]) + '</h3><p>' + esc(s[5]) + '</p>' +
+      '<div class="cl-risk"><div class="eyebrow">What can go wrong</div><p>' + esc(s[6]) + '</p></div></div>';
+  }
+
+  function cash() {
+    var modes = Object.keys(CASH).map(function (k, i) {
+      return '<button type="button" data-mode="' + k + '" aria-pressed="' + (i === 0 ? 'true' : 'false') + '">' + esc(CASH[k][0]) + '</button>';
+    }).join('');
+    return '<div class="wrap text"><div class="eyebrow"><a href="/education" style="color:inherit;text-decoration:none">Education</a></div>' +
+      '<h1>Cash Logistics</h1><p class="lead">When you buy a bond, your money goes on a trip. Follow $1,000 from your account to the borrower, ' +
+      'into the real economy, and back to you as interest and principal. Pick a type of bond, then step through it or press play.</p>' +
+      '<div class="cl-modes" role="group" aria-label="Type of bond">' + modes + '</div>' +
+      '<div class="cl-stage">' + cashStage('treasury', 0) + '</div>' +
+      '<section class="sec"><h2>The three trips at a glance</h2><table><thead><tr><th></th><th>Who uses your money</th><th>How you are paid</th><th>How you get it back</th></tr></thead><tbody>' +
+      '<tr><td class="r">Treasury</td><td>The U.S. government</td><td>Interest every six months</td><td>Face value at maturity</td></tr>' +
+      '<tr><td class="r">Corporate</td><td>A company</td><td>Interest every six months, if it can pay</td><td>Face value at maturity, unless called early or in default</td></tr>' +
+      '<tr><td class="r">Fund / ETF</td><td>Hundreds of issuers</td><td>Monthly payouts that vary</td><td>Sell your shares at the going price</td></tr>' +
+      '</tbody></table><p class="note">Figures use a sample 4% coupon on $1,000: $20 every six months for a single bond, or roughly $3 a month from a fund, before fees.</p></section>' +
+      '<a class="next" href="/bond-types">See every kind of bond in Classification of Bonds &rarr;</a>' +
+      '<p class="foot">A simplified illustration for learning, not financial advice.<br>&copy; ' + new Date().getFullYear() + ' Rahul Saxena. All rights reserved.</p></div>';
+  }
+
+  var cashTimer = null;
+  function wireCash(host) {
+    var st = { mode: 'treasury', step: 0 }, stage = host.querySelector('.cl-stage');
+    function draw() { stage.innerHTML = cashStage(st.mode, st.step); }
+    function stop() { if (cashTimer) { clearInterval(cashTimer); cashTimer = null; } }
+    stop();
+    host.querySelector('.cl-modes').addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-mode]'); if (!b) return;
+      st.mode = b.getAttribute('data-mode'); st.step = 0;
+      host.querySelectorAll('.cl-modes button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      draw();
+    });
+    stage.addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      if (b.hasAttribute('data-step')) { stop(); st.step = +b.getAttribute('data-step'); }
+      else if (b.hasAttribute('data-move')) { stop(); st.step = (st.step + (+b.getAttribute('data-move')) + 6) % 6; }
+      else if (b.hasAttribute('data-play')) {
+        if (cashTimer) stop();
+        else cashTimer = setInterval(function () {
+          if (!host.isConnected) return stop();
+          st.step = (st.step + 1) % 6; draw();
+        }, 4500);
+      }
+      draw();
+    });
+  }
+
+
   function headerHeight() {
     var h = document.querySelector('.top-blocks--sticky, header');
     return h ? Math.max(0, h.getBoundingClientRect().bottom) : 0;
@@ -1107,7 +1267,7 @@
     once();
     host = document.createElement('div');
     host.className = 'p75edu'; host.setAttribute('data-path', path);
-    host.innerHTML = path === '/education' ? landing() : path === '/bond-introduction' ? intro() : path === '/bond-fortunes' ? fortunes() : path === '/bond-history' ? history() : path === '/bond-types' ? types() : path === '/bond-players' ? players() : dictionary();
+    host.innerHTML = path === '/education' ? landing() : path === '/bond-introduction' ? intro() : path === '/bond-fortunes' ? fortunes() : path === '/bond-history' ? history() : path === '/bond-types' ? types() : path === '/cash-logistics' ? cash() : path === '/bond-players' ? players() : dictionary();
     var blocks = main.querySelector('.page__blocks');
     if (blocks) blocks.appendChild(host); else main.appendChild(host);
 
@@ -1135,6 +1295,7 @@
         window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - headerHeight() - 16, behavior: 'smooth' });
       });
     }
+    if (path === '/cash-logistics') wireCash(host);
     if (path === '/bond-types') {
       host.querySelector('.toc').addEventListener('click', function (e) {
         var a = e.target.closest('a[data-go]'); if (!a) return;
