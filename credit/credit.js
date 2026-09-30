@@ -168,11 +168,11 @@
     h += '<div class="part"><div class="lbl" style="display:flex;justify-content:space-between"><span>Who holds its paper</span>' + (cp ? '<span style="color:var(--faint);letter-spacing:0;text-transform:none;font-weight:500">As of ' + day(cp.date, true) + '</span>' : '') + '</div>';
     if (cp) {
       h += '<div class="li"><span>' + esc(cp.label) + '</span><b class="num">' + money(cp.amount) + '</b></div>' +
-        '<div class="li"><span>Money market funds</span><b class="num" style="color:var(--gold)">' + (cp.mmf ? '$' + Math.round(cp.mmf * 1000) + 'M' : '$0') +
-        (cp.mmfPct != null && cp.mmfPct <= 100 ? ' · ' + cp.mmfPct.toFixed(1) + '%' : '') + '</b></div>' +
+        '<div class="li"><span>Money market funds</span>' + (cp.mmf == null ? '<span class="na">being updated</span></div>' : '<b class="num" style="color:var(--gold)">' + (cp.mmf ? '$' + Math.round(cp.mmf * 1000) + 'M' : '$0') +
+        (cp.mmfPct != null && cp.mmfPct <= 100 ? ' · ' + cp.mmfPct.toFixed(1) + '%' : '') + '</b></div>') +
         '<div class="li"><span style="color:var(--muted)">Mutual funds &amp; ETFs</span><span class="na">not yet tracked</span></div>' +
         '<div class="li"><span style="color:var(--muted)">Insurers · Pension funds · Foreign &amp; others</span><span class="na">not publicly available</span></div>' +
-        '<div class="note">' + (cp.mmfFunds ? 'Held by ' + cp.mmfFunds + ' money market fund' + (cp.mmfFunds > 1 ? 's' : '') + '. ' : 'No money market fund held it on that date. ') +
+        '<div class="note">' + (cp.mmf == null ? '' : cp.mmfFunds ? 'Held by ' + cp.mmfFunds + ' money market fund' + (cp.mmfFunds > 1 ? 's' : '') + '. ' : 'No money market fund held it on that date. ') +
         (cp.muniNotes ? 'Tax-exempt funds also held ' + money(cp.muniNotes) + ' of municipal notes the company is responsible for repaying. ' : '') +
         '<a class="go" href="/lenders">Who lends across the market &rarr;</a></div>';
     } else {
