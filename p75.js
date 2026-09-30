@@ -625,18 +625,32 @@
     document.querySelectorAll('li.block-header-item').forEach(function (li) {
       var ul = li.querySelector(':scope > label > .block-header-item__dropdown-area > ul.block-header-item__dropdown'); if (!ul) return;
       var top = li.querySelector(':scope > label > .block-header-item__item > a.item-content'); if (!top) return;
-      var kids = [].slice.call(ul.querySelectorAll(':scope > li:not(.p75hub) a.item-content')).map(function (a) { return { href: norm(a.getAttribute('href')), text: a.textContent.trim() }; });
+      var ph = norm(top.getAttribute('href'));
+      var kids = [].slice.call(ul.querySelectorAll(':scope > li a.item-content')).filter(function (a) { return !isHub(a, ph); })
+        .map(function (a) { return { href: norm(a.getAttribute('href')), text: a.textContent.trim() }; });
       out.push({ li: li, ul: ul, href: norm(top.getAttribute('href')), text: top.textContent.trim(), kids: kids });
     });
     return out;
   }
+  // Our line is real only if its link carries our mark AND still points at the main page. On a direct page load
+  // Hostinger's menu can finish loading after we add it and recycle our node as one of its own items.
+  function isHub(a, parentHref) { return !!a && a.getAttribute('data-p75hub') === '1' && norm(a.getAttribute('href')) === parentHref; }
+  var HUB_READY = Date.now() + 2500;   // let the menu finish loading before touching it
   function hubMenus(fams) {
     fams.forEach(function (f) {
-      if (f.ul.querySelector(':scope > li.p75hub') || !f.kids.length) return;
+      [].slice.call(f.ul.querySelectorAll(':scope > li')).forEach(function (li) {   // repair recycled nodes
+        var a = li.querySelector('a.item-content');
+        if (isHub(a, f.href)) return;
+        if (li.classList.contains('p75hub')) li.classList.remove('p75hub');
+        if (a && a.hasAttribute('data-p75hub')) a.removeAttribute('data-p75hub');
+      });
+      if (Date.now() < HUB_READY || !f.kids.length) return;
+      var has = [].slice.call(f.ul.querySelectorAll(':scope > li a.item-content')).some(function (a) { return isHub(a, f.href); });
+      if (has) return;
       var first = f.ul.querySelector(':scope > li'); if (!first) return;
       var li = first.cloneNode(true); li.classList.add('p75hub');
       var a = li.querySelector('a.item-content');
-      a.setAttribute('href', f.href); a.removeAttribute('data-qa');
+      a.setAttribute('href', f.href); a.removeAttribute('data-qa'); a.setAttribute('data-p75hub', '1');
       a.innerHTML = '<span class="p75hub-t">' + escH(HUB_LABEL[f.href] || (f.text + ' overview')) + '</span>';
       f.ul.insertBefore(li, first);
     });
