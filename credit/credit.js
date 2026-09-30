@@ -1,4 +1,4 @@
-/* Point75 - Sector Credit (/sector-credit) and Lenders (/lenders), under Bond Summary.
+/* Point75 - Sector Credit (/sector-credit), Lenders (/lenders) and Credit Stress (/credit-stress), under Bond Summary.
    Loaded by p75.js; data from news.point75.io/api/credit, written weekly by fetch_credit.py.
    Sources: company 10-K/10-Q filings and money market fund filings (SEC EDGAR), and the Federal Reserve's
    Financial Accounts (Z.1) via FRED. No licensed data. (c) Rahul Saxena. All rights reserved. */
@@ -66,11 +66,26 @@
     '.p75cr td{padding:10px 8px;border-bottom:1px solid var(--line)}.p75cr td.r,.p75cr th.r{text-align:right}' +
     '.p75cr .foot{margin-top:44px;color:var(--faint);font-size:12.5px;line-height:1.6;border-top:1px solid var(--line);padding-top:16px}' +
     '.p75cr .load{margin-top:30px;color:var(--muted)}' +
+    '.p75cr .reading{display:flex;gap:20px;align-items:center;margin-top:24px}.p75cr .reading .big2{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:30px;white-space:nowrap}' +
+    '.p75cr .reading p{margin:0;font-size:16.5px;line-height:1.55;color:var(--soft)}' +
+    '.p75cr .shead,.p75cr .srow .top{display:grid;grid-template-columns:300px minmax(0,1fr) 190px;gap:20px;align-items:center}' +
+    '.p75cr .shead{padding:0 22px;margin:22px 0 8px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}.p75cr .shead .ends{display:flex;justify-content:space-between}' +
+    '.p75cr .srows{display:flex;flex-direction:column;gap:10px}' +
+    '.p75cr .srow{width:100%;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 22px}.p75cr .srow[aria-expanded=true]{border-color:rgba(201,162,39,.55);background:#1d1b15}' +
+    '.p75cr .srow .nm b{display:block;font-size:17px}.p75cr .srow .nm span{font-size:14px;color:var(--muted)}' +
+    '.p75cr .track{position:relative;height:46px}.p75cr .track .bg{position:absolute;left:0;right:0;top:19px;height:8px;border-radius:4px;background:linear-gradient(90deg,#2f3a33 0%,#3a3526 45%,#4a2c29 100%)}' +
+    '.p75cr .track .mv{position:absolute;top:21px;height:4px;border-radius:2px;opacity:.8}' +
+    '.p75cr .track .ref{position:absolute;top:15px;width:16px;height:16px;margin-left:-8px;border-radius:50%;border:2px solid;background:var(--ink);box-sizing:border-box}' +
+    '.p75cr .track .now{position:absolute;top:13px;width:20px;height:20px;margin-left:-10px;border-radius:50%;box-shadow:0 0 0 3px var(--ink)}' +
+    '.p75cr .track .lo,.p75cr .track .hi{position:absolute;top:34px;font-size:12.5px;color:var(--faint)}.p75cr .track .hi{right:0}.p75cr .track .lo{left:0}' +
+    '.p75cr .track .rl{position:absolute;top:-4px;font-size:12.5px;color:var(--faint);white-space:nowrap}' +
+    '.p75cr .srow .val{display:flex;flex-direction:column;align-items:flex-end;gap:4px}.p75cr .srow .val b{font-size:27px}' +
+    '.p75cr .srow .more{margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:15.5px;line-height:1.6;color:var(--soft)}' +
     '@media (max-width:980px){.p75cr .grid2{grid-template-columns:1fr}.p75cr .sectors{grid-template-columns:repeat(3,minmax(0,1fr))}.p75cr .cush{grid-template-columns:repeat(2,minmax(0,1fr))}.p75cr .hero{grid-template-columns:1fr}}' +
     '@media (max-width:640px){.p75cr .wrap{padding:30px 14px 56px}.p75cr h1{font-size:32px}.p75cr .sectors{grid-template-columns:repeat(2,minmax(0,1fr))}' +
       '.p75cr .thead{display:none}.p75cr .row{grid-template-columns:minmax(0,1fr) auto;row-gap:6px}.p75cr .row .bar{grid-column:1/-1;order:3}.p75cr .row .cov,.p75cr .row .rt{display:none}' +
       '.p75cr .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.p75cr .isk{grid-template-columns:repeat(2,minmax(0,1fr))}.p75cr .cush{grid-template-columns:1fr}' +
-      '.p75cr .hrow{grid-template-columns:minmax(0,1fr) 70px 54px}.p75cr .hrow .bw{grid-column:1/-1;order:4}.p75cr .card{padding:16px}}';
+      '.p75cr .hrow{grid-template-columns:minmax(0,1fr) 70px 54px}.p75cr .hrow .bw{grid-column:1/-1;order:4}.p75cr .card{padding:16px}.p75cr .shead{display:none}.p75cr .srow .top{grid-template-columns:minmax(0,1fr) auto;row-gap:10px}.p75cr .srow .track{grid-column:1/-1;order:3}.p75cr .srow{padding:14px 16px}.p75cr .reading{flex-direction:column;align-items:flex-start;gap:8px}}';
 
   function once() {
     if (document.getElementById('p75cr-css')) return;
@@ -92,7 +107,7 @@
   function median(a) { a = a.slice().sort(function (x, y) { return x - y; }); var n = a.length; return !n ? null : n % 2 ? a[(n - 1) / 2] : (a[n / 2 - 1] + a[n / 2]) / 2; }
 
   // ---------------------------------------------------------------- Sector Credit
-  var st = { sector: null, tk: null, pick: 'mmf' };
+  var st = { sector: null, tk: null, pick: 'mmf', sig: null };
 
   function companies(j) {
     return (j.companies || []).filter(function (c) { return c.debt != null; }).map(function (c) {
@@ -245,15 +260,63 @@
     return h;
   }
 
+  // ---------------------------------------------------------------- Credit Stress
+  var SCOL = { Calm: '#72b58d', Watch: '#d9a441', Stressed: '#e0776d' };
+  function sfmt(sig, v) { return v.toFixed(sig.key === 'zom' || sig.key === 'dg' ? 0 : sig.key === 'pik' ? 1 : 2) + '%'; }
+  function stressMore(g) {
+    var f = function (v) { return sfmt(g, v); };
+    if (g.key === 'co') return 'Banks wrote off ' + f(g.now) + ' of their business loans (annualized) in ' + g.nowDate + ', against ' + f(g.ref) + ' at the ' + g.refDate + ' ' + g.refKind.toLowerCase() + '. The crisis peak was ' + f(g.worst) + ' in ' + g.worstDate + '.';
+    if (g.key === 'dq') return f(g.now) + ' of banks’ business loans were 30 or more days late in ' + g.nowDate + ', against ' + f(g.ref) + ' at the ' + g.refDate + ' ' + g.refKind.toLowerCase() + ' and ' + f(g.worst) + ' at the ' + g.worstDate + ' peak. Late payments tend to rise before write-offs do.';
+    if (g.key === 'cre') return f(g.now) + ' of banks’ commercial real estate loans (offices, stores, apartments) were 30 or more days late in ' + g.nowDate + ', against ' + f(g.ref) + ' at the ' + g.refDate + ' ' + g.refKind.toLowerCase() + '. The peak was ' + f(g.worst) + ' in ' + g.worstDate + '.';
+    if (g.key === 'zom') return 'Of ' + (g.companies || 'about 1,400').toLocaleString('en-US') + ' U.S.-listed companies paying $10M or more a year in interest, ' + f(g.now) + ' had operating profit smaller than the interest they paid in ' + g.nowDate + '. The recent low was ' + f(g.ref) + ' (' + g.refDate + '); the worst since 2015 was ' + f(g.worst) + ' in ' + g.worstDate + '.';
+    if (g.key === 'pik') {
+      var fu = Object.keys(g.funds || {}).map(function (tk) { return ((g.fundNames || {})[tk] || tk) + ' ' + g.funds[tk].toFixed(1) + '%'; }).join(', ');
+      return 'At the largest listed private-credit lenders, ' + f(g.now) + ' of investment income in ' + g.nowDate + ' was paid “in kind”: borrowers added the interest to their loans instead of paying cash. A rising share is an early sign of strain. By fund: ' + fu + '. The bar runs from 0% to 20%.';
+    }
+    if (g.key === 'dg') return 'U.S. companies owe $' + g.debtT + ' trillion, ' + f(g.now) + ' of GDP (' + g.nowDate + '), against a ' + g.refKind.toLowerCase() + ' of ' + f(g.ref) + ' in ' + g.refDate + ' and a record ' + f(g.worst) + ' in ' + g.worstDate + '.';
+    return '';
+  }
+  var SRC = { co: 'Federal Reserve, all U.S. commercial banks', dq: 'Federal Reserve, all U.S. commercial banks', cre: 'Federal Reserve, all U.S. commercial banks',
+    zom: 'Point75 calculation from SEC filings', pik: 'Company 10-K filings via SEC EDGAR', dg: 'Federal Reserve Financial Accounts and BEA' };
+
+  function stressPage(j) {
+    var S = j.stress || [];
+    if (!S.length) return '<p class="load">The stress signals are unavailable right now.</p>';
+    var n = { Calm: 0, Watch: 0, Stressed: 0 }; S.forEach(function (g) { n[g.status]++; });
+    var head = n.Stressed ? ['Visible cracks', SCOL.Stressed] : n.Watch >= 3 ? ['Hairline cracks', SCOL.Watch] : ['Holding firm', SCOL.Calm];
+    var up = S.filter(function (g) { return g.status !== 'Calm'; }).length;
+    var summary = (n.Stressed ? n.Stressed + ' of ' + S.length + ' signals are in the worse half of their history. ' : 'None of the ' + S.length + ' signals is near crisis levels. ') +
+      (up ? up + ' ' + (up === 1 ? 'has' : 'have') + ' moved meaningfully off ' + (up === 1 ? 'its' : 'their') + ' recent lows or sit' + (up === 1 ? 's' : '') + ' high in ' + (up === 1 ? 'its' : 'their') + ' range, so they are worth watching.' : 'All are close to their calmest levels.');
+    var h = '<div class="card hi reading"><span class="big2" style="color:' + head[1] + '">' + head[0] + '</span><p>' + esc(summary) + '</p></div>' +
+      '<div class="shead"><span>Signal</span><span class="ends"><span>◂ Best</span><span>Worst ▸</span></span><span style="text-align:right">Today</span></div><div class="srows">';
+    S.forEach(function (g) {
+      var span = (g.worst - g.best) || 1, pos = function (v) { return Math.max(0, Math.min(100, (v - g.best) / span * 100)); };
+      var a = pos(g.ref), b = pos(g.now), c = SCOL[g.status], open = st.sig === g.key;
+      var tx = a < 12 ? '-8px' : a > 88 ? 'calc(-100% + 8px)' : '-50%';
+      h += '<button type="button" class="srow" data-sig="' + esc(g.key) + '" aria-expanded="' + open + '"><span class="top">' +
+        '<span class="nm"><b>' + esc(g.name) + '</b><span>' + esc(g.short) + '</span></span>' +
+        '<span class="track"><span class="bg"></span><span class="mv" style="left:' + Math.min(a, b) + '%;width:' + Math.abs(b - a) + '%;background:' + c + '"></span>' +
+        '<span class="ref" style="left:' + a + '%;border-color:' + c + '"></span><span class="now" style="left:' + b + '%;background:' + c + '"></span>' +
+        '<span class="rl num" style="left:' + a + '%;transform:translateX(' + tx + ')">' + g.refKind + ' ' + sfmt(g, g.ref) + ' · ' + esc(g.refDate) + '</span>' +
+        '<span class="lo num">' + sfmt(g, g.best) + '</span><span class="hi num">' + sfmt(g, g.worst) + (g.key === 'pik' ? '' : ' · ' + esc(g.worstDate)) + '</span></span>' +
+        '<span class="val"><b class="num" style="color:' + c + '">' + sfmt(g, g.now) + '</b><span class="pill" style="background:' + c + '">' + g.status + '</span></span></span>' +
+        (open ? '<span class="more" style="display:block">' + esc(stressMore(g)) + ' <span style="color:var(--faint)">Source: ' + esc(SRC[g.key] || '') + ', ' + esc(g.nowDate) + '.</span></span>' : '') + '</button>';
+    });
+    return h + '</div><p class="note" style="margin-top:12px">Tap a signal for what it means. Each bar runs from the signal’s best to its worst level since 2005 (since 2015 for “can’t cover interest”; a fixed 0–20% scale for private credit). The hollow dot marks its furthest point in the past five years; the solid dot is today. ' +
+      'Status: <b style="color:' + SCOL.Stressed + '">Stressed</b> in the worse half of its range; <b style="color:' + SCOL.Watch + '">Watch</b> in the worse 35%, or up at least 5% of its range from its five-year low; otherwise <b style="color:' + SCOL.Calm + '">Calm</b>.</p>';
+  }
+
   // ---------------------------------------------------------------- shell
   var PAGES = {
     '/sector-credit': { title: 'Sector Credit', eyebrow: 'Sector Credit', lede: 'Corporate debt, sector by sector: the biggest borrowers, how much they owe, whether their earnings comfortably carry it, and who holds their short-term IOUs. Pick a sector, then a company.', body: checkPage,
       link: '<a class="go" href="/lenders">Next: Lenders, who is lending them the money &rarr;</a>' },
     '/lenders': { title: 'Lenders', eyebrow: 'Lenders', lede: 'Companies and banks fund their day-to-day bills with commercial paper: short IOUs, usually repaid within weeks. Here is who is lending that money, and how much cushion those lenders have.', body: followPage,
+      link: '<a class="go" href="/credit-stress">Next: Credit Stress, where the cracks are &rarr;</a>' },
+    '/credit-stress': { title: 'Credit Stress', eyebrow: 'Credit Stress', lede: 'Where corporate credit is showing cracks, and where it isn’t: six signals from bank regulators and company filings, each placed between its best and worst level on record.', body: stressPage,
       link: '<a class="go" href="/sector-credit">Back to Sector Credit, who is borrowing &rarr;</a>' }
   };
   var FOOT = '<p class="foot">Sources: companies’ annual and quarterly reports (Forms 10-K and 10-Q) and money market funds’ monthly holdings (Form N-MFP) via SEC EDGAR; ' +
-    'Board of Governors of the Federal Reserve System, Financial Accounts of the United States (Z.1), via FRED (public domain). This product uses the FRED® API but is not endorsed or certified by the Federal Reserve Bank of St. Louis. ' +
+    'Board of Governors of the Federal Reserve System (Financial Accounts of the United States; bank delinquency and charge-off rates) and U.S. Bureau of Economic Analysis (GDP), via FRED (public domain). This product uses the FRED® API but is not endorsed or certified by the Federal Reserve Bank of St. Louis. ' +
     'Debt, EBITDA, coverage, debt mix and health grades are Point75 calculations from reported (GAAP) figures, not company-adjusted numbers, using the latest 12 months (last annual report plus the latest quarterly report) where available; EBITDA = operating profit + depreciation &amp; amortization; grades compare leverage with typical levels for each sector. ' +
     'Bank and insurer multiples use the Fed’s financial assets and liabilities, not regulatory capital ratios; pension funded ratios exclude the Fed’s “claims on sponsor” entry. “Everyone else” is the remainder the data does not split out. ' +
     'For education, not financial advice.<br>&copy; ' + new Date().getFullYear() + ' Rahul Saxena. All rights reserved.</p>';
@@ -285,11 +348,12 @@
     (blocks || main).appendChild(host);
     load(function (j) {
       if (!document.body.contains(host)) return;
-      if (!j || (!(j.companies || []).length && !j.market)) { host.querySelector('.load').textContent = 'This data is unavailable right now. Please try again shortly.'; return; }
+      if (!j || (!(j.companies || []).length && !j.market && !(j.stress || []).length)) { host.querySelector('.load').textContent = 'This data is unavailable right now. Please try again shortly.'; return; }
       if (j.generated_at) host.querySelector('.asof').innerHTML = 'Updated <b>' + new Date(j.generated_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + '</b>';
       draw(host, path, j);
       host.addEventListener('click', function (e) {
-        var b = e.target.closest('[data-sector],[data-tk],[data-pick]'); if (!b) return;
+        var b = e.target.closest('[data-sector],[data-tk],[data-pick],[data-sig]'); if (!b) return;
+        if (b.hasAttribute('data-sig')) { var k = b.getAttribute('data-sig'); st.sig = st.sig === k ? null : k; var yy = window.pageYOffset; draw(host, path, j); window.scrollTo(0, yy); return; }
         if (b.hasAttribute('data-sector')) { st.sector = b.getAttribute('data-sector'); st.tk = null; }
         else if (b.hasAttribute('data-tk')) st.tk = b.getAttribute('data-tk');
         else st.pick = b.getAttribute('data-pick');
