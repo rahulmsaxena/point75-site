@@ -378,6 +378,26 @@
     '.p75edu .two .ib{margin:0}' +
     '.p75edu .sec p.body{margin:0 0 12px;font-size:15.5px;line-height:1.7;color:#d9d4c8}' +
     '@media (max-width:640px){.p75edu .flow,.p75edu .two{grid-template-columns:1fr}}' +
+    '.p75edu .fl-score{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:18px 0 8px}' +
+    '.p75edu .fl-score div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}' +
+    '.p75edu .fl-score b{display:block;font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:30px;color:var(--cream)}' +
+    '.p75edu .fl-score span{font-size:13px;color:var(--muted)}' +
+    '.p75edu .fl{display:grid;grid-template-columns:200px minmax(0,1fr);gap:22px;align-items:start;margin-top:22px;padding:20px;border-radius:16px;background:var(--panel);border:1px solid var(--line)}' +
+    '.p75edu .fl.lost{border-left:4px solid #d95926}.p75edu .fl.made{border-left:4px solid #199e70}' +
+    '.p75edu .fl svg{width:100%;height:auto;display:block;border-radius:12px;background:#121418}' +
+    '.p75edu .fl .tagl{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;border-radius:99px}' +
+    '.p75edu .fl.lost .tagl{background:rgba(217,89,38,.14);color:#f0a07a}.p75edu .fl.made .tagl{background:rgba(25,158,112,.16);color:#6fd6ae}' +
+    '.p75edu .fl .yr{color:var(--muted);font-size:13px;font-weight:700;margin-left:8px}' +
+    '.p75edu .fl h3{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:23px;margin:8px 0 8px;color:var(--cream);line-height:1.2}' +
+    '.p75edu .fl p{margin:0 0 10px;font-size:15px;line-height:1.65;color:#d9d4c8}' +
+    '.p75edu .fl .nums{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 10px}' +
+    '.p75edu .fl .nums span{background:var(--ink);border:1px solid var(--line);border-radius:10px;padding:6px 10px;font-size:13px;color:var(--muted)}' +
+    '.p75edu .fl .nums b{display:block;color:var(--cream);font-size:16px}' +
+    '.p75edu .fl .les{font-size:14px;color:var(--gold);font-weight:700;margin:0}' +
+    '.p75edu .fl .les:before{content:"Lesson: ";color:var(--muted);font-weight:600}' +
+    '.p75edu .fl-quote{margin:30px 0 0;padding:18px 20px;border-radius:14px;background:var(--panel);border:1px solid var(--line);font-family:"Hedvig Letters Serif",Georgia,serif;font-size:21px;line-height:1.4;color:var(--cream)}' +
+    '.p75edu .fl-quote small{display:block;font-family:Manrope,sans-serif;font-size:13px;color:var(--muted);margin-top:8px}' +
+    '@media (max-width:640px){.p75edu .fl{grid-template-columns:1fr;padding:16px}.p75edu .fl svg{max-width:280px;margin:0 auto}.p75edu .fl-score{grid-template-columns:1fr}}' +
     '.p75edu details.list{margin-top:14px}.p75edu details.list summary{color:var(--gold);cursor:pointer;font-weight:700;font-size:14px}' +
     '.p75edu .text,.p75edu .text *{-webkit-user-select:none;user-select:none}' +
     '@media (max-width:600px){.p75edu h1{font-size:30px}.p75edu .term h3{font-size:18px}}';
@@ -408,6 +428,8 @@
           '<p>' + TERMS.length + ' bond terms explained in everyday language, from basis points to yield curves.</p><span class="go">Open the dictionary &rarr;</span></a>' +
         '<a class="card" href="/bond-players"><div class="eyebrow">Guide</div><h3>The Players</h3>' +
           '<p>Interactive charts of the $61 trillion U.S. bond market, who owns the national debt, and the giants who move it.</p><span class="go">Meet the players &rarr;</span></a>' +
+        '<a class="card" href="/bond-fortunes"><div class="eyebrow">Stories</div><h3>Fortunes Made and Lost</h3>' +
+          '<p>A king who stiffed his bankers, a county that bet the treasury, Nobel winners and a 100-year bond: the bond market’s greatest wins and wipeouts.</p><span class="go">Read the stories &rarr;</span></a>' +
         '<div class="card soon"><div class="eyebrow">Coming soon</div><h3>More guides</h3><p>New explainers will appear here as they are written.</p></div>' +
       '</div>' + foot() + '</div>';
   }
@@ -517,6 +539,137 @@
       '<a class="next" href="/bond-history">Next: A Short History of Bonds &rarr;</a><br><a class="next" href="/bond-dictionary" style="margin-top:4px">Look up any term in the Bond Dictionary &rarr;</a></section>';
     return h + '<p class="foot">Examples use round numbers for learning. Futures and options involve leverage and can lose money quickly; this page is education, not financial advice.<br>&copy; ' +
       new Date().getFullYear() + ' Rahul Saxena. All rights reserved.</p></div>';
+  }
+
+
+  // ---------- Fortunes made and lost (original cartoon illustrations) ----------
+  var INK = '#2A2B2F', CR = '#EDE8DC', GD = '#C9A227', BL = '#3987e5', OR = '#d95926', GR = '#199e70', GY = '#6a6d74';
+  var ART = {
+    king: '<rect x="0" y="120" width="200" height="40" fill="#1a1c21"/>' +
+      '<path d="M40 70 L55 40 L75 62 L100 30 L125 62 L145 40 L160 70 Z" fill="' + GD + '" stroke="#8a6512" stroke-width="3"/>' +
+      '<rect x="40" y="70" width="120" height="18" rx="3" fill="' + GD + '" stroke="#8a6512" stroke-width="3"/>' +
+      '<circle cx="100" cy="79" r="5" fill="' + OR + '"/><circle cx="70" cy="79" r="4" fill="' + BL + '"/><circle cx="130" cy="79" r="4" fill="' + BL + '"/>' +
+      '<g transform="rotate(-8 70 118)"><rect x="30" y="98" width="80" height="40" rx="4" fill="' + CR + '"/><text x="70" y="126" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#5b3a12">IOU</text></g>' +
+      '<g transform="translate(150 120)"><circle r="16" fill="' + GD + '" stroke="#8a6512" stroke-width="2"/><path d="M-3 -16 L3 -4 L-4 4 L2 16" stroke="#121418" stroke-width="3" fill="none"/></g>' +
+      '<text x="182" y="36" font-family="Manrope,sans-serif" font-size="22" fill="' + CR + '" text-anchor="end">?!</text>',
+    rocket: '<g fill="' + CR + '" opacity=".5"><circle cx="20" cy="22" r="1.5"/><circle cx="60" cy="12" r="1"/><circle cx="170" cy="30" r="1.5"/><circle cx="150" cy="120" r="1"/><circle cx="30" cy="110" r="1"/></g>' +
+      '<path d="M40 150 Q90 140 150 40" stroke="' + GD + '" stroke-width="2" stroke-dasharray="4 5" fill="none" opacity=".6"/>' +
+      '<g transform="rotate(35 120 80)"><path d="M120 30 C138 48 140 90 134 110 L106 110 C100 90 102 48 120 30 Z" fill="' + CR + '"/>' +
+      '<circle cx="120" cy="66" r="9" fill="' + BL + '" stroke="' + INK + '" stroke-width="3"/><path d="M106 96 L94 116 L106 112 Z M134 96 L146 116 L134 112 Z" fill="' + OR + '"/>' +
+      '<path d="M110 112 L120 146 L130 112 Z" fill="' + GD + '"/><path d="M114 112 L120 132 L126 112 Z" fill="' + OR + '"/></g>' +
+      '<text x="42" y="60" font-family="Georgia,serif" font-size="34" font-weight="700" fill="' + GD + '">15%</text>',
+    orange: '<rect x="0" y="130" width="200" height="30" fill="#1a1c21"/>' +
+      '<rect x="36" y="18" width="128" height="14" rx="3" fill="' + GY + '"/><rect x="94" y="0" width="12" height="20" fill="' + GY + '"/><rect x="70" y="0" width="60" height="6" rx="3" fill="' + GY + '"/>' +
+      '<ellipse cx="100" cy="72" rx="58" ry="36" fill="' + OR + '"/><path d="M100 36 V108 M60 50 L140 94 M60 94 L140 50" stroke="#f08a5a" stroke-width="3"/>' +
+      '<path d="M96 36 Q104 26 116 30" stroke="' + GR + '" stroke-width="5" fill="none"/>' +
+      '<g fill="' + GD + '" font-family="Manrope,sans-serif" font-weight="800" font-size="16"><text x="58" y="128">$</text><text x="100" y="144">$</text><text x="136" y="126">$</text></g>' +
+      '<path d="M62 110 Q60 118 62 120 Q64 118 62 110 Z M140 108 Q138 116 140 118 Q142 116 140 108 Z" fill="' + OR + '"/>',
+    cards: '<rect x="0" y="136" width="200" height="24" fill="#1a1c21"/>' +
+      '<g stroke="' + INK + '" stroke-width="2" fill="' + CR + '">' +
+      '<path d="M40 136 L55 96 L70 136 Z"/><path d="M72 136 L87 96 L102 136 Z"/><path d="M104 136 L119 96 L134 136 Z"/>' +
+      '<rect x="50" y="90" width="90" height="6" rx="2"/><path d="M58 90 L73 52 L88 90 Z"/><path d="M92 90 L107 52 L122 90 Z"/>' +
+      '<rect x="66" y="46" width="62" height="6" rx="2"/><path d="M82 46 L96 12 L110 46 Z"/></g>' +
+      '<path d="M84 12 L96 4 L108 12 L96 18 Z" fill="' + INK + '"/><path d="M104 13 L104 22" stroke="' + GD + '" stroke-width="2"/>' +
+      '<g transform="rotate(38 160 110)"><path d="M146 136 L161 96 L176 136 Z" fill="' + CR + '" stroke="' + INK + '" stroke-width="2"/></g>' +
+      '<path d="M150 80 q6 -8 12 0 M162 72 q6 -8 12 0" stroke="' + GY + '" stroke-width="2" fill="none"/>',
+    tomb: '<rect x="0" y="126" width="200" height="34" fill="#16301f"/><path d="M0 126 q10 -6 20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0" fill="#1f4a2e"/>' +
+      '<path d="M56 130 V56 Q56 22 100 22 Q144 22 144 56 V130 Z" fill="' + GY + '" stroke="#4a4d54" stroke-width="3"/>' +
+      '<text x="100" y="54" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#2a2c31">R.I.P.</text>' +
+      '<text x="100" y="76" text-anchor="middle" font-family="Manrope,sans-serif" font-size="12" font-weight="800" fill="#2a2c31">SHORT JAPAN</text>' +
+      '<text x="100" y="92" text-anchor="middle" font-family="Manrope,sans-serif" font-size="12" font-weight="800" fill="#2a2c31">BONDS</text>' +
+      '<text x="100" y="116" text-anchor="middle" font-family="Georgia,serif" font-size="20" fill="#2a2c31">¥</text>' +
+      '<g fill="' + CR + '" opacity=".75"><circle cx="30" cy="30" r="10"/><circle cx="38" cy="26" r="8"/></g><circle cx="34" cy="29" r="9" fill="#121418" opacity=".0"/>',
+    house: '<rect x="0" y="134" width="200" height="26" fill="#1a1c21"/>' +
+      '<path d="M40 134 V78 L82 44 L124 78 V134 Z" fill="#3a3d44" stroke="' + INK + '" stroke-width="3"/><path d="M82 44 L96 56 L88 62 L100 72" stroke="#121418" stroke-width="3" fill="none"/>' +
+      '<rect x="58" y="96" width="18" height="18" fill="#121418"/><rect x="92" y="104" width="18" height="30" fill="#121418"/>' +
+      '<g transform="rotate(20 130 70)"><rect x="118" y="62" width="16" height="10" fill="#3a3d44"/></g>' +
+      '<g><path d="M150 96 q-10 0 -10 14 q0 22 22 22 q22 0 22 -22 q0 -14 -10 -14 Z" fill="' + GR + '"/><path d="M152 96 l10 -10 l10 10 Z" fill="' + GR + '"/>' +
+      '<text x="162" y="124" text-anchor="middle" font-family="Manrope,sans-serif" font-size="18" font-weight="800" fill="#0e3a2a">$</text></g>' +
+      '<g><path d="M150 40 q-8 0 -8 11 q0 17 17 17 q17 0 17 -17 q0 -11 -8 -11 Z" fill="' + GR + '"/><text x="159" y="62" text-anchor="middle" font-family="Manrope,sans-serif" font-size="14" font-weight="800" fill="#0e3a2a">$</text></g>' +
+      '<path d="M138 28 l6 -6 M178 30 l6 -4" stroke="' + GD + '" stroke-width="2"/>',
+    cake: '<rect x="0" y="138" width="200" height="22" fill="#1a1c21"/><ellipse cx="96" cy="138" rx="70" ry="6" fill="#2a2c31"/>' +
+      '<rect x="40" y="108" width="112" height="30" rx="4" fill="#8a5a3a"/><path d="M40 112 q14 8 28 0 t28 0 t28 0 t28 0" stroke="' + CR + '" stroke-width="5" fill="none"/>' +
+      '<g transform="rotate(-7 96 94)"><rect x="54" y="80" width="86" height="28" rx="4" fill="#8a5a3a"/><path d="M54 84 q11 7 21 0 t21 0 t22 0 t22 0" stroke="' + CR + '" stroke-width="5" fill="none"/>' +
+      '<g fill="' + BL + '">' + [62, 72, 82, 92, 102, 112, 122, 132].map(function (x) { return '<rect x="' + x + '" y="64" width="4" height="16"/>'; }).join('') + '</g>' +
+      '<g fill="' + GD + '">' + [64, 74, 84, 94, 104, 114, 124, 134].map(function (x) { return '<ellipse cx="' + x + '" cy="60" rx="2.5" ry="4"/>'; }).join('') + '</g></g>' +
+      '<text x="170" y="40" text-anchor="middle" font-family="Georgia,serif" font-size="26" font-weight="700" fill="' + GD + '">100</text><text x="170" y="58" text-anchor="middle" font-family="Manrope,sans-serif" font-size="11" fill="' + CR + '">YEARS</text>' +
+      '<path d="M150 100 q10 -2 16 6" stroke="' + OR + '" stroke-width="2" fill="none"/>',
+    teacup: '<rect x="0" y="138" width="200" height="22" fill="#1a1c21"/><ellipse cx="96" cy="136" rx="62" ry="7" fill="' + CR + '"/>' +
+      '<path d="M50 88 H142 Q140 128 96 130 Q52 128 50 88 Z" fill="' + CR + '"/><path d="M142 96 q22 0 18 18 q-4 12 -20 8" stroke="' + CR + '" stroke-width="7" fill="none"/>' +
+      '<ellipse cx="96" cy="88" rx="46" ry="7" fill="#8a5a3a"/><text x="96" y="118" text-anchor="middle" font-family="Georgia,serif" font-size="22" font-weight="700" fill="' + BL + '">£</text>' +
+      '<g fill="#4a4d54"><ellipse cx="80" cy="36" rx="30" ry="14"/><ellipse cx="108" cy="30" rx="26" ry="16"/><ellipse cx="124" cy="40" rx="20" ry="11"/></g>' +
+      '<path d="M100 50 L90 66 L100 66 L92 82" stroke="' + GD + '" stroke-width="4" fill="none" stroke-linejoin="round"/>' +
+      '<g stroke="' + BL + '" stroke-width="2"><path d="M70 52 l-3 8"/><path d="M118 54 l-3 8"/><path d="M130 50 l-3 8"/></g>',
+    bank: '<rect x="0" y="140" width="200" height="20" fill="#1a1c21"/>' +
+      '<path d="M18 50 L62 26 L106 50 Z" fill="' + GY + '"/><rect x="22" y="50" width="80" height="8" fill="' + GY + '"/>' +
+      '<g fill="' + GY + '"><rect x="28" y="60" width="9" height="66"/><rect x="48" y="60" width="9" height="66"/><rect x="67" y="60" width="9" height="66"/><rect x="87" y="60" width="9" height="66"/></g>' +
+      '<rect x="18" y="126" width="88" height="14" fill="' + GY + '"/><text x="62" y="46" text-anchor="middle" font-family="Manrope,sans-serif" font-size="10" font-weight="800" fill="#2a2c31">BANK</text>' +
+      [112, 128, 144, 160, 176, 192].map(function (x, i) {
+        return '<g transform="translate(' + x + ' ' + (104 + (i % 2) * 2) + ')"><circle r="6" cy="0" fill="' + CR + '"/><rect x="-6" y="7" width="12" height="22" rx="4" fill="' + [BL, OR, GR, GD, BL, OR][i] + '"/>' +
+          '<rect x="-9" y="10" width="5" height="8" rx="1" fill="#121418" stroke="' + CR + '" stroke-width="1"/><rect x="-5" y="29" width="3" height="8" fill="' + CR + '"/><rect x="2" y="29" width="3" height="8" fill="' + CR + '"/></g>';
+      }).join('') +
+      '<text x="150" y="70" text-anchor="middle" font-family="Manrope,sans-serif" font-size="13" font-weight="800" fill="' + OR + '">$42B OUT</text><text x="150" y="86" text-anchor="middle" font-family="Manrope,sans-serif" font-size="11" fill="' + CR + '">in one day</text>'
+  };
+  var FORTUNES = [
+    ['lost', '1340s', 'king', 'The king who stiffed his bankers',
+      ['England’s Edward III borrowed huge sums from Florence’s two biggest banks, the Bardi and the Peruzzi, to fight the opening rounds of the Hundred Years’ War with France.',
+       'When the war money ran dry, he paid back only part of it, some of it in wool instead of gold. Both banks went bust in the 1340s. Historians note Florence had troubles of its own, but lending to a king at war did not help.'],
+      [['Lent (by one account)', '1.5M florins'], ['Banks that failed', '2 of Europe’s largest']], 'When you lend to someone with an army, you can’t make them pay.'],
+    ['made', '1981', 'rocket', 'The trade of a lifetime: buying at 15%',
+      ['In 1981 inflation was in double digits and Fed chair Paul Volcker had pushed short-term rates near 20%. Long-term Treasury yields went above 15%, and almost nobody wanted to lock money up for 30 years.',
+       'Those who did hit the jackpot. As inflation fell, yields dropped for roughly four decades, bond prices soared, and buyers kept collecting their 15% coupons. $10,000 in a 15% bond paid $1,500 a year in interest, whatever happened next.'],
+      [['30-year yield, late 1981', 'above 15%'], ['Interest on $10,000', '$1,500 a year']], 'The scariest moment to buy is often the best.'],
+    ['lost', '1994', 'orange', 'Orange County bets the treasury',
+      ['Orange County, California let its treasurer run a roughly $7.5 billion investment pool for local towns and schools. He borrowed heavily against it, controlling around $20 billion of bonds and derivatives that paid off only if interest rates stayed low.',
+       'In February 1994 the Fed started raising rates and kept going. The losses piled up to more than $1.6 billion, and in December the county filed for what was then the largest municipal bankruptcy in U.S. history.'],
+      [['Losses', '$1.6B+'], ['Bonds controlled', 'about $20B from $7.5B']], 'Borrowing to bet that rates stay put works until the day it doesn’t.'],
+    ['lost', '1998', 'cards', 'The geniuses who nearly broke Wall Street',
+      ['Long-Term Capital Management was run by star bond traders and two Nobel-prize economists. It made small, “safe” bets that tiny price gaps between similar bonds would close, and borrowed about $30 for every $1 of its own money to make them pay.',
+       'Then Russia defaulted in August 1998, investors fled to the safest Treasuries, and the gaps blew wider instead. The fund lost 44% in August alone. The New York Fed gathered 14 banks, which put in $3.6 billion to take it over before its collapse hit everyone else.'],
+      [['Debt per $1 of capital', 'about $30'], ['Rescue by 14 firms', '$3.6B']], 'A small edge, borrowed 30 times over, is a big risk.'],
+    ['lost', '1998–2020s', 'tomb', 'The Widowmaker: betting against Japan',
+      ['Japan’s government debt kept climbing past 200% of its economy, so for years traders were sure its bond yields had to rise. They sold Japanese government bonds short, again and again.',
+       'Instead yields kept falling, toward zero and even below it, while the Bank of Japan bought bonds by the trillion. The trade lost money so often, for so long, that it earned the nickname “the Widowmaker.” Yields only rose meaningfully in the 2020s, long after most of the bettors had given up.'],
+      [['Japan’s debt', '200%+ of GDP'], ['Years it didn’t work', 'about two decades']], 'Being right eventually is not the same as being right in time.'],
+    ['made', '2007', 'house', 'The greatest trade ever',
+      ['Hedge-fund manager John Paulson became convinced that American home loans made to risky borrowers would go bad. He bought credit default swaps, a form of insurance that pays out when mortgage bonds fail.',
+       'When the housing bubble burst in 2007, those mortgage bonds collapsed and the insurance paid off enormously. His funds made billions, and Paulson personally earned almost $4 billion that year, one of the largest paydays in Wall Street history.'],
+      [['Paulson’s personal take', 'almost $4B'], ['Cost of the insurance', 'small, until it paid']], 'Cheap insurance against a “sure thing” can be the best bet of all.'],
+    ['lost', '2017–2020', 'cake', 'The 100-year bond that didn’t make it to 3',
+      ['In June 2017 Argentina, a country with eight defaults behind it, sold $2.75 billion of bonds that would not be repaid until 2117. Investors, hungry for yield, offered close to $10 billion for them.',
+       'Within a year Argentina needed a record bailout from the IMF. The bonds lost much of their value, and in 2020 Argentina defaulted for the ninth time and swapped them for new bonds, handing investors a loss.'],
+      [['Promised to last', '100 years'], ['Lasted before default', 'under 3 years']], 'A high yield is the market telling you something.'],
+    ['lost', '2022', 'teacup', 'Britain’s storm in a teacup',
+      ['On 23 September 2022 the UK government announced big unfunded tax cuts. Investors dumped British government bonds, called gilts, and 30-year yields jumped 1.3 percentage points in three days.',
+       'Many pension funds had used borrowed money to hedge their future payouts. Falling gilt prices forced them to post cash fast, so they sold more gilts, pushing prices down further. The Bank of England stepped in, offering to buy up to £65 billion. Within weeks the finance minister was fired and the prime minister resigned.'],
+      [['30-year gilt yield', '+1.3 pts in 3 days'], ['Bank of England backstop', 'up to £65B']], '“Safe” investments bought with borrowed money are not safe.'],
+    ['lost', '2023', 'bank', 'The bank that bought the safest bonds',
+      ['During 2020 and 2021 Silicon Valley Bank took in a flood of deposits from tech start-ups and put much of it into long-term Treasuries and mortgage bonds paying under 2%.',
+       'When the Fed raised rates fast in 2022, those bonds fell in value, leaving more than $15 billion of losses on paper. In March 2023 the bank sold some at a $1.8 billion loss, customers panicked, and $42 billion walked out the door in one day. Regulators shut it the next morning.'],
+      [['Losses on paper', '$15B+'], ['Withdrawn in one day', '$42B']], 'Even government bonds lose value when rates rise; it matters when you have to sell.']
+  ];
+  function fortunes() {
+    var lost = FORTUNES.filter(function (f) { return f[0] === 'lost'; }).length;
+    var h = '<div class="wrap text"><div class="eyebrow"><a href="/education" style="color:inherit;text-decoration:none">Education</a></div>' +
+      '<h1>Fortunes Made and Lost</h1><p class="lead">Bonds are supposed to be the boring corner of finance. Tell that to the king, the county, the Nobel winners and the bank below. ' +
+      'Nine true stories of the biggest bond bets ever made, and what each one teaches.</p>' +
+      '<div class="fl-score"><div><b>' + (FORTUNES.length - lost) + '</b><span>fortunes made</span></div><div><b>' + lost + '</b><span>fortunes lost</span></div><div><b>~700</b><span>years of lessons, from the 1340s to 2023</span></div></div>';
+    FORTUNES.forEach(function (f) {
+      h += '<article class="fl ' + f[0] + '"><svg viewBox="0 0 200 160" aria-hidden="true">' + ART[f[2]] + '</svg><div>' +
+        '<span class="tagl">' + (f[0] === 'made' ? '▲ Made' : '▼ Lost') + '</span><span class="yr">' + f[1] + '</span>' +
+        '<h3>' + esc(f[3]) + '</h3>' + f[4].map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') +
+        '<div class="nums">' + f[5].map(function (n) { return '<span>' + esc(n[0]) + '<b>' + esc(n[1]) + '</b></span>'; }).join('') + '</div>' +
+        '<p class="les">' + esc(f[6]) + '</p></div></article>';
+    });
+    h += '<div class="fl-quote">“…I would like to come back as the bond market. You can intimidate everybody.”<small>James Carville, political strategist to Bill Clinton, 1993</small></div>' +
+      '<section class="sec"><h2>Three lessons that keep repeating</h2>' +
+      '<div class="term"><h3>Borrowed money turns small moves into disasters</h3><p>Orange County, LTCM, Britain’s pension funds: each was fine until leverage forced them to sell at the worst moment.</p></div>' +
+      '<div class="term"><h3>“Safe” is not the same as “can’t lose money”</h3><p>Silicon Valley Bank owned some of the safest bonds in the world. Rising rates still cut their value, and it had to sell.</p></div>' +
+      '<div class="term"><h3>Timing matters as much as being right</h3><p>The Widowmaker shorts were eventually right about Japan, decades too early. Paulson was right, and right on time.</p></div>' +
+      '<a class="next" href="/bond-introduction">New to bonds? Start with the Introduction &rarr;</a></section>' +
+      '<p class="foot">Figures are rounded and drawn from public sources, including the Federal Reserve, the Bank of England and contemporary reporting. Illustrations are original drawings. For education and entertainment, not financial advice.<br>&copy; ' +
+      new Date().getFullYear() + ' Rahul Saxena. All rights reserved.</p></div>';
+    return h;
   }
 
   function history() {
@@ -848,7 +1001,7 @@
     once();
     host = document.createElement('div');
     host.className = 'p75edu'; host.setAttribute('data-path', path);
-    host.innerHTML = path === '/education' ? landing() : path === '/bond-introduction' ? intro() : path === '/bond-history' ? history() : path === '/bond-types' ? types() : path === '/bond-players' ? players() : dictionary();
+    host.innerHTML = path === '/education' ? landing() : path === '/bond-introduction' ? intro() : path === '/bond-fortunes' ? fortunes() : path === '/bond-history' ? history() : path === '/bond-types' ? types() : path === '/bond-players' ? players() : dictionary();
     var blocks = main.querySelector('.page__blocks');
     if (blocks) blocks.appendChild(host); else main.appendChild(host);
 

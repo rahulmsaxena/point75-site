@@ -4,7 +4,7 @@
 (function () {
   // ---------- Settings ----------
   var TENANT_ID = 'NgvHdCEMvUY';                          // FastComments
-  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-introduction', '/bond-history', '/bond-types', '/bond-dictionary', '/bond-players', '/pulse', '/debt-trap', '/economic-indicators', '/bonds', '/insights'];    // no add-ons on these pages
+  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-introduction', '/bond-history', '/bond-types', '/bond-dictionary', '/bond-players', '/bond-fortunes', '/pulse', '/debt-trap', '/economic-indicators', '/bonds', '/insights'];    // no add-ons on these pages
 
   // Difficulty level per post
   var LEVELS = {
@@ -657,7 +657,7 @@
     if (path === '/news') polishNews();
 
     // Education pages (/education and its guides) are drawn by education.js from the same GitHub folder
-    var EDU = ['/education', '/bond-introduction', '/bond-history', '/bond-types', '/bond-dictionary', '/bond-players'];
+    var EDU = ['/education', '/bond-introduction', '/bond-history', '/bond-types', '/bond-dictionary', '/bond-players', '/bond-fortunes'];
     if (EDU.indexOf(path) > -1) {
       if (window.P75EDU) window.P75EDU.render(path);
       else if (!document.getElementById('p75edu-js')) {
