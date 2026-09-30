@@ -1,0 +1,39 @@
+name: Search index
+
+on:
+  schedule:
+    # Daily ~6:37 AM Central, so new essays and pages show up in search the next morning.
+    - cron: "37 11 * * *"
+  push:
+    branches: [main]
+    paths: ["tools/build_search.py", "education/education.js", "p75.js", ".github/workflows/search-index.yml"]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: search-index
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+      - name: Build search/index.json
+        run: python tools/build_search.py
+      - name: Commit if changed
+        run: |
+          git config user.name "point75-bot"
+          git config user.email "point75-bot@users.noreply.github.com"
+          git add search/index.json
+          if git diff --cached --quiet; then echo "No changes"; exit 0; fi
+          git commit -m "Update search index"
+          git pull --rebase origin main
+          git push origin HEAD:main

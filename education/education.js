@@ -1272,7 +1272,9 @@
     if (blocks) blocks.appendChild(host); else main.appendChild(host);
 
     if (path === '/bond-dictionary') {
-      renderTerms(host, '');
+      var q0 = new URLSearchParams(location.search).get('q') || '';
+      if (q0) host.querySelector('input').value = q0;
+      renderTerms(host, q0);
       var search = host.querySelector('.search');
       search.style.top = headerHeight() + 'px';
       host.querySelector('input').addEventListener('input', function (e) { renderTerms(host, e.target.value); });

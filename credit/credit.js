@@ -350,6 +350,11 @@
       if (!document.body.contains(host)) return;
       if (!j || (!(j.companies || []).length && !j.market && !(j.stress || []).length)) { host.querySelector('.load').textContent = 'This data is unavailable right now. Please try again shortly.'; return; }
       if (j.generated_at) host.querySelector('.asof').innerHTML = 'Updated <b>' + new Date(j.generated_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + '</b>';
+      if (path === '/sector-credit') {   // deep link from search: /sector-credit?tk=XOM
+        var tk = (new URLSearchParams(location.search).get('tk') || '').toUpperCase();
+        var hit = (j.companies || []).filter(function (c) { return c.tk === tk; })[0];
+        if (hit) { st.sector = hit.sector; st.tk = hit.tk; }
+      }
       draw(host, path, j);
       host.addEventListener('click', function (e) {
         var b = e.target.closest('[data-sector],[data-tk],[data-pick],[data-sig]'); if (!b) return;
