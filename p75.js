@@ -642,7 +642,7 @@
     });
     if (!document.getElementById('p75hub-css')) {
       var st = document.createElement('style'); st.id = 'p75hub-css';
-      st.textContent = 'li.p75hub a.item-content{color:' + GOLD + '!important;font-weight:700!important}' +
+      st.textContent = 'li.p75hub a.item-content,li.p75hub .p75hub-t{color:' + GOLD + '!important;font-weight:700!important;opacity:1!important}' +
         'li.p75hub .p75hub-t:after{content:" \\2192"}' +
         'li.p75hub{border-bottom:1px solid rgba(201,162,39,.35);margin-bottom:4px;padding-bottom:4px}' +
         '.p75crumb{display:block;width:100%;max-width:none;margin:0;background:#111214;padding:18px max(20px,calc((100% - 860px)/2)) 0;box-sizing:border-box;font-family:Manrope,system-ui,sans-serif;text-align:left}' +
