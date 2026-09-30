@@ -60,6 +60,10 @@
     '.p75pulse .spark{position:relative;margin-top:12px}' +
     '.p75pulse .spark svg{display:block;width:100%;height:46px}' +
     '.p75pulse .tip{position:absolute;top:-30px;transform:translateX(-50%);background:#0b0c0e;border:1px solid var(--line);color:var(--cream);font-size:11.5px;padding:3px 8px;border-radius:6px;white-space:nowrap;pointer-events:none;opacity:0}' +
+    '.p75pulse .dtlink{display:block;margin-top:40px;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:14px;padding:18px 20px;color:var(--soft);text-decoration:none;font-size:14.5px;line-height:1.5}' +
+    '.p75pulse .dtlink:hover{border-color:var(--gold)}' +
+    '.p75pulse .dtlink span{color:var(--gold);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-right:10px}' +
+    '.p75pulse .dtlink b{color:#fff;font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:19px;margin-right:8px}' +
     '.p75pulse .wire{border:1px dashed var(--line);border-radius:14px;padding:20px;color:var(--soft);font-size:14px}' +
     '.p75pulse .foot{color:#77736a;font-size:12px;line-height:1.6;margin-top:48px;border-top:1px solid var(--line);padding-top:18px}' +
     '.p75pulse .load{color:var(--muted);padding:40px 0}' +
@@ -205,7 +209,7 @@
   function page(j) {
     var g = j.gauges || {}, b = g.bull || {}, s = g.stress || {};
     var h = '<div class="wrap"><div class="eyebrow">Pulse</div><h1>The bond market’s vital signs</h1>' +
-      '<p class="lede">Two readings, taken from where real money moves: Treasury auctions, futures positioning, dealer balance sheets, the term premium and rate swings. No opinions, no chatter.</p>' +
+      '<p class="lede">Two readings, taken from where real money moves: Treasury auctions, futures positioning, dealer balance sheets, overnight funding, the term premium and rate swings. No opinions, no chatter.</p>' +
       '<div class="asof">Updated <b>' + new Date(j.generated_at).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' }) +
       '</b> · refreshed hourly on weekdays</div>';
 
@@ -217,7 +221,7 @@
         '<div class="hint"><b style="color:' + BULL + '">Blue</b> = bullish for bonds (prices up, yields down). <b style="color:' + BEAR + '">Red</b> = bearish (prices down, yields up). Scale runs from −100 to +100.</div></div></div></div>' +
       '<div class="card"><h3>Stress monitor</h3>' + (s.score != null ? stressGauge(s.score, s.label) : '') +
         '<div style="margin-top:auto;padding-top:16px">' +
-        '<div class="hint" style="margin:4px 0 12px">Higher means more strain in volatility, dealer balance sheets and auction demand. Biggest drivers right now:</div>' +
+        '<div class="hint" style="margin:4px 0 12px">Higher means more strain in volatility, funding, dealer balance sheets and auction demand. Biggest drivers right now:</div>' +
         (s.components || []).slice().sort(function (x, y) { return y.pct * y.weight - x.pct * x.weight; }).slice(0, 3).map(function (c) {
           return '<div style="display:grid;grid-template-columns:1fr 34px;gap:10px;align-items:center;font-size:13px;margin-top:7px"><div>' + esc(c.name) +
             '<div class="bar" style="margin-top:5px"><i style="width:' + Math.max(3, c.pct) + '%;background:' + stressColor(c.pct) + '"></i></div></div>' +
@@ -277,6 +281,12 @@
     if (r) cards.push(statCard('Rates volatility', r.vol.value.toFixed(1) + 'bp/day', 'Higher than ' + Math.round(r.vol.pct_1y) + '% of the past year', stressColor(r.vol.pct_1y),
       'How much the 10-year yield swings on a typical day (20-day average). The free cousin of the MOVE index.', r.vol.history, stressColor(r.vol.pct_1y), function (v) { return v.toFixed(1) + 'bp/day'; },
       'FRED · 10-year at ' + r.yield.value.toFixed(2) + '% on ' + fmtDate(r.yield.date)));
+    var fu = j.funding;
+    if (fu) cards.push(statCard('Funding pressure', signed(fu.spread_avg20_bp, 0, 'bp'), 'Tighter than ' + Math.round(fu.pct_1y) + '% of the past year', stressColor(fu.pct_1y),
+      'Overnight repo rate (SOFR) minus what the Fed pays banks on reserves (IORB), 20-day average. Above zero means cash is scarce. ' +
+      'Reserves: $' + (fu.reserves.value / 1000).toFixed(2) + 'T.' + (fu.srf.days_used_20d ? ' Banks borrowed $1bn+ from the Fed’s standing repo facility on ' + fu.srf.days_used_20d + ' of the last 20 days.' : ''),
+      fu.history, stressColor(fu.pct_1y), function (v) { return signed(v, 1, 'bp'); },
+      'FRED · NY Fed SOFR, Fed Board IORB · ' + fmtDate(fu.date)));
     if (tp) cards.push(statCard('Term premium', tp.value.toFixed(2) + '%', signed(tp.change * 100, 0, 'bp') + ' in 4 weeks', tone(tp.change),
       'Extra yield investors demand to lock money up for 10 years instead of rolling short bills. Rising = less trust in the long end.', tp.history, '#5FD0C5', function (v) { return v.toFixed(2) + '%'; },
       'FRED · Fed Board (Kim-Wright) · ' + fmtDate(tp.date)));
@@ -285,9 +295,11 @@
       'FRED · ' + fmtDate(be.date)));
     if (cards.length) h += '<h2>The pros and the plumbing</h2><p class="sub">What big money is doing, and the stress points underneath. Hover or tap a chart for past values.</p><div class="grid">' + cards.join('') + '</div>';
 
+    h += '<a class="dtlink" href="/debt-trap"><span>New</span><b>The debt trap</b> How much U.S. debt has to be refinanced, what it costs and who is still buying it &rarr;</a>';
+
     h += '<h2>Live wire</h2><div class="wire">Live bond and macro headlines will appear here.</div>';
 
-    h += '<p class="foot">Pulse is built from public data: U.S. Treasury (Fiscal Data), CFTC Traders in Financial Futures, Federal Reserve Bank of New York, and FRED (Federal Reserve Bank of St. Louis). This product uses the FRED® API but is not endorsed or certified by the Federal Reserve Bank of St. Louis. ' +
+    h += '<p class="foot">Pulse is built from public data: U.S. Treasury (Fiscal Data), CFTC Traders in Financial Futures, Federal Reserve Bank of New York, and FRED (Federal Reserve Bank of St. Louis), including SOFR from the Federal Reserve Bank of New York. This product uses the FRED® API but is not endorsed or certified by the Federal Reserve Bank of St. Louis. ' +
       'Signals are simple rules for education and are not financial advice.<br>&copy; ' + new Date().getFullYear() + ' Rahul Saxena. All rights reserved.</p></div>';
     return h;
   }

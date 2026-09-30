@@ -4,7 +4,7 @@
 (function () {
   // ---------- Settings ----------
   var TENANT_ID = 'NgvHdCEMvUY';                          // FastComments
-  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-history', '/bond-types', '/bond-dictionary', '/bond-players', '/pulse', '/economic-indicators', '/bonds', '/insights'];    // no add-ons on these pages
+  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-history', '/bond-types', '/bond-dictionary', '/bond-players', '/pulse', '/debt-trap', '/economic-indicators', '/bonds', '/insights'];    // no add-ons on these pages
 
   // Difficulty level per post
   var LEVELS = {
@@ -680,6 +680,18 @@
       }
       return;
     } else if (window.P75PULSE) window.P75PULSE.clear();
+
+    // Debt Trap (/debt-trap, under Pulse) is drawn by debttrap/debttrap.js; data comes from news.point75.io/api/debttrap
+    if (path === '/debt-trap') {
+      if (window.P75DEBT) window.P75DEBT.render();
+      else if (!document.getElementById('p75debt-js')) {
+        var dj = document.createElement('script'); dj.id = 'p75debt-js';
+        dj.src = 'https://rahulmsaxena.github.io/point75-site/debttrap/debttrap.js?v=' + Math.floor(Date.now() / 36e5);
+        dj.onload = function () { update(); };
+        document.body.appendChild(dj);
+      }
+      return;
+    } else if (window.P75DEBT) window.P75DEBT.clear();
 
     // Insights (/insights) is drawn by insights/insights.js from insights/insights.json
     if (path === '/insights') {
