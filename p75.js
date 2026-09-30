@@ -705,6 +705,15 @@
   }
   function update() {
     var path = location.pathname.replace(/\/+$/, '') || '/';
+
+    // Site search (search/search.js): a Search button in the header and the mobile menu, and "/" to open
+    if (window.P75SEARCH) window.P75SEARCH.mount();
+    else if (!document.getElementById('p75s-js')) {
+      var sj = document.createElement('script'); sj.id = 'p75s-js';
+      sj.src = 'https://rahulmsaxena.github.io/point75-site/search/search.js?v=' + Math.floor(Date.now() / 36e5);
+      sj.onload = function () { window.P75SEARCH && window.P75SEARCH.mount(); };
+      document.body.appendChild(sj);
+    }
     var disc = document.querySelector('.p75d'), comments = document.querySelector('.p75c'), listen = document.querySelector('.p75l');
 
     if (path !== lastPath) {
