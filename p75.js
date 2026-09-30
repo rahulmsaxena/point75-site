@@ -4,7 +4,7 @@
 (function () {
   // ---------- Settings ----------
   var TENANT_ID = 'NgvHdCEMvUY';                          // FastComments
-  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-introduction', '/bond-history', '/bond-types', '/cash-logistics', '/bond-dictionary', '/bond-players', '/bond-fortunes', '/pulse', '/debt-trap', '/economic-indicators', '/bonds', '/insights', '/sector-credit', '/lenders'];    // no add-ons on these pages
+  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-introduction', '/bond-history', '/bond-types', '/cash-logistics', '/bond-dictionary', '/bond-players', '/bond-fortunes', '/pulse', '/debt-trap', '/economic-indicators', '/bonds', '/insights', '/sector-credit', '/lenders', '/credit-stress'];    // no add-ons on these pages
 
   // Difficulty level per post
   var LEVELS = {
@@ -783,8 +783,8 @@
       return;
     } else if (window.P75DEBT) window.P75DEBT.clear();
 
-    // Sector Credit and Lenders (under Bond Summary) are drawn by credit/credit.js; data comes from news.point75.io/api/credit
-    if (path === '/sector-credit' || path === '/lenders') {
+    // Sector Credit, Lenders and Credit Stress (under Bond Summary) are drawn by credit/credit.js; data comes from news.point75.io/api/credit
+    if (path === '/sector-credit' || path === '/lenders' || path === '/credit-stress') {
       if (window.P75CREDIT) window.P75CREDIT.render(path);
       else if (!document.getElementById('p75cr-js')) {
         var cj = document.createElement('script'); cj.id = 'p75cr-js';
