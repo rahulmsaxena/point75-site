@@ -645,18 +645,18 @@
       st.textContent = 'li.p75hub a.item-content{color:' + GOLD + '!important;font-weight:700!important}' +
         'li.p75hub .p75hub-t:after{content:" \\2192"}' +
         'li.p75hub{border-bottom:1px solid rgba(201,162,39,.35);margin-bottom:4px;padding-bottom:4px}' +
-        '.p75crumb{max-width:900px;margin:0 auto;padding:18px 20px 0;box-sizing:border-box;font-family:Manrope,system-ui,sans-serif}' +
+        '.p75crumb{display:block;width:100%;max-width:none;margin:0;background:#111214;padding:18px max(20px,calc((100% - 860px)/2)) 0;box-sizing:border-box;font-family:Manrope,system-ui,sans-serif;text-align:left}' +
         '.p75crumb a{display:inline-flex;align-items:center;gap:8px;color:' + GOLD + ';font-weight:700;font-size:14px;text-decoration:none;border:1px solid rgba(201,162,39,.55);border-radius:99px;padding:7px 14px;background:rgba(201,162,39,.06)}' +
         '.p75crumb a:hover,.p75crumb a:focus-visible{background:rgba(201,162,39,.16);outline:none}' +
         '.p75crumb span{color:#B8B2A5;font-size:13px;margin-left:10px}' +
-        '.p75sib{max-width:900px;margin:0 auto;padding:10px 20px 40px;box-sizing:border-box;font-family:Manrope,system-ui,sans-serif;display:grid;grid-template-columns:1fr 1fr;gap:12px}' +
+        '.p75sib{width:100%;max-width:none;margin:0;background:#111214;padding:10px max(20px,calc((100% - 860px)/2)) 44px;box-sizing:border-box;font-family:Manrope,system-ui,sans-serif;display:grid;grid-template-columns:1fr 1fr;gap:12px;align-self:stretch}' +
         '.p75sib a{display:block;text-decoration:none;background:#17181B;border:1px solid #2A2B2F;border-radius:12px;padding:14px 16px;color:#EDE8DC}' +
         '.p75sib a:hover,.p75sib a:focus-visible{border-color:' + GOLD + ';outline:none}' +
         '.p75sib small{display:block;color:#B8B2A5;font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}' +
         '.p75sib b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:18px}' +
         '.p75sib .nx{text-align:right}.p75sib .hub{grid-column:1/-1;text-align:center;background:none;border-style:dashed}' +
         '.p75sib .hub b{font-family:Manrope,sans-serif;font-weight:700;font-size:14px;color:' + GOLD + '}' +
-        '@media (max-width:600px){.p75sib{grid-template-columns:1fr}.p75sib .nx{text-align:left}.p75crumb{padding:14px 16px 0}.p75sib{padding:6px 16px 32px}}';
+        '@media (max-width:600px){.p75sib{grid-template-columns:1fr;padding:6px 16px 32px}.p75sib .nx{text-align:left}.p75sib>span{display:none}.p75crumb{padding:14px 16px 0}}';
       document.head.appendChild(st);
     }
   }
