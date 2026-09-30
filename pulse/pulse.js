@@ -205,7 +205,7 @@
   function page(j) {
     var g = j.gauges || {}, b = g.bull || {}, s = g.stress || {};
     var h = '<div class="wrap"><div class="eyebrow">Pulse</div><h1>The bond market’s vital signs</h1>' +
-      '<p class="lede">Two readings, taken from where real money moves: Treasury auctions, futures positioning, dealer balance sheets, credit spreads and rate swings. No opinions, no chatter.</p>' +
+      '<p class="lede">Two readings, taken from where real money moves: Treasury auctions, futures positioning, dealer balance sheets, the term premium and rate swings. No opinions, no chatter.</p>' +
       '<div class="asof">Updated <b>' + new Date(j.generated_at).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' }) +
       '</b> · refreshed hourly on weekdays</div>';
 
@@ -217,7 +217,7 @@
         '<div class="hint"><b style="color:' + BULL + '">Blue</b> = bullish for bonds (prices up, yields down). <b style="color:' + BEAR + '">Red</b> = bearish (prices down, yields up). Scale runs from −100 to +100.</div></div></div></div>' +
       '<div class="card"><h3>Stress monitor</h3>' + (s.score != null ? stressGauge(s.score, s.label) : '') +
         '<div style="margin-top:auto;padding-top:16px">' +
-        '<div class="hint" style="margin:4px 0 12px">Higher means more strain in funding, volatility and credit. Biggest drivers right now:</div>' +
+        '<div class="hint" style="margin:4px 0 12px">Higher means more strain in volatility, dealer balance sheets and auction demand. Biggest drivers right now:</div>' +
         (s.components || []).slice().sort(function (x, y) { return y.pct * y.weight - x.pct * x.weight; }).slice(0, 3).map(function (c) {
           return '<div style="display:grid;grid-template-columns:1fr 34px;gap:10px;align-items:center;font-size:13px;margin-top:7px"><div>' + esc(c.name) +
             '<div class="bar" style="margin-top:5px"><i style="width:' + Math.max(3, c.pct) + '%;background:' + stressColor(c.pct) + '"></i></div></div>' +
@@ -259,7 +259,7 @@
     }
 
     // the pros + plumbing
-    var p = j.positioning, dl = j.dealers, r = j.rates, c = j.credit, be = j.breakeven, tp = j.term_premium;
+    var p = j.positioning, dl = j.dealers, r = j.rates, be = j.breakeven, tp = j.term_premium;
     var bn = function (v) { return (v < 0 ? '−$' : '$') + Math.abs(v).toLocaleString('en-US', { maximumFractionDigits: 0 }) + 'bn'; };
     var cards = [];
     if (p) {
@@ -277,14 +277,6 @@
     if (r) cards.push(statCard('Rates volatility', r.vol.value.toFixed(1) + 'bp/day', 'Higher than ' + Math.round(r.vol.pct_1y) + '% of the past year', stressColor(r.vol.pct_1y),
       'How much the 10-year yield swings on a typical day (20-day average). The free cousin of the MOVE index.', r.vol.history, stressColor(r.vol.pct_1y), function (v) { return v.toFixed(1) + 'bp/day'; },
       'FRED · 10-year at ' + r.yield.value.toFixed(2) + '% on ' + fmtDate(r.yield.date)));
-    if (c) {
-      cards.push(statCard('Junk-bond spread', c.hy.value.toFixed(2) + '%', signed(c.hy.change * 100, 0, 'bp') + ' in 4 weeks', tone(c.hy.change),
-        'Extra yield on high-yield corporate bonds over Treasuries. Widening = credit fear rising.', c.hy.history, '#FF8A5B', function (v) { return v.toFixed(2) + '%'; },
-        'FRED · ICE BofA · ' + fmtDate(c.hy.date)));
-      cards.push(statCard('Investment-grade spread', c.ig.value.toFixed(2) + '%', signed(c.ig.change * 100, 0, 'bp') + ' in 4 weeks', tone(c.ig.change),
-        'Extra yield on high-quality corporate bonds over Treasuries.', c.ig.history, '#F2C94C', function (v) { return v.toFixed(2) + '%'; },
-        'FRED · ICE BofA · ' + fmtDate(c.ig.date)));
-    }
     if (tp) cards.push(statCard('Term premium', tp.value.toFixed(2) + '%', signed(tp.change * 100, 0, 'bp') + ' in 4 weeks', tone(tp.change),
       'Extra yield investors demand to lock money up for 10 years instead of rolling short bills. Rising = less trust in the long end.', tp.history, '#5FD0C5', function (v) { return v.toFixed(2) + '%'; },
       'FRED · Fed Board (Kim-Wright) · ' + fmtDate(tp.date)));
@@ -295,7 +287,7 @@
 
     h += '<h2>Live wire</h2><div class="wire">Live bond and macro headlines will appear here.</div>';
 
-    h += '<p class="foot">Pulse is built from public data: U.S. Treasury (Fiscal Data), CFTC Traders in Financial Futures, Federal Reserve Bank of New York, and FRED (Federal Reserve Bank of St. Louis; ICE BofA spreads used under FRED terms). ' +
+    h += '<p class="foot">Pulse is built from public data: U.S. Treasury (Fiscal Data), CFTC Traders in Financial Futures, Federal Reserve Bank of New York, and FRED (Federal Reserve Bank of St. Louis). This product uses the FRED® API but is not endorsed or certified by the Federal Reserve Bank of St. Louis. ' +
       'Signals are simple rules for education and are not financial advice.<br>&copy; ' + new Date().getFullYear() + ' Rahul Saxena. All rights reserved.</p></div>';
     return h;
   }

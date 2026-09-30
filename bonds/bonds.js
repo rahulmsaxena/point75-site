@@ -238,7 +238,7 @@
           '<dl><dt>Fund size</dt><dd>' + e[2] + '</dd><dt>Yearly fee</dt><dd>' + e[3] + '</dd><dt>Rate sensitivity</dt><dd>' + e[4] + '</dd></dl><p>' + e[5] + '</p></div>';
       }).join('') + '</div><p class="fine" style="margin-top:10px">Fund sizes and fees from ETF Database, ' + ETF_ASOF + '. Rate sensitivity is a plain-English guide to each fund’s duration.</p>' +
       '<p class="foot">The list of Treasuries comes from U.S. Treasury Fiscal Data. Yields and values are Point75 estimates from the Treasury yield curve published by the Federal Reserve Bank of St. Louis (FRED); a bond’s actual trading price can differ slightly. TIPS yields are real yields, before inflation. ' +
-      'A simplified tool for learning, not investment advice.<br>&copy; ' + new Date().getFullYear() + ' Rahul Saxena. All rights reserved.</p></div>';
+      'This product uses the FRED® API but is not endorsed or certified by the Federal Reserve Bank of St. Louis. A simplified tool for learning, not investment advice.<br>&copy; ' + new Date().getFullYear() + ' Rahul Saxena. All rights reserved.</p></div>';
   }
 
   function wire(host) {

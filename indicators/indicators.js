@@ -167,7 +167,7 @@
     var by = {}; d.indicators.forEach(function (i) { by[i.id] = i; });
     var asof = new Date(d.generated_at).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' });
     var h = '<div class="wrap"><div class="eyebrow">News</div><h1>Economic indicators</h1>' +
-      '<p class="lede">The numbers that move bonds, in one place: inflation, growth, jobs, rates and housing. Tap a category for its indicators, then tap any indicator for its full history.</p>' +
+      '<p class="lede">The numbers that move bonds, in one place: inflation, growth, jobs, rates and housing starts. Tap a category for its indicators, then tap any indicator for its full history.</p>' +
       '<div class="asof">Updated <b>' + asof + '</b> · refreshed every weekday from FRED</div>' +
       '<a class="tonews" href="/news">Today&rsquo;s headlines &rarr;</a>';
     h += '<div class="tiles">' + d.indicators.filter(function (i) { return i.headline && i.id !== 'fedfunds' && i.id !== 't10'; }).map(function (i) {
@@ -188,7 +188,7 @@
             '<div class="detail" id="p75d-' + i.id + '" hidden></div>';
         }).join('') + '</div>';
     }).join('') + '</div>';
-    h += '<p class="note">Changes compare the latest reading with the one before it. Green and red show whether a move is good or bad news for the economy. In Rates today, red means yields or rates went up and green means they came down. Data: Federal Reserve Bank of St. Louis (FRED) and the agencies that publish each series. Not investment advice.</p></div>';
+    h += '<p class="note">Changes compare the latest reading with the one before it. Green and red show whether a move is good or bad news for the economy. In Rates today, red means yields or rates went up and green means they came down. Data: Federal Reserve Bank of St. Louis (FRED) and the agencies that publish each series. This product uses the FRED® API but is not endorsed or certified by the Federal Reserve Bank of St. Louis. Not investment advice.</p></div>';
     return h;
   }
 
@@ -225,7 +225,7 @@
         '<div class="s"><span style="color:' + bcol(x.change_1w_bps) + '">' + bps(x.change_1w_bps) + (x.change_1w_bps != null ? ' 1w' : '') + '</span><span>as of ' + asof(x.date) + '</span></div><p>' + p[3] + '</p></div>';
     }).join('');
     if (cards) h += '<div class="rcard"><div class="rlab">Fed policy and overnight funding rates</div><div class="rgrid">' + cards + '</div>' +
-      '<p class="rsrc">Source: FRED. EFFR and SOFR are published by the Federal Reserve Bank of New York.</p></div>';
+      '<p class="rsrc">Source: FRED. EFFR and SOFR are published by the Federal Reserve Bank of New York. This product uses the FRED® API but is not endorsed or certified by the Federal Reserve Bank of St. Louis.</p></div>';
     return h;
   }
   function loadRates(host) {
