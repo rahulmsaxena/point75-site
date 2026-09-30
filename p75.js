@@ -615,6 +615,80 @@
     document.head.appendChild(st);
   })();
 
+
+  // ---------- Section hubs: never let a sub-menu hide its main page ----------
+  // Reads the live Hostinger menu, so titles and order follow whatever is set in the builder.
+  var HUB_LABEL = { '/education': 'All Education guides', '/pulse': 'Pulse overview', '/bondsummary': 'Bond Summary overview' };
+  function norm(h) { return (h || '').replace(/[?#].*$/, '').replace(/\/+$/, '') || '/'; }
+  function families() {
+    var out = [];
+    document.querySelectorAll('li.block-header-item').forEach(function (li) {
+      var ul = li.querySelector(':scope > label > .block-header-item__dropdown-area > ul.block-header-item__dropdown'); if (!ul) return;
+      var top = li.querySelector(':scope > label > .block-header-item__item > a.item-content'); if (!top) return;
+      var kids = [].slice.call(ul.querySelectorAll(':scope > li:not(.p75hub) a.item-content')).map(function (a) { return { href: norm(a.getAttribute('href')), text: a.textContent.trim() }; });
+      out.push({ li: li, ul: ul, href: norm(top.getAttribute('href')), text: top.textContent.trim(), kids: kids });
+    });
+    return out;
+  }
+  function hubMenus(fams) {
+    fams.forEach(function (f) {
+      if (f.ul.querySelector(':scope > li.p75hub') || !f.kids.length) return;
+      var first = f.ul.querySelector(':scope > li'); if (!first) return;
+      var li = first.cloneNode(true); li.classList.add('p75hub');
+      var a = li.querySelector('a.item-content');
+      a.setAttribute('href', f.href); a.removeAttribute('data-qa');
+      a.innerHTML = '<span class="p75hub-t">' + escH(HUB_LABEL[f.href] || (f.text + ' overview')) + '</span>';
+      f.ul.insertBefore(li, first);
+    });
+    if (!document.getElementById('p75hub-css')) {
+      var st = document.createElement('style'); st.id = 'p75hub-css';
+      st.textContent = 'li.p75hub a.item-content{color:' + GOLD + '!important;font-weight:700!important}' +
+        'li.p75hub .p75hub-t:after{content:" \\2192"}' +
+        'li.p75hub{border-bottom:1px solid rgba(201,162,39,.35);margin-bottom:4px;padding-bottom:4px}' +
+        '.p75crumb{max-width:900px;margin:0 auto;padding:18px 20px 0;box-sizing:border-box;font-family:Manrope,system-ui,sans-serif}' +
+        '.p75crumb a{display:inline-flex;align-items:center;gap:8px;color:' + GOLD + ';font-weight:700;font-size:14px;text-decoration:none;border:1px solid rgba(201,162,39,.55);border-radius:99px;padding:7px 14px;background:rgba(201,162,39,.06)}' +
+        '.p75crumb a:hover,.p75crumb a:focus-visible{background:rgba(201,162,39,.16);outline:none}' +
+        '.p75crumb span{color:#B8B2A5;font-size:13px;margin-left:10px}' +
+        '.p75sib{max-width:900px;margin:0 auto;padding:10px 20px 40px;box-sizing:border-box;font-family:Manrope,system-ui,sans-serif;display:grid;grid-template-columns:1fr 1fr;gap:12px}' +
+        '.p75sib a{display:block;text-decoration:none;background:#17181B;border:1px solid #2A2B2F;border-radius:12px;padding:14px 16px;color:#EDE8DC}' +
+        '.p75sib a:hover,.p75sib a:focus-visible{border-color:' + GOLD + ';outline:none}' +
+        '.p75sib small{display:block;color:#B8B2A5;font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}' +
+        '.p75sib b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:18px}' +
+        '.p75sib .nx{text-align:right}.p75sib .hub{grid-column:1/-1;text-align:center;background:none;border-style:dashed}' +
+        '.p75sib .hub b{font-family:Manrope,sans-serif;font-weight:700;font-size:14px;color:' + GOLD + '}' +
+        '@media (max-width:600px){.p75sib{grid-template-columns:1fr}.p75sib .nx{text-align:left}.p75crumb{padding:14px 16px 0}.p75sib{padding:6px 16px 32px}}';
+      document.head.appendChild(st);
+    }
+  }
+  var PAGE_HOSTS = '.p75edu, .p75debt, .p75ins, .p75pulse, .p75bonds, .p75ind';
+  function familyLinks(path, fams) {
+    var fam = null, i = -1;
+    fams.forEach(function (f) { f.kids.forEach(function (k, j) { if (k.href === path) { fam = f; i = j; } }); });
+    var crumb = document.getElementById('p75crumb'), sib = document.getElementById('p75sib');
+    if (!fam) { if (crumb) crumb.remove(); if (sib) sib.remove(); return; }
+    var host = document.querySelector(PAGE_HOSTS);
+    var parent = host ? host.parentNode : document.querySelector('.page__blocks');
+    if (!parent) return;
+    var key = path + '|' + fam.kids.map(function (k) { return k.href; }).join(',');
+    if (!crumb || crumb.getAttribute('data-k') !== key) {
+      if (crumb) crumb.remove();
+      crumb = document.createElement('nav'); crumb.id = 'p75crumb'; crumb.className = 'p75crumb'; crumb.setAttribute('aria-label', 'Section'); crumb.setAttribute('data-k', key);
+      crumb.innerHTML = '<a href="' + fam.href + '">&larr; ' + escH(HUB_LABEL[fam.href] || fam.text) + '</a>' +
+        (fam.kids.length > 1 ? '<span>' + (i + 1) + ' of ' + fam.kids.length + '</span>' : '');
+    }
+    if (host) { if (crumb.nextSibling !== host) parent.insertBefore(crumb, host); }
+    else if (parent.firstChild !== crumb) parent.insertBefore(crumb, parent.firstChild);
+    if (!host) return;                                   // bottom links wait until the page has drawn
+    if (!sib || sib.getAttribute('data-k') !== key) {
+      if (sib) sib.remove();
+      var prev = fam.kids[i - 1], next = fam.kids[i + 1];
+      sib = document.createElement('nav'); sib.id = 'p75sib'; sib.className = 'p75sib'; sib.setAttribute('aria-label', 'More in this section'); sib.setAttribute('data-k', key);
+      sib.innerHTML = (prev ? '<a href="' + prev.href + '"><small>&larr; Previous</small><b>' + escH(prev.text) + '</b></a>' : '<span></span>') +
+        (next ? '<a class="nx" href="' + next.href + '"><small>Next &rarr;</small><b>' + escH(next.text) + '</b></a>' : '<span></span>') +
+        '<a class="hub" href="' + fam.href + '"><b>' + escH(HUB_LABEL[fam.href] || ('Back to ' + fam.text)) + '</b></a>';
+    }
+    if (host.nextSibling !== sib) parent.insertBefore(sib, host.nextSibling);
+  }
   function update() {
     var path = location.pathname.replace(/\/+$/, '') || '/';
     var disc = document.querySelector('.p75d'), comments = document.querySelector('.p75c'), listen = document.querySelector('.p75l');
@@ -629,6 +703,8 @@
       stopAll();
       lastPath = path;
     }
+
+    var fams = families(); hubMenus(fams); familyLinks(path, fams);
 
     // Level + Editor's pick next to the reading time (homepage cards and post headers)
     document.querySelectorAll('.blog-list-item-meta__subtitle').forEach(function (s) {
