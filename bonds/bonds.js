@@ -1,6 +1,6 @@
 /* Point75 - Bonds page (/bonds): search every outstanding U.S. Treasury by CUSIP or plain words,
    with a yield and value estimated from the Treasury yield curve, performance, a rate-change
-   calculator, and the five largest bond ETFs. Loaded by p75.js; data from news.point75.io/api/bonds
+   calculator, a T-bill vs CD vs savings after-tax calculator, and the five largest bond ETFs. Loaded by p75.js; data from news.point75.io/api/bonds
    (fetch_bonds.py in Finance-NewsFeed-Aggregator, weekdays). (c) Rahul Saxena. All rights reserved. */
 (function () {
   if (window.P75BONDS) return;
@@ -59,6 +59,19 @@
     '.p75bonds .etf dl{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;margin:6px 0 0;font-size:13.5px}' +
     '.p75bonds .etf dt{color:var(--muted)}.p75bonds .etf dd{margin:0;text-align:right;font-weight:700;font-variant-numeric:tabular-nums}' +
     '.p75bonds .etf p{font-size:13.5px;line-height:1.5;color:var(--soft);margin:4px 0 0}' +
+    '.p75bonds .tb{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px}' +
+    '.p75bonds .tbin{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}' +
+    '.p75bonds .tbin label{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}' +
+    '.p75bonds .tbin input,.p75bonds .tbin select{width:100%;font:600 15px Manrope,system-ui,sans-serif;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--ink);color:var(--cream)}' +
+    '.p75bonds .tbin input:focus,.p75bonds .tbin select:focus{outline:2px solid var(--gold);outline-offset:0;border-color:var(--gold)}' +
+    '.p75bonds .tbout{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}' +
+    '.p75bonds .tbout .st b{font-size:20px}.p75bonds .tbout .st span{display:block;font-size:12.5px;color:var(--soft);margin-top:2px}' +
+    '.p75bonds .tbcmp{width:100%;border-collapse:collapse;font-size:14px}' +
+    '.p75bonds .tbcmp th{text-align:left;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:0 8px 8px 0;border-bottom:1px solid var(--line)}' +
+    '.p75bonds .tbcmp td{padding:9px 8px 9px 0;border-bottom:1px solid var(--line)}.p75bonds .tbcmp .r{text-align:right;font-variant-numeric:tabular-nums}' +
+    '.p75bonds details.tbmore summary{cursor:pointer;color:var(--gold);font-weight:700;font-size:14px}' +
+    '.p75bonds details.tbmore[open] summary{margin-bottom:10px}' +
+    '@media (max-width:620px){.p75bonds .tbin{grid-template-columns:repeat(2,minmax(0,1fr))}.p75bonds .tbout{grid-template-columns:1fr}}' +
     '.p75bonds .foot{margin-top:40px;color:var(--muted);font-size:12.5px;line-height:1.6;border-top:1px solid var(--line);padding-top:16px}' +
     '.p75bonds .load{color:var(--muted);margin-top:24px}' +
     '@media (max-width:620px){.p75bonds .wrap{padding:30px 16px 56px}.p75bonds h1{font-size:30px}.p75bonds .rb{grid-template-columns:minmax(0,1fr) 78px 64px;padding:13px 14px}.p75bonds .rb .spk{display:none}' +
@@ -223,6 +236,65 @@
     out.innerHTML = '<div class="list">' + rows + (r.list.length > shown ? '<button type="button" class="more">Show ' + Math.min(25, r.list.length - shown) + ' more of ' + (r.list.length - shown) + '</button>' : '') + '</div>';
   }
 
+  // ---------- T-bill vs CD vs savings, after tax ----------
+  var TERMS = [[1 / 12, '1 month'], [.25, '3 months'], [.5, '6 months'], [1, '1 year']];
+  var tb = { amt: 10000, term: .25, fed: 22, st: 5, cd: '', sv: '' };
+  function billYield(t) {
+    var c = (D && D.curve && D.curve.nominal) || [];
+    var hit = c.filter(function (p) { return Math.abs(p[0] - t) < 1e-6; })[0];
+    return hit ? hit[1] : null;
+  }
+  function money0(v) { return (v < 0 ? '−$' : '$') + Math.abs(Math.round(v)).toLocaleString('en-US'); }
+  function tbOut() {
+    var y = billYield(tb.term), f = tb.fed / 100, st = Math.max(0, Math.min(15, +tb.st || 0)) / 100, yrs = tb.term, lbl = TERMS.filter(function (x) { return x[0] === tb.term; })[0][1];
+    if (y == null) return '<p class="fine">Today’s T-bill yield isn’t available right now.</p>';
+    var keep = y * (1 - f), be = keep / (1 - f - st), earn = tb.amt * keep / 100 * yrs;
+    var h = '<div class="tbout"><div class="st"><small>' + lbl.replace(/^(\d+) (month|year)s?$/, '$1-$2') + ' T-bill yield</small><b>' + y.toFixed(2) + '%</b><span>before tax</span></div>' +
+      '<div class="st"><small>You keep after tax</small><b>' + keep.toFixed(2) + '%</b><span>' + money0(earn) + ' on ' + money0(tb.amt) + ' over ' + lbl + '</span></div>' +
+      '<div class="st"><small>To match it, a CD or savings account must pay</small><b>' + be.toFixed(2) + '%</b><span>because their interest is also taxed by your state</span></div></div>';
+    var rows = [['T-bill (' + lbl + ')', y, keep]];
+    [['CD', tb.cd], ['Savings account', tb.sv]].forEach(function (r) {
+      var v = parseFloat(r[1]); if (v > 0 && v < 25) rows.push([r[0], v, v * (1 - f - st)]);
+    });
+    if (rows.length > 1) {
+      h += '<table class="tbcmp"><thead><tr><th>Option</th><th class="r">Rate</th><th class="r">After tax</th><th class="r">You earn</th></tr></thead><tbody>' +
+        rows.map(function (r) {
+          return '<tr><td>' + r[0] + (r[0].indexOf('T-bill') === 0 ? '' : '') + '</td><td class="r">' + r[1].toFixed(2) + '%</td><td class="r">' + r[2].toFixed(2) + '%</td><td class="r"><b>' + money0(tb.amt * r[2] / 100 * yrs) + '</b></td></tr>';
+        }).join('') + '</tbody></table>';
+      var best = rows.slice().sort(function (a, b) { return b[2] - a[2]; })[0];
+      h += '<p class="fine" style="color:var(--soft)"><b style="color:var(--cream)">' + best[0] + '</b> leaves you with the most after tax, by ' +
+        money0(tb.amt * (best[2] - rows.filter(function (r) { return r !== best; }).sort(function (a, b) { return b[2] - a[2]; })[0][2]) / 100 * yrs) + ' over ' + lbl + '.</p>';
+    }
+    return h;
+  }
+  function tbSection() {
+    return '<h2>T-bill, CD or savings?</h2><p class="sub">Treasury bill interest is free of state and local income tax; bank interest isn’t. Put in your numbers to see what you actually keep.</p>' +
+      '<div class="tb" id="p75tb"><div class="tbin">' +
+      '<label>Amount<input type="number" id="p75tb-amt" min="100" step="1000" value="' + tb.amt + '" inputmode="numeric"></label>' +
+      '<label>Term<select id="p75tb-term">' + TERMS.map(function (t) { return '<option value="' + t[0] + '"' + (t[0] === tb.term ? ' selected' : '') + '>' + t[1] + '</option>'; }).join('') + '</select></label>' +
+      '<label>Federal tax bracket<select id="p75tb-fed">' + [10, 12, 22, 24, 32, 35, 37].map(function (r) { return '<option value="' + r + '"' + (r === tb.fed ? ' selected' : '') + '>' + r + '%</option>'; }).join('') + '</select></label>' +
+      '<label>State + local tax (%)<input type="number" id="p75tb-st" min="0" max="15" step="0.1" value="' + tb.st + '" inputmode="decimal"></label></div>' +
+      '<div id="p75tb-out">' + tbOut() + '</div>' +
+      '<details class="tbmore"><summary>Compare with your bank’s rates</summary><div class="tbin" style="grid-template-columns:repeat(2,minmax(0,1fr))">' +
+      '<label>CD rate (APY %)<input type="number" id="p75tb-cd" min="0" max="25" step="0.05" placeholder="e.g. 4.10" inputmode="decimal"></label>' +
+      '<label>Savings rate (APY %)<input type="number" id="p75tb-sv" min="0" max="25" step="0.05" placeholder="e.g. 3.50" inputmode="decimal"></label></div></details>' +
+      '<p class="fine">T-bill yields are today’s Treasury yields for each term (FRED). Simplified: it ignores compounding, fees and itemized deductions, and assumes you hold to maturity. For learning, not tax advice.</p></div>';
+  }
+  function wireTb(host) {
+    var box = host.querySelector('#p75tb'); if (!box) return;
+    box.addEventListener('input', function (e) {
+      var id = e.target.id, v = e.target.value;
+      if (id === 'p75tb-amt') { if (!(+v > 0)) return; tb.amt = +v; }
+      else if (id === 'p75tb-term') tb.term = +v;
+      else if (id === 'p75tb-fed') tb.fed = +v;
+      else if (id === 'p75tb-st') tb.st = v === '' ? 0 : +v;
+      else if (id === 'p75tb-cd') tb.cd = v;
+      else if (id === 'p75tb-sv') tb.sv = v;
+      else return;
+      host.querySelector('#p75tb-out').innerHTML = tbOut();
+    });
+  }
+
   function page(j) {
     var asof = day(j.asof);
     return '<div class="wrap"><div class="eyebrow">Bonds</div><h1>Find a bond</h1>' +
@@ -232,6 +304,7 @@
       '<input id="p75bq" type="search" autocomplete="off" placeholder="CUSIP or words, e.g. 10 year, TIPS 2035, bills March" aria-label="Search bonds by CUSIP or description"></div>' +
       '<div class="tries">Try: ' + ['10 year', '30 year bond', 'TIPS', 'bills', '2 year', 'FRN'].map(function (t) { return '<button type="button">' + t + '</button>'; }).join('') + '</div>' +
       '<p class="meta" aria-live="polite"></p><div class="p75b-out"></div>' +
+      tbSection() +
       '<h2>The most-owned bond ETFs</h2><p class="sub">For most people, a fund is an easier way to own bonds than buying single ones. These are the five largest U.S.-listed bond ETFs by money invested.</p><div class="etfs">' +
       ETFS.map(function (e, i) {
         return '<div class="etf"><div><span class="rk">#' + (i + 1) + '</span><span class="tk">' + e[0] + '</span></div><div class="fn">' + e[1] + '</div>' +
@@ -280,7 +353,7 @@
     load(function (j) {
       if (!document.body.contains(host)) return;
       if (!j || !j.bonds) { host.querySelector('.load').textContent = 'Bond data is unavailable right now. Please try again shortly.'; return; }
-      prep(j); host.innerHTML = page(j); wire(host);
+      prep(j); host.innerHTML = page(j); wire(host); wireTb(host);
     });
   }
   function clear() { var h = document.querySelector('.p75bonds'); if (h) h.remove(); }

@@ -50,6 +50,20 @@
     '.p75ind .note{color:var(--muted);font-size:12px;line-height:1.55;margin-top:18px}' +
     '.p75ind .load{color:var(--muted);margin-top:24px}' +
     '.p75ind .rates{margin:0 0 34px}' +
+    '.p75ind .yc{margin-top:40px}' +
+    '.p75ind .yc h2{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:26px;margin:0 0 4px}' +
+    '.p75ind .yc .rsub{color:#DDD7CA;font-size:14.5px;line-height:1.55;margin:0 0 14px;max-width:680px}' +
+    '.p75ind .ycstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0 14px}' +
+    '.p75ind .ycstats div{background:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px 12px}' +
+    '.p75ind .ycstats small{display:block;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}' +
+    '.p75ind .ycstats b{display:block;font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:28px;margin-top:4px}' +
+    '.p75ind .ycstats span{font-size:12.5px;color:#DDD7CA}' +
+    '.p75ind .ycread{font-size:15px;line-height:1.6;color:var(--cream);border-left:3px solid var(--gold);padding-left:14px;margin:14px 0}' +
+    '.p75ind .yct{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:6px}' +
+    '.p75ind .yct th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:0 8px 8px 0;border-bottom:1px solid var(--line)}' +
+    '.p75ind .yct td{padding:8px 8px 8px 0;border-bottom:1px solid var(--line)}.p75ind .yct .r{text-align:right}' +
+    '.p75ind .ychart{position:relative;margin-top:6px}.p75ind .ychart svg{display:block;width:100%}' +
+    '@media (max-width:620px){.p75ind .ycstats{gap:6px}.p75ind .ycstats div{padding:8px}.p75ind .ycstats small{font-size:10px;letter-spacing:.03em}.p75ind .ycstats b{font-size:21px}.p75ind .ycstats span{font-size:11px}.p75ind .yct .hs{display:none}}' +
     '.p75ind .rates h2{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:26px;margin:0 0 4px}' +
     '.p75ind .rates .rsub{color:#DDD7CA;font-size:14.5px;line-height:1.55;margin:0 0 14px}' +
     '.p75ind .rcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:14px}' +
@@ -188,8 +202,94 @@
             '<div class="detail" id="p75d-' + i.id + '" hidden></div>';
         }).join('') + '</div>';
     }).join('') + '</div>';
+    h += ycHTML(d.curve);
     h += '<p class="note">Changes compare the latest reading with the one before it. Green and red show whether a move is good or bad news for the economy. In Rates today, red means yields or rates went up and green means they came down. Data: Federal Reserve Bank of St. Louis (FRED) and the agencies that publish each series. This product uses the FRED® API but is not endorsed or certified by the Federal Reserve Bank of St. Louis. Not investment advice.</p></div>';
     return h;
+  }
+
+  // ---------- The yield curve: 10-year minus 3-month, past inversions, recession odds ----------
+  var MONS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  function ym(m) { return m ? MONS[+m.slice(5, 7) - 1] + ' ' + m.slice(0, 4) : '–'; }
+  function mdiff(a, b) { return (+b.slice(0, 4) - +a.slice(0, 4)) * 12 + (+b.slice(5, 7) - +a.slice(5, 7)); }
+  function ycReading(c) {
+    var e = c.episodes[c.episodes.length - 1], hits = c.episodes.filter(function (x) { return x.recession; });
+    var leads = hits.map(function (x) { return x.lead_from_inversion; }), lo = Math.min.apply(null, leads), hi = Math.max.apply(null, leads);
+    var t = '';
+    if (c.inverted) return 'The curve is inverted: 3-month bills pay more than 10-year notes. In the past, ' + hits.length + ' of ' + c.episodes.length +
+      ' inversions were followed by a recession, ' + lo + ' to ' + hi + ' months after the curve first inverted.';
+    if (e && e.uninverted && c.months_since_uninversion != null) {
+      t = 'The curve turned positive in ' + ym(e.uninverted) + ' after ' + e.months_inverted + ' months inverted, and has stayed positive for ' + c.months_since_uninversion + ' months. ';
+      if (!e.recession) {
+        var since = mdiff(e.inverted, c.month.period);
+        t += 'No recession has followed. It is now ' + since + ' months since it first inverted; in the past, recessions arrived ' + lo + ' to ' + hi + ' months after inversion' +
+          (since > hi ? ', so this is the longest the signal has gone without one.' : '.');
+      } else t += 'The recession that followed began in ' + ym(e.recession) + '.';
+      return t;
+    }
+    return 'The curve is positive, with long-term rates above short-term rates, which is its normal shape.';
+  }
+  function ycChart(c, W) {
+    var ser = c.series, H = W < 480 ? 200 : 230, L = 36, R = 8, T = 10, B = 24;
+    var v = ser.map(function (p) { return p[1]; }), mn = Math.floor(Math.min.apply(null, v)), mx = Math.ceil(Math.max.apply(null, v));
+    var x = function (i) { return L + i / (ser.length - 1) * (W - L - R); }, y = function (val) { return T + (mx - val) / (mx - mn) * (H - T - B); };
+    var idx = {}; ser.forEach(function (p, i) { idx[p[0]] = i; });
+    var bands = (c.recessions || []).map(function (r) {
+      var a = idx[r[0]] != null ? idx[r[0]] : 0, b = idx[r[1]] != null ? idx[r[1]] : ser.length - 1;
+      return '<rect x="' + x(a).toFixed(1) + '" y="' + T + '" width="' + Math.max(3, x(b) - x(a)).toFixed(1) + '" height="' + (H - T - B) + '" fill="#A9A396" opacity=".16"/>';
+    }).join('');
+    var grid = '', step = mx - mn > 4 ? 2 : 1;
+    for (var g = mn; g <= mx; g += step) grid += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y(g).toFixed(1) + '" y2="' + y(g).toFixed(1) + '" stroke="' + (g === 0 ? '#6a665e' : '#2A2B2F') + '"' + (g === 0 ? ' stroke-dasharray="4 3"' : '') + '/>' +
+      '<text x="' + (L - 6) + '" y="' + (y(g) + 4).toFixed(1) + '" text-anchor="end" font-size="11.5" fill="#A9A396" font-family="Manrope,sans-serif">' + (g > 0 ? '+' : '') + g + '</text>';
+    var years = '', every = W < 480 ? 10 : 5;
+    ser.forEach(function (p, i) { var yr = +p[0].slice(0, 4); if (p[0].slice(5) === '01' && yr % every === 0) years += '<text x="' + x(i).toFixed(1) + '" y="' + (H - 6) + '" text-anchor="middle" font-size="11.5" fill="#A9A396" font-family="Manrope,sans-serif">' + yr + '</text>'; });
+    var line = ser.map(function (p, i) { return (i ? 'L' : 'M') + x(i).toFixed(1) + ',' + y(p[1]).toFixed(1); }).join('');
+    // shade the inverted stretches below zero
+    var neg = ser.map(function (p, i) { return x(i).toFixed(1) + ',' + y(Math.min(0, p[1])).toFixed(1); }).join(' ');
+    var last = ser[ser.length - 1];
+    return '<svg width="' + W + '" height="' + H + '" role="img" aria-label="10-year minus 3-month Treasury spread since ' + ser[0][0].slice(0, 4) + ', with recessions shaded">' + bands + grid + years +
+      '<polygon points="' + x(0).toFixed(1) + ',' + y(0).toFixed(1) + ' ' + neg + ' ' + x(ser.length - 1).toFixed(1) + ',' + y(0).toFixed(1) + '" fill="' + BAD + '" opacity=".35"/>' +
+      '<path d="' + line + '" fill="none" stroke="' + GOLD + '" stroke-width="1.8" stroke-linejoin="round"/>' +
+      '<circle cx="' + x(ser.length - 1).toFixed(1) + '" cy="' + y(last[1]).toFixed(1) + '" r="4" fill="' + GOLD + '" stroke="#17181B" stroke-width="2"/>' +
+      '<line class="xh" y1="' + T + '" y2="' + (H - B) + '" stroke="#6a665e" stroke-dasharray="3 3" opacity="0"/><circle class="hd" r="4.5" fill="' + GOLD + '" stroke="#17181B" stroke-width="2" opacity="0"/>' +
+      '<rect class="hit" x="' + L + '" y="' + T + '" width="' + (W - L - R) + '" height="' + (H - T - B) + '" fill="transparent"/></svg>' +
+      '<div class="tip"></div>';
+  }
+  function drawYc(host) {
+    var c = D.curve, box = host.querySelector('#p75yc-chart'); if (!c || !box) return;
+    var W = Math.max(300, box.clientWidth); box.innerHTML = ycChart(c, W);
+    var ser = c.series, H = W < 480 ? 200 : 230, L = 36, R = 8, T = 10, B = 24;
+    var v = ser.map(function (p) { return p[1]; }), mn = Math.floor(Math.min.apply(null, v)), mx = Math.ceil(Math.max.apply(null, v));
+    var x = function (i) { return L + i / (ser.length - 1) * (W - L - R); }, y = function (val) { return T + (mx - val) / (mx - mn) * (H - T - B); };
+    var hit = box.querySelector('.hit'), xh = box.querySelector('.xh'), hd = box.querySelector('.hd'), tip = box.querySelector('.tip');
+    function show(cx) {
+      var r = box.getBoundingClientRect(), i = Math.round((cx - r.left - L) / (W - L - R) * (ser.length - 1)); i = Math.max(0, Math.min(ser.length - 1, i));
+      var p = ser[i], X = x(i); xh.setAttribute('x1', X); xh.setAttribute('x2', X); xh.setAttribute('opacity', 1);
+      hd.setAttribute('cx', X); hd.setAttribute('cy', y(p[1])); hd.setAttribute('opacity', 1);
+      tip.textContent = ym(p[0]) + ' · ' + (p[1] > 0 ? '+' : '') + p[1].toFixed(2) + ' pts · recession odds ' + Math.round(p[2]) + '%';
+      tip.style.left = Math.max(90, Math.min(W - 90, X)) + 'px'; tip.style.opacity = 1;
+    }
+    function hide() { xh.setAttribute('opacity', 0); hd.setAttribute('opacity', 0); tip.style.opacity = 0; }
+    hit.addEventListener('mousemove', function (e) { show(e.clientX); });
+    hit.addEventListener('touchmove', function (e) { show(e.touches[0].clientX); }, { passive: true });
+    hit.addEventListener('mouseleave', hide); hit.addEventListener('touchend', hide);
+  }
+  function ycHTML(c) {
+    if (!c || !c.series) return '';
+    var l = c.latest, pr = c.month.prob, e = c.episodes;
+    return '<section class="yc"><h2>The yield curve</h2><p class="rsub">The gap between the 10-year Treasury yield and the 3-month bill. When short rates rise above long ones, the curve is “inverted,” and that has come before every U.S. recession since the 1980s.</p>' +
+      '<div class="rcard"><div class="ycstats">' +
+      '<div><small>10-year minus 3-month</small><b class="num">' + (l.value > 0 ? '+' : '') + l.value.toFixed(2) + '</b><span>percentage points, ' + asof(l.date) + '</span></div>' +
+      '<div><small>Recession odds, next 12 months</small><b class="num">' + Math.round(pr) + '%</b><span>NY Fed model, ' + ym(c.month.period) + '</span></div>' +
+      '<div><small>Status</small><b>' + (c.inverted ? 'Inverted' : 'Positive') + '</b><span>' + (c.inverted ? 'short rates above long rates' : c.months_since_uninversion != null ? 'for ' + c.months_since_uninversion + ' months' : 'normal shape') + '</span></div></div>' +
+      '<p class="ycread">' + esc(ycReading(c)) + '</p>' +
+      '<div class="ychart chart" id="p75yc-chart"></div>' +
+      '<p class="foot" style="margin-top:4px">Monthly average since ' + c.series[0][0].slice(0, 4) + '. Red marks inverted stretches; gray bands are recessions. Hover for the model’s recession odds in any month.</p>' +
+      '<table class="yct"><thead><tr><th>Curve inverted</th><th class="hs">Months</th><th>Turned positive</th><th>Recession began</th><th class="r">After turning positive</th></tr></thead><tbody>' +
+      e.map(function (x) {
+        return '<tr><td>' + ym(x.inverted) + '</td><td class="hs">' + x.months_inverted + '</td><td>' + (x.uninverted ? ym(x.uninverted) : 'still inverted') + '</td><td>' + (x.recession ? ym(x.recession) : 'none') + '</td>' +
+          '<td class="r num">' + (x.lead_from_uninversion == null ? '–' : x.lead_from_uninversion < 0 ? (-x.lead_from_uninversion) + ' mo before' : x.lead_from_uninversion + ' mo') + '</td></tr>';
+      }).join('') + '</tbody></table>' +
+      '<p class="foot">A handful of episodes is a small sample, and the 2020 recession was caused by the pandemic. Recession odds use the New York Fed’s published model, odds = N(−0.5333 − 0.6330 × spread), applied to the monthly average spread from daily Treasury yields, so they can differ slightly from the NY Fed’s own figure. Recession dates: NBER via FRED.</p></div></section>';
   }
 
   // ---------- Rates today (moved here from the News page): Treasury yields and Fed policy rates ----------
@@ -271,7 +371,8 @@
     load(function (j) {
       if (!document.body.contains(host)) return;
       if (!j || !j.indicators) { host.querySelector('.load').textContent = 'Indicator data is unavailable right now. Please try again shortly.'; return; }
-      host.innerHTML = page(j); wire(host); loadRates(host);
+      host.innerHTML = page(j); wire(host); loadRates(host); drawYc(host);
+      var lw = host.clientWidth, tt; window.addEventListener('resize', function () { clearTimeout(tt); tt = setTimeout(function () { if (document.body.contains(host) && host.clientWidth !== lw) { lw = host.clientWidth; drawYc(host); } }, 150); });
     });
   }
   function clear() { var h = document.querySelector('.p75ind'); if (h) h.remove(); }

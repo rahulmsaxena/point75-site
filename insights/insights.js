@@ -42,6 +42,23 @@
     '.p75ins .act a{color:var(--gold)}' +
     '.p75ins .note{margin-top:34px;color:var(--muted);font-size:12.5px;line-height:1.6;border-top:1px solid var(--line);padding-top:16px}' +
     '.p75ins .load{color:var(--muted);margin-top:24px}' +
+    '.p75ins .fw{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}' +
+    '.p75ins .fw .sub{font-size:15px;line-height:1.55;color:var(--soft);margin:-4px 0 14px;max-width:68ch}' +
+    '.p75ins .fwm{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center}' +
+    '.p75ins .fwt{position:relative;height:10px;border-radius:5px;background:linear-gradient(90deg,#3D8BFF,#3a3b40 50%,#E5484D)}' +
+    '.p75ins .fwt i{position:absolute;top:50%;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:#fff;border:3px solid #17181B;box-shadow:0 0 0 2px #fff}' +
+    '.p75ins .fwl{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:8px}' +
+    '.p75ins .fwv{text-align:right}.p75ins .fwv b{display:block;font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:26px;color:#fff}.p75ins .fwv span{font-size:12.5px;color:var(--muted)}' +
+    '.p75ins .fwp{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 4px}' +
+    '.p75ins .fwp span{font-size:13px;color:var(--soft);border:1px solid var(--line);border-radius:99px;padding:4px 11px}.p75ins .fwp b{color:#fff}' +
+    '.p75ins .fws{margin-top:10px}' +
+    '.p75ins .fwr{border-top:1px solid var(--line);padding:12px 0}' +
+    '.p75ins .fwr .h{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px;color:var(--muted)}.p75ins .fwr .h b{color:#fff;font-size:14.5px}' +
+    '.p75ins .fwr .h em{font-style:normal;font-weight:700;font-size:12px;padding:1px 9px;border-radius:99px;border:1px solid var(--line);color:var(--soft)}' +
+    '.p75ins .fwr p{margin:6px 0 0;font-size:14.5px;line-height:1.55;color:var(--soft)}' +
+    '.p75ins .fwr q{display:block;margin-top:6px;font-family:"Hedvig Letters Serif",Georgia,serif;font-size:15px;color:#fff;quotes:"\\201C" "\\201D"}' +
+    '.p75ins .fwr a{color:var(--gold);text-decoration:none;font-size:12.5px;font-weight:700}' +
+    '@media (max-width:560px){.p75ins .fwm{grid-template-columns:1fr}.p75ins .fwv{text-align:left}}' +
     '@media (max-width:720px){.p75ins .voices,.p75ins .acts,.p75ins .ad{grid-template-columns:1fr}}' +
     '@media (max-width:560px){.p75ins .wrap{padding:28px 16px 56px}.p75ins h1{font-size:30px}.p75ins h2{font-size:24px}}';
 
@@ -65,6 +82,7 @@
         (v.quote ? '<blockquote>“' + esc(v.quote) + '”</blockquote>' : '') +
         '<div class="src">Sources: ' + v.sources.map(function (s) { return '<a href="' + esc(s[1]) + '" target="_blank" rel="noopener">' + esc(s[0]) + '</a>'; }).join(' · ') + '</div></article>';
     }).join('') + '</div>';
+    h += '<div id="p75fw"></div>';
     h += '<h2>How to insulate your household</h2><div class="acts">' + d.actions.map(function (a, i) {
       var body = esc(a[1]).replace('The Bonds page', '<a href="/bonds">The Bonds page</a>');
       return '<div class="act"><div class="n">' + (i + 1) + '</div><div><h3>' + esc(a[0]) + '</h3><p>' + body + '</p></div></div>';
@@ -74,6 +92,34 @@
   }
 
   var D = null, loading = false;
+  // ---------- Fed watch: Fed Board speeches scored hawkish / dovish ----------
+  var FW_API = 'https://news.point75.io/api/fedspeak';
+  function tone(sc) { return sc >= 0.5 ? ['▲', '#E5484D'] : sc <= -0.5 ? ['▼', '#3D8BFF'] : ['●', '#9AA0A6']; }
+  function fwHTML(f) {
+    if (!f || f.tilt == null) return '';
+    var pos = (f.tilt + 2) / 4 * 100;
+    return '<h2>Fed watch: hawk or dove?</h2><div class="fw"><p class="sub">Every speech and testimony by a Federal Reserve Board member, scored for what it signals about interest rates. ' +
+      'Hawkish means leaning toward higher rates to fight inflation, which usually pushes bond yields up; dovish means leaning toward lower rates.</p>' +
+      '<div class="fwm"><div><div class="fwt" role="img" aria-label="Board tilt ' + f.tilt.toFixed(1) + ' on a scale from -2 dovish to +2 hawkish"><i style="left:' + pos.toFixed(1) + '%"></i></div>' +
+      '<div class="fwl"><span>Dovish</span><span>Balanced</span><span>Hawkish</span></div></div>' +
+      '<div class="fwv"><b>' + esc(f.tilt_label) + '</b><span>average of ' + f.tilt_count + ' speeches on rates, last 90 days</span></div></div>' +
+      (f.people && f.people.length ? '<div class="fwp">' + f.people.slice().sort(function (a, b) { return b.last.localeCompare(a.last); }).map(function (p) {
+        var t = tone(p.avg); return '<span><b>' + esc(p.name) + '</b> <span style="border:0;padding:0;color:' + t[1] + '">' + t[0] + '</span> ' + esc(p.label) + '</span>';
+      }).join('') + '</div>' : '') +
+      '<div class="fws">' + f.recent.slice(0, 4).map(function (r) {
+        var t = tone(r.score);
+        return '<div class="fwr"><div class="h"><b>' + esc(r.speaker) + '</b><span>' + fmt(r.date) + '</span><em><span style="color:' + t[1] + '">' + t[0] + '</span> ' + esc(r.label) + '</em></div>' +
+          '<p>' + esc(r.summary) + '</p>' + (r.quote ? '<q>' + esc(r.quote) + '</q>' : '') +
+          '<a href="' + esc(r.link) + '" target="_blank" rel="noopener">' + esc(r.title) + ' &rarr;</a></div>';
+      }).join('') + '</div>' +
+      '<p class="src" style="margin:10px 0 0">Scores and summaries are written by AI from the full text of each speech and can miss nuance; quotes are checked word-for-word against the original. ' +
+      'Speeches not about rates or the economy (bank supervision, payments and so on) are left out. Source: Federal Reserve Board. Updated each weekday evening.</p></div>';
+  }
+  function loadFw(host) {
+    var box = host.querySelector('#p75fw'); if (!box) return;
+    fetch(FW_API).then(function (r) { return r.json(); }).then(function (f) { box.innerHTML = fwHTML(f); }).catch(function () {});
+  }
+
   function load(cb) {
     if (D) return cb(D); if (loading) return; loading = true;
     fetch(DATA).then(function (r) { return r.json(); }).then(function (j) { D = j; loading = false; cb(j); }).catch(function () { loading = false; cb(null); });
@@ -88,7 +134,7 @@
     load(function (j) {
       if (!document.body.contains(host)) return;
       if (!j || !j.voices) { host.querySelector('.load').textContent = 'Insights are unavailable right now. Please try again shortly.'; return; }
-      host.innerHTML = page(j);
+      host.innerHTML = page(j); loadFw(host);
     });
   }
   function clear() { var h = document.querySelector('.p75ins'); if (h) h.remove(); }
