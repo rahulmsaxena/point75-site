@@ -382,9 +382,11 @@
     '.p75edu .fl-score div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}' +
     '.p75edu .fl-score b{display:block;font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:30px;color:var(--cream)}' +
     '.p75edu .fl-score span{font-size:13px;color:var(--muted)}' +
-    '.p75edu .fl{display:grid;grid-template-columns:200px minmax(0,1fr);gap:22px;align-items:start;margin-top:22px;padding:20px;border-radius:16px;background:var(--panel);border:1px solid var(--line)}' +
+    '.p75edu .fl{margin-top:26px;border-radius:16px;background:var(--panel);border:1px solid var(--line);overflow:hidden}' +
+    '.p75edu .fl-art{margin:0;line-height:0;border-bottom:1px solid var(--line)}' +
+    '.p75edu .fl-txt{padding:18px 22px 20px}' +
     '.p75edu .fl.lost{border-left:4px solid #d95926}.p75edu .fl.made{border-left:4px solid #199e70}' +
-    '.p75edu .fl svg{width:100%;height:auto;display:block;border-radius:12px;background:#121418}' +
+    '.p75edu .fl svg{width:100%;height:auto;display:block;background:#121418}' +
     '.p75edu .fl .tagl{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;border-radius:99px}' +
     '.p75edu .fl.lost .tagl{background:rgba(217,89,38,.14);color:#f0a07a}.p75edu .fl.made .tagl{background:rgba(25,158,112,.16);color:#6fd6ae}' +
     '.p75edu .fl .yr{color:var(--muted);font-size:13px;font-weight:700;margin-left:8px}' +
@@ -397,7 +399,7 @@
     '.p75edu .fl .les:before{content:"Lesson: ";color:var(--muted);font-weight:600}' +
     '.p75edu .fl-quote{margin:30px 0 0;padding:18px 20px;border-radius:14px;background:var(--panel);border:1px solid var(--line);font-family:"Hedvig Letters Serif",Georgia,serif;font-size:21px;line-height:1.4;color:var(--cream)}' +
     '.p75edu .fl-quote small{display:block;font-family:Manrope,sans-serif;font-size:13px;color:var(--muted);margin-top:8px}' +
-    '@media (max-width:640px){.p75edu .fl{grid-template-columns:1fr;padding:16px}.p75edu .fl svg{max-width:280px;margin:0 auto}.p75edu .fl-score{grid-template-columns:1fr}}' +
+    '@media (max-width:640px){.p75edu .fl-txt{padding:14px 16px 16px}.p75edu .fl-score{grid-template-columns:1fr}}' +
     '.p75edu details.list{margin-top:14px}.p75edu details.list summary{color:var(--gold);cursor:pointer;font-weight:700;font-size:14px}' +
     '.p75edu .text,.p75edu .text *{-webkit-user-select:none;user-select:none}' +
     '@media (max-width:600px){.p75edu h1{font-size:30px}.p75edu .term h3{font-size:18px}}';
@@ -542,80 +544,184 @@
   }
 
 
-  // ---------- Fortunes made and lost (original cartoon illustrations) ----------
-  var INK = '#2A2B2F', CR = '#EDE8DC', GD = '#C9A227', BL = '#3987e5', OR = '#d95926', GR = '#199e70', GY = '#6a6d74';
+  // ---------- Fortunes made and lost: original surrealist scenes (desert plains, dramatic skies, long shadows) ----------
+  // Each scene is 400x190: sky, a low horizon, sand, then one impossible object, finished with film grain and a vignette.
+  var SKIES = {
+    dusk:   ['#0e1628', '#3b2a44', '#b3643a', '#e9b36a'],
+    dawn:   ['#101c33', '#2d3b5c', '#8a6a7a', '#f0c98a'],
+    noon:   ['#1d2b44', '#51607a', '#c9975a', '#f3d9a4'],
+    violet: ['#0c0f22', '#2c2150', '#7a4a78', '#d99a7a'],
+    storm:  ['#0a0d14', '#1c2533', '#3e4a55', '#8d8a7a'],
+    teal:   ['#0a141c', '#18313a', '#4c6a6a', '#b9ab8a']
+  };
+  function person(x, y, h, c) {   // a slim standing silhouette, feet at (x, y)
+    var w = h * .22;
+    return '<g fill="' + (c || '#120d0b') + '"><ellipse cx="' + x + '" cy="' + (y - h * .9) + '" rx="' + (w * .42) + '" ry="' + (w * .48) + '"/>' +
+      '<path d="M' + (x - w / 2) + ' ' + (y - h * .78) + ' Q' + x + ' ' + (y - h * .84) + ' ' + (x + w / 2) + ' ' + (y - h * .78) + ' L' + (x + w * .3) + ' ' + y + ' L' + (x - w * .3) + ' ' + y + ' Z"/></g>';
+  }
+  function shadow(x, y, len, w, op) {   // long shadow cast toward the left, low evening sun
+    return '<path d="M' + (x + w / 2) + ' ' + y + ' L' + (x - len) + ' ' + (y + w * .35) + ' L' + (x - len) + ' ' + (y + w * .55) + ' L' + (x - w / 2) + ' ' + (y + 2) + ' Z" fill="#0b0705" opacity="' + (op || .45) + '"/>';
+  }
+  function scene(id, sky, sun, body, opt) {
+    opt = opt || {};
+    var s = SKIES[sky], hz = opt.hz || 124, sx = sun[0], sy = sun[1], sr = sun[2];
+    var ripples = '';
+    for (var i = 0; i < 6; i++) {
+      var yy = hz + 8 + i * i * 2.2 + i * 4;
+      ripples += '<path d="M0 ' + yy + ' Q100 ' + (yy - 3) + ' 200 ' + yy + ' T400 ' + yy + '" stroke="#f3d9a4" stroke-opacity="' + (0.07 - i * .008) + '" fill="none"/>';
+    }
+    return '<svg viewBox="0 0 400 190" role="img" aria-label="' + esc(opt.alt || '') + '"><defs>' +
+      '<linearGradient id="' + id + 'k" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + s[0] + '"/><stop offset=".45" stop-color="' + s[1] + '"/><stop offset=".82" stop-color="' + s[2] + '"/><stop offset="1" stop-color="' + s[3] + '"/></linearGradient>' +
+      '<linearGradient id="' + id + 's" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + (opt.sand ? opt.sand[0] : '#a8773f') + '"/><stop offset=".35" stop-color="' + (opt.sand ? opt.sand[1] : '#6e4a2a') + '"/><stop offset="1" stop-color="' + (opt.sand ? opt.sand[2] : '#1c130d') + '"/></linearGradient>' +
+      '<radialGradient id="' + id + 'g"><stop offset="0" stop-color="#fff6de" stop-opacity=".95"/><stop offset=".25" stop-color="#ffe0a0" stop-opacity=".55"/><stop offset="1" stop-color="#ffcf80" stop-opacity="0"/></radialGradient>' +
+      '<radialGradient id="' + id + 'v" cx=".5" cy=".45" r=".75"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".6"/></radialGradient>' +
+      '<filter id="' + id + 'n" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="' + (id.length * 7) + '"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .45  0 0 0 0 .38  0 0 0 .55 0"/></filter>' +
+      (opt.defs || '') + '</defs>' +
+      '<rect width="400" height="' + (hz + 1) + '" fill="url(#' + id + 'k)"/>' +
+      '<circle cx="' + sx + '" cy="' + sy + '" r="' + (sr * 4) + '" fill="url(#' + id + 'g)"/><circle cx="' + sx + '" cy="' + sy + '" r="' + sr + '" fill="#fff4d6" opacity="' + (opt.moon ? .85 : .95) + '"/>' +
+      '<path d="M0 ' + hz + ' L40 ' + (hz - 5) + ' L78 ' + (hz - 2) + ' L120 ' + (hz - 9) + ' L150 ' + (hz - 3) + ' L230 ' + (hz - 6) + ' L300 ' + (hz - 2) + ' L350 ' + (hz - 8) + ' L400 ' + (hz - 3) + ' L400 ' + hz + ' Z" fill="' + s[1] + '" opacity=".55"/>' +
+      '<rect y="' + hz + '" width="400" height="' + (190 - hz) + '" fill="url(#' + id + 's)"/>' + ripples +
+      body +
+      '<rect width="400" height="190" filter="url(#' + id + 'n)" opacity=".22" style="mix-blend-mode:overlay"/>' +
+      '<rect width="400" height="190" fill="url(#' + id + 'v)"/></svg>';
+  }
+
   var ART = {
-    king: '<rect x="0" y="120" width="200" height="40" fill="#1a1c21"/>' +
-      '<path d="M40 70 L55 40 L75 62 L100 30 L125 62 L145 40 L160 70 Z" fill="' + GD + '" stroke="#8a6512" stroke-width="3"/>' +
-      '<rect x="40" y="70" width="120" height="18" rx="3" fill="' + GD + '" stroke="#8a6512" stroke-width="3"/>' +
-      '<circle cx="100" cy="79" r="5" fill="' + OR + '"/><circle cx="70" cy="79" r="4" fill="' + BL + '"/><circle cx="130" cy="79" r="4" fill="' + BL + '"/>' +
-      '<g transform="rotate(-8 70 118)"><rect x="30" y="98" width="80" height="40" rx="4" fill="' + CR + '"/><text x="70" y="126" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#5b3a12">IOU</text></g>' +
-      '<g transform="translate(150 120)"><circle r="16" fill="' + GD + '" stroke="#8a6512" stroke-width="2"/><path d="M-3 -16 L3 -4 L-4 4 L2 16" stroke="#121418" stroke-width="3" fill="none"/></g>' +
-      '<text x="182" y="36" font-family="Manrope,sans-serif" font-size="22" fill="' + CR + '" text-anchor="end">?!</text>',
-    rocket: '<g fill="' + CR + '" opacity=".5"><circle cx="20" cy="22" r="1.5"/><circle cx="60" cy="12" r="1"/><circle cx="170" cy="30" r="1.5"/><circle cx="150" cy="120" r="1"/><circle cx="30" cy="110" r="1"/></g>' +
-      '<path d="M40 150 Q90 140 150 40" stroke="' + GD + '" stroke-width="2" stroke-dasharray="4 5" fill="none" opacity=".6"/>' +
-      '<g transform="rotate(35 120 80)"><path d="M120 30 C138 48 140 90 134 110 L106 110 C100 90 102 48 120 30 Z" fill="' + CR + '"/>' +
-      '<circle cx="120" cy="66" r="9" fill="' + BL + '" stroke="' + INK + '" stroke-width="3"/><path d="M106 96 L94 116 L106 112 Z M134 96 L146 116 L134 112 Z" fill="' + OR + '"/>' +
-      '<path d="M110 112 L120 146 L130 112 Z" fill="' + GD + '"/><path d="M114 112 L120 132 L126 112 Z" fill="' + OR + '"/></g>' +
-      '<text x="42" y="60" font-family="Georgia,serif" font-size="34" font-weight="700" fill="' + GD + '">15%</text>',
-    orange: '<rect x="0" y="130" width="200" height="30" fill="#1a1c21"/>' +
-      '<rect x="36" y="18" width="128" height="14" rx="3" fill="' + GY + '"/><rect x="94" y="0" width="12" height="20" fill="' + GY + '"/><rect x="70" y="0" width="60" height="6" rx="3" fill="' + GY + '"/>' +
-      '<ellipse cx="100" cy="72" rx="58" ry="36" fill="' + OR + '"/><path d="M100 36 V108 M60 50 L140 94 M60 94 L140 50" stroke="#f08a5a" stroke-width="3"/>' +
-      '<path d="M96 36 Q104 26 116 30" stroke="' + GR + '" stroke-width="5" fill="none"/>' +
-      '<g fill="' + GD + '" font-family="Manrope,sans-serif" font-weight="800" font-size="16"><text x="58" y="128">$</text><text x="100" y="144">$</text><text x="136" y="126">$</text></g>' +
-      '<path d="M62 110 Q60 118 62 120 Q64 118 62 110 Z M140 108 Q138 116 140 118 Q142 116 140 108 Z" fill="' + OR + '"/>',
-    cards: '<rect x="0" y="136" width="200" height="24" fill="#1a1c21"/>' +
-      '<g stroke="' + INK + '" stroke-width="2" fill="' + CR + '">' +
-      '<path d="M40 136 L55 96 L70 136 Z"/><path d="M72 136 L87 96 L102 136 Z"/><path d="M104 136 L119 96 L134 136 Z"/>' +
-      '<rect x="50" y="90" width="90" height="6" rx="2"/><path d="M58 90 L73 52 L88 90 Z"/><path d="M92 90 L107 52 L122 90 Z"/>' +
-      '<rect x="66" y="46" width="62" height="6" rx="2"/><path d="M82 46 L96 12 L110 46 Z"/></g>' +
-      '<path d="M84 12 L96 4 L108 12 L96 18 Z" fill="' + INK + '"/><path d="M104 13 L104 22" stroke="' + GD + '" stroke-width="2"/>' +
-      '<g transform="rotate(38 160 110)"><path d="M146 136 L161 96 L176 136 Z" fill="' + CR + '" stroke="' + INK + '" stroke-width="2"/></g>' +
-      '<path d="M150 80 q6 -8 12 0 M162 72 q6 -8 12 0" stroke="' + GY + '" stroke-width="2" fill="none"/>',
-    tomb: '<rect x="0" y="126" width="200" height="34" fill="#16301f"/><path d="M0 126 q10 -6 20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0" fill="#1f4a2e"/>' +
-      '<path d="M56 130 V56 Q56 22 100 22 Q144 22 144 56 V130 Z" fill="' + GY + '" stroke="#4a4d54" stroke-width="3"/>' +
-      '<text x="100" y="54" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#2a2c31">R.I.P.</text>' +
-      '<text x="100" y="76" text-anchor="middle" font-family="Manrope,sans-serif" font-size="12" font-weight="800" fill="#2a2c31">SHORT JAPAN</text>' +
-      '<text x="100" y="92" text-anchor="middle" font-family="Manrope,sans-serif" font-size="12" font-weight="800" fill="#2a2c31">BONDS</text>' +
-      '<text x="100" y="116" text-anchor="middle" font-family="Georgia,serif" font-size="20" fill="#2a2c31">¥</text>' +
-      '<g fill="' + CR + '" opacity=".75"><circle cx="30" cy="30" r="10"/><circle cx="38" cy="26" r="8"/></g><circle cx="34" cy="29" r="9" fill="#121418" opacity=".0"/>',
-    house: '<rect x="0" y="134" width="200" height="26" fill="#1a1c21"/>' +
-      '<path d="M40 134 V78 L82 44 L124 78 V134 Z" fill="#3a3d44" stroke="' + INK + '" stroke-width="3"/><path d="M82 44 L96 56 L88 62 L100 72" stroke="#121418" stroke-width="3" fill="none"/>' +
-      '<rect x="58" y="96" width="18" height="18" fill="#121418"/><rect x="92" y="104" width="18" height="30" fill="#121418"/>' +
-      '<g transform="rotate(20 130 70)"><rect x="118" y="62" width="16" height="10" fill="#3a3d44"/></g>' +
-      '<g><path d="M150 96 q-10 0 -10 14 q0 22 22 22 q22 0 22 -22 q0 -14 -10 -14 Z" fill="' + GR + '"/><path d="M152 96 l10 -10 l10 10 Z" fill="' + GR + '"/>' +
-      '<text x="162" y="124" text-anchor="middle" font-family="Manrope,sans-serif" font-size="18" font-weight="800" fill="#0e3a2a">$</text></g>' +
-      '<g><path d="M150 40 q-8 0 -8 11 q0 17 17 17 q17 0 17 -17 q0 -11 -8 -11 Z" fill="' + GR + '"/><text x="159" y="62" text-anchor="middle" font-family="Manrope,sans-serif" font-size="14" font-weight="800" fill="#0e3a2a">$</text></g>' +
-      '<path d="M138 28 l6 -6 M178 30 l6 -4" stroke="' + GD + '" stroke-width="2"/>',
-    cake: '<rect x="0" y="138" width="200" height="22" fill="#1a1c21"/><ellipse cx="96" cy="138" rx="70" ry="6" fill="#2a2c31"/>' +
-      '<rect x="40" y="108" width="112" height="30" rx="4" fill="#8a5a3a"/><path d="M40 112 q14 8 28 0 t28 0 t28 0 t28 0" stroke="' + CR + '" stroke-width="5" fill="none"/>' +
-      '<g transform="rotate(-7 96 94)"><rect x="54" y="80" width="86" height="28" rx="4" fill="#8a5a3a"/><path d="M54 84 q11 7 21 0 t21 0 t22 0 t22 0" stroke="' + CR + '" stroke-width="5" fill="none"/>' +
-      '<g fill="' + BL + '">' + [62, 72, 82, 92, 102, 112, 122, 132].map(function (x) { return '<rect x="' + x + '" y="64" width="4" height="16"/>'; }).join('') + '</g>' +
-      '<g fill="' + GD + '">' + [64, 74, 84, 94, 104, 114, 124, 134].map(function (x) { return '<ellipse cx="' + x + '" cy="60" rx="2.5" ry="4"/>'; }).join('') + '</g></g>' +
-      '<text x="170" y="40" text-anchor="middle" font-family="Georgia,serif" font-size="26" font-weight="700" fill="' + GD + '">100</text><text x="170" y="58" text-anchor="middle" font-family="Manrope,sans-serif" font-size="11" fill="' + CR + '">YEARS</text>' +
-      '<path d="M150 100 q10 -2 16 6" stroke="' + OR + '" stroke-width="2" fill="none"/>',
-    teacup: '<rect x="0" y="138" width="200" height="22" fill="#1a1c21"/><ellipse cx="96" cy="136" rx="62" ry="7" fill="' + CR + '"/>' +
-      '<path d="M50 88 H142 Q140 128 96 130 Q52 128 50 88 Z" fill="' + CR + '"/><path d="M142 96 q22 0 18 18 q-4 12 -20 8" stroke="' + CR + '" stroke-width="7" fill="none"/>' +
-      '<ellipse cx="96" cy="88" rx="46" ry="7" fill="#8a5a3a"/><text x="96" y="118" text-anchor="middle" font-family="Georgia,serif" font-size="22" font-weight="700" fill="' + BL + '">£</text>' +
-      '<g fill="#4a4d54"><ellipse cx="80" cy="36" rx="30" ry="14"/><ellipse cx="108" cy="30" rx="26" ry="16"/><ellipse cx="124" cy="40" rx="20" ry="11"/></g>' +
-      '<path d="M100 50 L90 66 L100 66 L92 82" stroke="' + GD + '" stroke-width="4" fill="none" stroke-linejoin="round"/>' +
-      '<g stroke="' + BL + '" stroke-width="2"><path d="M70 52 l-3 8"/><path d="M118 54 l-3 8"/><path d="M130 50 l-3 8"/></g>',
-    bank: '<rect x="0" y="140" width="200" height="20" fill="#1a1c21"/>' +
-      '<path d="M18 50 L62 26 L106 50 Z" fill="' + GY + '"/><rect x="22" y="50" width="80" height="8" fill="' + GY + '"/>' +
-      '<g fill="' + GY + '"><rect x="28" y="60" width="9" height="66"/><rect x="48" y="60" width="9" height="66"/><rect x="67" y="60" width="9" height="66"/><rect x="87" y="60" width="9" height="66"/></g>' +
-      '<rect x="18" y="126" width="88" height="14" fill="' + GY + '"/><text x="62" y="46" text-anchor="middle" font-family="Manrope,sans-serif" font-size="10" font-weight="800" fill="#2a2c31">BANK</text>' +
-      [112, 128, 144, 160, 176, 192].map(function (x, i) {
-        return '<g transform="translate(' + x + ' ' + (104 + (i % 2) * 2) + ')"><circle r="6" cy="0" fill="' + CR + '"/><rect x="-6" y="7" width="12" height="22" rx="4" fill="' + [BL, OR, GR, GD, BL, OR][i] + '"/>' +
-          '<rect x="-9" y="10" width="5" height="8" rx="1" fill="#121418" stroke="' + CR + '" stroke-width="1"/><rect x="-5" y="29" width="3" height="8" fill="' + CR + '"/><rect x="2" y="29" width="3" height="8" fill="' + CR + '"/></g>';
-      }).join('') +
-      '<text x="150" y="70" text-anchor="middle" font-family="Manrope,sans-serif" font-size="13" font-weight="800" fill="' + OR + '">$42B OUT</text><text x="150" y="86" text-anchor="middle" font-family="Manrope,sans-serif" font-size="11" fill="' + CR + '">in one day</text>'
+    // A giant crown sinking into the sand; its IOU scroll unrolls all the way to the horizon.
+    king: function () {
+      return scene('fk', 'dusk', [320, 92, 13], shadow(186, 150, 150, 70, .5) +
+        '<path d="M232 124 C220 132 170 134 150 140 C128 147 118 160 124 190 L90 190 C84 162 96 142 120 134 C150 124 210 124 232 122 Z" fill="#efe3c6"/>' +
+        '<path d="M232 124 C220 132 170 134 150 140 C128 147 118 160 124 190" stroke="#b9a37a" stroke-width="1.2" fill="none"/>' +
+        '<g fill="#6b4a22" font-family="Georgia,serif" font-style="italic"><text x="104" y="176" font-size="15" transform="rotate(-8 104 176)">I.O.U.</text><text x="152" y="146" font-size="8" transform="rotate(-10 152 146)">Florins</text></g>' +
+        person(214, 124, 7, '#2a1a12') +
+        '<defs><linearGradient id="fkc" x1="0" x2="1"><stop offset="0" stop-color="#6b4a12"/><stop offset=".35" stop-color="#e6c060"/><stop offset=".55" stop-color="#fff0b8"/><stop offset="1" stop-color="#7a5418"/></linearGradient></defs>' +
+        '<path d="M160 150 L168 98 L186 118 L202 84 L218 118 L236 98 L244 150 Z" fill="url(#fkc)" stroke="#4a320c" stroke-width="1.2"/>' +
+        '<g fill="#a2202c"><circle cx="202" cy="120" r="4.5"/><circle cx="178" cy="132" r="3"/><circle cx="226" cy="132" r="3"/></g>' +
+        '<path d="M150 152 Q202 140 256 152 L262 160 Q202 148 144 160 Z" fill="#8e6236"/>' +
+        '<path d="M140 158 Q200 150 266 158 Q250 168 200 166 Q156 166 140 158 Z" fill="#a8773f"/>', { alt: 'A giant golden crown sinking into desert sand, its IOU scroll unrolling to the horizon' });
+    },
+    // A lone open door in the desert at dawn; light pours out; a pale moon engraved 15%.
+    door: function () {
+      return scene('fd', 'dawn', [300, 44, 20], '<text x="300" y="50" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#8a7a66" opacity=".85">15%</text>' +
+        '<path d="M186 150 L150 190 L262 190 L222 150 Z" fill="#ffd98a" opacity=".32"/>' +
+        '<path d="M186 150 L172 168 L238 168 L222 150 Z" fill="#fff0c0" opacity=".35"/>' +
+        '<rect x="180" y="72" width="48" height="80" fill="#2a1a10"/><rect x="185" y="77" width="38" height="75" fill="#ffe8a8"/>' +
+        '<rect x="185" y="77" width="38" height="75" fill="url(#fdl)"/>' +
+        '<defs><linearGradient id="fdl" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fff9e6"/><stop offset="1" stop-color="#ffc766"/></linearGradient></defs>' +
+        '<path d="M185 77 L160 82 L160 156 L185 152 Z" fill="#3a2414" stroke="#1a0f08"/><circle cx="165" cy="118" r="1.8" fill="#c9a227"/>' +
+        shadow(180, 152, 110, 30, .45) + person(120, 176, 22) + shadow(120, 176, 40, 6, .4), { alt: 'A lone open door standing in the desert at dawn, warm light pouring out, beneath a pale moon' , moon: true });
+    },
+    // An orange balanced on a leaning tower of coins, cracked and dripping.
+    orange: function () {
+      var coins = '', x = 196;
+      for (var i = 0; i < 16; i++) {
+        var y = 150 - i * 5.4; x += (i > 6 ? 1.3 : .4);
+        coins += '<ellipse cx="' + x.toFixed(1) + '" cy="' + (y + 2.2).toFixed(1) + '" rx="17" ry="4.2" fill="#6b4a12"/><ellipse cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" rx="17" ry="4.2" fill="url(#foc)" stroke="#4a320c" stroke-width=".6"/>';
+      }
+      return scene('fo', 'noon', [96, 40, 14], shadow(200, 152, 140, 40, .45) +
+        '<defs><linearGradient id="foc" x1="0" x2="1"><stop offset="0" stop-color="#8a6512"/><stop offset=".5" stop-color="#f2d27a"/><stop offset="1" stop-color="#8a6512"/></linearGradient>' +
+        '<radialGradient id="foo" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#ffc07a"/><stop offset=".45" stop-color="#e5731f"/><stop offset="1" stop-color="#6e2a08"/></radialGradient></defs>' +
+        coins + '<circle cx="' + (x + 4) + '' + '" cy="46" r="22" fill="url(#foo)"/>' +
+        '<path d="M' + (x - 2) + ' 30 L' + (x + 6) + ' 44 L' + (x - 1) + ' 52 L' + (x + 8) + ' 64" stroke="#3a1204" stroke-width="1.6" fill="none"/>' +
+        '<path d="M' + (x + 3) + ' 24 q4 -8 12 -6" stroke="#2f5a2a" stroke-width="2.5" fill="none"/>' +
+        '<g fill="#f08a2a"><path d="M' + (x + 6) + ' 70 q-3 6 0 8 q3 -2 0 -8 Z"/><path d="M' + (x + 8) + ' 96 q-3 6 0 8 q3 -2 0 -8 Z" opacity=".8"/><path d="M' + (x + 10) + ' 124 q-3 6 0 8 q3 -2 0 -8 Z" opacity=".6"/></g>' +
+        '<ellipse cx="' + (x + 12) + '" cy="156" rx="14" ry="3" fill="#c0561a" opacity=".55"/>', { alt: 'An orange balanced on a tall, leaning tower of gold coins, cracked and dripping juice onto the sand' });
+    },
+    // A house of cards floating in the sky, crowned with a laurel wreath, cards peeling away.
+    cards: function () {
+      var c = function (x, y, a) { return '<g transform="rotate(' + a + ' ' + x + ' ' + y + ')"><rect x="' + (x - 8) + '" y="' + (y - 12) + '" width="16" height="24" rx="1.5" fill="#f3ead6" stroke="#6b5a44" stroke-width=".6"/><text x="' + x + '" y="' + (y + 4) + '" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#8a1c22">&#9830;</text></g>'; };
+      var h = '';
+      [[176, 100, 18], [188, 100, -18], [200, 100, 18], [212, 100, -18], [224, 100, 18], [236, 100, -18]].forEach(function (p) { h += c(p[0], p[1], p[2]); });
+      h += '<rect x="170" y="86" width="72" height="3" fill="#f3ead6" stroke="#6b5a44" stroke-width=".5"/>';
+      [[188, 74, 18], [200, 74, -18], [212, 74, 18], [224, 74, -18]].forEach(function (p) { h += c(p[0], p[1], p[2]); });
+      h += '<rect x="184" y="60" width="44" height="3" fill="#f3ead6" stroke="#6b5a44" stroke-width=".5"/>' + c(200, 48, 18) + c(212, 48, -18);
+      h += '<path d="M194 34 q12 -9 24 0" stroke="#c9a227" stroke-width="2.2" fill="none"/><g fill="#c9a227"><ellipse cx="195" cy="32" rx="3" ry="1.4" transform="rotate(-40 195 32)"/><ellipse cx="200" cy="28" rx="3" ry="1.4" transform="rotate(-20 200 28)"/><ellipse cx="212" cy="28" rx="3" ry="1.4" transform="rotate(20 212 28)"/><ellipse cx="217" cy="32" rx="3" ry="1.4" transform="rotate(40 217 32)"/></g>';
+      h += c(262, 96, 58) + c(290, 116, 110) + c(318, 140, 160);
+      return scene('fc', 'violet', [70, 70, 11], '<ellipse cx="190" cy="160" rx="54" ry="5" fill="#0b0705" opacity=".5"/>' + h, { alt: 'A house of cards floating high above the desert, crowned with a laurel wreath, its cards peeling away one by one' });
+    },
+    // A lone figure waiting before a giant wave frozen mid-crash.
+    wave: function () {
+      return scene('fw', 'teal', [330, 60, 10], '<defs><linearGradient id="fww" x1="0" x2="1"><stop offset="0" stop-color="#0c2a33"/><stop offset=".6" stop-color="#1f5560"/><stop offset="1" stop-color="#6fa2a0"/></linearGradient></defs>' +
+        '<path d="M0 190 L0 40 Q40 -4 120 16 Q176 30 196 64 Q204 80 188 84 Q170 86 164 70 Q156 52 132 52 Q110 54 110 84 L126 190 Z" fill="url(#fww)"/>' +
+        '<path d="M120 16 Q176 30 196 64 Q204 80 188 84 Q170 86 164 70" stroke="#e8f0ea" stroke-width="3" fill="none" opacity=".85"/>' +
+        '<g fill="#e8f0ea" opacity=".8"><circle cx="192" cy="88" r="1.6"/><circle cx="184" cy="92" r="1.2"/><circle cx="198" cy="94" r="1"/><circle cx="176" cy="88" r="1"/></g>' +
+        '<path d="M20 60 Q60 40 96 50 M14 96 Q54 78 100 90 M30 130 Q66 118 108 128" stroke="#8fc1bd" stroke-opacity=".25" fill="none"/>' +
+        shadow(276, 168, 50, 8, .45) + person(276, 168, 26) +
+        '<path d="M264 146 Q276 132 288 146 Z" fill="#120d0b"/><path d="M276 146 V150" stroke="#120d0b"/>', { alt: 'A giant dark wave frozen mid-crash over the desert, while a lone figure with an umbrella waits in front of it', sand: ['#8a7a5a', '#4a4232', '#15120d'] });
+    },
+    // Houses dissolving into a flock of birds; gold rains on one umbrella.
+    birds: function () {
+      var houses = '', birds = '', rain = '';
+      [[40, 140, 30], [74, 146, 26], [104, 138, 34]].forEach(function (p, i) {
+        houses += '<path d="M' + (p[0] - p[2] / 2) + ' ' + p[1] + ' V' + (p[1] - p[2] * .7) + ' L' + p[0] + ' ' + (p[1] - p[2] * 1.2) + ' L' + (p[0] + p[2] / 2) + ' ' + (p[1] - p[2] * .7) + ' V' + p[1] + ' Z" fill="#1a1512"/>' +
+          '<rect x="' + (p[0] - 3) + '" y="' + (p[1] - p[2] * .45) + '" width="6" height="7" fill="#e0a850" opacity=".7"/>';
+      });
+      for (var i = 0; i < 26; i++) {
+        var bx = 30 + i * 6.5 + (i % 3) * 5, by = 96 - i * 3.1 - (i % 4) * 5, sc = .6 + i * .03;
+        birds += '<path d="M' + bx + ' ' + by + ' q' + (3 * sc) + ' ' + (-3 * sc) + ' ' + (6 * sc) + ' 0 q' + (3 * sc) + ' ' + (-3 * sc) + ' ' + (6 * sc) + ' 0" stroke="#1a1512" stroke-width="1.3" fill="none"/>';
+      }
+      for (var j = 0; j < 22; j++) {
+        var rx = 262 + (j * 37) % 90, ry = 20 + (j * 53) % 110;
+        rain += '<ellipse cx="' + rx + '" cy="' + ry + '" rx="2" ry="1.2" fill="#f2cf66" opacity="' + (.5 + (j % 3) * .15) + '"/>';
+      }
+      return scene('fb', 'storm', [210, 30, 8], houses + birds + rain +
+        '<path d="M282 146 Q306 120 330 146 Z" fill="#2a1d10"/><path d="M306 146 V172 q0 4 -4 4" stroke="#2a1d10" stroke-width="1.6" fill="none"/>' +
+        '<g fill="#f2cf66"><ellipse cx="300" cy="172" rx="10" ry="2.5"/><ellipse cx="312" cy="170" rx="8" ry="2"/><ellipse cx="306" cy="168" rx="7" ry="2"/></g>' +
+        person(306, 172, 20) + shadow(306, 172, 40, 8, .35), { alt: 'A row of houses whose roofs dissolve into a flock of birds, while gold coins rain onto a single figure under an umbrella' });
+    },
+    // A towering hourglass marked 100 years, cracked, emptying fast.
+    hourglass: function () {
+      return scene('fh', 'dusk', [86, 84, 12], shadow(212, 158, 150, 40, .5) +
+        '<defs><linearGradient id="fhg" x1="0" x2="1"><stop offset="0" stop-color="#9fb4c0" stop-opacity=".25"/><stop offset=".4" stop-color="#eef6fa" stop-opacity=".55"/><stop offset="1" stop-color="#9fb4c0" stop-opacity=".2"/></linearGradient>' +
+        '<linearGradient id="fhw" x1="0" x2="1"><stop offset="0" stop-color="#3a2410"/><stop offset=".5" stop-color="#8a5a2a"/><stop offset="1" stop-color="#2a180a"/></linearGradient></defs>' +
+        '<rect x="176" y="18" width="72" height="8" rx="2" fill="url(#fhw)"/><rect x="176" y="152" width="72" height="8" rx="2" fill="url(#fhw)"/>' +
+        '<rect x="180" y="26" width="4" height="126" fill="url(#fhw)"/><rect x="240" y="26" width="4" height="126" fill="url(#fhw)"/>' +
+        '<path d="M188 26 H236 Q236 70 214 88 Q236 106 236 152 H188 Q188 106 210 88 Q188 70 188 26 Z" fill="url(#fhg)" stroke="#dfe8ec" stroke-opacity=".5"/>' +
+        '<path d="M196 44 H228 Q226 64 212 80 Q198 64 196 44 Z" fill="#d9a55a" opacity=".85"/>' +
+        '<text x="212" y="40" text-anchor="middle" font-family="Georgia,serif" font-size="8" fill="#6b4a22">100 YEARS</text>' +
+        '<path d="M212 88 V140" stroke="#d9a55a" stroke-width="1.4"/><path d="M194 150 Q212 132 230 150 Z" fill="#d9a55a"/>' +
+        '<path d="M232 110 L226 120 L234 126 L228 138" stroke="#f3f7f9" stroke-width="1.2" fill="none"/>' +
+        '<path d="M236 124 Q262 132 268 158 Q280 162 300 160 L300 164 L236 164 Z" fill="#d9a55a"/>' +
+        '<path d="M236 124 q10 4 16 14" stroke="#e8b86a" stroke-width="2" fill="none"/>', { alt: 'A towering hourglass marked 100 years standing in the desert, its lower glass cracked and its sand pouring out' });
+    },
+    // A giant teacup tipping a storm onto the sea.
+    teacup: function () {
+      return scene('ft', 'storm', [330, 40, 7], '<defs><linearGradient id="ftc" x1="0" x2="1"><stop offset="0" stop-color="#b8ad9a"/><stop offset=".45" stop-color="#f6f0e2"/><stop offset="1" stop-color="#9a8f7c"/></linearGradient></defs>' +
+        '<rect x="330" y="96" width="10" height="28" fill="#141a22"/><path d="M328 96 L335 84 L342 96 Z" fill="#141a22"/><rect x="332" y="104" width="6" height="6" rx="3" fill="#8d8a7a" opacity=".6"/>' +
+        '<g transform="rotate(28 170 60)"><path d="M120 44 H222 Q218 96 171 100 Q124 96 120 44 Z" fill="url(#ftc)"/><ellipse cx="171" cy="44" rx="51" ry="8" fill="#3a2414"/>' +
+        '<path d="M222 54 q22 0 18 20 q-4 12 -22 8" stroke="#e6ddca" stroke-width="6" fill="none"/>' +
+        '<path d="M120 44 Q171 56 222 44" stroke="#c9a227" stroke-width="1.5" fill="none"/></g>' +
+        '<defs><linearGradient id="ftt" x1="0" x2="1"><stop offset="0" stop-color="#5a3a1e" stop-opacity=".35"/><stop offset=".5" stop-color="#a0703a" stop-opacity=".7"/><stop offset="1" stop-color="#5a3a1e" stop-opacity=".3"/></linearGradient></defs>' +
+        '<path d="M118 64 Q104 100 100 150 L134 150 Q128 100 136 70 Z" fill="url(#ftt)"/>' +
+        '<g stroke="#e0b070" stroke-opacity=".45" fill="none"><path d="M122 70 Q110 104 108 148"/><path d="M128 72 Q120 108 120 148"/><path d="M133 74 Q128 110 130 148"/></g>' +
+        '<ellipse cx="117" cy="152" rx="34" ry="5" fill="#c9a36a" opacity=".35"/>' +
+        '<g fill="#e8d2a8" opacity=".6"><circle cx="92" cy="146" r="1.6"/><circle cx="142" cy="144" r="1.4"/><circle cx="86" cy="140" r="1"/><circle cx="150" cy="140" r="1.1"/><circle cx="100" cy="138" r="1.2"/></g>' +
+        '<g fill="#2e3440"><ellipse cx="200" cy="18" rx="46" ry="12"/><ellipse cx="236" cy="12" rx="30" ry="10"/><ellipse cx="160" cy="16" rx="26" ry="8"/></g>' +
+        '<path d="M214 26 L204 44 L214 44 L206 60" stroke="#f2cf66" stroke-width="2.4" fill="none" stroke-linejoin="round"/>', { alt: 'A giant teacup tilting in a stormy sky, pouring a dark torrent onto a grey sea, a small clock tower on the horizon', sand: ['#4a5560', '#2a323a', '#0e1216'] });
+    },
+    // A classical bank melting into the sand; a queue stretches to the horizon.
+    bank: function () {
+      var q = '';
+      for (var i = 0; i < 14; i++) {
+        var t = i / 13, x = 250 + t * 140, y = 176 - t * 50, h = 22 - t * 16;
+        q += person(x, y, h) ;
+      }
+      return scene('fv', 'dusk', [340, 100, 10], '<defs><linearGradient id="fvs" x1="0" x2="1"><stop offset="0" stop-color="#8e8a82"/><stop offset=".5" stop-color="#e6e0d2"/><stop offset="1" stop-color="#7a766e"/></linearGradient></defs>' +
+        shadow(150, 170, 140, 90, .5) +
+        '<path d="M92 58 L150 30 L208 58 Z" fill="url(#fvs)"/><rect x="96" y="58" width="108" height="8" fill="url(#fvs)"/>' +
+        '<g fill="url(#fvs)"><rect x="104" y="68" width="9" height="86"/><rect x="124" y="68" width="9" height="86"/><rect x="146" y="68" width="9" height="86"/>' +
+        '<path d="M168 68 h9 v60 q0 10 -3 20 q-2 8 2 16 h-9 q2 -10 0 -18 q-2 -10 1 -18 Z"/><path d="M188 68 h9 v40 q2 14 -4 26 q-4 10 2 24 q-6 4 -9 0 q4 -12 1 -22 q-2 -12 1 -28 Z"/></g>' +
+        '<path d="M92 154 H208 L214 170 Q150 176 86 170 Z" fill="url(#fvs)"/>' +
+        '<path d="M196 170 q10 6 30 4 q8 -1 10 4 q-20 6 -44 0 Z" fill="#cfc8b8" opacity=".9"/>' +
+        '<rect x="140" y="118" width="16" height="36" fill="#1a0f08"/>' + q, { alt: 'A classical bank facade in the desert, its right columns melting into the sand, with a queue of people stretching to the horizon' });
+    }
   };
   var FORTUNES = [
     ['lost', '1340s', 'king', 'The king who stiffed his bankers',
       ['England’s Edward III borrowed huge sums from Florence’s two biggest banks, the Bardi and the Peruzzi, to fight the opening rounds of the Hundred Years’ War with France.',
        'When the war money ran dry, he paid back only part of it, some of it in wool instead of gold. Both banks went bust in the 1340s. Historians note Florence had troubles of its own, but lending to a king at war did not help.'],
       [['Lent (by one account)', '1.5M florins'], ['Banks that failed', '2 of Europe’s largest']], 'When you lend to someone with an army, you can’t make them pay.'],
-    ['made', '1981', 'rocket', 'The trade of a lifetime: buying at 15%',
+    ['made', '1981', 'door', 'The trade of a lifetime: buying at 15%',
       ['In 1981 inflation was in double digits and Fed chair Paul Volcker had pushed short-term rates near 20%. Long-term Treasury yields went above 15%, and almost nobody wanted to lock money up for 30 years.',
        'Those who did hit the jackpot. As inflation fell, yields dropped for roughly four decades, bond prices soared, and buyers kept collecting their 15% coupons. $10,000 in a 15% bond paid $1,500 a year in interest, whatever happened next.'],
       [['30-year yield, late 1981', 'above 15%'], ['Interest on $10,000', '$1,500 a year']], 'The scariest moment to buy is often the best.'],
@@ -627,15 +733,15 @@
       ['Long-Term Capital Management was run by star bond traders and two Nobel-prize economists. It made small, “safe” bets that tiny price gaps between similar bonds would close, and borrowed about $30 for every $1 of its own money to make them pay.',
        'Then Russia defaulted in August 1998, investors fled to the safest Treasuries, and the gaps blew wider instead. The fund lost 44% in August alone. The New York Fed gathered 14 banks, which put in $3.6 billion to take it over before its collapse hit everyone else.'],
       [['Debt per $1 of capital', 'about $30'], ['Rescue by 14 firms', '$3.6B']], 'A small edge, borrowed 30 times over, is a big risk.'],
-    ['lost', '1998–2020s', 'tomb', 'The Widowmaker: betting against Japan',
+    ['lost', '1998–2020s', 'wave', 'The Widowmaker: betting against Japan',
       ['Japan’s government debt kept climbing past 200% of its economy, so for years traders were sure its bond yields had to rise. They sold Japanese government bonds short, again and again.',
        'Instead yields kept falling, toward zero and even below it, while the Bank of Japan bought bonds by the trillion. The trade lost money so often, for so long, that it earned the nickname “the Widowmaker.” Yields only rose meaningfully in the 2020s, long after most of the bettors had given up.'],
       [['Japan’s debt', '200%+ of GDP'], ['Years it didn’t work', 'about two decades']], 'Being right eventually is not the same as being right in time.'],
-    ['made', '2007', 'house', 'The greatest trade ever',
+    ['made', '2007', 'birds', 'The greatest trade ever',
       ['Hedge-fund manager John Paulson became convinced that American home loans made to risky borrowers would go bad. He bought credit default swaps, a form of insurance that pays out when mortgage bonds fail.',
        'When the housing bubble burst in 2007, those mortgage bonds collapsed and the insurance paid off enormously. His funds made billions, and Paulson personally earned almost $4 billion that year, one of the largest paydays in Wall Street history.'],
       [['Paulson’s personal take', 'almost $4B'], ['Cost of the insurance', 'small, until it paid']], 'Cheap insurance against a “sure thing” can be the best bet of all.'],
-    ['lost', '2017–2020', 'cake', 'The 100-year bond that didn’t make it to 3',
+    ['lost', '2017–2020', 'hourglass', 'The 100-year bond that didn’t make it to 3',
       ['In June 2017 Argentina, a country with eight defaults behind it, sold $2.75 billion of bonds that would not be repaid until 2117. Investors, hungry for yield, offered close to $10 billion for them.',
        'Within a year Argentina needed a record bailout from the IMF. The bonds lost much of their value, and in 2020 Argentina defaulted for the ninth time and swapped them for new bonds, handing investors a loss.'],
       [['Promised to last', '100 years'], ['Lasted before default', 'under 3 years']], 'A high yield is the market telling you something.'],
@@ -655,7 +761,7 @@
       'Nine true stories of the biggest bond bets ever made, and what each one teaches.</p>' +
       '<div class="fl-score"><div><b>' + (FORTUNES.length - lost) + '</b><span>fortunes made</span></div><div><b>' + lost + '</b><span>fortunes lost</span></div><div><b>~700</b><span>years of lessons, from the 1340s to 2023</span></div></div>';
     FORTUNES.forEach(function (f) {
-      h += '<article class="fl ' + f[0] + '"><svg viewBox="0 0 200 160" aria-hidden="true">' + ART[f[2]] + '</svg><div>' +
+      h += '<article class="fl ' + f[0] + '"><figure class="fl-art">' + ART[f[2]]() + '</figure><div class="fl-txt">' +
         '<span class="tagl">' + (f[0] === 'made' ? '▲ Made' : '▼ Lost') + '</span><span class="yr">' + f[1] + '</span>' +
         '<h3>' + esc(f[3]) + '</h3>' + f[4].map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') +
         '<div class="nums">' + f[5].map(function (n) { return '<span>' + esc(n[0]) + '<b>' + esc(n[1]) + '</b></span>'; }).join('') + '</div>' +
@@ -667,7 +773,7 @@
       '<div class="term"><h3>“Safe” is not the same as “can’t lose money”</h3><p>Silicon Valley Bank owned some of the safest bonds in the world. Rising rates still cut their value, and it had to sell.</p></div>' +
       '<div class="term"><h3>Timing matters as much as being right</h3><p>The Widowmaker shorts were eventually right about Japan, decades too early. Paulson was right, and right on time.</p></div>' +
       '<a class="next" href="/bond-introduction">New to bonds? Start with the Introduction &rarr;</a></section>' +
-      '<p class="foot">Figures are rounded and drawn from public sources, including the Federal Reserve, the Bank of England and contemporary reporting. Illustrations are original drawings. For education and entertainment, not financial advice.<br>&copy; ' +
+      '<p class="foot">Figures are rounded and drawn from public sources, including the Federal Reserve, the Bank of England and contemporary reporting. Illustrations are original surrealist scenes drawn for this page. For education and entertainment, not financial advice.<br>&copy; ' +
       new Date().getFullYear() + ' Rahul Saxena. All rights reserved.</p></div>';
     return h;
   }
