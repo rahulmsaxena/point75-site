@@ -1,4 +1,4 @@
-/* Point75 - Check, Please! (/check-please) and Follow the Paper (/follow-the-paper), under Bond Summary.
+/* Point75 - Sector Credit (/sector-credit) and Lenders (/lenders), under Bond Summary.
    Loaded by p75.js; data from news.point75.io/api/credit, written weekly by fetch_credit.py.
    Sources: company 10-K/10-Q filings and money market fund filings (SEC EDGAR), and the Federal Reserve's
    Financial Accounts (Z.1) via FRED. No licensed data. (c) Rahul Saxena. All rights reserved. */
@@ -91,7 +91,7 @@
   }
   function median(a) { a = a.slice().sort(function (x, y) { return x - y; }); var n = a.length; return !n ? null : n % 2 ? a[(n - 1) / 2] : (a[n / 2 - 1] + a[n / 2]) / 2; }
 
-  // ---------------------------------------------------------------- Check, Please!
+  // ---------------------------------------------------------------- Sector Credit
   var st = { sector: null, tk: null, pick: 'mmf' };
 
   function companies(j) {
@@ -174,7 +174,7 @@
         '<div class="li"><span style="color:var(--muted)">Insurers · Pension funds · Foreign &amp; others</span><span class="na">not publicly available</span></div>' +
         '<div class="note">' + (cp.mmfFunds ? 'Held by ' + cp.mmfFunds + ' money market fund' + (cp.mmfFunds > 1 ? 's' : '') + '. ' : 'No money market fund held it on that date. ') +
         (cp.muniNotes ? 'Tax-exempt funds also held ' + money(cp.muniNotes) + ' of municipal notes the company is responsible for repaying. ' : '') +
-        '<a class="go" href="/follow-the-paper">Who lends across the market &rarr;</a></div>';
+        '<a class="go" href="/lenders">Who lends across the market &rarr;</a></div>';
     } else {
       h += '<div class="note" style="font-size:13.5px;color:var(--muted)">No commercial paper reported in its latest filing, so there is nothing for money market funds to hold.</div>';
     }
@@ -194,7 +194,7 @@
       '<div><div class="card scatter">' + scatter(list, sec.norm) + '</div>' + (c ? detail(c, st.sector) : '') + '</div></div>';
   }
 
-  // ---------------------------------------------------------------- Follow the Paper
+  // ---------------------------------------------------------------- Lenders
   var ISC = ['#C9A227', '#8f9bb0', '#6b6f77', '#4a4c53'];
 
   function followPage(j) {
@@ -247,10 +247,10 @@
 
   // ---------------------------------------------------------------- shell
   var PAGES = {
-    '/check-please': { title: 'Check, Please!', eyebrow: 'Check, Please!', lede: 'Who’s running up the corporate tab, sector by sector: the biggest borrowers, how much they owe, whether their earnings comfortably carry it, and who holds their short-term IOUs. Pick a sector, then a company.', body: checkPage,
-      link: '<a class="go" href="/follow-the-paper">Next: Follow the Paper, who’s lending them the money &rarr;</a>' },
-    '/follow-the-paper': { title: 'Follow the Paper', eyebrow: 'Follow the Paper', lede: 'Companies and banks fund their day-to-day bills with commercial paper: short IOUs, usually repaid within weeks. Here is who is lending that money, and how much cushion those lenders have.', body: followPage,
-      link: '<a class="go" href="/check-please">Back to Check, Please!, who’s borrowing &rarr;</a>' }
+    '/sector-credit': { title: 'Sector Credit', eyebrow: 'Sector Credit', lede: 'Corporate debt, sector by sector: the biggest borrowers, how much they owe, whether their earnings comfortably carry it, and who holds their short-term IOUs. Pick a sector, then a company.', body: checkPage,
+      link: '<a class="go" href="/lenders">Next: Lenders, who is lending them the money &rarr;</a>' },
+    '/lenders': { title: 'Lenders', eyebrow: 'Lenders', lede: 'Companies and banks fund their day-to-day bills with commercial paper: short IOUs, usually repaid within weeks. Here is who is lending that money, and how much cushion those lenders have.', body: followPage,
+      link: '<a class="go" href="/sector-credit">Back to Sector Credit, who is borrowing &rarr;</a>' }
   };
   var FOOT = '<p class="foot">Sources: companies’ annual and quarterly reports (Forms 10-K and 10-Q) and money market funds’ monthly holdings (Form N-MFP) via SEC EDGAR; ' +
     'Board of Governors of the Federal Reserve System, Financial Accounts of the United States (Z.1), via FRED (public domain). This product uses the FRED® API but is not endorsed or certified by the Federal Reserve Bank of St. Louis. ' +
@@ -280,7 +280,7 @@
     once();
     host = document.createElement('div'); host.className = 'p75cr'; host.setAttribute('data-path', path);
     host.innerHTML = '<div class="wrap"><div class="eyebrow"><a href="/bondsummary">Bond Summary</a> · ' + esc(p.eyebrow) + '</div><h1>' + esc(p.title) + '</h1>' +
-      '<p class="lede">' + esc(p.lede) + '</p><div class="asof"></div><div class="body"><div class="load">Adding up the tab…</div></div></div>';
+      '<p class="lede">' + esc(p.lede) + '</p><div class="asof"></div><div class="body"><div class="load">Loading the latest filings…</div></div></div>';
     var blocks = main.querySelector('.page__blocks');
     (blocks || main).appendChild(host);
     load(function (j) {
