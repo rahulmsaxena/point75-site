@@ -364,6 +364,20 @@
     '@media (max-width:600px){.p75edu .sl-sun{width:420px;height:420px;margin-left:-210px;top:-120px}.p75edu .sl-head{padding-top:118px}.p75edu .sl-big{font-size:32px}' +
       '.p75edu .sl-list{padding:6px 10px 0}.p75edu .sl-btn{gap:14px;padding:8px}.p75edu .sl-planet{width:calc(var(--d)*.62px);height:calc(var(--d)*.62px)}' +
       '.p75edu .sl-planet.ringed{width:calc(var(--d)*1.02px)}.p75edu .sl-name{font-size:22px}.p75edu .sl-val{font-size:25px}.p75edu .sl-moons{grid-template-columns:1fr}}' +
+    '.p75edu .ib{margin:14px 0 4px;padding:16px 18px;border-radius:14px;background:var(--panel);border:1px solid var(--line)}' +
+    '.p75edu .ib h4{margin:0 0 6px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:700}' +
+    '.p75edu .ib p{margin:0 0 8px;font-size:15px;line-height:1.65;color:#d9d4c8}.p75edu .ib p:last-child{margin-bottom:0}' +
+    '.p75edu .ib b{color:var(--cream)}' +
+    '.p75edu .fig{margin:12px 0 4px}.p75edu .fig svg{display:block;width:100%;height:auto}' +
+    '.p75edu .cap{color:var(--muted);font-size:13px;line-height:1.55;margin-top:6px}' +
+    '.p75edu .flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0 4px}' +
+    '.p75edu .flow div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;position:relative}' +
+    '.p75edu .flow b{display:block;color:var(--gold);font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}' +
+    '.p75edu .flow span{font-size:14px;line-height:1.55;color:#d9d4c8}' +
+    '.p75edu .two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0 4px}' +
+    '.p75edu .two .ib{margin:0}' +
+    '.p75edu .sec p.body{margin:0 0 12px;font-size:15.5px;line-height:1.7;color:#d9d4c8}' +
+    '@media (max-width:640px){.p75edu .flow,.p75edu .two{grid-template-columns:1fr}}' +
     '.p75edu details.list{margin-top:14px}.p75edu details.list summary{color:var(--gold);cursor:pointer;font-weight:700;font-size:14px}' +
     '.p75edu .text,.p75edu .text *{-webkit-user-select:none;user-select:none}' +
     '@media (max-width:600px){.p75edu h1{font-size:30px}.p75edu .term h3{font-size:18px}}';
@@ -384,6 +398,8 @@
     return '<div class="wrap text"><div class="eyebrow">Education</div><h1>Learn the language of bonds</h1>' +
       '<p class="lead">Short, plain-English guides to the ideas behind the essays, so you can follow the argument without a finance degree.</p>' +
       '<div class="cards">' +
+        '<a class="card" href="/bond-introduction"><div class="eyebrow">Start here</div><h3>Introduction: Bonds, Futures and Options</h3>' +
+          '<p>What a bond is, why its price moves when rates change, and how traders use bond futures and options.</p><span class="go">Start with the basics &rarr;</span></a>' +
         '<a class="card" href="/bond-history"><div class="eyebrow">Guide</div><h3>A Short History of Bonds</h3>' +
           '<p>From clay tablets in Mesopotamia to a $40 trillion U.S. debt: how lending to governments shaped the world.</p><span class="go">Read the history &rarr;</span></a>' +
         '<a class="card" href="/bond-types"><div class="eyebrow">Guide</div><h3>Classification of Bonds</h3>' +
@@ -396,6 +412,112 @@
       '</div>' + foot() + '</div>';
   }
 
+
+
+  // ---------- Introduction: bonds, bond futures, bond options ----------
+  function cashflowFig() {   // a $1,000 10-year Treasury paying 4%: $20 every six months, $1,000 back at the end
+    var W = 680, H = 250, L = 20, R = 16, base = 196, n = 20, bw = (W - L - R) / n, s = 0.135;
+    var bars = '';
+    for (var i = 0; i < n; i++) {
+      var x = L + i * bw + bw * .18, w = bw * .64, last = i === n - 1;
+      bars += '<rect x="' + x.toFixed(1) + '" y="' + (base - 20 * s * 10) + '" width="' + w.toFixed(1) + '" height="' + (20 * s * 10) + '" rx="2" fill="#C9A227"/>';
+      if (last) bars += '<rect x="' + x.toFixed(1) + '" y="' + (base - 20 * s * 10 - 2 - 1000 * s) + '" width="' + w.toFixed(1) + '" height="' + (1000 * s) + '" rx="3" fill="#3987e5"/>';
+    }
+    return '<div class="fig"><svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Cash flows of a $1,000 ten-year bond paying 4 percent: twenty payments of $20 and $1,000 back at the end">' +
+      '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + base + '" y2="' + base + '" stroke="#3a3b40"/>' + bars +
+      '<text x="' + (L + 2) + '" y="' + (base - 62) + '" font-family="Manrope,sans-serif" font-size="20" font-weight="700" fill="#EDE8DC">$20 every six months</text>' +
+      '<text x="' + (L + 2) + '" y="' + (base - 40) + '" font-family="Manrope,sans-serif" font-size="15" fill="#B8B2A5">(4% a year on $1,000)</text>' +
+      '<text x="' + (W - R - 44) + '" y="' + (base - 20 * s * 10 - 1000 * s - 12) + '" text-anchor="end" font-family="Manrope,sans-serif" font-size="20" font-weight="700" fill="#EDE8DC">$1,000 back at the end</text>' +
+      '<text x="' + L + '" y="' + (base + 28) + '" font-family="Manrope,sans-serif" font-size="17" fill="#B8B2A5">Year 1</text>' +
+      '<text x="' + (W - R) + '" y="' + (base + 28) + '" text-anchor="end" font-family="Manrope,sans-serif" font-size="17" fill="#B8B2A5">Year 10</text></svg>' +
+      '<div class="cap">You lend $1,000 and get 20 interest payments of $20, then your $1,000 back. Total received: $1,400.</div></div>';
+  }
+  function payoffFig() {   // option on 10-year futures, strike 111, premium 1 point ($1,000)
+    var W = 680, H = 300, L = 70, R = 20, T = 20, B = 44, x0 = 107, x1 = 115, y0 = -1500, y1 = 3500;
+    var X = function (v) { return L + (v - x0) / (x1 - x0) * (W - L - R); }, Y = function (v) { return T + (y1 - v) / (y1 - y0) * (H - T - B); };
+    var call = [[107, -1000], [111, -1000], [115, 3000]], put = [[107, 3000], [111, -1000], [115, -1000]];
+    var path = function (pts) { return pts.map(function (p, i) { return (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ',' + Y(p[1]).toFixed(1); }).join(''); };
+    var g = '';
+    [-1000, 0, 1000, 2000, 3000].forEach(function (v) {
+      g += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="' + (v === 0 ? '#6a665e' : '#2A2B2F') + '"' + (v === 0 ? ' stroke-dasharray="5 4"' : '') + '/>' +
+        '<text x="' + (L - 10) + '" y="' + (Y(v) + 6) + '" text-anchor="end" font-family="Manrope,sans-serif" font-size="16" fill="#B8B2A5">' + (v < 0 ? '−$' + (-v).toLocaleString('en-US') : '$' + v.toLocaleString('en-US')) + '</text>';
+    });
+    [107, 109, 111, 113, 115].forEach(function (v) { g += '<text x="' + X(v) + '" y="' + (H - 14) + '" text-anchor="middle" font-family="Manrope,sans-serif" font-size="16" fill="#B8B2A5">' + v + '</text>'; });
+    return '<div class="fig"><svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Profit or loss at expiry for a call and a put with strike 111 and a $1,000 premium">' + g +
+      '<line x1="' + X(111) + '" x2="' + X(111) + '" y1="' + T + '" y2="' + (H - B) + '" stroke="#3a3b40" stroke-dasharray="3 4"/>' +
+      '<text x="' + (X(111) + 6) + '" y="' + (T + 16) + '" font-family="Manrope,sans-serif" font-size="15" fill="#B8B2A5">strike 111</text>' +
+      '<path d="' + path(call) + '" fill="none" stroke="#3987e5" stroke-width="3" stroke-linejoin="round"/>' +
+      '<path d="' + path(put) + '" fill="none" stroke="#d95926" stroke-width="3" stroke-linejoin="round" stroke-dasharray="9 5"/>' +
+      '<text x="' + (X(114.1) - 6) + '" y="' + (Y(2100) - 14) + '" text-anchor="end" font-family="Manrope,sans-serif" font-size="18" font-weight="700" fill="#EDE8DC">Call</text>' +
+      '<text x="' + (X(107.9) + 6) + '" y="' + (Y(2100) - 14) + '" font-family="Manrope,sans-serif" font-size="18" font-weight="700" fill="#EDE8DC">Put</text>' +
+      '</svg><div class="cap">Profit or loss when the option expires, by the futures price (horizontal axis). Solid blue: a call; dashed orange: a put. ' +
+      'Both have a strike of 111 and cost 1 point ($1,000). The most either buyer can lose is the $1,000 they paid.</div></div>';
+  }
+  function intro() {
+    var h = '<div class="wrap text"><div class="eyebrow"><a href="/education" style="color:inherit;text-decoration:none">Education</a> · Start here</div>' +
+      '<h1>Bonds, Futures and Options: An Introduction</h1><p class="lead">Three instruments run the bond market. A bond is the loan itself. A future is a promise to trade a bond later. ' +
+      'An option is the right, but not the duty, to make that trade. Here is how each works, with simple numbers.</p>' +
+      '<nav class="toc"><a href="#p75i-bonds">What is a bond?</a><a href="#p75i-futures">Bond futures</a><a href="#p75i-options">Bond options</a><a href="#p75i-together">How they fit together</a></nav>';
+
+    h += '<section class="sec" id="p75i-bonds"><h2>What is a bond?</h2>' +
+      '<p class="body">A bond is a loan that you make to a government or a company. In return, the borrower promises two things: to pay you interest on a set schedule, ' +
+      'and to pay back the full amount on a set date. Because the promise is written down and can be sold to someone else, a bond can change hands many times before it is repaid.</p>' +
+      '<div class="term"><h3>Face value <small>also called par or principal</small></h3><p>The amount the borrower pays back at the end, usually $1,000 or $100 per bond.</p></div>' +
+      '<div class="term"><h3>Coupon</h3><p>The interest rate the bond pays on its face value. U.S. Treasury notes and bonds pay it in two halves each year.</p></div>' +
+      '<div class="term"><h3>Maturity</h3><p>The date the borrower repays the face value and the bond ends. Treasury bills last up to a year, notes 2 to 10 years, and bonds 20 or 30 years.</p></div>' +
+      '<div class="term"><h3>Yield</h3><p>The return you actually earn if you buy the bond at today’s price and hold it to the end. It is the number the market watches.</p></div>' +
+      '<h3 style="font-family:\'Hedvig Letters Serif\',Georgia,serif;font-weight:400;font-size:21px;margin:22px 0 2px">Example: a 10-year Treasury</h3>' + cashflowFig() +
+      '<div class="ib"><h4>The seesaw: why prices fall when rates rise</h4>' +
+      '<p>Say you own that 4% bond and, a day later, new 10-year bonds start paying 5%. Nobody will pay you the full $1,000 for a bond that pays less than a new one, so its price drops until its yield matches the market. ' +
+      'If rates fall to 3%, the opposite happens and your bond becomes worth more.</p>' +
+      '<table><thead><tr><th>New market rate</th><th>Price of your 4% bond</th><th>Change</th></tr></thead><tbody>' +
+      '<tr><td>3%</td><td class="r">$1,086</td><td>+8.6%</td></tr><tr><td>4% (unchanged)</td><td class="r">$1,000</td><td>0%</td></tr><tr><td>5%</td><td class="r">$922</td><td>−7.8%</td></tr></tbody></table>' +
+      '<p style="margin-top:10px">This is why bond prices and yields always move in opposite directions, and why long-term bonds swing more than short-term ones: there are more years of the “wrong” rate locked in. ' +
+      'If you hold the bond to the end, though, you still get every payment and your $1,000 back.</p></div></section>';
+
+    h += '<section class="sec" id="p75i-futures"><h2>What are bond futures?</h2>' +
+      '<p class="body">A bond future is an agreement, made today, to buy or sell a bond on a date a few months from now at a price fixed today. ' +
+      'Futures are traded on an exchange (for U.S. Treasuries, the Chicago Board of Trade, part of CME Group), which stands between buyer and seller so neither has to trust the other.</p>' +
+      '<div class="two"><div class="ib"><h4>Going long</h4><p>You agree to <b>buy</b>. You make money if bond prices rise, which means yields fall.</p></div>' +
+      '<div class="ib"><h4>Going short</h4><p>You agree to <b>sell</b>. You make money if bond prices fall, which means yields rise.</p></div></div>' +
+      '<div class="flow"><div><b>1 · Today</b><span>You agree on a price, for example 110 for one 10-year Treasury futures contract, and post a deposit called margin, typically a few thousand dollars.</span></div>' +
+      '<div><b>2 · Every day</b><span>The exchange settles gains and losses in cash each evening. If the price rises to 111, a long gains $1,000 and a short pays $1,000.</span></div>' +
+      '<div><b>3 · Expiry</b><span>Most traders close or “roll” into the next contract before the end. The few who stay deliver or receive actual Treasury notes.</span></div></div>' +
+      '<div class="ib"><h4>Why a small deposit controls a lot</h4><p>One 10-year contract stands for <b>$100,000</b> of Treasury notes, and each full point of price is worth <b>$1,000</b>. ' +
+      'Because you only post a few thousand dollars of margin, a small move in rates is a big gain or loss relative to what you put down. This is leverage, and it cuts both ways.</p>' +
+      '<p>The price moves roughly like a 10-year note. When the 10-year yield rises by 0.10%, the contract typically falls by about two-thirds of a point, around $600 to $700.</p></div>' +
+      '<div class="term"><h3>Who uses them</h3><p><b style="color:var(--cream)">Hedgers</b>, such as pension funds, insurers and bank trading desks, use futures to protect against rate moves on bonds they own or plan to buy. ' +
+      '<b style="color:var(--cream)">Asset managers</b> use them to add or cut interest-rate exposure quickly without buying bonds. ' +
+      '<b style="color:var(--cream)">Hedge funds</b> run the “basis trade”: they buy Treasuries and sell futures to earn the small price gap between the two, often with a lot of borrowed money.</p></div>' +
+      '<div class="term"><h3>Cheapest to deliver</h3><p>A futures contract can be settled with any of a basket of eligible notes. The seller picks the one that is cheapest to hand over, so the futures price tracks that particular note.</p></div>' +
+      '<p class="note">The weekly positioning of these groups is on our <a href="/pulse" style="color:var(--gold)">Pulse</a> page, from the CFTC’s Commitments of Traders report.</p></section>';
+
+    h += '<section class="sec" id="p75i-options"><h2>What are bond options?</h2>' +
+      '<p class="body">An option gives you the right, but not the obligation, to buy or sell at a set price, called the strike, on or before a set date. You pay for that right up front; the price is called the premium. ' +
+      'Most bond options that traders use are options on Treasury futures, also traded at CME Group.</p>' +
+      '<div class="two"><div class="ib"><h4>Call option</h4><p>The right to <b>buy</b> at the strike. It pays off if bond prices rise, which means yields fall.</p></div>' +
+      '<div class="ib"><h4>Put option</h4><p>The right to <b>sell</b> at the strike. It pays off if bond prices fall, which means yields rise.</p></div></div>' +
+      '<div class="ib"><h4>Example</h4><p>The 10-year futures price is 110. You buy a <b>call with a strike of 111</b> for a premium of 1 point, which is <b>$1,000</b>.</p>' +
+      '<p>If the futures price ends at 113, your call is worth 2 points ($2,000): a profit of $1,000 after the premium. If it ends at 111 or below, you simply let the option expire and lose the $1,000 you paid, nothing more. ' +
+      'You break even at 112.</p></div>' + payoffFig() +
+      '<div class="term"><h3>Why people buy them</h3><p>Options work like insurance. A pension fund worried about rising rates can buy puts to cap its losses, while keeping the upside if rates fall. ' +
+      'Someone expecting a sharp rate cut can buy calls and risk only the premium.</p></div>' +
+      '<div class="term"><h3>What option prices tell you</h3><p>The premium depends mostly on how much the market expects prices to move before expiry. That expected move is called <b style="color:var(--cream)">implied volatility</b>. ' +
+      'The best-known gauge for Treasuries is the MOVE index: when it jumps, options are getting expensive because traders expect bigger swings in rates.</p></div></section>';
+
+    h += '<section class="sec" id="p75i-together"><h2>How they fit together</h2>' +
+      '<table><thead><tr><th></th><th>Bond</th><th>Future</th><th>Option</th></tr></thead><tbody>' +
+      '<tr><td class="r">What it is</td><td>A loan you own</td><td>A promise to trade a bond later</td><td>The right to trade later</td></tr>' +
+      '<tr><td class="r">Paid up front</td><td>The full price</td><td>A margin deposit</td><td>The premium</td></tr>' +
+      '<tr><td class="r">Earns interest</td><td>Yes, the coupon</td><td>No</td><td>No</td></tr>' +
+      '<tr><td class="r">Most you can lose</td><td>What you paid, if the borrower defaults or you sell low</td><td>Can exceed your deposit</td><td>The premium (for a buyer)</td></tr>' +
+      '<tr><td class="r">Used for</td><td>Income and safety</td><td>Hedging, fast exposure, the basis trade</td><td>Insurance, or a limited-risk bet</td></tr></tbody></table>' +
+      '<p class="note">Prices of all three are tied together: if futures drift away from the bonds they track, traders buy the cheap one and sell the dear one until the gap closes. ' +
+      'That is exactly the trade hedge funds run at scale, and why stress in futures can spill into the bond market itself.</p>' +
+      '<a class="next" href="/bond-history">Next: A Short History of Bonds &rarr;</a><br><a class="next" href="/bond-dictionary" style="margin-top:4px">Look up any term in the Bond Dictionary &rarr;</a></section>';
+    return h + '<p class="foot">Examples use round numbers for learning. Futures and options involve leverage and can lose money quickly; this page is education, not financial advice.<br>&copy; ' +
+      new Date().getFullYear() + ' Rahul Saxena. All rights reserved.</p></div>';
+  }
 
   function history() {
     var h = '<div class="wrap text"><div class="eyebrow"><a href="/education" style="color:inherit;text-decoration:none">Education</a></div>' +
@@ -726,7 +848,7 @@
     once();
     host = document.createElement('div');
     host.className = 'p75edu'; host.setAttribute('data-path', path);
-    host.innerHTML = path === '/education' ? landing() : path === '/bond-history' ? history() : path === '/bond-types' ? types() : path === '/bond-players' ? players() : dictionary();
+    host.innerHTML = path === '/education' ? landing() : path === '/bond-introduction' ? intro() : path === '/bond-history' ? history() : path === '/bond-types' ? types() : path === '/bond-players' ? players() : dictionary();
     var blocks = main.querySelector('.page__blocks');
     if (blocks) blocks.appendChild(host); else main.appendChild(host);
 
@@ -746,6 +868,13 @@
       wireDonut(host, 'p75-d1', SECTORS, 'U.S. bond market');
       wireDonut(host, 'p75-d2', HOLDERS, 'Federal debt');
       wireSolar(host);
+    }
+    if (path === '/bond-introduction') {
+      host.querySelector('.toc').addEventListener('click', function (e) {
+        var a = e.target.closest('a[href^="#"]'); if (!a) return; e.preventDefault();
+        var el = host.querySelector(a.getAttribute('href')); if (!el) return;
+        window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - headerHeight() - 16, behavior: 'smooth' });
+      });
     }
     if (path === '/bond-types') {
       host.querySelector('.toc').addEventListener('click', function (e) {
