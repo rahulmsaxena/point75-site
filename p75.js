@@ -727,12 +727,11 @@
       '#p75tn a.pill:hover,#p75tn a.pill:focus-visible{background:rgba(201,162,39,.18)!important;color:' + G + '!important;outline:none}' +
       '#p75tn a.pill span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:inherit!important}' +
       '#p75tn a.nx{justify-self:end}' +
-      '#p75tn a.mid{display:inline-flex!important;align-items:center;gap:7px;box-sizing:border-box;min-width:0;max-width:100%;color:#EDE8DC!important;font-weight:600;font-size:13.5px;line-height:1.2;white-space:nowrap;text-decoration:none!important;' +
-        'border:1px solid #3a3b40;border-radius:99px;padding:8px 14px;background:#17181B;opacity:1!important;visibility:visible!important}' +
-      '#p75tn a.mid:hover,#p75tn a.mid:focus-visible{border-color:' + G + ';outline:none}' +
-      '.p75home{width:14px;height:14px;flex:none;fill:' + G + '}' +
-      '#p75tn .mid em,#p75tf .mid em{font-style:normal;color:#9d978b;font-weight:600;font-size:12.5px}' +
-      '#p75tn .mid .sec,#p75tf .mid .sec{overflow:hidden;text-overflow:ellipsis;max-width:none}' +
+      // middle: the section's home page, drawn as a gold ring with a dot (the "." in Point75)
+      '#p75tn a.mid{display:inline-flex!important;align-items:center;justify-content:center;box-sizing:border-box;width:36px;height:36px;padding:0;border:1.5px solid ' + G + ';border-radius:50%;' +
+        'background:transparent;text-decoration:none!important;opacity:1!important;visibility:visible!important;transition:background .15s}' +
+      '#p75tn a.mid:hover,#p75tn a.mid:focus-visible{background:rgba(201,162,39,.16);outline:none}' +
+      '.p75dot{display:block;width:6px;height:6px;border-radius:50%;background:' + G + '}' +
       // pinned bar
       '#p75tf{position:fixed!important;left:50%;top:10px;z-index:60;display:flex!important;max-width:calc(100vw - 24px);transform:translate(-50%,-14px);opacity:0;pointer-events:none;' +
         'background:rgba(17,18,20,.95);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(201,162,39,.6);border-radius:99px;' +
@@ -741,23 +740,21 @@
       '#p75tf a{display:flex!important;align-items:center;gap:6px;min-width:0;padding:9px 15px;color:' + G + '!important;font-weight:700;font-size:13.5px;line-height:1.2;text-decoration:none!important;white-space:nowrap;opacity:1!important;visibility:visible!important}' +
       '#p75tf a+a{border-left:1px solid rgba(201,162,39,.3)}' +
       '#p75tf a:first-child{border-radius:99px 0 0 99px}#p75tf a:last-child{border-radius:0 99px 99px 0}#p75tf a:only-child{border-radius:99px}' +
-      '#p75tf a.mid{color:#EDE8DC!important;font-weight:600}' +
+      '#p75tf a.mid{justify-content:center;padding:9px 17px}' +
+      '#p75tf .p75dot{box-shadow:0 0 0 5px rgba(17,18,20,.95),0 0 0 6.5px ' + G + '}' +
       '#p75tf a:hover,#p75tf a:focus-visible{background:rgba(201,162,39,.16)!important;outline:none}' +
       '#p75tf span{min-width:0;overflow:hidden;text-overflow:ellipsis;max-width:230px;color:inherit!important}' +
-      '@media (max-width:600px){#p75tn{padding:14px 16px 2px}#p75tn a.pill{font-size:13.5px;padding:8px 12px}#p75tn a.mid{padding:8px 11px}#p75tn .mid em{display:none}' +
-        '#p75tf a{padding:9px 12px;font-size:13px}#p75tf span{max-width:30vw}#p75tf .mid em{display:none}}' +
+      '@media (max-width:600px){#p75tn{padding:14px 16px 2px}#p75tn a.pill{font-size:13.5px;padding:8px 12px}#p75tn a.mid{width:34px;height:34px}' +
+        '#p75tf a{padding:9px 12px;font-size:13px}#p75tf span{max-width:30vw}}' +
       '@media print{#p75tn,#p75tf{display:none!important}}';
     document.head.appendChild(st);
   }
   function navHref(s, it) { return s.frame ? it.hash : it.href; }
   function navAttrs(s, it) {
-    return ' href="' + escH(navHref(s, it)) + '" title="' + escH(it.title || it.text) + '"' + (s.frame ? ' data-hash="' + escH(it.hash) + '"' : '');
+    return ' href="' + escH(navHref(s, it)) + '" title="' + escH(it.title || it.text) + '" aria-label="' + escH(it.title || it.text) + '"' + (s.frame ? ' data-hash="' + escH(it.hash) + '"' : '');
   }
-  // Middle link: the section's home page (overview), with a grid icon and "3 of 7" where it applies
-  var HOME_ICON = '<svg class="p75home" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="6" height="6" rx="1.5"/><rect x="9" y="1" width="6" height="6" rx="1.5"/><rect x="1" y="9" width="6" height="6" rx="1.5"/><rect x="9" y="9" width="6" height="6" rx="1.5"/></svg>';
-  function midHtml(m) {
-    return HOME_ICON + '<span class="sec">' + escH(m.text) + '</span>' + (m.pos ? '<em>' + escH(m.pos) + '</em>' : '');
-  }
+  // Middle link: the section's home page, a gold ring with a dot; the name shows as a tooltip
+  function midHtml(m) { return '<span class="p75dot"></span>'; }
   function pageNav(path, s) {
     var top = document.getElementById('p75tn'), bar = document.getElementById('p75tf');
     if (!s) { if (top) top.remove(); if (bar) bar.remove(); return; }
