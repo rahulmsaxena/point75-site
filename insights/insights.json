@@ -1,6 +1,6 @@
 {
-  "updated": "2026-09-29",
-  "window": "Aug 21 – Sep 24, 2026",
+  "updated": "2026-10-05",
+  "window": "Aug 21 – Oct 3, 2026",
   "hero": {
     "src": "https://rahulmsaxena.github.io/point75-site/insights/hero.jpg",
     "small": "https://rahulmsaxena.github.io/point75-site/insights/hero-sm.jpg",
@@ -10,9 +10,9 @@
   "headline": "What the biggest voices in bonds are saying",
   "mood": "Cautious vigilance",
   "bigPicture": [
-    "The shared view among the market’s leading voices is that the era of cheap money is over. The Federal Reserve raised rates in September because inflation has been above its 2% goal for more than five years, and the 10-year Treasury yield is now around 5.2%.",
+    "The shared view among the market’s leading voices is that the era of cheap money is over. The Federal Reserve raised rates in September because inflation has been above its 2% goal for more than five years, and the 10-year Treasury yield has climbed to around 5.25%, near its highest level since 2002.",
     "The pressure comes from supply as much as inflation. Federal debt has passed $40 trillion, the government keeps borrowing heavily, and traditional foreign buyers such as Japan and China are buying fewer Treasuries. Several of these investors say that makes buy-and-hold in long-term bonds riskier than it used to be.",
-    "They are not all bearish on bonds. BlackRock’s Rick Rieder and PIMCO see today’s yields as an opportunity, especially in high-quality and shorter-term bonds. Gundlach, Dalio and Druckenmiller warn that long-term Treasuries may not protect investors in the next downturn the way they used to."
+    "They are not all bearish on bonds. BlackRock’s Rick Rieder and PIMCO see today’s yields as an opportunity, especially in high-quality and shorter-term bonds, and Treasury Secretary Scott Bessent says the rise is a global trend rather than a U.S. problem. Gundlach, Dalio and Druckenmiller warn that long-term Treasuries may not protect investors in the next downturn the way they used to."
   ],
   "agree": ["Rates will stay higher for longer", "Government debt is the core pressure on yields", "Quality matters more than chasing extra yield"],
   "differ": [
@@ -32,26 +32,37 @@
       "sources": [["Press conference transcript (PDF)", "https://www.federalreserve.gov/mediacenter/files/FOMCpresconf20260916.pdf"], ["FOMC statement", "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm"]]
     },
     {
-      "name": "Mohamed El-Erian", "role": "Economist; former PIMCO CEO", "initials": "ME", "theme": "Buyers are drifting away",
-      "when": "Sep 4 and Sep 24, 2026", "where": "CNBC; comments reported by Benzinga",
+      "name": "Scott Bessent", "role": "U.S. Treasury Secretary", "initials": "SB", "theme": "Not alarmed yet",
+      "when": "Oct 3, 2026", "where": "Axios interview, reported by Bloomberg",
       "points": [
-        "He expects the global government-bond selloff to run further, because traditional big buyers of Treasuries, notably Japan and China, have been buying less.",
+        "He played down the jump in yields, describing it as part of a global rise in borrowing costs rather than a U.S.-specific problem.",
+        "He said he would worry about a rise unique to the U.S., and that investors are not selling Treasuries to buy German or Japanese bonds.",
+        "He acknowledged the limits of his role, saying he cannot control the bond market but can urge people to slow down and think."
+      ],
+      "quote": "I can’t control the bond market.",
+      "sources": [["Yahoo Finance (Bloomberg)", "https://finance.yahoo.com/economy/policy/articles/bessent-downplays-worries-rising-yields-145907014.html"]]
+    },
+    {
+      "name": "Mohamed El-Erian", "role": "Economist; former PIMCO CEO", "initials": "ME", "theme": "Buyers are drifting away",
+      "when": "Sep 4 – Oct 1, 2026", "where": "CNBC; Benzinga; posts on X",
+      "points": [
+        "He expects the global government-bond selloff to run further, because traditional big buyers of Treasuries, notably Japan and China, have been buying less. On Oct 1 he said upward pressure on yields remains the dominant theme.",
         "He sees the core problem as a fiscal imbalance with no political appetite to fix it, which keeps upward pressure on borrowing costs for households and businesses.",
         "He also cautions that investors anchored to a decade of ultra-low yields may be reacting to today’s levels with more fear than the fundamentals justify."
       ],
       "quote": "It has much more to do with fundamental imbalance than inflation or Fed credibility.",
-      "sources": [["CNBC, Sep 4", "https://www.cnbc.com/2026/09/04/el-erian-government-bond-selloff.html"], ["Yahoo Finance summary", "https://finance.yahoo.com/economy/policy/articles/famed-economist-mohamed-el-erian-154614710.html"], ["Benzinga, Sep 24", "https://www.benzinga.com/markets/bonds/26/09/61968162/bond-market-alarm-bells-are-ringing-but-mohamed-el-erian-says-psychology-may-be-fueling-the-fear-more-than-fundamentals"]]
+      "sources": [["CNBC, Sep 4", "https://www.cnbc.com/2026/09/04/el-erian-government-bond-selloff.html"], ["Benzinga, Sep 24", "https://www.benzinga.com/markets/bonds/26/09/61968162/bond-market-alarm-bells-are-ringing-but-mohamed-el-erian-says-psychology-may-be-fueling-the-fear-more-than-fundamentals"], ["Summary of Oct 1 post", "https://gokhshtein.com/news/2026-10-01-mohamed-el-erian-says-upward-pressure-dominates-bond-yields"]]
     },
     {
       "name": "Jeffrey Gundlach", "role": "CEO, DoubleLine", "initials": "JG", "theme": "Safe haven at risk",
-      "when": "Sep 17–18, 2026", "where": "CNBC; New York investor event",
+      "when": "Sep 17 – Oct 1, 2026", "where": "CNBC; interview with David Rosenberg, reported by MarketWatch",
       "points": [
         "He said the Fed should have raised rates by half a point, not a quarter, given its own forecast that inflation won’t reach 2% until 2029.",
-        "He warned that the next recession could trigger a fiscal crisis that pushes long-term Treasury yields up rather than down, breaking their usual role as a safe haven.",
-        "He flagged stress in bonds issued by AI companies, which have been cheapening within days of being sold, and favors shorter-duration credit over crowded big-tech exposure."
+        "He warned that the next recession could push long-term Treasury yields up rather than down, and on Oct 1 added that the dollar may fall rather than rise next time, as heavy government debt leaves only inflationary ways out.",
+        "He called the U.S. stock market a hollow tree: the index looks healthy only because a handful of giant companies are holding it up while most stocks have fallen well off their highs."
       ],
       "quote": "Long-term rates are going to go up because of the debt crisis…",
-      "sources": [["24/7 Wall St. (CNBC interview)", "https://247wallst.com/investing/2026/09/17/jeffrey-gundlach-says-the-fed-should-have-hiked-twice-as-much-and-ai-debt-is-already-cracking/"], ["Briefs, Sep 18", "https://www.briefs.co/news/gundlach-warns-next-recession-could-send-long-term-yields-mu/"], ["Bloomberg, Sep 17", "https://www.bloomberg.com/news/articles/2026-09-17/doubleline-s-gundlach-warns-of-fiscal-crisis-in-next-recession"]]
+      "sources": [["24/7 Wall St. (CNBC interview), Sep 17", "https://247wallst.com/investing/2026/09/17/jeffrey-gundlach-says-the-fed-should-have-hiked-twice-as-much-and-ai-debt-is-already-cracking/"], ["Briefs, Sep 18", "https://www.briefs.co/news/gundlach-warns-next-recession-could-send-long-term-yields-mu/"], ["Yahoo Finance / Quartz, Oct 1", "https://finance.yahoo.com/markets/stocks/articles/doublelines-jeffrey-gundlach-warns-stock-123516832.html"]]
     },
     {
       "name": "Ray Dalio", "role": "Founder, Bridgewater Associates", "initials": "RD", "theme": "A debt clock",
