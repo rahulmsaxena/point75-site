@@ -709,7 +709,7 @@
         if (k.href !== path) return;
         s.prev = j ? f.kids[j - 1] : { href: f.href, text: f.text + ' overview' };
         s.next = f.kids[j + 1] || null;
-        s.mid = { href: f.href, text: f.text, pos: f.kids.length > 1 ? (j + 1) + ' of ' + f.kids.length : '', title: HUB_LABEL[f.href] || (f.text + ' overview') };
+        s.mid = { href: f.href, text: f.text, title: HUB_LABEL[f.href] || (f.text + ' overview') };
       });
     });
     var fix = NAV_FIX[path]; if (fix) for (var k in fix) s[k] = fix[k];
