@@ -16,8 +16,6 @@
     '.p75ind .lede{color:var(--muted);font-size:16px;line-height:1.6;max-width:640px;margin:0}' +
     '.p75ind .asof{font-size:12.5px;color:var(--muted);margin-top:10px}.p75ind .asof b{color:var(--cream);font-weight:600}' +
     '.p75ind .num{font-variant-numeric:tabular-nums}' +
-    '.p75ind .tonews{display:inline-block;margin-top:14px;color:var(--gold);font-weight:700;font-size:14.5px;text-decoration:none;border:1px solid var(--gold);border-radius:99px;padding:7px 16px}' +
-    '.p75ind .tonews:hover,.p75ind .tonews:focus-visible{background:rgba(201,162,39,.12);outline:none}' +
     '.p75ind .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:30px 0 34px}' +
     '.p75ind .tile{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}' +
     '.p75ind .tile .l{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}' +
@@ -182,8 +180,7 @@
     var asof = new Date(d.generated_at).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' });
     var h = '<div class="wrap"><div class="eyebrow">News</div><h1>Economic indicators</h1>' +
       '<p class="lede">The numbers that move bonds, in one place: inflation, growth, jobs, rates and housing starts. Tap a category for its indicators, then tap any indicator for its full history.</p>' +
-      '<div class="asof">Updated <b>' + asof + '</b> · refreshed every weekday from FRED</div>' +
-      '<a class="tonews" href="/news">&larr; Today&rsquo;s headlines</a>';
+      '<div class="asof">Updated <b>' + asof + '</b> · refreshed every weekday from FRED</div>';
     h += '<div class="tiles">' + d.indicators.filter(function (i) { return i.headline && i.id !== 'fedfunds' && i.id !== 't10'; }).map(function (i) {
       var c = change(i);
       return '<div class="tile"><div class="l">' + esc(i.headline) + '</div><div class="v num">' + fmt(i.latest.value, i.dec) + '<small>' + esc(unitShort(i.unit)) + '</small></div>' +

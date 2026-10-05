@@ -688,7 +688,7 @@
   var NAV_FIX = {
     '/pulse': { next: { href: '/debt-trap', text: 'Debt Trap' } },
     '/debt-trap': { prev: { href: '/pulse', text: 'Pulse' } },
-    '/economic-indicators': { prev: { href: '/news', text: 'News' } }
+    '/economic-indicators': { prev: { href: '/news', text: 'Today\u2019s headlines' }, mid: null }
   };
   var navFrame = null;
   window.addEventListener('message', function (e) {
