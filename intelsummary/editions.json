@@ -1,3 +1,264 @@
 {
-  "summaries": []
+  "summaries": [
+    {
+      "market_date": "2026-10-05",
+      "key": "2026-10-05",
+      "edition": "close",
+      "generated_at": "2026-10-05T22:58:44Z",
+      "as_of": "Treasury close",
+      "title": "Long-end yields grind to fresh 24-year highs as the curve keeps steepening",
+      "regime": "Bear steepener",
+      "regime_note": "Term premium, not the Fed",
+      "conviction": "Medium",
+      "takeaway": "The 10-year and 30-year yields rose 3 bp to 5.31% and 5.66%, the highest since 2002, while the 2-year barely moved. The whole 10-year move came from real yields, with inflation breakevens unchanged, so investors are asking for more pay to lend long rather than betting on a more hawkish Fed. A soft ISM services headline with hot prices did little to change that.",
+      "tape": [
+        {
+          "k": "2Y",
+          "level": 4.84,
+          "d": 1,
+          "w": -8
+        },
+        {
+          "k": "5Y",
+          "level": 5.06,
+          "d": 0,
+          "w": 0
+        },
+        {
+          "k": "10Y",
+          "level": 5.31,
+          "d": 3,
+          "w": 7
+        },
+        {
+          "k": "30Y",
+          "level": 5.66,
+          "d": 3,
+          "w": 10
+        },
+        {
+          "k": "2s10s",
+          "level": 47,
+          "d": 2,
+          "w": 15,
+          "unit": "bp",
+          "group": "Curve"
+        },
+        {
+          "k": "5s30s",
+          "level": 60,
+          "d": 3,
+          "w": 10,
+          "unit": "bp",
+          "group": "Curve"
+        },
+        {
+          "k": "10Y real",
+          "level": 2.95,
+          "d": 3,
+          "w": 5,
+          "group": "10Y split"
+        },
+        {
+          "k": "10Y breakeven",
+          "level": 2.36,
+          "d": 0,
+          "w": 2,
+          "group": "10Y split"
+        }
+      ],
+      "fed": {
+        "meeting": "Oct 28"
+      },
+      "cross": [
+        {
+          "k": "S&P 500",
+          "v": "+0.66%",
+          "dir": "up",
+          "read": "Stocks rose and the Nasdaq hit a record despite higher long yields: tech strength outweighed bond weakness."
+        },
+        {
+          "k": "Brent",
+          "v": "+0.64%",
+          "dir": "up",
+          "read": "Oil stayed above $100 ($102.90), but breakevens did not move, so energy was not today's rates story."
+        },
+        {
+          "k": "WTI",
+          "v": "−0.47%",
+          "dir": "down",
+          "read": "US crude slipped to about $90.68; a mixed oil tape with no clear inflation signal."
+        }
+      ],
+      "drivers": [
+        {
+          "title": "Long end extends its selloff",
+          "tags": [
+            "Term premium",
+            "Global"
+          ],
+          "impact": "30Y +3 bp to 5.66%; 2s10s +2 bp",
+          "what": "The 10-year rose to 5.31% and the 30-year to 5.66% at Treasury's close, both up 3 bp and at their highest since 2002. The 2-year rose just 1 bp to 4.84%.",
+          "why": "Long-dated government bonds are selling off around the world. France's 10-year yield is near 5% and its gap over Germany is close to 1.5 percentage points after a new budget met doubts from its fiscal watchdog. When investors worry about government borrowing, they want extra yield to hold long bonds.",
+          "response": "2s10s steepened 2 bp to 47 bp and 5s30s 3 bp to 60 bp. The 10-year real (TIPS) yield rose 3 bp to 2.95%; the 10-year breakeven was unchanged at 2.36%.",
+          "signal": "Long-end and real-yield led, with the front end flat: a term-premium story, not a repricing of Fed policy or of inflation expectations."
+        },
+        {
+          "title": "ISM services: softer activity, hotter prices",
+          "tags": [
+            "Inflation",
+            "Growth"
+          ],
+          "impact": "Mixed data; the prices index stood out",
+          "what": "The ISM services PMI was 54.9 vs 55.0 expected and 55.4 in August. Business activity fell to 56.5 from 61.7, but the prices index rose to 74.0 from 72.6, its highest since July 2022, and employment rose back above 50 to 50.1.",
+          "why": "Slower activity would normally pull yields down, but rising input costs keep inflation risk alive at a time when the Fed has been raising rates.",
+          "response": "The 10-year still finished 3 bp higher on the day, and breakevens were unchanged, so the hot prices index did not show up as higher inflation expectations.",
+          "signal": "The data did not give the market a reason to buy bonds: a slight growth miss was offset by price pressure."
+        },
+        {
+          "title": "Weak jobs report keeps a lid on the front end",
+          "tags": [
+            "Labor",
+            "Fed"
+          ],
+          "impact": "2Y +1 bp; October hike odds stay low",
+          "what": "Friday's September jobs report showed payrolls up just 29,000, unemployment at 4.2%, and the prior two months revised down by a combined 60,000.",
+          "why": "A cooling job market makes another Fed hike at the October 27–28 meeting less likely, which anchors 2-year yields, the maturity most tied to Fed policy.",
+          "response": "CME FedWatch put October hike odds near 24% on Monday. The 2-year is 8 bp lower than a week ago.",
+          "signal": "With the Fed priced as likely to hold, the long end is doing the moving, which is why the curve steepened 15 bp (2s10s) over the week."
+        }
+      ],
+      "macro": [
+        {
+          "tag": "Growth",
+          "title": "ISM services PMI (September)",
+          "time": "10:00 AM",
+          "actual": "54.9",
+          "consensus": "55.0",
+          "prior": "55.4",
+          "note": "27th straight month of expansion; business activity fell to 56.5 from 61.7."
+        },
+        {
+          "tag": "Inflation",
+          "title": "ISM services prices index",
+          "time": "10:00 AM",
+          "actual": "74.0",
+          "prior": "72.6",
+          "note": "Highest since July 2022."
+        },
+        {
+          "tag": "Labor",
+          "title": "ISM services employment index",
+          "time": "10:00 AM",
+          "actual": "50.1",
+          "prior": "47.8",
+          "note": "Back in expansion after two months of contraction."
+        },
+        {
+          "tag": "Supply",
+          "title": "Treasury supply",
+          "note": "Only bill auctions today. The quarterly coupon supply comes this week: 3-year notes Tuesday, 10-year notes Wednesday and 30-year bonds Thursday, a test of demand at 24-year-high long yields."
+        },
+        {
+          "tag": "Fed",
+          "title": "Fed pricing",
+          "note": "After the September 16 hike to 3.75%–4.00%, CME FedWatch showed roughly a one-in-four chance of another hike on October 28 (about 24%), with most of the market expecting a hold."
+        }
+      ],
+      "geo": [
+        {
+          "title": "France's budget and political risk",
+          "impact": "Moderate",
+          "text": "France's 2027 budget targets a 5% deficit, but its fiscal watchdog questioned the growth assumptions. French 10-year yields near 5% are part of the global long-end selloff weighing on Treasuries."
+        },
+        {
+          "title": "Middle East supply risk in oil",
+          "impact": "Low",
+          "text": "Brent held above $100, but 10-year breakevens were unchanged, so oil added little to today's move in Treasuries."
+        }
+      ],
+      "events": [
+        {
+          "t": "10:00 AM",
+          "cat": "Data",
+          "title": "ISM services PMI 54.9 vs 55.0 expected; prices index 74.0",
+          "react": "No rally in bonds; the 10-year ended the day 3 bp higher"
+        },
+        {
+          "t": "4:00 PM",
+          "cat": "Close",
+          "title": "Stocks close higher; Nasdaq sets a record",
+          "react": "S&P 500 +0.66%; 10Y finishes at 5.31%, 30Y at 5.66% (Treasury close)"
+        }
+      ],
+      "interpretation": {
+        "text": "The evidence points to rising term premium: the long end rose while the 2-year was flat, real yields did all of the 10-year move, and breakevens did not budge. Fed expectations, if anything, eased after Friday's weak jobs data. Conviction is medium because the day's move was small and no single headline drove it; it is a continuation of a global long-bond selloff rather than a new shock.",
+        "change": "Weak demand at this week's 10-year or 30-year auctions would likely push long yields higher still; strong auctions, or a soft CPI on October 14, could halt the steepening."
+      },
+      "watch": [
+        {
+          "when": "Tue",
+          "what": "3-year note auction"
+        },
+        {
+          "when": "Tue 10:45 AM",
+          "what": "Fed Vice Chair for Supervision Bowman speaks on bank regulation"
+        },
+        {
+          "when": "Wed",
+          "what": "10-year note auction"
+        },
+        {
+          "when": "Wed 2:00 PM",
+          "what": "FOMC minutes (September 15–16 meeting)"
+        },
+        {
+          "when": "Thu",
+          "what": "30-year bond auction; weekly jobless claims"
+        },
+        {
+          "when": "Mon Oct 12",
+          "what": "Columbus Day: US bond market closed"
+        },
+        {
+          "when": "Wed Oct 14 8:30 AM",
+          "what": "September CPI"
+        }
+      ],
+      "sources": [
+        {
+          "name": "U.S. Treasury: daily par yield curve rates",
+          "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value_month=202610"
+        },
+        {
+          "name": "U.S. Treasury: daily par real yield curve rates",
+          "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_real_yield_curve&field_tdr_date_value_month=202610"
+        },
+        {
+          "name": "ISM: September 2026 Services PMI report",
+          "url": "https://www.prnewswire.com/news-releases/services-pmi-at-54-9-september-2026-ism-services-pmi-report-302898421.html"
+        },
+        {
+          "name": "FXStreet: US services PMI misses forecasts; FedWatch odds",
+          "url": "https://www.fxstreet.com/cryptocurrencies/news/bitcoin-and-gold-outlook-btc-slips-xau-downtrend-persists-as-us-services-pmi-misses-forecasts-202610051700"
+        },
+        {
+          "name": "TheStreet: Stock market today, Oct. 5, 2026",
+          "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-oct-05-2026"
+        },
+        {
+          "name": "EU Insider: France's borrowing costs near 5%",
+          "url": "https://www.euinsider.eu/news/france-bond-selloff-oat-bund-spread-near-record-2026"
+        },
+        {
+          "name": "Federal Reserve: October 2026 calendar",
+          "url": "https://www.federalreserve.gov/newsevents/2026-october.htm"
+        },
+        {
+          "name": "BLS: October 2026 release schedule",
+          "url": "https://www.bls.gov/schedule/2026/10_sched_list.htm"
+        }
+      ]
+    }
+  ]
 }
