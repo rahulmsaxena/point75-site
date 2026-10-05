@@ -803,6 +803,46 @@
     try { navFrame.src.postMessage({ p75: true, type: 'go', hash: a.getAttribute('data-hash') }, '*'); } catch (err) {}
   });
 
+  // ---------- Smooth page changes ----------
+  // The site is a single-page app: its own menu links swap the page in place. A plain link (like the ones we
+  // add) makes the browser reload the whole site instead: a white flash while the header, fonts and scripts
+  // load again. So our links borrow the site's own menu link to the same page when there is one, and we
+  // redraw our parts as soon as the address changes rather than on the next one-second tick.
+  function siteLink(path) {
+    var list = document.querySelectorAll('.block-header a[href], header a[href]');
+    for (var i = 0; i < list.length; i++) {
+      var a = list[i];
+      if (a.closest('#p75tn, #p75tf, #p75sib') || a.hasAttribute('data-p75hub')) continue;
+      if (norm(a.getAttribute('href')) === path) return a;
+    }
+    return null;
+  }
+  document.addEventListener('click', function (e) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target.closest && e.target.closest('#p75tn a[href], #p75tf a[href], #p75sib a[href], .p75d a[href], .p75edu a[href], .p75pulse a[href], .p75debt a[href], .p75cr a[href], .p75ind a[href], .p75ins a[href], .p75bonds a[href]');
+    if (!a || a.hasAttribute('data-hash') || a.target === '_blank') return;
+    var href = a.getAttribute('href') || '';
+    if (!/^\/(?!\/)/.test(href) || /[?#]/.test(href)) return;      // same-site page links only
+    var path = norm(href);
+    if (path === norm(location.pathname)) return;
+    var site = siteLink(path);
+    if (!site) return;                                             // no menu link: normal navigation
+    e.preventDefault();
+    site.click();
+  }, true);
+  var soonT = [];
+  function soon() {
+    soonT.forEach(clearTimeout);
+    soonT = [0, 80, 250, 600].map(function (ms) { return setTimeout(function () { try { update(); } catch (err) {} }, ms); });
+  }
+  ['pushState', 'replaceState'].forEach(function (m) {
+    var orig = history[m];
+    if (typeof orig !== 'function' || orig.p75) return;
+    var wrapped = function () { var r = orig.apply(this, arguments); soon(); return r; };
+    wrapped.p75 = true; history[m] = wrapped;
+  });
+  window.addEventListener('popstate', soon);
+
   // Bottom of section pages: Previous / Next cards and a link back to the overview
   function familyLinks(path, fams) {
     var fam = null, i = -1;
