@@ -183,7 +183,7 @@
     var h = '<div class="wrap"><div class="eyebrow">News</div><h1>Economic indicators</h1>' +
       '<p class="lede">The numbers that move bonds, in one place: inflation, growth, jobs, rates and housing starts. Tap a category for its indicators, then tap any indicator for its full history.</p>' +
       '<div class="asof">Updated <b>' + asof + '</b> · refreshed every weekday from FRED</div>' +
-      '<a class="tonews" href="/news">Today&rsquo;s headlines &rarr;</a>';
+      '<a class="tonews" href="/news">&larr; Today&rsquo;s headlines</a>';
     h += '<div class="tiles">' + d.indicators.filter(function (i) { return i.headline && i.id !== 'fedfunds' && i.id !== 't10'; }).map(function (i) {
       var c = change(i);
       return '<div class="tile"><div class="l">' + esc(i.headline) + '</div><div class="v num">' + fmt(i.latest.value, i.dec) + '<small>' + esc(unitShort(i.unit)) + '</small></div>' +

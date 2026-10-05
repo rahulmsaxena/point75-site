@@ -703,6 +703,92 @@
     }
     if (host.nextSibling !== sib) parent.insertBefore(sib, host.nextSibling);
   }
+  // ---------- Floating navigation dock ----------
+  // One pill at the bottom of the screen that follows the reader: back (or previous) on the left,
+  // the section overview in the middle when it isn't already the back link, next on the right.
+  //   Essays: "All essays". Pages in a menu section (Education, Pulse, Bond Summary, News...): previous /
+  //   next in menu order, the first page goes back to the overview, the overview goes on to the first page.
+  //   DOCK_FIX overrides that for specific pages. Bond Summary and Intelligent Summary articles live in an
+  //   iframe sized to its content, so they send {type:'nav'} with older/newer and we send {type:'go'} back.
+  var DOCK_FIX = {
+    '/pulse': { next: { href: '/debt-trap', text: 'Debt Trap' } },
+    '/debt-trap': { prev: { href: '/pulse', text: 'Pulse' } },
+    '/economic-indicators': { prev: { href: '/news', text: 'News' } }
+  };
+  var dockFrame = null;
+  window.addEventListener('message', function (e) {
+    var m = e.data;
+    if (!m || m.p75 !== true || m.type !== 'nav') return;
+    dockFrame = m.view === 'article' ? { src: e.source, path: norm(location.pathname), prev: m.older || null, up: m.up || null, next: m.newer || null } : null;
+    drawDock(dockSpecFor(norm(location.pathname), families()));
+  });
+  function dockSpecFor(path, fams) {
+    if (dockFrame && dockFrame.path === path) return { prev: dockFrame.prev, up: dockFrame.up, next: dockFrame.next, frame: true };
+    if (path === '/') return null;
+    var s = {};
+    if (EXCLUDED.indexOf(path) === -1 && document.querySelector('.block-blog-header')) s.prev = { href: '/', text: 'All essays' };
+    fams.forEach(function (f) {
+      if (f.href === path && f.kids.length) s.next = f.kids[0];
+      f.kids.forEach(function (k, j) {
+        if (k.href !== path) return;
+        var hub = { href: f.href, text: f.text };
+        s.prev = j ? f.kids[j - 1] : hub;
+        s.next = f.kids[j + 1] || null;
+        s.up = j ? { href: f.href, text: f.text, title: HUB_LABEL[f.href] || f.text } : null;
+      });
+    });
+    var fix = DOCK_FIX[path]; if (fix) for (var k in fix) s[k] = fix[k];
+    return (s.prev || s.next) ? s : null;
+  }
+  function drawDock(s) {
+    var d = document.getElementById('p75dock');
+    var key = s ? JSON.stringify([s.prev, s.up, s.next]) : '';
+    if (!s) { if (d) d.remove(); return; }
+    if (d && d.getAttribute('data-k') === key) return;
+    if (!document.getElementById('p75dock-css')) {
+      var st = document.createElement('style'); st.id = 'p75dock-css';
+      st.textContent = '.p75dock{position:fixed;left:50%;bottom:max(18px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:9990;display:flex;max-width:calc(100vw - 140px);' +
+        'background:rgba(17,18,20,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(201,162,39,.6);border-radius:99px;' +
+        'box-shadow:0 6px 24px rgba(0,0,0,.45);font-family:Manrope,system-ui,sans-serif;transition:opacity .25s,transform .25s}' +
+        '.p75dock.hid{opacity:0;transform:translate(-50%,14px);pointer-events:none}' +
+        '.p75dock a{display:flex;align-items:center;gap:6px;min-width:0;padding:10px 16px;color:' + GOLD + '!important;font-weight:700;font-size:14px;line-height:1.2;text-decoration:none!important;white-space:nowrap}' +
+        '.p75dock a+a{border-left:1px solid rgba(201,162,39,.3)}' +
+        '.p75dock a:first-child{border-radius:99px 0 0 99px}.p75dock a:last-child{border-radius:0 99px 99px 0}.p75dock a:only-child{border-radius:99px}' +
+        '.p75dock a.up{color:#EDE8DC!important;font-weight:600}' +
+        '.p75dock a:hover,.p75dock a:focus-visible{background:rgba(201,162,39,.14);outline:none}' +
+        '.p75dock span{overflow:hidden;text-overflow:ellipsis;max-width:220px}' +
+        '@media (max-width:600px){.p75dock{bottom:max(14px,env(safe-area-inset-bottom))}.p75dock a{padding:10px 13px;font-size:13.5px}.p75dock span{max-width:26vw}}' +
+        '@media print{.p75dock{display:none}}';
+      document.head.appendChild(st);
+    }
+    if (!d) { d = document.createElement('nav'); d.id = 'p75dock'; d.className = 'p75dock'; d.setAttribute('aria-label', 'Page navigation'); document.body.appendChild(d); }
+    d.setAttribute('data-k', key);
+    var link = function (it, cls, html) {
+      var href = s.frame ? it.hash : it.href;
+      return '<a class="' + cls + '" href="' + escH(href) + '" title="' + escH(it.title || it.text) + '"' + (s.frame ? ' data-hash="' + escH(it.hash) + '"' : '') + '>' + html + '</a>';
+    };
+    d.innerHTML = (s.prev ? link(s.prev, 'pv', '&larr; <span>' + escH(s.prev.text) + '</span>') : '') +
+      (s.up ? link(s.up, 'up', '<span>' + escH(s.up.text) + '</span>') : '') +
+      (s.next ? link(s.next, 'nx', '<span>' + escH(s.next.text) + '</span> &rarr;') : '');
+    d.classList.remove('hid');
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('#p75dock a[data-hash]');
+    if (!a || !dockFrame || !dockFrame.src) return;
+    e.preventDefault();
+    try { dockFrame.src.postMessage({ p75: true, type: 'go', hash: a.getAttribute('data-hash') }, '*'); } catch (err) {}
+  });
+  // Hide while scrolling down; back on scroll up or after a short pause
+  var dockY = window.scrollY, dockT;
+  window.addEventListener('scroll', function () {
+    var d = document.getElementById('p75dock'), y = window.scrollY;
+    if (d) {
+      if (y > dockY + 6 && y > 240) d.classList.add('hid'); else if (y < dockY - 6) d.classList.remove('hid');
+      clearTimeout(dockT); dockT = setTimeout(function () { d.classList.remove('hid'); }, 700);
+    }
+    dockY = y;
+  }, { passive: true });
+
   function update() {
     var path = location.pathname.replace(/\/+$/, '') || '/';
 
@@ -728,6 +814,8 @@
     }
 
     var fams = families(); hubMenus(fams); familyLinks(path, fams);
+    if (dockFrame && dockFrame.path !== path) dockFrame = null;
+    drawDock(dockSpecFor(path, fams));
 
     // Level + Editor's pick next to the reading time (homepage cards and post headers)
     document.querySelectorAll('.blog-list-item-meta__subtitle').forEach(function (s) {
@@ -743,9 +831,9 @@
     // Hide stray "All essays" copies pasted inside articles
     document.querySelectorAll('.page__blocks .p75-float').forEach(function (a) { a.style.display = 'none'; });
 
-    // Hide the floating "All essays" button when there's no room beside the text
-    var back = document.getElementById('p75-back'), para = document.querySelector('.page__blocks p');
-    if (back && para) back.style.visibility = para.getBoundingClientRect().left < 160 ? 'hidden' : '';
+    // The pasted floating "All essays" button is replaced by the dock (see drawDock)
+    var back = document.getElementById('p75-back');
+    if (back) back.style.display = 'none';
 
     // Mark essay pages so the desktop typography applies only there
     document.documentElement.classList.toggle('p75-essay',
