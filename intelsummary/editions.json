@@ -1,6 +1,201 @@
 {
   "summaries": [
     {
+      "market_date": "2026-10-06",
+      "key": "2026-10-06",
+      "edition": "close",
+      "generated_at": "2026-10-06T22:58:26Z",
+      "as_of": "Market close (late NY trading)",
+      "title": "Yields ease back from 24-year highs as Fed hike bets fade",
+      "regime": "Bull steepener",
+      "regime_note": "Front end leads a modest pullback",
+      "conviction": "Low",
+      "takeaway": "Treasury yields slipped after Monday's 24-year highs: the 2-year fell about 4 bp to 4.79% and the 10-year about 4 bp to 5.28%, while the 30-year dipped only 2 bp. The front end led as the market's odds of an October Fed hike sank to about 22%, and a dip in oil helped. The moves were small and the long end barely budged, so this looks like a pause in the selloff rather than a turn.",
+      "tape": [
+        {
+          "k": "2Y",
+          "level": 4.79,
+          "d": -4
+        },
+        {
+          "k": "10Y",
+          "level": 5.28,
+          "d": -4
+        },
+        {
+          "k": "30Y",
+          "level": 5.65,
+          "d": -2
+        },
+        {
+          "k": "2s10s",
+          "level": 48,
+          "d": 1,
+          "unit": "bp",
+          "group": "Curve"
+        }
+      ],
+      "fed": {
+        "meeting": "Oct 28"
+      },
+      "cross": [
+        {
+          "k": "S&P 500",
+          "v": "+0.58%",
+          "dir": "up",
+          "read": "Stocks closed at a record (7,818.93) as yields eased: lower borrowing costs and tech strength helped equities."
+        },
+        {
+          "k": "Gold",
+          "v": "+0.71%",
+          "dir": "up",
+          "read": "Gold rose to about $4,186 an ounce as yields and Fed hike odds came down."
+        }
+      ],
+      "drivers": [
+        {
+          "title": "Fed hike bets keep fading",
+          "tags": [
+            "Fed",
+            "Labor"
+          ],
+          "impact": "2Y −4 bp to 4.79%",
+          "what": "CME FedWatch put the chance of a rate hike at the October 27–28 meeting at about 21.6%, down from roughly 51% a week earlier.",
+          "why": "Friday's weak September jobs report (just 29,000 payrolls added) made another hike after September's look less necessary. The 2-year yield is the maturity most tied to where the Fed sets rates, so it moves most when hike odds change.",
+          "response": "The 2-year fell about 4 bp and the 10-year about 4 bp, while the 30-year eased only 2 bp, so the 2s10s curve steepened slightly to about 48 bp.",
+          "signal": "A front-end-led rally says traders are trimming the odds of more Fed tightening, not that worries about long-term borrowing have gone away."
+        },
+        {
+          "title": "Oil dips on improving Gulf supply",
+          "tags": [
+            "Energy",
+            "Inflation"
+          ],
+          "impact": "Took some pressure off yields",
+          "what": "Brent crude fell as low as $97.8 a barrel during the session before recovering toward $100. Saudi Arabia restored its East-West pipeline to 5.8 million barrels a day and G7 countries have been releasing emergency reserves.",
+          "why": "Oil near $100 has been a big part of the inflation worry that pushed yields to multi-decade highs. Any sign of steadier supply eases that worry a little.",
+          "response": "Yields drifted lower alongside oil, but the move was modest and oil itself ended well off its lows.",
+          "signal": "Energy remains a two-way risk: oil relief helps bonds, but renewed attacks on shipping in the Strait of Hormuz could quickly reverse it."
+        },
+        {
+          "title": "3-year auction meets ordinary demand",
+          "tags": [
+            "Supply"
+          ],
+          "impact": "No directional read",
+          "what": "Treasury sold $58 billion of 3-year notes at 4.932%, slightly below the yield expected just before the sale (stopped through by 0.3 bp). The bid-to-cover ratio was 2.62 vs a 2.65 average; foreign and other indirect buyers took 57.6% vs a 65.9% average.",
+          "why": "This week's auctions test whether investors will absorb heavy government borrowing at yields near 24-year highs.",
+          "response": "The sale passed without disruption, and yields stayed lower into the close.",
+          "signal": "Adequate but not strong demand. The bigger tests are Wednesday's 10-year and Thursday's 30-year sales, where the long-end selloff has been concentrated."
+        }
+      ],
+      "macro": [
+        {
+          "tag": "Growth",
+          "title": "Trade deficit (August)",
+          "time": "8:30 AM",
+          "actual": "$105.6bn",
+          "prior": "$92.8bn",
+          "note": "Imports rose $17.2bn to $420.8bn and exports $4.5bn to $315.2bn. Little visible effect on Treasuries."
+        },
+        {
+          "tag": "Supply",
+          "title": "3-year note auction",
+          "time": "1:00 PM",
+          "actual": "4.932%",
+          "note": "$58bn; stopped through by 0.3 bp; bid-to-cover 2.62 vs 2.65 average."
+        },
+        {
+          "tag": "Fed",
+          "title": "Fed pricing",
+          "note": "CME FedWatch showed about a 21.6% chance of a hike on October 28 and 78.4% for a hold, after the September hike to 3.75%–4.00%. Vice Chair for Supervision Bowman spoke on bank regulation and did not discuss monetary policy."
+        }
+      ],
+      "geo": [
+        {
+          "title": "Strait of Hormuz shipping",
+          "impact": "Moderate",
+          "text": "Oil flows have been recovering, which helped Brent dip below $98 intraday, but reports of stepped-up Iranian attacks on tankers kept prices near $100. This remains the main inflation risk hanging over bonds."
+        }
+      ],
+      "events": [
+        {
+          "t": "8:30 AM",
+          "cat": "Data",
+          "title": "August trade deficit widens to $105.6bn from $92.8bn",
+          "react": "Little reaction in Treasuries"
+        },
+        {
+          "t": "1:00 PM",
+          "cat": "Supply",
+          "title": "$58bn 3-year auction at 4.932%, stopped through 0.3 bp",
+          "react": "In-line demand; no change in direction"
+        },
+        {
+          "t": "4:00 PM",
+          "cat": "Close",
+          "title": "S&P 500 closes at a record 7,818.93 (+0.58%)",
+          "react": "2Y ends near 4.79% (−4 bp), 10Y near 5.28% (−4 bp), 30Y near 5.65% (−2 bp)"
+        }
+      ],
+      "interpretation": {
+        "text": "The day's evidence points mildly toward easing Fed expectations: the 2-year led, hike odds kept falling, and the long end lagged. But the moves were only a few basis points after a large multi-week selloff, oil ended well off its lows, and inflation-adjusted yields were not available to confirm the split. Conviction is low: this reads as a pause, not a reversal.",
+        "change": "Weak demand at Wednesday's 10-year or Thursday's 30-year auction, or a hawkish tone in Wednesday's FOMC minutes, would likely send long yields back toward their highs; a soft CPI on October 14 would support today's direction."
+      },
+      "watch": [
+        {
+          "when": "Wed",
+          "what": "10-year note auction"
+        },
+        {
+          "when": "Wed 2:00 PM",
+          "what": "FOMC minutes (September 15–16 meeting)"
+        },
+        {
+          "when": "Thu",
+          "what": "30-year bond auction; weekly jobless claims"
+        },
+        {
+          "when": "Mon Oct 12",
+          "what": "Columbus Day: US bond market closed"
+        },
+        {
+          "when": "Wed Oct 14 8:30 AM",
+          "what": "September CPI"
+        }
+      ],
+      "sources": [
+        {
+          "name": "TheStreet: Stock market today, Oct. 6, 2026",
+          "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-oct-06-2026"
+        },
+        {
+          "name": "Benzinga: October Fed hike odds fall to 21.6% (CME FedWatch)",
+          "url": "https://www.benzinga.com/markets/economic-data/26/10/62185721/jim-cramer-says-interest-rates-can-fall-too-as-october-fed-hike-odds-fall-to-21-6-heres-what-traders-are-betting-on"
+        },
+        {
+          "name": "FinanceFeeds: Fed hike odds drop to 21.6%",
+          "url": "https://financefeeds.com/gold-price-4172-fed-hike-odds-21-6-percent"
+        },
+        {
+          "name": "Helious: 3-year note auction results, Oct. 6",
+          "url": "https://helious.io/news/auc-91282CRQ6-2026-10-06/3-year-note-auction-in-line"
+        },
+        {
+          "name": "BEA: U.S. International Trade in Goods and Services, August 2026",
+          "url": "https://www.bea.gov/sites/default/files/2026-10/trad0826.pdf"
+        },
+        {
+          "name": "Trading Economics: Brent crude",
+          "url": "https://tradingeconomics.com/commodity/brent-crude-oil"
+        },
+        {
+          "name": "Federal Reserve: Bowman speech, Oct. 6, 2026",
+          "url": "https://www.federalreserve.gov/newsevents/speech/bowman20261006a.htm"
+        }
+      ]
+    },
+    {
       "market_date": "2026-10-05",
       "key": "2026-10-05",
       "edition": "close",
