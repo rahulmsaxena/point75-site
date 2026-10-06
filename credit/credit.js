@@ -342,7 +342,7 @@
     if (host) host.remove();
     once();
     host = document.createElement('div'); host.className = 'p75cr'; host.setAttribute('data-path', path);
-    host.innerHTML = '<div class="wrap"><div class="eyebrow"><a href="/bondsummary">Bond Summary</a> · ' + esc(p.eyebrow) + '</div><h1>' + esc(p.title) + '</h1>' +
+    host.innerHTML = '<div class="wrap"><div class="eyebrow"><a href="/intelligent-summary">Bond Summary</a> · ' + esc(p.eyebrow) + '</div><h1>' + esc(p.title) + '</h1>' +
       '<p class="lede">' + esc(p.lede) + '</p><div class="asof"></div><div class="body"><div class="load">Loading the latest filings…</div></div></div>';
     var blocks = main.querySelector('.page__blocks');
     (blocks || main).appendChild(host);
