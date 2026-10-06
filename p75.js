@@ -4,7 +4,7 @@
 (function () {
   // ---------- Settings ----------
   var TENANT_ID = 'NgvHdCEMvUY';                          // FastComments
-  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-introduction', '/bond-history', '/bond-types', '/cash-logistics', '/bond-dictionary', '/bond-players', '/bond-fortunes', '/pulse', '/debt-trap', '/economic-indicators', '/bonds', '/insights', '/sector-credit', '/lenders', '/credit-stress', '/intellegent-summary'];    // no add-ons on these pages
+  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-introduction', '/bond-history', '/bond-types', '/cash-logistics', '/bond-dictionary', '/bond-players', '/bond-fortunes', '/pulse', '/debt-trap', '/economic-indicators', '/bonds', '/insights', '/sector-credit', '/lenders', '/credit-stress', '/intellegent-summary', '/intelligent-summary'];    // no add-ons on these pages
 
   // Difficulty level per post
   var LEVELS = {
@@ -618,7 +618,7 @@
 
   // ---------- Section hubs: never let a sub-menu hide its main page ----------
   // Reads the live Hostinger menu, so titles and order follow whatever is set in the builder.
-  var HUB_LABEL = { '/education': 'All Education guides', '/pulse': 'Pulse overview', '/bondsummary': 'Bond Summary overview' };
+  var HUB_LABEL = { '/education': 'All Education guides', '/pulse': 'Pulse overview', '/bondsummary': 'Bond Summary overview', '/intelligent-summary': 'Bond Summary overview' };
   function norm(h) { return (h || '').replace(/[?#].*$/, '').replace(/\/+$/, '') || '/'; }
   function families() {
     var out = [];
@@ -635,7 +635,10 @@
   // Our line is real only if its link carries our mark AND still points at the main page. On a direct page load
   // Hostinger's menu can finish loading after we add it and recycle our node as one of its own items.
   function isHub(a, parentHref) { return !!a && a.getAttribute('data-p75hub') === '1' && norm(a.getAttribute('href')) === parentHref; }
-  var HUB_READY = Date.now() + 2500;   // let the menu finish loading before touching it
+  // Let the menu finish loading before touching it: Hostinger's Vue app marks its root with data-v-app once it has
+  // mounted (hydration done), so add the overview as soon as that appears; otherwise fall back to a 2.5 s wait.
+  var HUB_READY = Date.now() + 2500;
+  function hubReady() { return Date.now() >= HUB_READY || !!document.querySelector('[data-v-app]'); }
   function hubMenus(fams) {
     fams.forEach(function (f) {
       [].slice.call(f.ul.querySelectorAll(':scope > li')).forEach(function (li) {   // repair recycled nodes
@@ -644,7 +647,7 @@
         if (li.classList.contains('p75hub')) li.classList.remove('p75hub');
         if (a && a.hasAttribute('data-p75hub')) a.removeAttribute('data-p75hub');
       });
-      if (Date.now() < HUB_READY || !f.kids.length) return;
+      if (!hubReady() || !f.kids.length) return;
       var has = [].slice.call(f.ul.querySelectorAll(':scope > li a.item-content')).some(function (a) { return isHub(a, f.href); });
       if (has) return;
       var first = f.ul.querySelector(':scope > li'); if (!first) return;
