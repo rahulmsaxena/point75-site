@@ -1,6 +1,218 @@
 {
   "summaries": [
     {
+      "market_date": "2026-10-07",
+      "key": "2026-10-07",
+      "edition": "close",
+      "generated_at": "2026-10-07T23:05:00Z",
+      "as_of": "4:00 PM ET (stock market close)",
+      "title": "Strong 10-year auction caps the selloff as Fed minutes point to another hike",
+      "regime": "Bear steepener",
+      "regime_note": "Small moves; front end eases, long end edges up",
+      "conviction": "Low",
+      "takeaway": "Long-term yields touched their highest levels since 2002 before a strong $39 billion 10-year auction calmed fears about demand for US debt. By the stock-market close the 10-year was about 2 bp higher at 5.28% and the 2-year about 2 bp lower at 4.77%, so the curve steepened slightly. Fed minutes showed most officials expect another rate hike by year end, but traders still see an October hike as unlikely.",
+      "tape": [
+        {
+          "k": "2Y",
+          "level": 4.77,
+          "d": -2
+        },
+        {
+          "k": "5Y",
+          "level": 5.03,
+          "d": 0
+        },
+        {
+          "k": "10Y",
+          "level": 5.28,
+          "d": 2
+        },
+        {
+          "k": "30Y",
+          "level": 5.66,
+          "d": 2
+        },
+        {
+          "k": "2s10s",
+          "level": 51,
+          "d": 4,
+          "unit": "bp",
+          "group": "Curve"
+        },
+        {
+          "k": "5s30s",
+          "level": 63,
+          "d": 2,
+          "unit": "bp",
+          "group": "Curve"
+        }
+      ],
+      "fed": {
+        "meeting": "Oct 28"
+      },
+      "cross": [
+        {
+          "k": "S&P 500",
+          "v": "−0.22%",
+          "dir": "down",
+          "read": "Stocks slipped from a record to 7,801.73, with small caps (Russell 2000 −1.31%) hit hardest by high borrowing costs."
+        },
+        {
+          "k": "DXY",
+          "v": "≈+0.5%",
+          "dir": "up",
+          "read": "The dollar firmed as the minutes kept the prospect of another Fed hike alive."
+        },
+        {
+          "k": "Brent",
+          "v": "−0.4%",
+          "dir": "down",
+          "read": "Brent settled at $100.20 and WTI at $88.28; oil's slight dip did little for inflation worries."
+        },
+        {
+          "k": "Gold",
+          "v": "−1.1%",
+          "dir": "down",
+          "read": "Gold fell to a two-month low near $4,141 an ounce as hike talk and a firmer dollar weighed."
+        }
+      ],
+      "drivers": [
+        {
+          "title": "Strong 10-year auction",
+          "tags": [
+            "Supply"
+          ],
+          "impact": "Pulled the 10Y back from its 2002-era highs",
+          "what": "Treasury sold $39 billion of 10-year notes at 5.300%, below the 5.317% yield traded just before the sale (a 1.7 bp \"stop-through\"). Bid-to-cover was 2.77 vs a 2.54 average, and indirect bidders, a group that includes foreign buyers, took 80.3% vs a 74.1% average. Dealers were left with just 2.5%.",
+          "why": "With yields at multi-decade highs and heavy government borrowing, investors were worried buyers might demand even higher yields. A sale that clears below the pre-auction yield with strong outside demand eases that fear.",
+          "response": "Yields eased from the day's highs after the 1:00 PM ET result, leaving the 10-year only about 2 bp higher on the day.",
+          "signal": "Demand for long-term US debt is still there at these yield levels, which may slow the long-end selloff. Thursday's 30-year sale is the next test."
+        },
+        {
+          "title": "Fed minutes keep a year-end hike in play",
+          "tags": [
+            "Fed",
+            "Inflation"
+          ],
+          "impact": "2Y −2 bp; little net reaction",
+          "what": "Minutes of the September 15–16 meeting, when the Fed raised rates to 3.75%–4.00%, said \"most participants assessed that another increase in the target range for the federal funds rate would likely be appropriate\" by year end. Officials also noted \"more than five years of inflation above 2 percent.\"",
+          "why": "The 2-year yield tracks expected Fed policy most closely. The minutes confirmed a tightening bias but predate last week's weak September jobs report, so they changed near-term expectations little.",
+          "response": "The 2-year ended about 2 bp lower at 4.77%. CME FedWatch put the odds of a hike at the October 27–28 meeting at about 17%, with an 83% chance of a hold.",
+          "signal": "Markets read the minutes as \"wait in October, maybe hike in December,\" leaving upcoming inflation data as the deciding factor."
+        }
+      ],
+      "macro": [
+        {
+          "tag": "Supply",
+          "title": "10-year note auction",
+          "time": "1:00 PM",
+          "actual": "5.300%",
+          "note": "$39bn; stopped through the 5.317% pre-auction yield by 1.7 bp; bid-to-cover 2.77 vs 2.54 average; indirect bidders 80.3%. The highest 10-year auction yield since 2000."
+        },
+        {
+          "tag": "Fed",
+          "title": "FOMC minutes (September 15–16 meeting)",
+          "time": "2:00 PM",
+          "note": "All participants supported September's hike; most saw another increase as likely appropriate by year end. Next decision October 28."
+        },
+        {
+          "tag": "Inflation",
+          "title": "NY Fed consumer inflation expectations",
+          "note": "The New York Fed's survey showed one-year-ahead inflation expectations at their highest since 2023."
+        },
+        {
+          "tag": "Energy",
+          "title": "EIA weekly crude inventories",
+          "actual": "−3.19m bbl",
+          "consensus": "+1.72m bbl",
+          "note": "A larger-than-expected draw, but oil still settled slightly lower."
+        }
+      ],
+      "geo": [
+        {
+          "title": "Oil near $100 and Gulf supply risks",
+          "impact": "Low",
+          "text": "Brent held around $100 a barrel and dipped slightly on the day. Energy remains a background inflation risk for bonds, but it was not a main driver of Treasuries today."
+        }
+      ],
+      "events": [
+        {
+          "t": "1:00 PM",
+          "cat": "Supply",
+          "title": "$39bn 10-year auction at 5.300%, stopped through 1.7 bp",
+          "react": "Strong demand; yields eased from multi-decade highs"
+        },
+        {
+          "t": "2:00 PM",
+          "cat": "Fed",
+          "title": "FOMC minutes: most see another hike likely by year end",
+          "react": "Little net change; October hike odds about 17%"
+        },
+        {
+          "t": "4:00 PM",
+          "cat": "Close",
+          "title": "S&P 500 closes −0.22% at 7,801.73",
+          "react": "2Y near 4.77% (−2 bp), 10Y near 5.28% (+2 bp), 30Y near 5.66% (+2 bp)"
+        }
+      ],
+      "interpretation": {
+        "text": "The evidence is mixed and the net moves were only a couple of basis points. The long end touched new 24-year highs early, but strong auction demand pulled it back, while the 2-year eased despite hawkish-sounding minutes because they predate the weak jobs report. The slight steepening says the market's worry is still concentrated in long-term borrowing costs rather than near-term Fed moves. Inflation-adjusted yields were not available to split the move, so conviction is low.",
+        "change": "A weak 30-year auction on Thursday would likely push long yields back to their highs; a hot September CPI on October 14 would revive October hike odds and lift the front end."
+      },
+      "watch": [
+        {
+          "when": "Thu",
+          "what": "30-year bond auction; Fed's Waller speaks"
+        },
+        {
+          "when": "Thu 8:30 AM",
+          "what": "Weekly jobless claims"
+        },
+        {
+          "when": "Thu 1:40 PM",
+          "what": "St. Louis Fed President Musalem speaks"
+        },
+        {
+          "when": "Mon Oct 12",
+          "what": "Columbus Day: US bond market closed"
+        },
+        {
+          "when": "Wed Oct 14 8:30 AM",
+          "what": "September CPI"
+        }
+      ],
+      "sources": [
+        {
+          "name": "investingLive: US stocks retreat after record closes (closing yields)",
+          "url": "https://investinglive.com/stocks/us-stocks-retreat-after-record-closes/"
+        },
+        {
+          "name": "investingLive: Treasury sells $39bn 10-year notes at 5.300%",
+          "url": "https://investinglive.com/news/the-us-treasury-sells-39-billion-of-10-year-notes-at-a-high-yield-of-5-300-versus-wi-level-of-5-317/"
+        },
+        {
+          "name": "investingLive: Americas market news wrap, Oct. 7",
+          "url": "https://investinglive.com/news/investinglive-americas-market-news-wrap-fed-officials-prepared-to-hike-again-this-year/"
+        },
+        {
+          "name": "Benzinga: Fed minutes hint at another hike this year",
+          "url": "https://www.benzinga.com/news/26/10/62230795/fed-minutes-hint-to-another-hike-this-year-traders-dont-see-it-coming-in-october"
+        },
+        {
+          "name": "Investrade: Market Review, October 7, 2026",
+          "url": "https://investrade.com/market-review-october-07-2026/"
+        },
+        {
+          "name": "FXStreet: Pound slides as the bond selloff resumes (Fed minutes, calendar)",
+          "url": "https://www.fxstreet.com/news/the-pound-slides-back-to-the-bottom-of-its-range-as-the-bond-selloff-resumes-202610072155"
+        },
+        {
+          "name": "Trading Economics: US 10-year Treasury yield",
+          "url": "https://tradingeconomics.com/united-states/government-bond-yield"
+        }
+      ]
+    },
+    {
       "market_date": "2026-10-06",
       "key": "2026-10-06",
       "edition": "close",
