@@ -1,6 +1,272 @@
 {
   "summaries": [
     {
+      "market_date": "2026-10-08",
+      "key": "2026-10-08",
+      "edition": "close",
+      "generated_at": "2026-10-08T23:00:00Z",
+      "as_of": "4:00 PM ET (stock market close)",
+      "title": "Long yields reverse from 24-year highs after a solid 30-year auction",
+      "regime": "Bull flattener",
+      "regime_note": "Long end leads a turnaround; front end barely moves",
+      "conviction": "Medium",
+      "takeaway": "An oil spike on Iran reports pushed the 10-year yield to about 5.35% in the morning, its highest in 24 years, before yields turned around and finished at the day's lows. A solid $22 billion 30-year auction, President Trump's post that the US won't attack Iran before the midterms, and a tech-stock selloff all helped. By the close the 10-year was about 5 bp lower at 5.23% and the 30-year about 6 bp lower at 5.60%, while the 2-year slipped only about 1 bp as Fed officials kept talking about more hikes.",
+      "tape": [
+        {
+          "k": "2Y",
+          "level": 4.75,
+          "d": -1
+        },
+        {
+          "k": "5Y",
+          "level": 4.99,
+          "d": -4
+        },
+        {
+          "k": "10Y",
+          "level": 5.23,
+          "d": -5
+        },
+        {
+          "k": "30Y",
+          "level": 5.6,
+          "d": -6
+        },
+        {
+          "k": "2s10s",
+          "level": 47,
+          "d": -4,
+          "unit": "bp",
+          "group": "Curve"
+        },
+        {
+          "k": "5s30s",
+          "level": 61,
+          "d": -2,
+          "unit": "bp",
+          "group": "Curve"
+        }
+      ],
+      "fed": {
+        "meeting": "Oct 28"
+      },
+      "cross": [
+        {
+          "k": "S&P 500",
+          "v": "−0.47%",
+          "dir": "down",
+          "read": "Stocks fell to 7,765.36 and the Nasdaq dropped 1.25% after a report that OpenAI's revenue is lower than thought hit chipmakers; some of that money moved into bonds late in the day."
+        },
+        {
+          "k": "Brent",
+          "v": "+4.1%",
+          "dir": "up",
+          "read": "Brent rose to about $104 on reports of possible US strikes on Iran, but came off its highs after Trump said there would be no attack before the midterms."
+        },
+        {
+          "k": "Dollar",
+          "v": "≈ flat",
+          "dir": "flat",
+          "read": "The Bloomberg dollar index was little changed; the dollar firmed in Europe, then lagged in US trading."
+        },
+        {
+          "k": "Gold",
+          "v": "+0.4%",
+          "dir": "up",
+          "read": "Gold edged up to about $4,156 an ounce as oil and geopolitical worries offered some support."
+        }
+      ],
+      "drivers": [
+        {
+          "title": "Solid 30-year auction",
+          "tags": [
+            "Supply"
+          ],
+          "impact": "Helped long yields fall from 24-year highs",
+          "what": "Treasury sold $22 billion of 30-year bonds at 5.618%, essentially at the 5.617% yield traded just before the 1:00 PM ET sale (a tiny 0.1 bp \"tail\"). Bid-to-cover was 2.54 vs a 2.41 average, indirect bidders, a group that includes foreign buyers, took 72.3% vs a 69.1% average, and dealers were left with 6.8% vs a 10.3% average.",
+          "why": "With the 30-year near its highest yield since the early 2000s, investors were watching for signs that buyers were tiring of long-term US debt. Strong outside demand, following Wednesday's well-received 10-year sale, eased that worry.",
+          "response": "Treasuries rallied after the result and into the close; the 30-year ended about 6 bp lower at 5.60% after hitting a fresh 24-year peak earlier in the day.",
+          "signal": "Two solid long-end auctions in a row suggest buyers are willing to step in at these yield levels, which may slow the long-end selloff for now."
+        },
+        {
+          "title": "Oil spike, then Trump's Iran comments",
+          "tags": [
+            "Energy",
+            "Geopolitics",
+            "Inflation"
+          ],
+          "impact": "Pushed yields up in the morning, eased the pressure in the afternoon",
+          "what": "Oil jumped on reports that the US was considering strikes on Iran, with Brent topping $104 and the 10-year hitting about 5.35% in the morning. Around 1:00 PM ET, oil pared gains after Trump posted that the US would not attack Iran before the November 3 midterm elections.",
+          "why": "Higher oil raises inflation risks, which can push the Fed to hike more and makes investors demand higher yields. A lower near-term risk of conflict trims that inflation fear.",
+          "response": "Oil still closed sharply higher (Brent about +4%), but yields reversed from their morning highs and finished at the day's lows.",
+          "signal": "Energy remains the main inflation wildcard for bonds; headlines about Iran and the Strait of Hormuz can move yields quickly in either direction."
+        },
+        {
+          "title": "AI stock selloff",
+          "tags": [
+            "Risk sentiment"
+          ],
+          "impact": "Added late support for Treasuries",
+          "what": "A Financial Times report put OpenAI's annualized revenue at about $50 billion, roughly $20 billion below earlier reports. Chip stocks fell sharply in the afternoon, with Nvidia −2.9%, AMD −3.9% and Micron −4.8%.",
+          "why": "When stocks fall, some investors move money into safer government bonds, and doubts about AI spending can also weigh on growth expectations.",
+          "response": "The Nasdaq fell 1.25% and the S&P 500 0.47%, while the 10-year closed at its low of the day.",
+          "signal": "If doubts about the AI boom spread, bonds could get more support from investors seeking safety, even with inflation still high."
+        },
+        {
+          "title": "Fed officials keep hikes on the table",
+          "tags": [
+            "Fed"
+          ],
+          "impact": "Kept the 2-year steady (−1 bp)",
+          "what": "Governor Christopher Waller said \"I anticipate additional hikes to support a timelier return of inflation to our 2% goal,\" adding that \"the hikes do not need to come at consecutive meetings.\" St. Louis Fed President Alberto Musalem signaled rate increases over the next six to nine months but did not endorse a move at this month's meeting.",
+          "why": "The 2-year yield tracks expected Fed policy. Officials talking about more hikes, but with flexible timing, fits the market's view of a hold in October and a likely hike later.",
+          "response": "The 2-year ended only about 1 bp lower at 4.75%, far less than the long end, so the curve flattened. Trading Economics reported markets pricing roughly a 78% chance of an October hold and about a 69% chance of a December hike.",
+          "signal": "The front end is anchored by Fed hike expectations; next week's September CPI is the next big test of those expectations."
+        }
+      ],
+      "macro": [
+        {
+          "tag": "Labor",
+          "title": "Weekly initial jobless claims (week ended Oct. 3)",
+          "time": "8:30 AM",
+          "actual": "197K",
+          "consensus": "200K",
+          "prior": "199K",
+          "note": "Layoffs remain very low."
+        },
+        {
+          "tag": "Growth",
+          "title": "Wholesale inventories (August)",
+          "actual": "+0.5%",
+          "consensus": "+0.7%"
+        },
+        {
+          "tag": "Growth",
+          "title": "Atlanta Fed GDPNow (Q3)",
+          "actual": "3.6%",
+          "prior": "3.7%",
+          "note": "The model still points to solid third-quarter growth."
+        },
+        {
+          "tag": "Supply",
+          "title": "30-year bond auction",
+          "time": "1:00 PM",
+          "actual": "5.618%",
+          "note": "$22bn; 0.1 bp tail vs the 5.617% pre-auction yield; bid-to-cover 2.54 vs 2.41 average; indirect bidders 72.3% vs 69.1%; dealers 6.8% vs 10.3%."
+        },
+        {
+          "tag": "Fed",
+          "title": "Fed speakers: Waller, Musalem",
+          "note": "Both pointed to further rate hikes; Waller said the timing is flexible. Next decision October 28."
+        }
+      ],
+      "geo": [
+        {
+          "title": "Iran strike reports and Trump's no-attack pledge",
+          "impact": "Moderate",
+          "text": "Reports that the US was weighing strikes on Iran lifted oil and pushed yields to multi-decade highs in the morning. Trump's post that there would be no attack before the midterms pulled oil off its highs, though markets greeted it with some skepticism. Unconfirmed reports of explosions near the Strait of Hormuz also circulated."
+        }
+      ],
+      "events": [
+        {
+          "t": "Morning",
+          "cat": "Energy",
+          "title": "Oil jumps on Iran strike reports; Brent tops $104",
+          "react": "10Y up to about 5.35%, a 24-year high; 30Y above 5.70%"
+        },
+        {
+          "t": "8:30 AM",
+          "cat": "Data",
+          "title": "Jobless claims 197K vs 200K expected",
+          "react": "Little reaction"
+        },
+        {
+          "t": "1:00 PM",
+          "cat": "Supply",
+          "title": "$22bn 30-year auction at 5.618%, solid demand",
+          "react": "Long-end yields extend their pullback"
+        },
+        {
+          "t": "~1:00 PM",
+          "cat": "Geopolitics",
+          "title": "Trump: no attack on Iran before the midterms",
+          "react": "Oil pares gains"
+        },
+        {
+          "t": "Afternoon",
+          "cat": "Risk",
+          "title": "FT report on OpenAI revenue hits chip stocks",
+          "react": "Nasdaq −1.25%; Treasuries firm"
+        },
+        {
+          "t": "4:00 PM",
+          "cat": "Close",
+          "title": "S&P 500 closes −0.47% at 7,765.36",
+          "react": "2Y near 4.75% (−1 bp), 10Y near 5.23% (−5 bp), 30Y near 5.60% (−6 bp)"
+        }
+      ],
+      "interpretation": {
+        "text": "The day had two halves. In the morning, an oil spike pushed long-term yields to new 24-year highs, showing how sensitive bonds are to inflation risk from energy. In the afternoon, a solid 30-year auction, a calmer tone on Iran and a stock selloff turned yields lower, and they closed at the day's lows. Because the long end fell much more than the 2-year, the move looks like relief about long-term debt demand and inflation risk rather than any change in the Fed outlook, which officials kept tilted toward more hikes. Inflation-adjusted yields were not available to confirm that split, so conviction is medium.",
+        "change": "A renewed jump in oil or a hot September CPI on October 14 would likely send long yields back toward their highs; a deeper stock selloff could extend today's rally."
+      },
+      "watch": [
+        {
+          "when": "Fri 9:30 AM",
+          "what": "Kansas City Fed President Schmid speaks"
+        },
+        {
+          "when": "Fri 10:00 AM",
+          "what": "University of Michigan consumer sentiment (preliminary October); August factory orders"
+        },
+        {
+          "when": "Mon Oct 12",
+          "what": "Columbus Day: US bond market closed"
+        },
+        {
+          "when": "Wed Oct 14 8:30 AM",
+          "what": "September CPI"
+        },
+        {
+          "when": "Oct 27–28",
+          "what": "FOMC meeting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Kiplinger: Nasdaq sinks as OpenAI revenue woes weigh on tech (closing yields)",
+          "url": "https://www.kiplinger.com/investing/stocks/openai-revenue-woes-weigh-on-tech-stocks-stock-market-today"
+        },
+        {
+          "name": "investingLive: Treasury sells $22bn 30-year bonds at 5.618%",
+          "url": "https://investinglive.com/news/us-treasury-sells-22-billion-of-30-year-bonds-at-a-high-yield-of-5-618/"
+        },
+        {
+          "name": "investingLive: Americas market news wrap, Oct. 8",
+          "url": "https://investinglive.com/news/investinglive-americas-market-news-wrap-trump-says-no-attacks-on-iran-before-the-midterms/"
+        },
+        {
+          "name": "Bloomberg via swissinfo: S&P 500 falls as reports on OpenAI sink chipmakers",
+          "url": "https://swissinfo.ch/eng/s&p-500-falls-as-reports-on-openai-sink-chipmakers:-markets-wrap/92183542"
+        },
+        {
+          "name": "Yahoo Finance: Stock market today, Oct. 8 (live updates)",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-thursday-october-8-dow-sp-500-nasdaq-080537884.html"
+        },
+        {
+          "name": "WBOW: Fed's Waller says more hikes needed, with flexibility on pace",
+          "url": "https://1027wbow.com/2026/10/08/feds-waller-more-hikes-needed-but-there-is-flexibility-about-the-pace/"
+        },
+        {
+          "name": "Trading Economics: US 10-year Treasury yield",
+          "url": "https://tradingeconomics.com/united-states/government-bond-yield"
+        },
+        {
+          "name": "Kiplinger: This week's economic calendar",
+          "url": "https://www.kiplinger.com/investing/economy/this-weeks-economic-calendar"
+        }
+      ]
+    },
+    {
       "market_date": "2026-10-07",
       "key": "2026-10-07",
       "edition": "close",
