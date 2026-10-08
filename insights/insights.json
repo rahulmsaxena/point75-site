@@ -1,6 +1,6 @@
 {
-  "updated": "2026-10-07",
-  "window": "Aug 21 – Oct 3, 2026",
+  "updated": "2026-10-08",
+  "window": "Aug 21 – Oct 7, 2026",
   "hero": {
     "src": "https://rahulmsaxena.github.io/point75-site/insights/hero.jpg",
     "small": "https://rahulmsaxena.github.io/point75-site/insights/hero-sm.jpg",
@@ -10,7 +10,7 @@
   "headline": "What the biggest voices in bonds are saying",
   "mood": "Cautious vigilance",
   "bigPicture": [
-    "The shared view among the market’s leading voices is that the era of cheap money is over. The Federal Reserve raised rates in September because inflation has been above its 2% goal for more than five years, and the 10-year Treasury yield has climbed above 5.3%, its highest level since 2002.",
+    "The shared view among the market’s leading voices is that the era of cheap money is over. The Federal Reserve raised rates in September because inflation has been above its 2% goal for more than five years, and minutes released Oct 7 show most officials expect another hike by year end. The 10-year Treasury yield has climbed above 5.3%, its highest level since 2002.",
     "The pressure comes from supply as much as inflation. Federal debt has passed $40 trillion, the government keeps borrowing heavily, and traditional foreign buyers such as Japan and China are buying fewer Treasuries. Several of these investors say that makes buy-and-hold in long-term bonds riskier than it used to be.",
     "They are not all bearish on bonds. BlackRock’s Rick Rieder and PIMCO see today’s yields as an opportunity, especially in high-quality and shorter-term bonds, and Treasury Secretary Scott Bessent says the rise is a global trend rather than a U.S. problem. Gundlach, Dalio and Druckenmiller warn that long-term Treasuries may not protect investors in the next downturn the way they used to."
   ],
@@ -22,14 +22,14 @@
   "voices": [
     {
       "name": "Kevin Warsh", "role": "Chair, Federal Reserve", "initials": "KW", "theme": "The Fed raises rates",
-      "when": "Sep 16, 2026", "where": "FOMC statement and press conference",
+      "when": "Sep 16 – Oct 7, 2026", "where": "FOMC statement, press conference and meeting minutes",
       "points": [
         "The Fed raised its target range to 3.75%–4.00% in a unanimous 12–0 vote, citing inflation that has run above target for more than five years.",
-        "He gave no promise about further hikes, saying the Fed is committed to getting inflation down sooner.",
+        "He gave no promise about further hikes, but the meeting minutes released Oct 7 show most officials think another increase would likely be appropriate by year end, citing too little recent progress on inflation.",
         "He linked the rise in long-term yields to a strong economy, heavy corporate investment competing for capital, and geopolitical uncertainty, and said the Fed does not need to hurt the job market to succeed."
       ],
       "quote": "The plain fact is that inflation is too high and has been for too long.",
-      "sources": [["Press conference transcript (PDF)", "https://www.federalreserve.gov/mediacenter/files/FOMCpresconf20260916.pdf"], ["FOMC statement", "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm"]]
+      "sources": [["Press conference transcript (PDF)", "https://www.federalreserve.gov/mediacenter/files/FOMCpresconf20260916.pdf"], ["FOMC statement", "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm"], ["FOMC minutes, released Oct 7", "https://www.federalreserve.gov/monetarypolicy/fomcminutes20260916.htm"]]
     },
     {
       "name": "Scott Bessent", "role": "U.S. Treasury Secretary", "initials": "SB", "theme": "Not alarmed yet",
