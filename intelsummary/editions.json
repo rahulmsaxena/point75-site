@@ -1,6 +1,255 @@
 {
   "summaries": [
     {
+      "market_date": "2026-10-09",
+      "key": "2026-10-09",
+      "edition": "close",
+      "generated_at": "2026-10-09T22:59:01Z",
+      "as_of": "4:00 PM ET (stock market close)",
+      "title": "Short-term yields edge up as consumers' inflation worries climb; long end holds steady",
+      "regime": "Bear flattener",
+      "regime_note": "Front end rises; the 30-year is little changed",
+      "conviction": "Low",
+      "takeaway": "After Thursday's big swings, Treasuries had a quieter Friday ahead of a three-day weekend. The 2-year yield rose about 4 bp to 4.79% as a University of Michigan survey showed Americans expecting higher inflation and markets kept leaning toward another Fed hike later this year. The 10-year edged up about 1 bp to 5.24% and the 30-year was flat at 5.60%, so the curve flattened; the 10-year still ended the week about 5 bp lower, according to Trading Economics.",
+      "tape": [
+        {
+          "k": "2Y",
+          "level": 4.79,
+          "d": 4
+        },
+        {
+          "k": "5Y",
+          "level": 5.02,
+          "d": 3
+        },
+        {
+          "k": "10Y",
+          "level": 5.24,
+          "d": 1
+        },
+        {
+          "k": "30Y",
+          "level": 5.6,
+          "d": -1
+        },
+        {
+          "k": "2s10s",
+          "level": 45,
+          "d": -2,
+          "unit": "bp",
+          "group": "Curve"
+        },
+        {
+          "k": "5s30s",
+          "level": 58,
+          "d": -4,
+          "unit": "bp",
+          "group": "Curve"
+        }
+      ],
+      "fed": {
+        "meeting": "Oct 28"
+      },
+      "cross": [
+        {
+          "k": "S&P 500",
+          "v": "+0.59%",
+          "dir": "up",
+          "read": "Stocks rebounded to 7,811.54 as tech recovered from Thursday's selloff, leaving all three major indexes higher for the week. The rally took away some of the safe-haven demand that helped bonds on Thursday."
+        },
+        {
+          "k": "Brent",
+          "v": "+0.4%",
+          "dir": "up",
+          "read": "Brent settled near $104.72, little changed after dipping early on Trump's pledge not to attack Iran before the midterms; hurricane-related shutdowns of Gulf of Mexico oil output limited the decline."
+        },
+        {
+          "k": "Gold",
+          "v": "+1.4%",
+          "dir": "up",
+          "read": "December gold settled at $4,216.30 an ounce, up about $59, as inflation and geopolitical worries kept demand firm."
+        },
+        {
+          "k": "VIX",
+          "v": "−0.57",
+          "dir": "down",
+          "read": "The stock market's fear gauge eased to 14.84, consistent with a calmer day across markets."
+        }
+      ],
+      "drivers": [
+        {
+          "title": "Consumers expect more inflation",
+          "tags": [
+            "Inflation",
+            "Data"
+          ],
+          "impact": "Added upward pressure on short-term yields",
+          "what": "The University of Michigan's preliminary October survey showed sentiment falling to 46.3, below the 47.8 expected and September's 48.1. One-year inflation expectations rose to 4.7% from 4.6%, and five-year expectations rose to 3.5% from 3.4%. Survey director Joanne Hsu said \"Frustration over cost-of-living continues to mount.\"",
+          "why": "The Fed watches inflation expectations closely: if people expect prices to keep rising, inflation can become harder to bring down, which argues for higher rates for longer.",
+          "response": "The 2-year yield, the one most tied to Fed expectations, ended about 4 bp higher at 4.79%, the biggest move on the curve. Weak sentiment on its own would normally pull yields down, so the inflation details appear to have mattered more.",
+          "signal": "Rising long-term inflation expectations keep pressure on the Fed to hike again; that makes next Wednesday's CPI report especially important."
+        },
+        {
+          "title": "Fed hike expectations stay in place",
+          "tags": [
+            "Fed"
+          ],
+          "impact": "Kept the front end anchored at high levels",
+          "what": "Trading Economics reported markets pricing roughly an 81–82% chance the Fed holds rates at its October 28 meeting, with a December hike still seen as likely. This follows comments this week from Governor Waller and St. Louis Fed President Musalem that more hikes will probably be needed.",
+          "why": "When markets expect the Fed to raise rates again, short-term yields stay high and tend to rise on any sign of stubborn inflation.",
+          "response": "With no major Fed news on Friday, the 2-year drifted higher alongside the inflation-expectations data, and the 2s10s curve flattened about 2 bp to 45 bp.",
+          "signal": "The October meeting looks like a likely pause, but the market still expects the Fed's next move to be a hike rather than a cut."
+        },
+        {
+          "title": "Long end steadies after this week's auctions",
+          "tags": [
+            "Supply"
+          ],
+          "impact": "30-year little changed (about −1 bp)",
+          "what": "The 30-year yield finished near 5.60%, essentially where it closed Thursday after pulling back from its highest level since the early 2000s. Strong demand at this week's 10-year and 30-year auctions suggested investors are still willing to buy long-term debt at these yields. Investrade also reported a weekly record $19.78 billion flowing into bond funds.",
+          "why": "Long-term yields had been climbing on worries about heavy government borrowing and inflation; solid buying interest eases those concerns, at least for now.",
+          "response": "The long end held steady while short-term yields rose, which is why the curve flattened.",
+          "signal": "If long-end demand stays healthy, the 30-year may settle into a range; a hot CPI could quickly test that."
+        },
+        {
+          "title": "Oil steady despite Iran pledge and Gulf hurricane",
+          "tags": [
+            "Energy",
+            "Geopolitics"
+          ],
+          "impact": "Small; oil ended little changed",
+          "what": "Oil slipped early after President Trump's pledge not to attack Iran before the November 3 midterms, but Hurricane Isaias shut in about 63% of Gulf of Mexico oil output, per TheStreet's report of the agency figure. Brent settled up about 0.4% near $104.72.",
+          "why": "Oil prices feed directly into inflation, so they matter for how high the Fed may need to push rates.",
+          "response": "With oil roughly flat, energy was not a major driver of yields on Friday, unlike Thursday's morning spike.",
+          "signal": "Oil above $100 keeps inflation risk elevated; any escalation around Iran or the Strait of Hormuz could quickly push yields back up."
+        }
+      ],
+      "macro": [
+        {
+          "tag": "Sentiment",
+          "title": "University of Michigan consumer sentiment (preliminary October)",
+          "time": "10:00 AM",
+          "actual": "46.3",
+          "consensus": "47.8",
+          "prior": "48.1",
+          "note": "Current conditions 44.7 vs 51.0 expected; expectations 47.3 vs 45.5 expected."
+        },
+        {
+          "tag": "Inflation",
+          "title": "UMich 1-year inflation expectations",
+          "time": "10:00 AM",
+          "actual": "4.7%",
+          "prior": "4.6%"
+        },
+        {
+          "tag": "Inflation",
+          "title": "UMich 5-year inflation expectations",
+          "time": "10:00 AM",
+          "actual": "3.5%",
+          "prior": "3.4%",
+          "note": "Longer-term expectations moved up, a worry for the Fed."
+        },
+        {
+          "tag": "Supply",
+          "title": "Treasury supply",
+          "note": "No coupon auctions on Friday. This week's 10-year and 30-year auctions both drew strong demand."
+        }
+      ],
+      "geo": [
+        {
+          "title": "Iran: Trump defers any attack until after the midterms",
+          "impact": "Low",
+          "text": "Trump said talks with Iran were productive and that any attack would wait until after the November 3 midterm elections. Oil dipped early but recovered, and traders remained skeptical about progress toward ending the conflict. Separately, a Houthi attack at Riyadh's airport killed three Saudi nationals, according to TheStreet."
+        }
+      ],
+      "events": [
+        {
+          "t": "Early",
+          "cat": "Energy",
+          "title": "Oil eases after Trump's pledge not to attack Iran before the midterms",
+          "react": "Brent briefly down more than 1%"
+        },
+        {
+          "t": "10:00 AM",
+          "cat": "Data",
+          "title": "Michigan sentiment 46.3 vs 47.8 expected; 5-year inflation expectations rise to 3.5%",
+          "react": "Short-term yields firm"
+        },
+        {
+          "t": "10:07 AM",
+          "cat": "Geopolitics",
+          "title": "Houthi attack at Riyadh airport reported",
+          "react": "Little reaction in Treasuries"
+        },
+        {
+          "t": "11:09 AM",
+          "cat": "Energy",
+          "title": "Hurricane Isaias shuts in about 63% of Gulf oil output",
+          "react": "Oil recovers to roughly flat"
+        },
+        {
+          "t": "1:35 PM",
+          "cat": "Rates",
+          "title": "Treasury yields rise across the curve",
+          "react": "2Y near 4.80%, 10Y near 5.25%"
+        },
+        {
+          "t": "4:00 PM",
+          "cat": "Close",
+          "title": "S&P 500 closes +0.59% at 7,811.54",
+          "react": "2Y near 4.79% (+4 bp), 10Y near 5.24% (+1 bp), 30Y near 5.60% (−1 bp)"
+        }
+      ],
+      "interpretation": {
+        "text": "Friday was a modest, front-end-led move. Short-term yields rose a few basis points while the 30-year stayed put, a pattern that points to Fed and inflation expectations rather than worries about long-term debt supply. The Michigan survey's rise in inflation expectations fits that story, but the moves were small, there was no major data release beyond the survey, and inflation-adjusted yields were not available to confirm the split, so conviction is low. Over the week, long-term yields hit 24-year highs and then pulled back after strong auctions.",
+        "change": "A hot September CPI on October 14 would likely push the 2-year higher and revive the long-end selloff; a soft reading could ease December hike bets."
+      },
+      "watch": [
+        {
+          "when": "Mon Oct 12",
+          "what": "Columbus Day: US bond market closed"
+        },
+        {
+          "when": "Tue Oct 13",
+          "what": "Big bank third-quarter earnings begin"
+        },
+        {
+          "when": "Wed Oct 14",
+          "what": "September CPI"
+        },
+        {
+          "when": "Thu Oct 15",
+          "what": "September PPI"
+        },
+        {
+          "when": "Oct 27–28",
+          "what": "FOMC meeting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "investingLive: Americas FX news wrap, Oct. 9 (closing Treasury yields)",
+          "url": "https://investinglive.com/news/investinglive-americas-fx-news-wrap-9-oct-it-s-a-wrap-stocks-rebound-despite-weak-sentiment-canadian-dollar-falls-on-jobs-miss/"
+        },
+        {
+          "name": "TheStreet: Stock market today, Oct. 9, 2026",
+          "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-oct-09-2026"
+        },
+        {
+          "name": "Investrade: Market Review, Oct. 9, 2026",
+          "url": "https://investrade.com/market-review-october-09-2026/"
+        },
+        {
+          "name": "Yahoo Finance: Stock market today, Oct. 9 (live updates)",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-october-9-dow-sp-500-nasdaq-080148117.html"
+        },
+        {
+          "name": "Trading Economics: US 10-year Treasury yield",
+          "url": "https://tradingeconomics.com/united-states/government-bond-yield"
+        }
+      ]
+    },
+    {
       "market_date": "2026-10-08",
       "key": "2026-10-08",
       "edition": "close",
