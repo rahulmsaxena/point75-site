@@ -1,6 +1,6 @@
 {
-  "updated": "2026-10-08",
-  "window": "Aug 21 – Oct 7, 2026",
+  "updated": "2026-10-09",
+  "window": "Aug 25 – Oct 7, 2026",
   "hero": {
     "src": "https://rahulmsaxena.github.io/point75-site/insights/hero.jpg",
     "small": "https://rahulmsaxena.github.io/point75-site/insights/hero-sm.jpg",
@@ -10,14 +10,14 @@
   "headline": "What the biggest voices in bonds are saying",
   "mood": "Cautious vigilance",
   "bigPicture": [
-    "The shared view among the market’s leading voices is that the era of cheap money is over. The Federal Reserve raised rates in September because inflation has been above its 2% goal for more than five years, and minutes released Oct 7 show most officials expect another hike by year end. The 10-year Treasury yield has climbed above 5.3%, its highest level since 2002.",
+    "The shared view among the market’s leading voices is that the era of cheap money is over. The Federal Reserve raised rates in September because inflation has been above its 2% goal for more than five years, and minutes released Oct 7 show most officials expect another hike by year end. The 10-year Treasury yield touched 5.35% on Oct 8, its highest level since 2002, before easing to about 5.25%.",
     "The pressure comes from supply as much as inflation. Federal debt has passed $40 trillion, the government keeps borrowing heavily, and traditional foreign buyers such as Japan and China are buying fewer Treasuries. Several of these investors say that makes buy-and-hold in long-term bonds riskier than it used to be.",
-    "They are not all bearish on bonds. BlackRock’s Rick Rieder and PIMCO see today’s yields as an opportunity, especially in high-quality and shorter-term bonds, and Treasury Secretary Scott Bessent says the rise is a global trend rather than a U.S. problem. Gundlach, Dalio and Druckenmiller warn that long-term Treasuries may not protect investors in the next downturn the way they used to."
+    "They are not all bearish on bonds. BlackRock’s Rick Rieder and PIMCO see today’s yields as an opportunity, especially in high-quality and shorter-term bonds, and Treasury Secretary Scott Bessent says the rise is a global trend rather than a U.S. problem, promising that growth and spending restraint will soon slow government borrowing. Gundlach and Druckenmiller warn that long-term Treasuries may not protect investors the way they used to, and Bill Gross now says not to own bonds at all, apart from one-year Treasury bills."
   ],
   "agree": ["Rates will stay higher for longer", "Government debt is the core pressure on yields", "Quality matters more than chasing extra yield"],
   "differ": [
     ["Long-term Treasuries are starting to look worth owning", "PIMCO, Capital Group, and Rieder (in small amounts)"],
-    ["Long-term Treasuries may not be a safe haven next time", "Gundlach, Dalio, Druckenmiller"]
+    ["Long-term Treasuries may not be a safe haven next time", "Gundlach, Druckenmiller, Gross"]
   ],
   "voices": [
     {
@@ -33,14 +33,14 @@
     },
     {
       "name": "Scott Bessent", "role": "U.S. Treasury Secretary", "initials": "SB", "theme": "Not alarmed yet",
-      "when": "Oct 3, 2026", "where": "Axios interview, reported by Bloomberg",
+      "when": "Oct 3–5, 2026", "where": "Axios interview; fireside chat in Pennsylvania, reported by Bloomberg",
       "points": [
-        "He played down the jump in yields, describing it as part of a global rise in borrowing costs rather than a U.S.-specific problem.",
-        "He said he would worry about a rise unique to the U.S., and that investors are not selling Treasuries to buy German or Japanese bonds.",
+        "He played down the jump in yields as part of a global rise in borrowing costs rather than a U.S.-specific problem, noting investors are not selling Treasuries to buy German or Japanese bonds.",
+        "On Oct 5 he told investors that economic growth and spending restraint would very quickly start to change the path of government borrowing.",
         "He acknowledged the limits of his role, saying he cannot control the bond market but can urge people to slow down and think."
       ],
       "quote": "I can’t control the bond market.",
-      "sources": [["Yahoo Finance (Bloomberg)", "https://finance.yahoo.com/economy/policy/articles/bessent-downplays-worries-rising-yields-145907014.html"]]
+      "sources": [["Yahoo Finance (Bloomberg), Oct 3", "https://finance.yahoo.com/economy/policy/articles/bessent-downplays-worries-rising-yields-145907014.html"], ["Yahoo Finance (Bloomberg), Oct 6", "https://finance.yahoo.com/economy/policy/articles/us-yields-fall-2002-high-102019892.html"]]
     },
     {
       "name": "Mohamed El-Erian", "role": "Economist; former PIMCO CEO", "initials": "ME", "theme": "Buyers are drifting away",
@@ -65,15 +65,15 @@
       "sources": [["24/7 Wall St. (CNBC interview), Sep 17", "https://247wallst.com/investing/2026/09/17/jeffrey-gundlach-says-the-fed-should-have-hiked-twice-as-much-and-ai-debt-is-already-cracking/"], ["Briefs, Sep 18", "https://www.briefs.co/news/gundlach-warns-next-recession-could-send-long-term-yields-mu/"], ["Yahoo Finance / Quartz, Oct 1", "https://finance.yahoo.com/markets/stocks/articles/doublelines-jeffrey-gundlach-warns-stock-123516832.html"]]
     },
     {
-      "name": "Ray Dalio", "role": "Founder, Bridgewater Associates", "initials": "RD", "theme": "A debt clock",
-      "when": "Aug 21, 2026", "where": "LinkedIn post",
+      "name": "Bill Gross", "role": "Co-founder, PIMCO", "initials": "BG", "theme": "Don’t own bonds",
+      "when": "Sep 30, 2026", "where": "Financial Times opinion piece",
       "points": [
-        "He warned that interest costs on U.S. debt, now above $40 trillion, are crowding out other spending, and that rising yields and weaker foreign demand make the path riskier.",
-        "He put the timing of a U.S. debt crisis at roughly three years, give or take two, if nothing changes.",
-        "His suggested response is broad diversification: hold fewer bonds than usual and keep a meaningful slice in gold."
+        "He told investors not to own bonds, with the exception of one-year Treasury bills, which he noted were yielding 4.55%.",
+        "He argues debt has piled up too far, about $84 trillion of government, mortgage and corporate credit, with federal debt near 100% of GDP and an AI borrowing boom, which he links to higher inflation and slower growth.",
+        "He expects more swings in 10-year Treasury prices and urges caution on stocks, warning that higher yields will squeeze company profit margins."
       ],
-      "quote": "It will come in three years, give or take two…",
-      "sources": [["Yahoo Finance", "https://finance.yahoo.com/economy/policy/articles/ray-dalio-says-us-faces-114500355.html"], ["24/7 Wall St., Sep 13", "https://247wallst.com/investing/2026/09/13/ray-dalio-says-interest-costs-are-crowding-out-everything-else-heres-his-three-year-warning/"]]
+      "quote": "Preserve and protect is my current investment motto.",
+      "sources": [["Fortune, Oct 4", "https://fortune.com/2026/10/04/bond-king-bill-gross-long-term-debt-volatility-treasury-yields/"], ["Benzinga, Oct 5", "https://www.benzinga.com/markets/bonds/26/10/62158622/preserve-and-protect-why-the-bond-king-is-avoiding-his-own-asset-class"], ["Yahoo Finance (Moneywise), Oct 6", "https://finance.yahoo.com/markets/stocks/articles/too-much-risk-pimco-bill-114500754.html"]]
     },
     {
       "name": "Stanley Druckenmiller", "role": "Investor, Duquesne Family Office", "initials": "SD", "theme": "Don’t fight the market",
