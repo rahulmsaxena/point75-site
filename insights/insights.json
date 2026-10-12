@@ -1,6 +1,6 @@
 {
-  "updated": "2026-10-09",
-  "window": "Aug 25 – Oct 7, 2026",
+  "updated": "2026-10-12",
+  "window": "Sep 4 – Oct 8, 2026",
   "hero": {
     "src": "https://rahulmsaxena.github.io/point75-site/insights/hero.jpg",
     "small": "https://rahulmsaxena.github.io/point75-site/insights/hero-sm.jpg",
@@ -10,14 +10,14 @@
   "headline": "What the biggest voices in bonds are saying",
   "mood": "Cautious vigilance",
   "bigPicture": [
-    "The shared view among the market’s leading voices is that the era of cheap money is over. The Federal Reserve raised rates in September because inflation has been above its 2% goal for more than five years, and minutes released Oct 7 show most officials expect another hike by year end. The 10-year Treasury yield touched 5.35% on Oct 8, its highest level since 2002, before easing to about 5.25%.",
-    "The pressure comes from supply as much as inflation. Federal debt has passed $40 trillion, the government keeps borrowing heavily, and traditional foreign buyers such as Japan and China are buying fewer Treasuries. Several of these investors say that makes buy-and-hold in long-term bonds riskier than it used to be.",
-    "They are not all bearish on bonds. BlackRock’s Rick Rieder and PIMCO see today’s yields as an opportunity, especially in high-quality and shorter-term bonds, and Treasury Secretary Scott Bessent says the rise is a global trend rather than a U.S. problem, promising that growth and spending restraint will soon slow government borrowing. Gundlach and Druckenmiller warn that long-term Treasuries may not protect investors the way they used to, and Bill Gross now says not to own bonds at all, apart from one-year Treasury bills."
+    "The shared view among the market’s leading voices is that the era of cheap money is over. The Federal Reserve raised rates in September because inflation has been above its 2% goal for more than five years, and minutes released Oct 7 show most officials expect another hike by year end. The 10-year Treasury yield touched 5.35% on Oct 8, its highest level since 2002, before easing to about 5.24% on Oct 9.",
+    "The pressure comes from supply as much as inflation. Federal debt has passed $40 trillion, the government keeps borrowing heavily, and traditional foreign buyers such as Japan and China are buying fewer Treasuries. Ray Dalio says the U.S. is nearing the limit of how much debt it can carry, and several of these investors say that makes buy-and-hold in long-term bonds riskier than it used to be.",
+    "They are not all bearish on bonds. BlackRock’s Rick Rieder and PIMCO see today’s yields as an opportunity, especially in high-quality and shorter-term bonds, and Treasury Secretary Scott Bessent says the rise is a global trend rather than a U.S. problem, promising that growth and spending restraint will soon slow government borrowing. Gundlach warns that long-term Treasuries may not protect investors the way they used to, Dalio is betting against bonds and holding gold instead, and Bill Gross now says not to own bonds at all, apart from one-year Treasury bills."
   ],
   "agree": ["Rates will stay higher for longer", "Government debt is the core pressure on yields", "Quality matters more than chasing extra yield"],
   "differ": [
     ["Long-term Treasuries are starting to look worth owning", "PIMCO, Capital Group, and Rieder (in small amounts)"],
-    ["Long-term Treasuries may not be a safe haven next time", "Gundlach, Druckenmiller, Gross"]
+    ["Long-term Treasuries may not be a safe haven next time", "Gundlach, Dalio, Gross"]
   ],
   "voices": [
     {
@@ -76,26 +76,26 @@
       "sources": [["Fortune, Oct 4", "https://fortune.com/2026/10/04/bond-king-bill-gross-long-term-debt-volatility-treasury-yields/"], ["Benzinga, Oct 5", "https://www.benzinga.com/markets/bonds/26/10/62158622/preserve-and-protect-why-the-bond-king-is-avoiding-his-own-asset-class"], ["Yahoo Finance (Moneywise), Oct 6", "https://finance.yahoo.com/markets/stocks/articles/too-much-risk-pimco-bill-114500754.html"]]
     },
     {
-      "name": "Stanley Druckenmiller", "role": "Investor, Duquesne Family Office", "initials": "SD", "theme": "Don’t fight the market",
-      "when": "Aug 25, 2026", "where": "Wall Street Journal opinion piece",
+      "name": "Ray Dalio", "role": "Founder, Bridgewater Associates", "initials": "RD", "theme": "Nearing the limit",
+      "when": "Oct 6–8, 2026", "where": "Bloomberg TV interview; Greenwich Economic Forum fireside chat",
       "points": [
-        "He criticized the Treasury’s plan to buy back bonds to hold yields down, arguing that yields reflect growth, deficits and debt, not something policy can wish away.",
-        "He sees rising rates as a warning signal that disciplines government borrowing, and says muting that signal makes the danger worse.",
-        "His fix is to cut the deficit rather than manage bond prices."
+        "He expects a U.S. debt crisis within roughly the next two years, as the government must sell about $2 trillion of new debt a year while big buyers such as China and Japan pull back.",
+        "He says rising interest costs are taking a growing share of federal spending, and that rising rates will squeeze borrowers, especially homeowners with mortgages.",
+        "He is betting against bonds, suggests 5% to 15% of a diversified portfolio in gold, likes inflation-protected bonds, and thinks U.S. stocks are in a bubble."
       ],
-      "quote": "Governments defending prices against fundamentals always lose.",
-      "sources": [["CNBC, Aug 25", "https://www.cnbc.com/2026/08/25/stanley-druckenmiller-leads-doubters-who-think-bessents-bond-ploys-will-fail.html"], ["CoinDesk, Aug 25", "https://www.coindesk.com/markets/2026/08/25/governments-defending-prices-against-fundamentals-always-lose-billionaire-investor-druckenmiller-says"]]
+      "quote": "We're approaching our limits.",
+      "sources": [["TheStreet (Bloomberg TV interview), Oct 6", "https://www.thestreet.com/crypto/markets/billionaire-ray-dalio-reveals-deadline-for-u-s-debt-crisis"], ["Yahoo Finance, Greenwich Economic Forum", "https://finance.yahoo.com/economy/policy/articles/ray-dalio-believes-going-experience-143411294.html"], ["Scuttlebutt summary, Oct 9", "https://getscuttlebutt.substack.com/p/2-years-to-a-debt-squeeze-and-stocks"]]
     },
     {
       "name": "Rick Rieder", "role": "CIO of Global Fixed Income, BlackRock", "initials": "RR", "theme": "Bonds are back",
-      "when": "Sep 16, 2026", "where": "CNBC",
+      "when": "Sep 16 – Oct 8, 2026", "where": "CNBC; Bloomberg Surveillance",
       "points": [
-        "He has turned more cautious on U.S. stocks because high-quality bonds now pay enough to be a real alternative.",
-        "He favors short-term, high-quality bonds at the front of the curve and has started adding a little in long-term Treasuries.",
+        "On Oct 8 he said short-term bonds at the front of the yield curve are still very attractive, a way to keep income high while keeping price swings down, and that he is positioned for a hawkish Fed, one leaning toward more rate hikes.",
+        "He has turned more cautious on U.S. stocks and has started adding a little in long-term Treasuries.",
         "He warns that every 1-point rise in rates adds about $100 billion a year to government interest costs, which eventually has to pull rates back down."
       ],
-      "quote": "We're going to have a compounding debt problem in the country.",
-      "sources": [["Benzinga (corrected)", "https://www.benzinga.com/markets/bonds/26/09/61811344/blackrocks-rick-rieder-turns-cautious-on-us-stocks-warns-40-trillion-debt-is-becoming-a-compoundingproblem"]]
+      "quote": "Still very attractive.",
+      "sources": [["Bloomberg via Yahoo Finance, Oct 8", "https://finance.yahoo.com/video/blackrocks-rieder-yield-curve-federal-131036567.html"], ["Whatfinger (Bloomberg Surveillance), Oct 8", "https://money.whatfinger.com/2026/10/08/blackrocks-rieder-says-front-end-of-yield-curve-still-very-attractive/"], ["Benzinga (corrected), Sep 16", "https://www.benzinga.com/markets/bonds/26/09/61811344/blackrocks-rick-rieder-turns-cautious-on-us-stocks-warns-40-trillion-debt-is-becoming-a-compoundingproblem"]]
     },
     {
       "name": "Dan Ivascyn", "role": "Group CIO, PIMCO", "initials": "DI", "theme": "Pick your spots",
