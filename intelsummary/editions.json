@@ -1,6 +1,262 @@
 {
   "summaries": [
     {
+      "market_date": "2026-10-13",
+      "key": "2026-10-13",
+      "edition": "close",
+      "generated_at": "2026-10-13T22:53:02Z",
+      "as_of": "5:19 PM ET (late-session quotes)",
+      "title": "Long-term yields slip after the holiday as Fed officials keep a December hike in view",
+      "regime": "Twist flattener",
+      "regime_note": "Long end eases; the 2-year edges up",
+      "conviction": "Low",
+      "takeaway": "Treasuries reopened after Monday's Columbus Day holiday with a quiet, mixed day. The 10-year yield ended about 2 bp lower at 5.22% and the 30-year about 3 bp lower near 5.57%, while the 2-year edged up to 4.80% as three Fed officials said another rate hike is likely before year-end. With September CPI due Wednesday morning, traders mostly waited.",
+      "tape": [
+        {
+          "k": "2Y",
+          "level": 4.8,
+          "d": 1,
+          "w": 1
+        },
+        {
+          "k": "5Y",
+          "level": 5.01,
+          "d": -1
+        },
+        {
+          "k": "10Y",
+          "level": 5.22,
+          "d": -2,
+          "w": -6
+        },
+        {
+          "k": "30Y",
+          "level": 5.57,
+          "d": -3,
+          "w": -8
+        },
+        {
+          "k": "2s10s",
+          "level": 42,
+          "d": -3,
+          "w": -6,
+          "unit": "bp",
+          "group": "Curve"
+        },
+        {
+          "k": "5s30s",
+          "level": 56,
+          "d": -2,
+          "unit": "bp",
+          "group": "Curve"
+        }
+      ],
+      "fed": {
+        "meeting": "Oct 28"
+      },
+      "cross": [
+        {
+          "k": "S&P 500",
+          "v": "−0.02%",
+          "dir": "flat",
+          "read": "Stocks closed essentially flat at 7,805.45 as mixed big-bank earnings and a chip-stock selloff offset each other, so equities gave bonds little direction."
+        },
+        {
+          "k": "Dollar index",
+          "v": "about −0.35%",
+          "dir": "down",
+          "read": "The dollar slipped to around 102.2 and fell against every major currency as traders positioned ahead of the CPI report."
+        },
+        {
+          "k": "WTI crude",
+          "v": "+0.4%",
+          "dir": "up",
+          "read": "Oil fell about 2% early on reports of easing Russian diesel supply concerns, then recovered to settle near $94.14 as Middle East shipping risks returned to focus."
+        },
+        {
+          "k": "Gold",
+          "v": "about −0.3%",
+          "dir": "down",
+          "read": "Spot gold eased to roughly $4,160 an ounce, a calm reading for a market still on edge about inflation."
+        }
+      ],
+      "drivers": [
+        {
+          "title": "Fed officials keep a December hike on the table",
+          "tags": [
+            "Fed"
+          ],
+          "impact": "Held the 2-year near 4.80% while longer yields fell",
+          "what": "Boston Fed President Susan Collins said \"it will be appropriate to raise rates a bit further before the end of the year.\" New York Fed President John Williams told Bloomberg News one more hike may still be appropriate this year but he sees no need for more in 2027, adding that \"the economy is not overheating.\" Governor Waller said the surge in long-term yields is restraining housing and auto demand.",
+          "why": "The 2-year yield tracks where markets think the Fed's policy rate is headed. Officials talking about another hike keep it from falling, while Williams' signal that the hiking cycle is close to its end limits how high longer-term yields need to go.",
+          "response": "The 2-year edged up about 1 bp to 4.80% while the 10-year and 30-year fell, flattening the curve. Investing.com's Fed rate monitor showed the chance of a hike at the October 28 meeting at 23%, up from 19.5% a day earlier, with about 87% odds of at least one hike by December.",
+          "signal": "The market sees October as a likely pause and December as the probable next hike; Wednesday's CPI is the next test of that view."
+        },
+        {
+          "title": "Long end gives back some of its recent selloff",
+          "tags": [
+            "Supply",
+            "Positioning"
+          ],
+          "impact": "30-year about −3 bp, 10-year about −2 bp",
+          "what": "Early in the day the 10-year fell to about 5.19%, roughly 5 bp below Friday's close, before recovering most of that drop. It still finished the day lower, and is about 6 bp below last Tuesday's level after hitting 24-year highs earlier this month. An FXStreet analysis noted record investor buying of long-term Treasuries at these yields, including the largest net position in 10-year futures held by asset managers in CFTC data going back to 2006.",
+          "why": "Long-term yields reflect inflation worries and heavy government borrowing, but at levels above 5% many investors see value in locking in income, which caps the selloff for now.",
+          "response": "The 30-year finished near 5.57% and the 5s30s curve narrowed about 2 bp to 56 bp.",
+          "signal": "Steady demand from long-term buyers is keeping the long end in a range for now; a hot inflation print could quickly test it."
+        },
+        {
+          "title": "Oil and stocks offer no clear direction",
+          "tags": [
+            "Energy",
+            "Risk"
+          ],
+          "impact": "Small",
+          "what": "Oil swung from an early drop of about 2% to a small gain at the settlement. Stocks were flat as JPMorgan missed earnings forecasts while Goldman Sachs beat, and chip stocks fell after a Chinese rival flagged progress on a new memory chip design.",
+          "why": "Oil feeds into inflation and risk-off moves in stocks can push investors toward Treasuries, but neither moved far enough on Tuesday to drive yields.",
+          "response": "The early dip in oil coincided with the 10-year's low near 5.19%; as oil recovered, yields drifted back up.",
+          "signal": "With oil still above $90, energy remains a source of inflation risk that bond investors are watching closely."
+        }
+      ],
+      "macro": [
+        {
+          "tag": "Housing",
+          "title": "Existing-home sales (September)",
+          "time": "10:00 AM",
+          "actual": "3.99M annualized",
+          "note": "Sales rose slightly from August and came in close to forecasts, so the report did little to move yields."
+        },
+        {
+          "tag": "Sentiment",
+          "title": "NFIB small business optimism (September)",
+          "time": "6:00 AM",
+          "actual": "97.9",
+          "consensus": "96.0",
+          "prior": "98.7"
+        },
+        {
+          "tag": "Fed",
+          "title": "Fed pricing",
+          "note": "Investing.com's Fed rate monitor (5:25 PM ET): 23% chance of a hike on Oct 28, up from 19.5% the prior day; about 87% chance of at least one hike by the Dec 9 meeting, up from about 84%. The policy rate is 3.75–4.00% after September's hike."
+        },
+        {
+          "tag": "Supply",
+          "title": "Treasury supply",
+          "note": "No coupon auctions on Tuesday. Treasury's next quarterly borrowing announcement is due November 4."
+        }
+      ],
+      "geo": [
+        {
+          "title": "Iran and Gulf shipping risks",
+          "impact": "Low",
+          "text": "Reports said President Trump and Israeli Prime Minister Netanyahu discussed possible action against Iran, and TheStreet reported that Iran is fortifying nuclear sites. Attacks on commercial ships near the Strait of Hormuz and Saudi-led strikes on a Houthi-linked oil facility in Yemen were also reported. These kept oil supported but had no clear effect on Treasuries."
+        }
+      ],
+      "events": [
+        {
+          "t": "7:11 AM",
+          "cat": "Energy",
+          "title": "Oil falls about 2% in early trading",
+          "react": "Brent near $104.40, WTI near $91.78"
+        },
+        {
+          "t": "7:40 AM",
+          "cat": "Earnings",
+          "title": "JPMorgan misses profit forecasts; Goldman beats before the open",
+          "react": "Bank shares mixed"
+        },
+        {
+          "t": "8:30 AM",
+          "cat": "Rates",
+          "title": "10-year yield trades near 5.19%, about 5 bp below Friday's close",
+          "react": "Low of the day for long-term yields"
+        },
+        {
+          "t": "10:00 AM",
+          "cat": "Data",
+          "title": "Existing-home sales 3.99M annualized",
+          "react": "Little reaction"
+        },
+        {
+          "t": "10:31 AM",
+          "cat": "Equities",
+          "title": "Chip stocks slide on China memory-chip news",
+          "react": "Nasdaq slips; Treasuries little changed"
+        },
+        {
+          "t": "4:00 PM",
+          "cat": "Fed",
+          "title": "Collins: appropriate to raise rates \"a bit further\" before year-end",
+          "react": "Front-end yields steady near 4.80%"
+        },
+        {
+          "t": "5:19 PM",
+          "cat": "Close",
+          "title": "Late-session Treasury levels",
+          "react": "2Y 4.80% (+1 bp), 10Y 5.22% (−2 bp), 30Y 5.57% (−3 bp)"
+        }
+      ],
+      "interpretation": {
+        "text": "Tuesday was a waiting day. Long-term yields drifted lower while the 2-year held firm, a pattern that fits Fed officials signalling one more hike but not an extended cycle: that keeps short-term yields up while easing pressure on longer maturities. The moves were small, there was little major data, and the dollar's slide and oil's round trip pointed in different directions, so conviction is low.",
+        "change": "A hotter-than-expected September CPI on Wednesday would likely lift the 2-year and push October hike odds higher; a soft core reading could extend the long-end rally."
+      },
+      "watch": [
+        {
+          "when": "Wed 8:30 AM",
+          "what": "September CPI"
+        },
+        {
+          "when": "Thu 8:30 AM",
+          "what": "September PPI, retail sales, jobless claims and Philadelphia Fed survey"
+        },
+        {
+          "when": "Thu",
+          "what": "Fed Chair Kevin Warsh speaks"
+        },
+        {
+          "when": "Fri 8:30 AM",
+          "what": "September import and export prices"
+        },
+        {
+          "when": "Oct 28, 2:00 PM",
+          "what": "FOMC rate decision"
+        }
+      ],
+      "sources": [
+        {
+          "name": "investingLive: Americas FX news wrap, 13 Oct",
+          "url": "https://investinglive.com/news/investinglive-americas-fx-news-wrap-13-oct-dollar-retreats-as-traders-await-cpi-oil-rises-and-stocks-slip"
+        },
+        {
+          "name": "Investing.com: Fed rate monitor",
+          "url": "https://www.investing.com/central-banks/fed-rate-monitor"
+        },
+        {
+          "name": "Investing.com/Reuters: Fed's Collins sees another rate hike before end of 2026",
+          "url": "https://www.investing.com/news/economy-news/feds-collins-sees-another-rate-hike-on-the-table-before-end-of-2026-4947448"
+        },
+        {
+          "name": "investingLive: Three Fed officials signal inflation fight continues",
+          "url": "https://investinglive.com/central-banks/icymi-three-fed-officials-signal-inflation-fight-continues-williams-sees-no-2027-hike/"
+        },
+        {
+          "name": "TheStreet: Stock market today, Oct. 13, 2026",
+          "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-oct-13-2026"
+        },
+        {
+          "name": "BabyPips: Financial & forex market recap, Oct. 13",
+          "url": "https://babypips.com/news/financial-forex-market-recap-2026-10-13"
+        },
+        {
+          "name": "The Mortgage Reports: Mortgage rates today, Oct. 13, 2026",
+          "url": "https://themortgagereports.com/mortgage-rates-now/mortgage-rates-today-october-13-2026"
+        },
+        {
+          "name": "FXStreet: A historic Treasury rout is underway; investors are buying it at record size",
+          "url": "https://fxstreet.com/analysis/a-historic-treasury-rout-is-underway-investors-are-buying-it-at-record-size-202610131927"
+        }
+      ]
+    },
+    {
       "market_date": "2026-10-09",
       "key": "2026-10-09",
       "edition": "close",
