@@ -1,6 +1,273 @@
 {
   "summaries": [
     {
+      "market_date": "2026-10-14",
+      "key": "2026-10-14",
+      "edition": "close",
+      "generated_at": "2026-10-14T22:54:27Z",
+      "as_of": "4:37 PM ET (late-session quotes)",
+      "title": "Hot CPI jolts Treasuries, then the long end rallies back as stocks slide",
+      "regime": "Twist flattener",
+      "regime_note": "CPI spike fades; long end ends lower, 2-year edges up",
+      "conviction": "Low",
+      "takeaway": "September's consumer price report came in hotter than expected, briefly pushing the 10-year yield to about 5.33% and lifting the odds of a Fed rate hike this month. Treasuries then rallied through the afternoon as stocks fell, and the 10-year finished about 3 bp lower at 5.19%. The 2-year still ended slightly higher near 4.80%, so the curve flattened again.",
+      "tape": [
+        {
+          "k": "2Y",
+          "level": 4.8,
+          "d": 1,
+          "w": 3
+        },
+        {
+          "k": "10Y",
+          "level": 5.19,
+          "d": -3,
+          "w": -9
+        },
+        {
+          "k": "30Y",
+          "level": 5.52,
+          "d": -4,
+          "w": -14
+        },
+        {
+          "k": "2s10s",
+          "level": 39,
+          "d": -3,
+          "w": -12,
+          "unit": "bp",
+          "group": "Curve"
+        }
+      ],
+      "fed": {
+        "meeting": "Oct 28"
+      },
+      "cross": [
+        {
+          "k": "S&P 500",
+          "v": "−1.11%",
+          "dir": "down",
+          "read": "Stocks fell to 7,718.94 as technology shares dropped 3% on rising rate-hike bets. The slide coincided with the afternoon rally in long-term Treasuries."
+        },
+        {
+          "k": "Dollar index",
+          "v": "about +0.3%",
+          "dir": "up",
+          "read": "The dollar rose to around 102.5 after peaking near 102.9 at about 11 AM ET, as the inflation data supported higher US short-term rates."
+        },
+        {
+          "k": "Gold",
+          "v": "about −1.5%",
+          "dir": "down",
+          "read": "Gold fell to roughly $4,100 an ounce; higher odds of a Fed hike make non-yielding assets less attractive."
+        },
+        {
+          "k": "VIX",
+          "v": "+10%",
+          "dir": "up",
+          "read": "Stock-market volatility rose to 16.82, a sign of more nervous risk appetite after the inflation surprise."
+        }
+      ],
+      "drivers": [
+        {
+          "title": "Hotter-than-expected September CPI",
+          "tags": [
+            "Inflation",
+            "Fed"
+          ],
+          "impact": "2-year briefly hit about 4.95% before settling near 4.80%",
+          "what": "Consumer prices rose 3.7% from a year earlier, above the 3.6% forecast and up from 3.4% in August. The monthly gain was 0.6%, as expected, with gasoline accounting for more than half of it. Core prices, which exclude food and energy, rose 0.3% on the month against a 0.2% forecast and 2.6% on the year against 2.5% expected. Shelter, airfares and used cars were among the upside drivers.",
+          "why": "The Fed raised rates in September and has signalled one more hike this year. A firmer core reading strengthens the case for hiking sooner, and the 2-year yield is the maturity most sensitive to that.",
+          "response": "Right after the 8:30 AM ET release the 2-year jumped to about 4.95%, its highest since late September, and the 10-year rose to about 5.33%. LSEG data showed the chance of a hike at the October 28 meeting rising to about 40% in the morning from 22% before the report.",
+          "signal": "Markets now treat October as a live meeting rather than a likely pause, and bets on a December hike firmed."
+        },
+        {
+          "title": "Afternoon rally erases the long-end selloff",
+          "tags": [
+            "Risk",
+            "Fed"
+          ],
+          "impact": "10-year about −3 bp, 30-year about −4 bp at the close",
+          "what": "Treasuries recovered through the afternoon while stocks slid, with the S&P 500 down about 1% by midday and the Russell 2000 down 2.2% by 2:25 PM ET. Coverage of the reversal also pointed to recent Fed comments suggesting no rush to hike again, and after the close San Francisco Fed President Mary Daly told Reuters more hikes are likely needed but she sees no need to move in October.",
+          "why": "When stocks sell off, investors often move money into Treasuries, pushing yields down. Signs that the Fed will be patient also reduce the risk that rates rise quickly, which helps longer-term bonds most.",
+          "response": "By late afternoon October hike odds had eased to about 33% (LSEG). The 10-year fell to 5.19% and the 30-year to about 5.52%, while the 2-year held roughly 1 bp higher, flattening the 2s10s curve to about 39 bp. The 10-year breakeven inflation rate was about 2.35%.",
+          "signal": "The market reads hot inflation as a reason for a slightly higher policy rate, not a reason to demand much more for holding long-term debt."
+        },
+        {
+          "title": "Beige Book flags spreading fuel costs",
+          "tags": [
+            "Fed",
+            "Energy"
+          ],
+          "impact": "Reinforced the inflation worry; no clear yield reaction",
+          "what": "The Fed's Beige Book survey of its 12 districts said price growth was moderate in most districts and accelerating in four, adding that \"higher oil prices permeated all District reports.\" Diesel costs passed on through fuel surcharges were a recurring theme, while labor conditions were described as \"little changed\" and consumer spending as mostly flat. Chicago Fed President Austan Goolsbee called the CPI report discouraging, pointing to sticky services inflation.",
+          "why": "If energy costs spread into other prices, inflation could stay high even with a cooling economy, which is the Fed's main worry.",
+          "response": "Yields kept falling through the afternoon despite the report, suggesting traders saw it as confirming what the CPI had already shown.",
+          "signal": "Oil, tied to the Iran war, remains the biggest swing factor for inflation and for how long the Fed keeps tightening."
+        }
+      ],
+      "macro": [
+        {
+          "tag": "Inflation",
+          "title": "CPI, year over year (September)",
+          "time": "8:30 AM",
+          "actual": "3.7%",
+          "consensus": "3.6%",
+          "prior": "3.4%"
+        },
+        {
+          "tag": "Inflation",
+          "title": "CPI, month over month (September)",
+          "time": "8:30 AM",
+          "actual": "+0.6%",
+          "consensus": "+0.6%",
+          "prior": "+0.4%",
+          "note": "Gasoline prices rose 9.1% and accounted for more than half of the monthly increase."
+        },
+        {
+          "tag": "Inflation",
+          "title": "Core CPI, month over month (September)",
+          "time": "8:30 AM",
+          "actual": "+0.3%",
+          "consensus": "+0.2%"
+        },
+        {
+          "tag": "Inflation",
+          "title": "Core CPI, year over year (September)",
+          "time": "8:30 AM",
+          "actual": "2.6%",
+          "consensus": "2.5%",
+          "prior": "2.4%",
+          "note": "The core beat was the part of the report that moved Fed expectations most."
+        },
+        {
+          "tag": "Housing",
+          "title": "MBA mortgage applications (week to Oct 9)",
+          "actual": "−2.7%",
+          "prior": "−4.2%",
+          "note": "The average 30-year mortgage rate was 7.5%, up from 7.49%."
+        },
+        {
+          "tag": "Fed",
+          "title": "Fed pricing",
+          "note": "LSEG data: the chance of a hike at the Oct 27–28 meeting rose to about 40% after the CPI report from 22% before it, then eased to about 33% by late afternoon. The policy rate is 3.75–4.00% after September's hike."
+        }
+      ],
+      "geo": [
+        {
+          "title": "Iran war and Gulf shipping",
+          "impact": "Low",
+          "text": "Iran's Revolutionary Guards said a container ship sank south of the Strait of Hormuz after hitting a naval mine, and Houthi attacks on Saudi Arabia escalated, including an attack on a Saudi Aramco building in Dhahran. President Trump said he is considering joining strikes against the Houthis. These kept oil supported, but the day's Treasury moves were driven by inflation data and stocks."
+        }
+      ],
+      "events": [
+        {
+          "t": "7:19 AM",
+          "cat": "Energy",
+          "title": "Oil rises after an attack on a Saudi Aramco building in Dhahran",
+          "react": "WTI near $95.47"
+        },
+        {
+          "t": "8:30 AM",
+          "cat": "Data",
+          "title": "September CPI: 3.7% y/y vs 3.6% expected; core +0.3% m/m vs +0.2%",
+          "react": "2-year jumps toward 4.95%; 10-year toward 5.33%"
+        },
+        {
+          "t": "9:38 AM",
+          "cat": "Equities",
+          "title": "Stocks open lower",
+          "react": "S&P 500 −0.45%, Nasdaq −0.63%"
+        },
+        {
+          "t": "11:00 AM",
+          "cat": "FX",
+          "title": "Dollar index peaks near 102.9",
+          "react": "Hike bets at their strongest"
+        },
+        {
+          "t": "12:00 PM",
+          "cat": "Equities",
+          "title": "S&P 500 down 0.92%, Nasdaq down 1.37%",
+          "react": "Treasuries begin to recover"
+        },
+        {
+          "t": "2:25 PM",
+          "cat": "Equities",
+          "title": "Russell 2000 down 2.2% on rate-hike bets",
+          "react": "Long-term yields drift lower"
+        },
+        {
+          "t": "4:00 PM",
+          "cat": "Equities",
+          "title": "S&P 500 closes −1.11% at 7,718.94",
+          "react": "Tech −3%, health care +2.4%"
+        },
+        {
+          "t": "4:37 PM",
+          "cat": "Close",
+          "title": "Late-session Treasury levels",
+          "react": "2Y 4.80% (+1 bp), 10Y 5.19% (−3 bp), 30Y 5.52% (−4 bp)"
+        }
+      ],
+      "interpretation": {
+        "text": "A clear inflation surprise produced a sharp early selloff, but by the close long-term yields were lower than on Tuesday. The pattern of the day, with the 2-year holding its gain while the long end rallied, fits a market that expects the Fed to respond to firmer inflation with a slightly higher policy rate, which in turn limits how far long-term inflation fears can run. But the reversal coincided with both a stock selloff and comments about Fed patience, and the reasons cannot be fully separated, so conviction is low.",
+        "change": "Thursday's producer price data and Fed Chair Kevin Warsh's comments late Thursday could reset October hike odds. Another jump in oil, or signs that core inflation is broadening, would put renewed pressure on the 2-year."
+      },
+      "watch": [
+        {
+          "when": "Wed 10:55 PM",
+          "what": "Fed Vice Chair for Supervision Michelle Bowman speaks in Bangkok"
+        },
+        {
+          "when": "Thu 8:30 AM",
+          "what": "September PPI, weekly jobless claims, Philadelphia Fed and Empire State surveys"
+        },
+        {
+          "when": "Thu (late, NY time)",
+          "what": "Fed Chair Kevin Warsh in conversation with IMF chief Kristalina Georgieva in Bangkok"
+        },
+        {
+          "when": "Oct 27–28",
+          "what": "FOMC meeting; rate decision Oct 28"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Finwire: Bond market whiplash, US yields jump then pull back",
+          "url": "https://finwire.io/news/stock-markets-news/bond-market-whiplash-us-yields-jump-then-pull-back-reflecting-feds-expected-patience"
+        },
+        {
+          "name": "TheStreet: Stock market today, Oct. 14, 2026",
+          "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-oct-14-2026"
+        },
+        {
+          "name": "BabyPips: Financial & forex market recap, Oct. 14",
+          "url": "https://www.babypips.com/news/financial-forex-market-recap-2026-10-14"
+        },
+        {
+          "name": "Benzinga: Hot inflation lifts Fed October hike odds",
+          "url": "https://www.benzinga.com/markets/economic-data/26/10/62358014/hot-inflation-fed-october-hike-odds-debasement-risk-september-cpi"
+        },
+        {
+          "name": "Investing.com: US Treasury yields fall after reversing inflation-led selloff",
+          "url": "https://uk.investing.com/news/stock-market-news/us-treasury-yields-fall-after-reversing-inflationled-selloff-93CH-4910686"
+        },
+        {
+          "name": "Federal Reserve: Beige Book, October 2026",
+          "url": "https://www.federalreserve.gov/monetarypolicy/beigebook202610-summary.htm"
+        },
+        {
+          "name": "investingLive: Goolsbee calls CPI discouraging as Beige Book flags diesel",
+          "url": "https://investinglive.com/central-banks/fed-catch-up-goolsbee-calls-cpi-discouraging-as-beige-book-flags-diesel-fuelled-price-pressure/"
+        },
+        {
+          "name": "investingLive: Fed's Daly sees more hikes but no urgency in October",
+          "url": "https://investinglive.com/central-banks/fed-s-daly-more-rate-hikes-likely-needed-but-no-urgency-to-move-in-october/"
+        }
+      ]
+    },
+    {
       "market_date": "2026-10-13",
       "key": "2026-10-13",
       "edition": "close",
