@@ -1,6 +1,294 @@
 {
   "summaries": [
     {
+      "market_date": "2026-10-15",
+      "key": "2026-10-15",
+      "edition": "close",
+      "generated_at": "2026-10-15T22:53:37Z",
+      "as_of": "4:12 PM ET (late-session quotes; 30Y as of 3:19 PM ET)",
+      "title": "A global tech rout sends investors into Treasuries, overpowering a red-hot PPI",
+      "regime": "Bull flattener",
+      "regime_note": "Flight to safety; long end leads the rally",
+      "conviction": "Medium",
+      "takeaway": "Producer prices jumped far more than expected and retail sales beat forecasts, yet Treasuries rallied hard as a selloff in technology stocks spread from Asia. The 10-year yield fell about 10 bp to roughly 5.09%, its lowest since late September, while the 2-year dropped about 5 bp to 4.76%. Long-term yields fell more than short-term ones, so the curve flattened again.",
+      "tape": [
+        {
+          "k": "2Y",
+          "level": 4.76,
+          "d": -5,
+          "w": 1
+        },
+        {
+          "k": "10Y",
+          "level": 5.09,
+          "d": -10,
+          "w": -14
+        },
+        {
+          "k": "30Y",
+          "level": 5.43,
+          "d": -10,
+          "w": -17
+        },
+        {
+          "k": "2s10s",
+          "level": 33,
+          "d": -6,
+          "w": -14,
+          "unit": "bp",
+          "group": "Curve"
+        }
+      ],
+      "fed": {
+        "meeting": "Oct 28"
+      },
+      "cross": [
+        {
+          "k": "S&P 500",
+          "v": "+0.3%",
+          "dir": "up",
+          "read": "Stocks recovered from a weak open to close at 7,744.81, helped by the drop in yields even as chip and AI shares stayed under pressure."
+        },
+        {
+          "k": "Nasdaq",
+          "v": "+0.1%",
+          "dir": "up",
+          "read": "The tech-heavy index opened down about 1.3% before clawing back to a small gain, closing at 26,713.03."
+        },
+        {
+          "k": "Dow",
+          "v": "+1.1%",
+          "dir": "up",
+          "read": "Rotation into consumer, health care and financial shares lifted the Dow to 52,177.81."
+        },
+        {
+          "k": "WTI crude",
+          "v": "almost +3%",
+          "dir": "up",
+          "read": "Oil rose after a larger-than-expected drop in US crude inventories; energy costs were the main force behind the jump in producer prices."
+        }
+      ],
+      "drivers": [
+        {
+          "title": "Global tech selloff drives a rush into bonds",
+          "tags": [
+            "Risk",
+            "Equities"
+          ],
+          "impact": "10-year about −10 bp, 30-year about −10 bp",
+          "what": "A selloff in technology and chip stocks that began on Wednesday spread through Asia overnight: South Korea's Kospi fell about 8% and Japan's Nikkei about 5%, with worries about the sustainability of AI spending at the centre. US markets opened lower, with the Nasdaq down 1.3% and the Russell 2000 down 1.9% shortly after 9:30 AM ET.",
+          "why": "When investors pull money out of stocks they often park it in Treasuries, which pushes bond prices up and yields down. Long-term bonds tend to benefit most because they are the classic safe-haven asset.",
+          "response": "Treasuries had already rallied in Asian trading, and yields kept falling through the day. Market reports described it as the biggest one-day drop in US yields since August 2025, and Reuters said longer-dated yields reached their lowest since September 23. By 3:19 PM ET the 10-year was near 5.085% and the 30-year near 5.426%.",
+          "signal": "For now, fear about stocks is outweighing fear about inflation in the bond market. If the tech selloff fades, some of today's rally could reverse."
+        },
+        {
+          "title": "Hot producer prices and strong retail sales barely dent the rally",
+          "tags": [
+            "Inflation",
+            "Growth"
+          ],
+          "impact": "Yields briefly pared declines after 8:30 AM ET, then resumed falling",
+          "what": "Producer prices for final demand rose 1.3% in September, after 0.5% in August, and 6.3% from a year earlier, the biggest monthly gain in four and a half years. Energy prices jumped 10.8% on the month and gasoline 20.3%. Excluding food and energy, producer prices rose 0.7% against a 0.3% forecast. Retail sales rose 0.8% versus 0.3% expected, though much of that came from gasoline stations; the control group used to estimate GDP rose only 0.1%.",
+          "why": "Rising costs for businesses can feed into consumer prices later, and strong spending argues against the economy cooling. Both normally push yields up, especially for short maturities tied to Fed policy.",
+          "response": "Yields bounced briefly after the 8:30 AM ET releases, and CME FedWatch odds of a quarter-point hike this month rose to nearly 34% from about 29%. Both moves faded: hike odds slipped back to about 27% and yields resumed their slide.",
+          "signal": "Much of the inflation heat is coming from energy, which investors seem to treat as a temporary shock rather than a reason for much higher long-term rates."
+        },
+        {
+          "title": "Fed officials signal patience on October",
+          "tags": [
+            "Fed"
+          ],
+          "impact": "Helped the 2-year fall despite the hot data",
+          "what": "San Francisco Fed President Mary Daly said further rate hikes are more likely than not to be needed but that she sees no need to move at the October 27–28 meeting. Reuters reported that comments from officials including Michelle Bowman and Daly tempered the hike bets that had jumped after Wednesday's CPI.",
+          "why": "The 2-year yield tracks where markets think the Fed's policy rate is heading over the next couple of years, so signs the Fed will wait pull it lower.",
+          "response": "Traders priced roughly a 71–73% chance that rates stay unchanged this month but about a 91% chance of a hike by December, according to Reuters.",
+          "signal": "The market expects one more hike, but later rather than sooner. Fed Chair Kevin Warsh's comments in Bangkok are the next test of that view."
+        }
+      ],
+      "macro": [
+        {
+          "tag": "Inflation",
+          "title": "PPI final demand, month over month (September)",
+          "time": "8:30 AM",
+          "actual": "+1.3%",
+          "prior": "+0.5%",
+          "note": "Energy +10.8% and gasoline +20.3% on the month; forecasts quoted in different reports ranged from 0.3% to 0.6%, all far below the result."
+        },
+        {
+          "tag": "Inflation",
+          "title": "PPI final demand, year over year (September)",
+          "time": "8:30 AM",
+          "actual": "6.3%",
+          "note": "The largest annual gain since 2022."
+        },
+        {
+          "tag": "Inflation",
+          "title": "PPI excluding food and energy, month over month",
+          "time": "8:30 AM",
+          "actual": "+0.7%",
+          "consensus": "+0.3%"
+        },
+        {
+          "tag": "Inflation",
+          "title": "PPI excluding food and energy, year over year",
+          "time": "8:30 AM",
+          "actual": "5.0%",
+          "consensus": "4.4%"
+        },
+        {
+          "tag": "Growth",
+          "title": "Retail sales, month over month (September)",
+          "time": "8:30 AM",
+          "actual": "+0.8%",
+          "consensus": "+0.3%",
+          "prior": "+1.3%",
+          "note": "August revised up from 1.1%. Gasoline station sales rose 6.4%; excluding gas stations, sales rose 0.2%."
+        },
+        {
+          "tag": "Growth",
+          "title": "Retail sales control group (September)",
+          "time": "8:30 AM",
+          "actual": "+0.1%",
+          "consensus": "+0.3%",
+          "prior": "+1.2%",
+          "note": "The softer underlying spending figure helped bonds shrug off the headline beat."
+        },
+        {
+          "tag": "Labor",
+          "title": "Initial jobless claims (week to Oct 10)",
+          "time": "8:30 AM",
+          "actual": "199k",
+          "prior": "198k",
+          "note": "In line with expectations; four-week average 198,500. Continuing claims 1.71 million."
+        },
+        {
+          "tag": "Fed",
+          "title": "Fed pricing",
+          "note": "CME FedWatch: odds of a quarter-point hike at the Oct 27–28 meeting rose to nearly 34% from about 29% after the data, then fell back to about 27%. Reuters put the chance of a December hike near 91%."
+        },
+        {
+          "tag": "Supply",
+          "title": "Treasury supply",
+          "note": "No coupon auctions today. Treasury announced a 20-year bond reopening for Oct 21 and a 5-year TIPS auction for Oct 22."
+        }
+      ],
+      "geo": [
+        {
+          "title": "Middle East and oil sanctions",
+          "impact": "Low",
+          "text": "Oil edged lower in Asian trading after a Reuters report that Washington is considering easing sanctions on shadow-fleet tankers, then US crude rose almost 3% on an inventory draw. Energy prices matter for inflation, but today's Treasury rally was driven by the equity selloff rather than geopolitics."
+        }
+      ],
+      "events": [
+        {
+          "t": "Overnight",
+          "cat": "Equities",
+          "title": "Kospi falls about 8% and Nikkei about 5% as the tech selloff spreads",
+          "react": "Treasuries extend Wednesday's rebound in Asian trading"
+        },
+        {
+          "t": "8:30 AM",
+          "cat": "Data",
+          "title": "September PPI +1.3% m/m; retail sales +0.8% vs 0.3% expected",
+          "react": "Yields briefly pare declines; October hike odds near 34%"
+        },
+        {
+          "t": "9:33 AM",
+          "cat": "Equities",
+          "title": "Stocks open mixed",
+          "react": "Nasdaq −1.34%, Russell 2000 −1.93%, Dow +0.43%"
+        },
+        {
+          "t": "1:47 PM",
+          "cat": "Equities",
+          "title": "S&P 500 turns higher, Dow up about 1%",
+          "react": "Falling yields support consumer and financial shares"
+        },
+        {
+          "t": "3:19 PM",
+          "cat": "Rates",
+          "title": "Treasury rally holds into the afternoon",
+          "react": "2Y 4.749% (−5.3 bp), 10Y 5.085% (−10.5 bp), 30Y 5.426% (−9.8 bp)"
+        },
+        {
+          "t": "4:00 PM",
+          "cat": "Equities",
+          "title": "S&P 500 closes +0.3% at 7,744.81",
+          "react": "Dow +1.1%, Nasdaq +0.1%"
+        },
+        {
+          "t": "4:12 PM",
+          "cat": "Close",
+          "title": "Late-session Treasury levels",
+          "react": "2Y 4.755% (−4.7 bp), 10Y 5.088% (−10.1 bp)"
+        }
+      ],
+      "interpretation": {
+        "text": "On a day with hot inflation data, yields still fell sharply, which tells you the main driver was a flight to safety out of technology stocks rather than any change in the inflation outlook. The flattening curve, with long-term yields leading, fits that safe-haven story. The data itself pointed the other way, and Fed hike odds briefly rose, so the rally rests on the stock-market mood more than on fundamentals. That is why conviction is medium rather than high.",
+        "change": "A calm rebound in tech stocks would remove the safe-haven bid and could push yields back up toward Wednesday's levels. Hawkish comments from Fed Chair Warsh, or another big energy-driven inflation reading, would put the 2-year under pressure again."
+      },
+      "watch": [
+        {
+          "when": "Thu late / Fri (Bangkok)",
+          "what": "Fed Chair Kevin Warsh joins an IMF discussion at the IMF-World Bank meetings"
+        },
+        {
+          "when": "Fri Oct 16",
+          "what": "September industrial production"
+        },
+        {
+          "when": "Tue Oct 20",
+          "what": "September housing starts and building permits"
+        },
+        {
+          "when": "Wed Oct 21",
+          "what": "20-year Treasury bond reopening auction"
+        },
+        {
+          "when": "Thu Oct 22",
+          "what": "5-year TIPS auction"
+        },
+        {
+          "when": "Oct 27–28",
+          "what": "FOMC meeting; rate decision Oct 28"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Investing.com: Nasdaq ends higher as bond rally offsets tech softness, hot PPI",
+          "url": "https://www.investing.com/news/stock-market-news/us-stock-futures-fall-as-hot-inflation-revives-fed-hike-concerns-4950317"
+        },
+        {
+          "name": "TheStreet: Stock market today, Oct. 15, 2026",
+          "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-oct-15-2026"
+        },
+        {
+          "name": "Rallies.ai (Reuters): US yields fall as investors seek safety and bet on pause in rate hikes",
+          "url": "https://rallies.ai/news/us-yields-fall-as-investors-seek-safety-and-bet-on-pause-in-rate-hikes-68eb5407b1635b3b"
+        },
+        {
+          "name": "Schwab: Stocks slip early after wholesale inflation surges",
+          "url": "https://www.schwab.com/learn/story/stock-market-update-open"
+        },
+        {
+          "name": "Sharecast: US open, energy-driven PPI surge",
+          "url": "https://sharecast.com/news/market-report-us/wall-street-nyse-dow-jones-nasdaq-earnings-tsmc-coreweave-bny-mellon-ppi--23861922.html"
+        },
+        {
+          "name": "BabyPips: US PPI and retail sales above forecasts in September",
+          "url": "https://www.babypips.com/news/headline-us-ppi-retail-sales-september-2026-gasoline-prices-fed-outlook-2026-10-15"
+        },
+        {
+          "name": "investingLive: Asia-Pacific news, Treasury rally sinks dollar, lifts gold",
+          "url": "https://investinglive.com/news/investinglive-asia-pacific-market-news-treasury-rally-sinks-dollar-lifts-gold/"
+        },
+        {
+          "name": "US500: Upcoming Treasury auctions",
+          "url": "https://us500.com/treasury/upcoming-treasury-auctions"
+        }
+      ]
+    },
+    {
       "market_date": "2026-10-14",
       "key": "2026-10-14",
       "edition": "close",
