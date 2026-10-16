@@ -1041,15 +1041,9 @@
       return;
     } else if (window.P75INS) window.P75INS.clear();
 
-    // Bonds (/bonds) is drawn by bonds/bonds.js; data comes from news.point75.io/api/bonds
+    // Bonds moved to the tools site as Treasury Finder; old links and bookmarks go straight there
     if (path === '/bonds') {
-      if (window.P75BONDS) window.P75BONDS.render();
-      else if (!document.getElementById('p75bonds-js')) {
-        var bj = document.createElement('script'); bj.id = 'p75bonds-js';
-        bj.src = 'https://rahulmsaxena.github.io/point75-site/bonds/bonds.js?v=' + Math.floor(Date.now() / 36e5);
-        bj.onload = function () { update(); };
-        document.body.appendChild(bj);
-      }
+      location.replace('https://tools.point75.io/market-intelligence/treasury-finder');
       return;
     } else if (window.P75BONDS) window.P75BONDS.clear();
 

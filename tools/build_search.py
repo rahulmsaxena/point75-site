@@ -35,7 +35,6 @@ PAGES = [
     ("/sector-credit", "Sector Credit", "Data", "Corporate debt sector by sector: the biggest borrowers, debt, Debt/EBITDA, interest coverage, how they are financed and who holds their commercial paper."),
     ("/lenders", "Lenders", "Data", "Who lends corporate America its short-term money: commercial paper holders, money market funds, insurers, pension funds, banks and private credit."),
     ("/credit-stress", "Credit Stress", "Data", "Where corporate credit is showing cracks: loan delinquencies, write-offs, commercial real estate, companies that can’t cover interest, private credit PIK and corporate debt to GDP."),
-    ("/bonds", "Bonds", "Data", "Every outstanding U.S. Treasury with curve-based estimates."),
     ("/economic-indicators", "Economic Indicators", "Data", "The latest U.S. economic data: inflation, jobs, growth and more."),
     ("/insights", "Insights", "Data", "What the big bond investors are saying: where they agree, where they differ and what they are doing."),
     ("/news", "News", "Data", "Today’s bond, rates and central bank headlines."),
