@@ -941,9 +941,9 @@
       '.p75help a{color:#fff;font-weight:700;text-decoration:underline;text-decoration-color:rgba(201,162,39,.6);text-underline-offset:3px}' +
       '.p75help a.go{color:#C9A227;text-decoration:none;font-weight:800;white-space:nowrap}' +
       '.p75cta{max-width:1224px;margin:22px auto 6px;width:calc(100% - 40px);box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;' +
-        'border:1px solid rgba(201,162,39,.5);background:rgba(201,162,39,.06);border-radius:12px;padding:14px 20px;text-decoration:none!important;font:500 15.5px/1.5 Manrope,system-ui,sans-serif;color:#D9D3C6!important}' +
+        'border:1px solid rgba(201,162,39,.5);background:#1a1914;border-radius:12px;padding:14px 20px;text-decoration:none!important;font:500 15.5px/1.5 Manrope,system-ui,sans-serif;color:#D9D3C6!important}' +
       '.p75cta b{color:#fff;font-weight:700}.p75cta .go{color:#C9A227;font-weight:800;white-space:nowrap}' +
-      '.p75cta:hover,.p75cta:focus-visible{background:rgba(201,162,39,.12);outline:none}';
+      '.p75cta:hover,.p75cta:focus-visible{background:#221f15;outline:none}';
     document.head.appendChild(st);
   })();
   function levelBadges(path) {
@@ -964,9 +964,10 @@
   }
   function startHereLine(path) {
     if (path !== '/' || document.querySelector('.p75cta')) return;
-    var list = document.querySelector('.block-blog-list'), sec = list && list.closest('section');
-    if (!sec) return;
-    sec.insertAdjacentHTML('beforebegin', '<a class="p75cta" href="/start-here"><span><b>New to bonds?</b> Three short paths, from the basics to the live market.</span><span class="go">Start here &rarr;</span></a>');
+    var list = document.querySelector('.block-blog-list');
+    if (!list) return;
+    // Inside the dark blog section, just above the cards
+    list.insertAdjacentHTML('beforebegin', '<a class="p75cta" href="/start-here"><span><b>New to bonds?</b> Three short paths, from the basics to the live market.</span><span class="go">Start here &rarr;</span></a>');
   }
 
   function update() {
