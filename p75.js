@@ -897,10 +897,13 @@
     var host = document.querySelector(PAGE_HOSTS);
     if (!host) return;                                   // bottom links wait until the page has drawn
     var parent = host.parentNode;
-    var key = path + '|' + fam.kids.map(function (k) { return k.href; }).join(',');
+    var key = path + '|v2|' + fam.kids.map(function (k) { return k.href; }).join(',');
     if (!sib || sib.getAttribute('data-k') !== key) {
       if (sib) sib.remove();
       var prev = fam.kids[i - 1], next = fam.kids[i + 1];
+      // A page with its own sub-pages (Pulse > Debt Trap) goes forward into them, matching the top arrow
+      var own = null; fams.forEach(function (f) { if (f.href === path && f.hub === false && f.kids.length) own = f; });
+      if (own) next = own.kids[0];
       sib = document.createElement('nav'); sib.id = 'p75sib'; sib.className = 'p75sib'; sib.setAttribute('aria-label', 'More in this section'); sib.setAttribute('data-k', key);
       sib.innerHTML = (prev ? '<a href="' + prev.href + '"><small>&larr; Previous</small><b>' + escH(prev.text) + '</b></a>' : '<span></span>') +
         (next ? '<a class="nx" href="' + next.href + '"><small>Next &rarr;</small><b>' + escH(next.text) + '</b></a>' : '<span></span>') +
