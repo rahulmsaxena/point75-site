@@ -12,7 +12,7 @@
     '/pulse': { blurb: 'The bond market’s vital signs: positioning, rates volatility, funding pressure, term premium and inflation expectations.', cta: 'Check the pulse' },
     '/news': { blurb: 'Today’s bond, rates and central bank headlines, in one place.', cta: 'Read the news' },
     '/bond-summary': { blurb: 'How credit and the Treasury market are holding up: the daily summary, credit stress, sectors, lenders and what big investors are saying.', cta: 'Open Bond Summary' },
-    '/economic-indicators': { blurb: 'The latest U.S. economic data, from inflation and jobs to growth, and the debt that sits underneath it all.', cta: 'See the indicators' },
+    '/economic-indicators': { blurb: 'The latest U.S. economic data: inflation, jobs, growth and more.', cta: 'See the indicators' },
     '/intelligent-summary': { blurb: 'Daily close summary of the Treasury market: why yields moved, the curve, Fed pricing and what to watch next.', cta: 'Read the summary' },
     '/credit-stress': { blurb: 'Where corporate credit is showing cracks: delinquencies, write-offs, commercial real estate and companies that can’t cover interest.', cta: 'Open' },
     '/sector-credit': { blurb: 'Corporate debt sector by sector: the biggest borrowers, leverage, interest coverage and how they are financed.', cta: 'Open' },

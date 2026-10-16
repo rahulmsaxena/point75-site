@@ -349,12 +349,13 @@
     });
   }
 
-  var loading = false;
+  var loading = false, waiting = [];
   function load(cb) {
+    // Queue every caller: the site can rebuild the page while data is loading, and the redrawn page must hear back too
     if (D) return cb(D);
-    if (loading) return; loading = true;
-    fetch(DATA).then(function (r) { return r.json(); }).then(function (j) { D = j; loading = false; cb(j); })
-      .catch(function () { loading = false; cb(null); });
+    waiting.push(cb); if (loading) return; loading = true;
+    fetch(DATA).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { D = j; })
+      .catch(function () { D = null; }).then(function () { loading = false; var w = waiting; waiting = []; w.forEach(function (f) { f(D); }); });
   }
 
   function render() {

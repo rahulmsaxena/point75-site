@@ -340,12 +340,13 @@
     }); });
   }
 
-  var cache = null, loading = false;
+  var cache = null, loading = false, waiting = [];
   function load(cb) {
+    // Queue every caller: the site can rebuild the page while data is loading, and the redrawn page must hear back too
     if (cache) return cb(cache);
-    if (loading) return; loading = true;
-    fetch(API).then(function (r) { return r.json(); }).then(function (j) { cache = j; loading = false; cb(j); })
-      .catch(function () { loading = false; cb(null); });
+    waiting.push(cb); if (loading) return; loading = true;
+    fetch(API).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { cache = j; })
+      .catch(function () { cache = null; }).then(function () { loading = false; var w = waiting; waiting = []; w.forEach(function (f) { f(cache); }); });
   }
 
   function render() {

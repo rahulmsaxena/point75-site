@@ -622,12 +622,14 @@
 
   // ---------- Sections that go deeper than the menu ----------
   // The menu shows one level (Kinetics > Pulse, News, Bond Summary, Economic Indicators). The pages under
-  // Bond Summary and Economic Indicators are reached from their landing pages, so the tree lives here.
+  // Bond Summary and Pulse (Debt Trap) are reached from their landing pages, so the tree lives here.
   // It drives the hub pages (hubs/hubs.js), the back / forward arrows and the Previous / Next cards.
   // Order matters: arrows step through each group in this order.
   var SECTIONS = [
     { href: '/kinetics', text: 'Kinetics', hub: true, kids: [
-      { href: '/pulse', text: 'Pulse' },
+      { href: '/pulse', text: 'Pulse', hub: false, kids: [
+        { href: '/debt-trap', text: 'Debt Trap' }
+      ] },
       { href: '/news', text: 'News' },
       { href: '/bond-summary', text: 'Bond Summary', hub: true, kids: [
         { href: '/intelligent-summary', text: 'Daily Summary' },
@@ -636,9 +638,7 @@
         { href: '/lenders', text: 'Lenders' },
         { href: '/insights', text: 'Insights' }
       ] },
-      { href: '/economic-indicators', text: 'Economic Indicators', hub: false, kids: [
-        { href: '/debt-trap', text: 'Debt Trap' }
-      ] }
+      { href: '/economic-indicators', text: 'Economic Indicators' }
     ] }
   ];
   // Every node with pages under it, flattened: { href, text, hub, kids: [{ href, text, kids }] }
@@ -1002,7 +1002,7 @@
       return;
     } else if (window.P75PULSE) window.P75PULSE.clear();
 
-    // Debt Trap (/debt-trap, under Economic Indicators) is drawn by debttrap/debttrap.js; data comes from news.point75.io/api/debttrap
+    // Debt Trap (/debt-trap, under Pulse) is drawn by debttrap/debttrap.js; data comes from news.point75.io/api/debttrap
     if (path === '/debt-trap') {
       if (window.P75DEBT) window.P75DEBT.render();
       else if (!document.getElementById('p75debt-js')) {

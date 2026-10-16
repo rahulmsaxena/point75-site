@@ -91,7 +91,7 @@
     return h;
   }
 
-  var D = null, loading = false;
+  var D = null, loading = false, waiting = [];
   // ---------- Fed watch: Fed Board speeches scored hawkish / dovish ----------
   var FW_API = 'https://news.point75.io/api/fedspeak';
   function tone(sc) { return sc >= 0.5 ? ['▲', '#E5484D'] : sc <= -0.5 ? ['▼', '#3D8BFF'] : ['●', '#9AA0A6']; }
@@ -121,8 +121,11 @@
   }
 
   function load(cb) {
-    if (D) return cb(D); if (loading) return; loading = true;
-    fetch(DATA).then(function (r) { return r.json(); }).then(function (j) { D = j; loading = false; cb(j); }).catch(function () { loading = false; cb(null); });
+    // Queue every caller: the site can rebuild the page while data is loading, and the redrawn page must hear back too
+    if (D) return cb(D);
+    waiting.push(cb); if (loading) return; loading = true;
+    fetch(DATA).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { D = j; })
+      .catch(function () { D = null; }).then(function () { loading = false; var w = waiting; waiting = []; w.forEach(function (f) { f(D); }); });
   }
   function render() {
     var main = document.querySelector('main') || document.body;
