@@ -27,9 +27,11 @@ BODY_CHARS = 1500
 
 # Pages drawn by our scripts (their text isn't in the server HTML), described by hand.
 PAGES = [
+    ("/kinetics", "Kinetics", "Section", "The forces moving the bond market: Pulse, News, Bond Summary and Economic Indicators."),
+    ("/bond-summary", "Bond Summary", "Section", "How credit markets are holding up: the daily summary, credit stress, sector credit, lenders and investor insights."),
     ("/pulse", "Pulse", "Data", "The bond market’s vital signs: positioning, rates volatility, funding pressure, term premium, inflation expectations and live headlines."),
     ("/debt-trap", "The Debt Trap", "Data", "How much U.S. debt has to be refinanced, what it costs in interest and who is still buying Treasuries."),
-    ("/intelligent-summary", "Bond Summary", "Data", "Daily close summary of the Treasury market: why yields moved, the yield curve, Fed pricing, the day’s data and what to watch next."),
+    ("/intelligent-summary", "Daily Summary", "Data", "Daily close summary of the Treasury market: why yields moved, the yield curve, Fed pricing, the day’s data and what to watch next."),
     ("/sector-credit", "Sector Credit", "Data", "Corporate debt sector by sector: the biggest borrowers, debt, Debt/EBITDA, interest coverage, how they are financed and who holds their commercial paper."),
     ("/lenders", "Lenders", "Data", "Who lends corporate America its short-term money: commercial paper holders, money market funds, insurers, pension funds, banks and private credit."),
     ("/credit-stress", "Credit Stress", "Data", "Where corporate credit is showing cracks: loan delinquencies, write-offs, commercial real estate, companies that can’t cover interest, private credit PIK and corporate debt to GDP."),

@@ -4,7 +4,7 @@
 (function () {
   // ---------- Settings ----------
   var TENANT_ID = 'NgvHdCEMvUY';                          // FastComments
-  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-introduction', '/bond-history', '/bond-types', '/cash-logistics', '/bond-dictionary', '/bond-players', '/bond-fortunes', '/pulse', '/debt-trap', '/economic-indicators', '/bonds', '/insights', '/sector-credit', '/lenders', '/credit-stress', '/intellegent-summary', '/intelligent-summary'];    // no add-ons on these pages
+  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-introduction', '/bond-history', '/bond-types', '/cash-logistics', '/bond-dictionary', '/bond-players', '/bond-fortunes', '/pulse', '/debt-trap', '/economic-indicators', '/bonds', '/insights', '/sector-credit', '/lenders', '/credit-stress', '/intellegent-summary', '/intelligent-summary', '/kinetics', '/bond-summary'];    // no add-ons on these pages
 
   // Difficulty level per post
   var LEVELS = {
@@ -618,7 +618,49 @@
 
   // ---------- Section hubs: never let a sub-menu hide its main page ----------
   // Reads the live Hostinger menu, so titles and order follow whatever is set in the builder.
-  var HUB_LABEL = { '/education': 'All Education guides', '/pulse': 'Pulse overview', '/bondsummary': 'Bond Summary overview', '/intelligent-summary': 'Bond Summary overview' };
+  var HUB_LABEL = { '/education': 'All Education guides', '/kinetics': 'All of Kinetics', '/bond-summary': 'Bond Summary overview', '/economic-indicators': 'Economic Indicators' };
+
+  // ---------- Sections that go deeper than the menu ----------
+  // The menu shows one level (Kinetics > Pulse, News, Bond Summary, Economic Indicators). The pages under
+  // Bond Summary and Economic Indicators are reached from their landing pages, so the tree lives here.
+  // It drives the hub pages (hubs/hubs.js), the back / forward arrows and the Previous / Next cards.
+  // Order matters: arrows step through each group in this order.
+  var SECTIONS = [
+    { href: '/kinetics', text: 'Kinetics', hub: true, kids: [
+      { href: '/pulse', text: 'Pulse' },
+      { href: '/news', text: 'News' },
+      { href: '/bond-summary', text: 'Bond Summary', hub: true, kids: [
+        { href: '/intelligent-summary', text: 'Daily Summary' },
+        { href: '/credit-stress', text: 'Credit Stress' },
+        { href: '/sector-credit', text: 'Sector Credit' },
+        { href: '/lenders', text: 'Lenders' },
+        { href: '/insights', text: 'Insights' }
+      ] },
+      { href: '/economic-indicators', text: 'Economic Indicators', kids: [
+        { href: '/debt-trap', text: 'Debt Trap' }
+      ] }
+    ] }
+  ];
+  // Every node with pages under it, flattened: { href, text, hub, kids: [{ href, text, kids }] }
+  var SECTION_FAMS = (function () {
+    var out = [];
+    (function walk(list) { list.forEach(function (n) { if (n.kids) { out.push(n); walk(n.kids); } }); })(SECTIONS);
+    return out;
+  })();
+  function sectionNode(path) {
+    var node = null, parent = null;
+    SECTION_FAMS.forEach(function (f) {
+      if (f.href === path) node = f;
+      f.kids.forEach(function (k) { if (k.href === path) parent = f; });
+    });
+    return node ? { node: node, parent: parent } : null;
+  }
+  // Menu sections (Education...) as read from the live menu, plus the tree above in place of any menu
+  // section it covers (Kinetics), so the deeper levels get arrows too.
+  function navFamilies(menuFams) {
+    var mine = {}; SECTION_FAMS.forEach(function (f) { mine[f.href] = 1; });
+    return menuFams.filter(function (f) { return !mine[f.href]; }).concat(SECTION_FAMS);
+  }
   function norm(h) { return (h || '').replace(/[?#].*$/, '').replace(/\/+$/, '') || '/'; }
   function families() {
     var out = [];
@@ -677,7 +719,7 @@
       document.head.appendChild(st);
     }
   }
-  var PAGE_HOSTS = '.p75edu, .p75debt, .p75ins, .p75pulse, .p75bonds, .p75ind, .p75cr';
+  var PAGE_HOSTS = '.p75edu, .p75debt, .p75ins, .p75pulse, .p75bonds, .p75ind, .p75cr, .p75hubpg';
 
   // ---------- Page navigation: back / forward at the top of every page in a series ----------
   // One row at the top of the page: back (or previous) on the left, where you are in the middle, next on
@@ -688,18 +730,14 @@
   //   next in menu order; the first page goes back to the section overview and the overview goes on to the
   //   first page. NAV_FIX overrides specific pages. Bond Summary and Intelligent Summary articles live in an
   //   iframe sized to its content: they send {type:'nav'} with older/newer and we send {type:'go'} back.
-  var NAV_FIX = {
-    '/pulse': { next: { href: '/debt-trap', text: 'Debt Trap' } },
-    '/debt-trap': { prev: { href: '/pulse', text: 'Pulse' } },
-    '/economic-indicators': { prev: { href: '/news', text: 'Today\u2019s headlines' }, mid: null }
-  };
+  var NAV_FIX = {};
   var navFrame = null;
   window.addEventListener('message', function (e) {
     var m = e.data;
     if (!m || m.p75 !== true || m.type !== 'nav') return;
     navFrame = m.view === 'article' ? { src: e.source, path: norm(location.pathname), prev: m.older || null, mid: m.up || null, next: m.newer || null } : null;
     var path = norm(location.pathname);
-    pageNav(path, navSpecFor(path, families()));
+    pageNav(path, navSpecFor(path, navFamilies(families())));
   });
   function navSpecFor(path, fams) {
     if (navFrame && navFrame.path === path) return { prev: navFrame.prev, mid: navFrame.mid, next: navFrame.next, frame: true };
@@ -707,7 +745,6 @@
     var s = {};
     if (EXCLUDED.indexOf(path) === -1 && document.querySelector('.block-blog-header')) s.prev = { href: '/', text: 'All essays' };
     fams.forEach(function (f) {
-      if (f.href === path && f.kids.length) s.next = f.kids[0];
       f.kids.forEach(function (k, j) {
         if (k.href !== path) return;
         s.prev = j ? f.kids[j - 1] : { href: f.href, text: f.text + ' overview' };
@@ -715,6 +752,9 @@
         s.mid = { href: f.href, text: f.text, title: HUB_LABEL[f.href] || (f.text + ' overview') };
       });
     });
+    // A page with pages under it goes forward into the first one. Landing pages (hub) already show their
+    // pages as cards, so their arrows move on to the next section instead, when there is one.
+    fams.forEach(function (f) { if (f.href === path && f.kids.length && !(f.hub && s.next)) s.next = f.kids[0]; });
     var fix = NAV_FIX[path]; if (fix) for (var k in fix) s[k] = fix[k];
     return (s.prev || s.next) ? s : null;
   }
@@ -820,18 +860,31 @@
     }
     return null;
   }
+  // Pages that aren't in the menu (Credit Stress, Debt Trap...): ask the site's own router to change page,
+  // the same thing its menu links do. If the router can't be found or doesn't know the page, return false
+  // and the link loads normally.
+  function routerGo(path) {
+    try {
+      var root = document.querySelector('[data-v-app]'), app = root && root.__vue_app__;
+      var r = app && app.config && app.config.globalProperties && app.config.globalProperties.$router;
+      if (!r || typeof r.push !== 'function' || typeof r.resolve !== 'function') return false;
+      var m = r.resolve(path);
+      if (!m || !m.matched || !m.matched.length || /404|not-?found/i.test(String(m.name || ''))) return false;
+      r.push(path).catch(function () { location.href = path; });
+      return true;
+    } catch (err) { return false; }
+  }
   document.addEventListener('click', function (e) {
     if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-    var a = e.target.closest && e.target.closest('#p75tn a[href], #p75tf a[href], #p75sib a[href], .p75d a[href], .p75edu a[href], .p75pulse a[href], .p75debt a[href], .p75cr a[href], .p75ind a[href], .p75ins a[href], .p75bonds a[href]');
+    var a = e.target.closest && e.target.closest('#p75tn a[href], #p75tf a[href], #p75sib a[href], .p75d a[href], .p75edu a[href], .p75pulse a[href], .p75debt a[href], .p75cr a[href], .p75ind a[href], .p75ins a[href], .p75bonds a[href], .p75hubpg a[href]');
     if (!a || a.hasAttribute('data-hash') || a.target === '_blank') return;
     var href = a.getAttribute('href') || '';
     if (!/^\/(?!\/)/.test(href) || /[?#]/.test(href)) return;      // same-site page links only
     var path = norm(href);
     if (path === norm(location.pathname)) return;
     var site = siteLink(path);
-    if (!site) return;                                             // no menu link: normal navigation
-    e.preventDefault();
-    site.click();
+    if (site) { e.preventDefault(); site.click(); return; }
+    if (routerGo(path)) e.preventDefault();                        // else: normal navigation
   }, true);
   var soonT = [];
   function soon() {
@@ -892,7 +945,8 @@
       lastPath = path;
     }
 
-    var fams = families(); hubMenus(fams); familyLinks(path, fams);
+    var menuFams = families(); hubMenus(menuFams);
+    var fams = navFamilies(menuFams); familyLinks(path, fams);
     if (navFrame && navFrame.path !== path) navFrame = null;
     pageNav(path, navSpecFor(path, fams));
 
@@ -922,6 +976,19 @@
     // the rest of the site: cream text tones, Manrope + Hedvig type, one label style, and a clear search bar.
     if (path === '/news') polishNews();
 
+    // Hub pages (/kinetics, /bond-summary) are drawn by hubs/hubs.js from SECTIONS above
+    var hub = sectionNode(path);
+    if (hub && hub.node.hub) {
+      if (window.P75HUBS) window.P75HUBS.render(path, hub.node, hub.parent || null);
+      else if (!document.getElementById('p75hub-js')) {
+        var hj = document.createElement('script'); hj.id = 'p75hub-js';
+        hj.src = 'https://rahulmsaxena.github.io/point75-site/hubs/hubs.js?v=' + Math.floor(Date.now() / 36e5);
+        hj.onload = function () { update(); };
+        document.body.appendChild(hj);
+      }
+      return;
+    } else if (window.P75HUBS) window.P75HUBS.clear();
+
     // Education pages (/education and its guides) are drawn by education.js from the same GitHub folder
     var EDU = ['/education', '/bond-introduction', '/bond-history', '/bond-types', '/cash-logistics', '/bond-dictionary', '/bond-players', '/bond-fortunes'];
     if (EDU.indexOf(path) > -1) {
@@ -947,7 +1014,7 @@
       return;
     } else if (window.P75PULSE) window.P75PULSE.clear();
 
-    // Debt Trap (/debt-trap, under Pulse) is drawn by debttrap/debttrap.js; data comes from news.point75.io/api/debttrap
+    // Debt Trap (/debt-trap, under Economic Indicators) is drawn by debttrap/debttrap.js; data comes from news.point75.io/api/debttrap
     if (path === '/debt-trap') {
       if (window.P75DEBT) window.P75DEBT.render();
       else if (!document.getElementById('p75debt-js')) {
@@ -995,7 +1062,7 @@
       return;
     } else if (window.P75BONDS) window.P75BONDS.clear();
 
-    // Economic Indicators (/economic-indicators, under News) is drawn by indicators/indicators.js;
+    // Economic Indicators (/economic-indicators, under Kinetics) is drawn by indicators/indicators.js;
     // data comes from news.point75.io/api/indicators
     if (path === '/economic-indicators') {
       if (window.P75IND) window.P75IND.render();
