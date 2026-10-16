@@ -970,6 +970,41 @@
     list.insertAdjacentHTML('afterbegin', '<a class="p75cta" href="/start-here"><span><b>New to bonds?</b> Three short paths, from the basics to the live market.</span><span class="go">Start here &rarr;</span></a>');
   }
 
+  // ---------- Desktop menu (option 3): bigger, bolder items, gold active underline, Tools as a gold button
+  // beside Search, and a "Start here" invitation first in the row. Every item is 40px tall with its text
+  // centred, so words, buttons and pills share one centre line. ----------
+  (function menuCss() {
+    if (document.getElementById('p75-menu3')) return;
+    var D = '.block-header-layout-desktop .block-header__nav-links', TOP = D + '>.block-header-item>.block-header-item__label>';
+    var st = document.createElement('style'); st.id = 'p75-menu3';
+    st.textContent =
+      D + '{align-items:center!important;gap:28px!important}' +
+      TOP + '.item-content-wrapper{display:inline-flex!important;align-items:center!important;height:40px!important}' +
+      TOP + '.item-content-wrapper>.item-content{font-size:16px!important;font-weight:600!important;color:#fff!important;letter-spacing:.01em}' +
+      TOP + '.item-content-wrapper--active>.item-content{text-decoration:underline!important;text-decoration-color:#C9A227!important;text-decoration-thickness:2px!important;text-underline-offset:9px!important}' +
+      TOP + '.item-content-wrapper>.item-content:hover{color:#E0B53A!important}' +
+      D + ' .item-content__icon-container svg,' + D + ' .item-content__icon-container svg *{fill:#C9A227!important;color:#C9A227!important}' +
+      D + '>.p75tools-li{order:5}' +
+      D + '>.p75s-li{order:6;height:auto!important;align-self:center!important;margin-left:0!important}' +
+      D + '>.p75tools-li .item-content{display:inline-flex!important;align-items:center;height:40px;padding:0 18px!important;border-radius:20px;background:#C9A227!important;color:#111214!important;font-weight:800!important;font-size:15px!important;text-decoration:none!important}' +
+      D + '>.p75tools-li .item-content:hover{background:#E0B53A!important;color:#111214!important}' +
+      D + ' .p75s-btn{height:40px;padding:0 16px;font-size:15px;font-weight:700;border-color:rgba(201,162,39,.8)}' +
+      D + '>.p75start-li{order:-1;list-style:none}' +
+      D + '>.p75start-li a{display:inline-flex;align-items:center;height:32px;padding:0 12px;border:1px dashed rgba(201,162,39,.6);border-radius:99px;color:#C9A227!important;font:700 13.5px Manrope,system-ui,sans-serif;text-decoration:none!important;white-space:nowrap}' +
+      D + '>.p75start-li a:hover,' + D + '>.p75start-li a:focus-visible{border-style:solid;outline:none}' +
+      // phone menu: Tools in gold so it stands out there too
+      '.block-header-layout-mobile .p75tools-li .item-content{color:#C9A227!important}';
+    document.head.appendChild(st);
+  })();
+  function decorateMenu() {
+    document.querySelectorAll('.block-header__nav-links').forEach(function (ul) {
+      var tools = ul.querySelector(':scope>.block-header-item>.block-header-item__label a.item-content[href*="tools.point75.io"]');
+      if (tools) tools.closest('li').classList.add('p75tools-li');
+      if (!ul.closest('.block-header-layout-mobile') && !ul.querySelector(':scope>.p75start-li'))
+        ul.insertAdjacentHTML('afterbegin', '<li class="p75start-li"><a href="/start-here">Start here &rarr;</a></li>');
+    });
+  }
+
   function update() {
     var path = location.pathname.replace(/\/+$/, '') || '/';
 
@@ -999,6 +1034,7 @@
     if (navFrame && navFrame.path !== path) navFrame = null;
     pageNav(path, navSpecFor(path, fams));
     startHereLine(path);
+    decorateMenu();
     levelBadges(path);
 
     // Level + Editor's pick next to the reading time (homepage cards and post headers)
