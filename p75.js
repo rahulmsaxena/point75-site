@@ -1010,6 +1010,58 @@
       '.block-blog-list__list{row-gap:56px!important}';
     document.head.appendChild(st);
   })();
+  // ---------- Journal gallery: picture and title only. A small line above each title carries the level and
+  // reading time; an Editor's pick wears a gold tag on its painting, and the newest pick is featured large.
+  // On hover (desktop) the painting dims and the essay's own closing question appears as a reason to click. ----------
+  (function galleryCss() {
+    if (document.getElementById('p75-gal')) return;
+    var I = '.block-blog-list .block-blog-list-item';
+    var st = document.createElement('style'); st.id = 'p75-gal';
+    st.textContent =
+      '.block-blog-list__list{grid-auto-flow:row dense!important;row-gap:44px!important}' +
+      I + ' .block-blog-list-item__description,' + I + ' .blog-list-item-meta,' + I + ' p.categories{display:none!important}' +
+      I + ' .block-blog-list-item__content{display:flex!important;flex-direction:column;gap:10px}' +
+      I + ' .p75cm{display:flex;align-items:center;gap:10px;font:500 12.5px Manrope,system-ui,sans-serif;color:#A9A396;margin-top:4px}' +
+      I + ' .p75cm .p75lvl{margin-left:0}' +
+      I + ' .block-blog-list-item__cover-image-wrapper{overflow:hidden;border-radius:4px}' +
+      I + ' .p75pick{position:absolute;top:12px;left:12px;z-index:2;background:#C9A227;color:#111214;font:800 11.5px Manrope,system-ui,sans-serif;letter-spacing:.04em;text-transform:uppercase;border-radius:3px;padding:4px 9px}' +
+      I + ' .p75hook{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;gap:12px;padding:22px;background:rgba(17,18,20,.78);opacity:0;transition:opacity .25s;pointer-events:none}' +
+      I + ' .p75hook i{font:italic 400 19px/1.4 "Hedvig Letters Serif",Georgia,serif;color:#EDE8DC}' +
+      I + ' .p75hook b{font:800 13.5px Manrope,system-ui,sans-serif;color:#C9A227}' +
+      '@media (hover:hover){' + I + ':hover .p75hook{opacity:1}' + I + ':hover .block-blog-list-item__title{color:#E0B53A!important}}' +
+      I + '.p75feat{grid-column:span 2;grid-row:span 2}' +
+      I + '.p75feat .block-blog-list-item__cover-image-container{height:auto!important;flex:1 1 auto;display:flex!important;flex-direction:column}' +
+      I + '.p75feat .block-blog-list-item__cover-image-wrapper{height:auto!important;flex:1 1 auto;min-height:420px}' +
+      I + '.p75feat .block-blog-list-item__title{font-size:34px!important;line-height:1.15!important}' +
+      I + '.p75feat .p75hook i{font-size:24px}' +
+      '@media (max-width:920px){' + I + '.p75feat{grid-column:auto;grid-row:auto}' + I + '.p75feat .block-blog-list-item__cover-image-wrapper{min-height:0}' +
+        I + '.p75feat .block-blog-list-item__title{font-size:24px!important}}';
+    document.head.appendChild(st);
+  })();
+  function hookFor(href) {
+    var m = /<em>([\s\S]*?)<\/em>/.exec(TLDR[href] || '');
+    return m ? m[1].replace(/<[^>]+>/g, '') : '';
+  }
+  function journalGallery(path) {
+    if (path !== '/') return;
+    var featured = false;
+    document.querySelectorAll('.block-blog-list .block-blog-list-item').forEach(function (it) {
+      var link = it.querySelector('a.block-blog-list-item__cover-image-container');
+      var href = link ? (link.getAttribute('href') || '').replace(/\/+$/, '') : '';
+      if (!featured && PICKS.indexOf(href) > -1) { it.classList.add('p75feat'); featured = true; }
+      if (it.getAttribute('data-p75c')) return;
+      var wrap = it.querySelector('.block-blog-list-item__cover-image-wrapper'), content = it.querySelector('.block-blog-list-item__content');
+      if (!wrap || !content) return;
+      it.setAttribute('data-p75c', '1');
+      var rt = '';
+      it.querySelectorAll('.blog-list-item-meta__subtitle span').forEach(function (sp) { if (/min read/.test(sp.textContent)) rt = sp.textContent.trim(); });
+      var lvl = LEVELS[href];
+      content.insertAdjacentHTML('afterbegin', '<div class="p75cm">' + (lvl ? '<span class="p75lvl p75lvl--' + lvl.toLowerCase() + '">' + lvl + '</span>' : '') + '<span>' + rt + '</span></div>');
+      if (PICKS.indexOf(href) > -1) wrap.insertAdjacentHTML('beforeend', '<span class="p75pick">&#9733; Editor&#39;s pick</span>');
+      var hook = hookFor(href);
+      wrap.insertAdjacentHTML('beforeend', '<div class="p75hook" aria-hidden="true">' + (hook ? '<i>' + hook + '</i>' : '') + '<b>Read the essay &rarr;</b></div>');
+    });
+  }
   function decorateMenu() {
     document.querySelectorAll('.block-header__nav-links').forEach(function (ul) {
       var tools = ul.querySelector(':scope>.block-header-item>.block-header-item__label a.item-content[href*="tools.point75.io"]');
@@ -1049,6 +1101,7 @@
     pageNav(path, navSpecFor(path, fams));
     startHereLine(path);
     decorateMenu();
+    journalGallery(path);
     levelBadges(path);
 
     // Level + Editor's pick next to the reading time (homepage cards and post headers)
