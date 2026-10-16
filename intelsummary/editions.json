@@ -1,6 +1,252 @@
 {
   "summaries": [
     {
+      "market_date": "2026-10-16",
+      "key": "2026-10-16",
+      "edition": "close",
+      "generated_at": "2026-10-16T23:16:16Z",
+      "as_of": "4:00 PM ET (market close quotes; Treasury's official curve for today not yet posted)",
+      "title": "Treasuries catch their breath after their best week since February as tech stocks slide again",
+      "regime": "Twist steepener",
+      "regime_note": "Quiet session; week's rally holds",
+      "conviction": "Low",
+      "takeaway": "After Thursday's big rally, Treasuries barely moved: the 10-year yield edged up about 1 bp to 5.10% while the 2-year slipped to about 4.73%. For the week the 10-year fell roughly 15 bp, its best week since mid-February, as a selloff in chip and AI stocks pulled money into bonds. Hotter import prices and rising oil kept inflation worries alive, so yields did not fall further.",
+      "tape": [
+        {
+          "k": "2Y",
+          "level": 4.73,
+          "d": -3,
+          "w": -6
+        },
+        {
+          "k": "10Y",
+          "level": 5.1,
+          "d": 1,
+          "w": -14
+        },
+        {
+          "k": "2s10s",
+          "level": 36,
+          "d": 3,
+          "w": -9,
+          "unit": "bp",
+          "group": "Curve"
+        }
+      ],
+      "fed": {
+        "meeting": "Oct 28"
+      },
+      "cross": [
+        {
+          "k": "S&P 500",
+          "v": "−1.1%",
+          "dir": "down",
+          "read": "Stocks fell to 7,659.44 even though yields were steady, so this was a tech-specific scare rather than a rates scare."
+        },
+        {
+          "k": "Nasdaq",
+          "v": "−2.1%",
+          "dir": "down",
+          "read": "Chipmakers led losses: the Philadelphia Semiconductor Index fell 3.8% with all 30 members lower, and the Nasdaq had its worst week since June."
+        },
+        {
+          "k": "Dow",
+          "v": "−0.3%",
+          "dir": "down",
+          "read": "Energy shares cushioned the blue-chip index as oil climbed."
+        },
+        {
+          "k": "VIX",
+          "v": "19.99 (+21%)",
+          "dir": "up",
+          "read": "Stock-market fear rose sharply, the kind of backdrop that usually keeps demand for Treasuries firm."
+        },
+        {
+          "k": "WTI crude",
+          "v": "+2.6%",
+          "dir": "up",
+          "read": "US crude settled near $99 a barrel and Brent near $110, its highest since May, adding to inflation worries."
+        }
+      ],
+      "drivers": [
+        {
+          "title": "AI and chip selloff keeps bonds in demand",
+          "tags": [
+            "Risk",
+            "Equities"
+          ],
+          "impact": "Held yields near the week's lows",
+          "what": "Chip and AI-infrastructure stocks fell again on worries about debt-funded data-center spending and Chinese chip competition. CoreWeave fell about 12%, Micron about 5.6% and AMD about 6%; the Nasdaq dropped 2.1%.",
+          "why": "When investors get nervous about stocks, they often shift money into Treasuries. That extra buying pushes bond prices up and yields down, or at least stops yields from rising.",
+          "response": "The 10-year yield stayed close to Thursday's level of about 5.09% and settled at 5.097%, after falling 14.6 bp over the week according to Investrade. Market reports called it Treasuries' best week since mid-February.",
+          "signal": "For now, worries about growth and AI spending are outweighing inflation fears in the bond market. A rebound in tech stocks would test whether this week's rally can last."
+        },
+        {
+          "title": "Import prices and factory output beat forecasts",
+          "tags": [
+            "Inflation",
+            "Growth"
+          ],
+          "impact": "Kept yields from extending the rally",
+          "what": "September import prices rose 1.1% against a 0.8% forecast and are up 8.1% from a year earlier, the biggest annual rise since 2022, led by a 4.8% jump in fuel. Industrial production rose 0.7% against a 0.4% forecast.",
+          "why": "Higher prices for imported goods can flow through to what consumers pay, and stronger factory output suggests the economy is not cooling fast. Both argue for the Fed keeping rates high or raising them, which pushes yields up.",
+          "response": "The data added to a week of hot inflation reports (CPI and PPI) but did not move bonds much on their own; the 10-year finished only about 1 bp higher.",
+          "signal": "Inflation pressure is broadening from energy into goods prices. That keeps a further Fed hike on the table even as stocks wobble."
+        },
+        {
+          "title": "Warsh declines to signal the next move",
+          "tags": [
+            "Fed"
+          ],
+          "impact": "Little market reaction",
+          "what": "Speaking with IMF chief Kristalina Georgieva in Bangkok, Fed Chair Kevin Warsh was asked about a hike at the October meeting and said, \"I don't prejudge meetings.\" He told investors to watch the data rather than rely on guidance from the Fed.",
+          "why": "The 2-year yield tracks expectations for the Fed's policy rate over the next two years, so hints from the Fed chair can move it quickly.",
+          "response": "Treasury yields were largely stable after the remarks, which came Thursday night US time. Yahoo Finance reported CME FedWatch odds of a December hike at 74.3%, up from 50.2% a month earlier, with most traders expecting no change in October.",
+          "signal": "Without guidance, each data release carries more weight. The market expects a hike by December rather than this month."
+        }
+      ],
+      "macro": [
+        {
+          "tag": "Inflation",
+          "title": "Import prices, month over month (September)",
+          "actual": "+1.1%",
+          "consensus": "+0.8%",
+          "prior": "+0.5%",
+          "note": "Up 8.1% from a year earlier; fuel import prices +4.8% on the month and nonfuel +0.7%."
+        },
+        {
+          "tag": "Inflation",
+          "title": "Export prices, month over month (September)",
+          "actual": "+2.2%",
+          "consensus": "+1.0%",
+          "prior": "+1.2%",
+          "note": "Up 11.6% from a year earlier."
+        },
+        {
+          "tag": "Growth",
+          "title": "Industrial production (September)",
+          "actual": "+0.7%",
+          "consensus": "+0.4%",
+          "prior": "+0.1%",
+          "note": "August revised up from 0.0%. Manufacturing output rose 0.3%, in line with forecasts."
+        },
+        {
+          "tag": "Growth",
+          "title": "Capacity utilization (September)",
+          "actual": "76.9%",
+          "consensus": "76.5%",
+          "prior": "76.4%"
+        },
+        {
+          "tag": "Fed",
+          "title": "Fed pricing",
+          "note": "CME FedWatch odds of a quarter-point hike at the December meeting were 74.3%, up from 50.2% a month earlier, according to Yahoo Finance; most traders expect the Fed to hold at the late-October meeting."
+        },
+        {
+          "tag": "Supply",
+          "title": "Treasury supply",
+          "note": "No coupon auctions today. The Treasury reported a fiscal 2026 deficit of $1.99 trillion, the largest since fiscal 2021. Next week brings a $13 billion 20-year bond auction on Wednesday."
+        }
+      ],
+      "geo": [
+        {
+          "title": "Middle East and oil supply",
+          "impact": "Low",
+          "text": "Conflict around the Strait of Hormuz and tensions in the Black Sea kept oil supply risks high, and Brent settled at its highest since May. Higher oil feeds inflation worries, but today's bond moves were small and driven more by the tech selloff."
+        }
+      ],
+      "events": [
+        {
+          "t": "Overnight",
+          "cat": "Fed",
+          "title": "Warsh in Bangkok: \"I don't prejudge meetings\"",
+          "react": "Treasury yields largely stable; stock futures edged higher"
+        },
+        {
+          "t": "Morning",
+          "cat": "Data",
+          "title": "Import prices +1.1% vs 0.8% expected; industrial production +0.7% vs 0.4%",
+          "react": "Little lasting move in yields"
+        },
+        {
+          "t": "12:33 PM",
+          "cat": "Rates",
+          "title": "Midday check",
+          "react": "10Y about 5.1%, 2Y about 4.7%; chip stocks sliding"
+        },
+        {
+          "t": "4:00 PM",
+          "cat": "Equities",
+          "title": "S&P 500 closes −1.09% at 7,659.44; Nasdaq −2.14%",
+          "react": "10Y settles at 5.097%, about 1 bp higher on the day"
+        }
+      ],
+      "interpretation": {
+        "text": "Friday was a pause, not a reversal. Short-term yields drifted slightly lower while the 10-year edged up, so the gap between them widened a little after a week of sharp flattening. The bigger picture is a tug of war: falling tech stocks are pulling investors into bonds, while hot inflation readings and $100 oil keep the Fed leaning toward another hike.",
+        "change": "If tech stocks stabilise and next week's data stay firm, yields could climb back toward this month's highs. A deeper stock selloff would likely push the 10-year further below 5.1%."
+      },
+      "watch": [
+        {
+          "when": "Mon 10:00 AM",
+          "what": "NAHB homebuilder sentiment (October)"
+        },
+        {
+          "when": "Tue 8:30 AM",
+          "what": "Housing starts and building permits (September)"
+        },
+        {
+          "when": "Wed 1:00 PM",
+          "what": "20-year bond auction ($13 billion)"
+        },
+        {
+          "when": "Wed after close",
+          "what": "Earnings from Meta, Tesla, IBM and Texas Instruments, a test for the AI trade"
+        },
+        {
+          "when": "Thu 8:30 AM",
+          "what": "Weekly jobless claims"
+        },
+        {
+          "when": "Fri 10:00 AM",
+          "what": "University of Michigan sentiment and inflation expectations (October final)"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Investrade: Market Review, October 16, 2026",
+          "url": "https://investrade.com/market-review-october-16-2026/"
+        },
+        {
+          "name": "Yahoo Finance: Tech stocks tumble as AI debt fears rattle Wall Street",
+          "url": "https://finance.yahoo.com/markets/stocks/articles/tech-stocks-tumble-ai-debt-200828030.html"
+        },
+        {
+          "name": "TradingKey: US stocks close, Nasdaq drops over 2%",
+          "url": "https://www.tradingkey.com/analysis/stocks/us-stocks/262221811-us-stock-market-close-nasdaq-drop-chip-stocks-fall-coreweave-micron-tradingkey"
+        },
+        {
+          "name": "Benzinga: Nasdaq 100 slides; Warsh keeps Fed hike open",
+          "url": "https://www.benzinga.com/markets/equities/26/10/62417145/nasdaq-100-slides-micron-sandisk-coreweave-sink-warsh-keeps-fed-hike-open-stock-market-today-friday"
+        },
+        {
+          "name": "Federal Reserve: Industrial Production and Capacity Utilization (G.17)",
+          "url": "https://www.federalreserve.gov/releases/g17/current/default.htm"
+        },
+        {
+          "name": "IndexBox: US import and export prices rise sharply in September 2026",
+          "url": "https://www.indexbox.io/blog/us-import-and-export-prices-rise-sharply-in-september-2026/"
+        },
+        {
+          "name": "Investrade: Weekly Event Calendar, Oct 19–23, 2026",
+          "url": "https://investrade.com/weekly-event-calendar-10-19-2026-10-23-2026/"
+        },
+        {
+          "name": "U.S. Treasury: daily par yield curve rates (October 2026)",
+          "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=202610"
+        }
+      ]
+    },
+    {
       "market_date": "2026-10-15",
       "key": "2026-10-15",
       "edition": "close",
