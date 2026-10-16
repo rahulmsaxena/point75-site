@@ -5,6 +5,14 @@
   var API = 'https://news.point75.io/api/pulse';
   var BULL = '#3D8BFF', BEAR = '#E5484D', NEUT = '#9AA0A6';
 
+  // The overview shows the two gauges and one card per section; a card opens that section on its own (/pulse#auctions)
+  var SECTIONS = [
+    { key: 'why', title: 'Why the needles are where they are', blurb: 'Every signal behind the two gauges, with the rule it follows. Nothing hidden in a black box.', cta: 'See every signal' },
+    { key: 'auctions', title: 'Who’s buying the debt?', blurb: 'Each Treasury auction graded against the last six of the same maturity, and what’s coming up.', cta: 'See the auctions' },
+    { key: 'plumbing', title: 'The pros and the plumbing', blurb: 'What big money is doing in futures, dealer balance sheets, funding, rates swings and inflation expectations.', cta: 'Open the gauges' },
+    { key: 'wire', title: 'Live wire', blurb: 'The latest bond, central-bank and macro headlines, linking to the source.', cta: 'Read the headlines' }
+  ];
+
   var CSS =
     '.p75pulse{--ink:#111214;--panel:#17181B;--panel2:#1C1D21;--line:#2A2B2F;--cream:#EDE8DC;--muted:#C2BCAF;--soft:#E4DED1;--gold:#C9A227;' +
       '--bull:' + BULL + ';--bear:' + BEAR + ';background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box}' +
@@ -70,6 +78,25 @@
     '.p75pulse .wire a.h:last-of-type{border-bottom:0}.p75pulse .wire a.h b{display:block;font-size:15px;font-weight:600;line-height:1.4}' +
     '.p75pulse .wire a.h:hover b{color:var(--gold)}.p75pulse .wire a.h span{display:block;font-size:12.5px;color:var(--muted);margin-top:3px}' +
     '.p75pulse .wire .more{display:inline-block;margin:10px 0 8px;color:var(--gold);font-weight:700;text-decoration:none;font-size:14px}' +
+    // overview cards (same look as the Bond Summary page) and the one-section view
+    '.p75pulse .secs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:22px}' +
+    '.p75pulse a.sec{display:flex;flex-direction:column;gap:10px;min-height:210px;padding:26px 26px 22px;background:var(--panel);border:1px solid var(--line);border-top:2px solid var(--gold);' +
+      'border-radius:4px;color:var(--cream);text-decoration:none;transition:border-color .15s,background .15s}' +
+    '.p75pulse a.sec:hover,.p75pulse a.sec:focus-visible{border-color:var(--gold);background:var(--panel2);outline:none}' +
+    '.p75pulse a.sec .n{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:15px;color:var(--gold)}' +
+    '.p75pulse a.sec .nm{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:26px;line-height:1.15;color:#fff}' +
+    '.p75pulse a.sec .bl{font-size:14.5px;line-height:1.6;color:var(--soft)}' +
+    '.p75pulse a.sec .now{margin-top:auto;font-size:13.5px;line-height:1.5;color:var(--cream);border-top:1px solid var(--line);padding-top:12px}' +
+    '.p75pulse a.sec .now b{color:var(--gold);font-weight:800;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;margin-right:8px}' +
+    '.p75pulse a.sec .go{font-size:14.5px;font-weight:700;color:var(--gold)}' +
+    '.p75pulse .crumb{font-size:13.5px;color:#8D887E;margin:0 0 18px}.p75pulse .crumb a{color:var(--gold);text-decoration:none;font-weight:700}' +
+    '.p75pulse .strip{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0 6px;font-size:14px;color:var(--soft)}' +
+    '.p75pulse .strip b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:20px;margin-right:6px}' +
+    '.p75pulse .strip a{margin-left:auto;color:var(--gold);font-weight:700;text-decoration:none}' +
+    '.p75pulse .pn{display:flex;justify-content:space-between;gap:12px;margin-top:40px;border-top:1px solid var(--line);padding-top:16px}' +
+    '.p75pulse .pn a{color:var(--soft);font-weight:600;text-decoration:none;font-size:15px}.p75pulse .pn a.nx{color:var(--gold);font-weight:800}' +
+    '.p75pulse .view > h2:first-child{margin-top:28px}' +
+    '@media (max-width:700px){.p75pulse .secs{grid-template-columns:1fr;gap:14px}.p75pulse a.sec{min-height:0;padding:22px 20px}.p75pulse a.sec .nm{font-size:23px}.p75pulse .strip a{margin-left:0}}' +
     '.p75pulse .foot{color:#77736a;font-size:12px;line-height:1.6;margin-top:48px;border-top:1px solid var(--line);padding-top:18px}' +
     '.p75pulse .load{color:var(--muted);padding:40px 0}' +
     '@media (max-width:980px){.p75pulse .grid{grid-template-columns:repeat(2,minmax(0,1fr))}}' +
@@ -234,6 +261,7 @@
         }).join('') + '</div></div>' +
       '</div>';
 
+    var head = h; h = '';
     // why
     var icon = function (v) { var c = v > 0 ? BULL : v < 0 ? BEAR : NEUT; return '<span class="ic" style="background:' + c + '">' + (v > 0 ? '▲' : v < 0 ? '▼' : '•') + '</span>'; };
     h += '<h2>Why the needles are where they are</h2><p class="sub">Every signal is shown, with the rule it follows. Nothing is hidden in a black box.</p><div class="why">' +
@@ -247,6 +275,7 @@
           '<div class="bar"><i style="width:' + Math.max(3, c.pct) + '%;background:' + stressColor(c.pct) + '"></i></div><div class="tx">' + esc(c.why) + '</div></div></div>';
       }).join('') + '<div class="note">' + esc(s.note || '') + '</div></div></div>';
 
+    var SEC = { why: h }; h = '';
     // auctions
     var a = j.auctions;
     if (a && a.recent && a.recent.length) {
@@ -267,6 +296,7 @@
         '<div class="note">Source: U.S. Treasury, Fiscal Data. Nominal notes and bonds only (no TIPS or floating-rate notes).</div></div>';
     }
 
+    SEC.auctions = h; h = '';
     // the pros + plumbing
     var p = j.positioning, dl = j.dealers, r = j.rates, be = j.breakeven, tp = j.term_premium;
     var bn = function (v) { return (v < 0 ? '−$' : '$') + Math.abs(v).toLocaleString('en-US', { maximumFractionDigits: 0 }) + 'bn'; };
@@ -300,9 +330,35 @@
       'FRED · ' + fmtDate(be.date)));
     if (cards.length) h += '<h2>The pros and the plumbing</h2><p class="sub">What big money is doing, and the stress points underneath. Hover or tap a chart for past values.</p><div class="grid">' + cards.join('') + '</div>';
 
-    h += '<a class="dtlink" href="/debt-trap"><span>New</span><b>The debt trap</b> How much U.S. debt has to be refinanced, what it costs and who is still buying it &rarr;</a>';
+    SEC.plumbing = h;
+    SEC.wire = '<h2>Live wire</h2><p class="sub wire-sub">The latest bond, central-bank and macro headlines. Updated daily.</p><div class="wire" data-wire>Loading headlines…</div>';
+    var dt = '<a class="dtlink" href="/debt-trap"><span>Next</span><b>The debt trap</b> How much U.S. debt has to be refinanced, what it costs and who is still buying it &rarr;</a>';
 
-    h += '<h2>Live wire</h2><p class="sub wire-sub">The latest bond, central-bank and macro headlines. Updated daily.</p><div class="wire" data-wire>Loading headlines…</div>';
+    var view = location.hash.slice(1), idx = -1;
+    SECTIONS.forEach(function (x, i) { if (x.key === view && SEC[x.key]) idx = i; });
+    if (idx < 0) {
+      // Overview: the two gauges, then one card per section with what it says right now
+      var votes = b.votes || [], bear = votes.filter(function (v) { return v.vote < 0; }).length, bull = votes.filter(function (v) { return v.vote > 0; }).length;
+      var last = a && a.recent && a.recent[0];
+      var now = {
+        why: votes.length ? votes.length + ' signals: ' + bull + ' bullish, ' + bear + ' bearish' + ((s.components || []).length ? ' · ' + s.components.length + ' stress readings' : '') : '',
+        auctions: last ? esc(last.term.replace(' ', '-')) + ' auction, ' + fmtDate(last.date) + ': ' + last.grade + ' demand' : '',
+        plumbing: tp ? 'Term premium ' + tp.value.toFixed(2) + '%' + (r ? ' · 10-year swinging ' + r.vol.value.toFixed(1) + 'bp a day' : '') : '',
+        wire: '<span data-wire-top>The latest headlines</span>'
+      };
+      h = head + '<div class="secs">' + SECTIONS.filter(function (x) { return SEC[x.key]; }).map(function (x, i) {
+        return '<a class="sec" href="#' + x.key + '" data-sec="' + x.key + '"><span class="n">0' + (i + 1) + '</span><span class="nm">' + x.title + '</span><span class="bl">' + x.blurb + '</span>' +
+          (now[x.key] ? '<span class="now"><b>Now</b>' + now[x.key] + '</span>' : '') + '<span class="go">' + x.cta + ' &rarr;</span></a>';
+      }).join('') + '</div>' + dt;
+    } else {
+      var cur = SECTIONS[idx], prev = SECTIONS[idx - 1], next = SECTIONS[idx + 1];
+      h = '<div class="wrap"><p class="crumb"><a href="#" data-sec="">&larr; Pulse overview</a></p><div class="eyebrow">Pulse · ' + cur.title + '</div>' +
+        '<div class="strip"><span><b class="num" style="color:' + bullColor(b.score) + '">' + (b.score > 0 ? '+' : '') + (b.score != null ? b.score : '–') + '</b>' + esc(b.label || '') + '</span>' +
+        '<span><b class="num" style="color:' + stressColor(s.score) + '">' + (s.score != null ? Math.round(s.score) : '–') + '</b>stress, ' + esc(s.label || '') + '</span>' +
+        '<a href="#" data-sec="">See the gauges</a></div><div class="view">' + SEC[cur.key] + '</div>' +
+        '<nav class="pn" aria-label="Pulse sections">' + (prev ? '<a href="#' + prev.key + '" data-sec="' + prev.key + '">&larr; ' + prev.title + '</a>' : '<a href="#" data-sec="">&larr; Pulse overview</a>') +
+        (next ? '<a class="nx" href="#' + next.key + '" data-sec="' + next.key + '">Next: ' + next.title + ' &rarr;</a>' : '<a class="nx" href="/debt-trap">Next: The debt trap &rarr;</a>') + '</nav>';
+    }
 
     h += '<p class="foot">Pulse is built from public data: U.S. Treasury (Fiscal Data), CFTC Traders in Financial Futures, Federal Reserve Bank of New York, and FRED (Federal Reserve Bank of St. Louis), including SOFR from the Federal Reserve Bank of New York. This product uses the FRED® API but is not endorsed or certified by the Federal Reserve Bank of St. Louis. ' +
       'Signals are simple rules for education and are not financial advice.<br>&copy; ' + new Date().getFullYear() + ' Rahul Saxena. All rights reserved.</p></div>';
@@ -319,18 +375,20 @@
     return Math.round(m / 1440) + ' d ago';
   }
   function wire(host) {
-    var box = host.querySelector('[data-wire]'); if (!box) return;
+    var box = host.querySelector('[data-wire]'), top = host.querySelector('[data-wire-top]');
+    if (!box && !top) return;
     var e = function (x) { return String(x == null ? '' : x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); };
     fetch(NEWS).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
       var a = ((j && j.articles) || []).filter(function (x) { return x.title && /^https?:/.test(x.url || '') && (x.tags || []).indexOf('newsdata') === -1; })  // skip general-news wire items, keep central banks and markets
         .sort(function (x, y) { return String(y.published_at).localeCompare(String(x.published_at)); }).slice(0, 8);
+      if (top) { top.textContent = a.length ? a[0].title : 'Headlines are unavailable right now.'; if (!box) return; }
       if (!a.length) { box.textContent = 'Headlines are unavailable right now.'; return; }
       box.className = 'wire on';
       box.innerHTML = a.map(function (x) {
         return '<a class="h" href="' + e(x.url) + '" target="_blank" rel="noopener"><b>' + e(x.title) + '</b><span>' + e(x.source) +
           (x.published_at ? ' · ' + ago(x.published_at) : '') + '</span></a>';
       }).join('') + '<a class="more" href="/news">All of today’s headlines &rarr;</a>';
-    }).catch(function () { box.textContent = 'Headlines are unavailable right now.'; });
+    }).catch(function () { if (box) box.textContent = 'Headlines are unavailable right now.'; if (top) top.textContent = 'Headlines are unavailable right now.'; });
   }
 
   function animate(host) {
@@ -360,9 +418,22 @@
     load(function (j) {
       if (!document.body.contains(host)) return;
       if (!j || !j.gauges) { host.querySelector('.load').textContent = 'Pulse data is unavailable right now. Please try again shortly.'; return; }
-      host.innerHTML = page(j); wireSparks(host); animate(host); wire(host);
+      draw(host, j);
+      host.addEventListener('click', function (e) {
+        var a = e.target.closest('a[data-sec]'); if (!a) return;
+        e.preventDefault();
+        var k = a.getAttribute('data-sec');
+        history.replaceState(history.state, '', location.pathname + location.search + (k ? '#' + k : ''));
+        draw(host, j);
+        var y = host.getBoundingClientRect().top + window.pageYOffset - 90;
+        if (window.pageYOffset > y) window.scrollTo({ top: y });
+      });
     });
   }
+  function draw(host, j) { host.innerHTML = page(j); wireSparks(host); animate(host); wire(host); }
+  window.addEventListener('hashchange', function () {
+    var host = document.querySelector('.p75pulse'); if (host && cache) draw(host, cache);
+  });
   function clear() { var h = document.querySelector('.p75pulse'); if (h) h.remove(); }
 
   window.P75PULSE = { render: render, clear: clear };
