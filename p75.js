@@ -860,20 +860,6 @@
     }
     return null;
   }
-  // Pages that aren't in the menu (Credit Stress, Debt Trap...): ask the site's own router to change page,
-  // the same thing its menu links do. If the router can't be found or doesn't know the page, return false
-  // and the link loads normally.
-  function routerGo(path) {
-    try {
-      var root = document.querySelector('[data-v-app]'), app = root && root.__vue_app__;
-      var r = app && app.config && app.config.globalProperties && app.config.globalProperties.$router;
-      if (!r || typeof r.push !== 'function' || typeof r.resolve !== 'function') return false;
-      var m = r.resolve(path);
-      if (!m || !m.matched || !m.matched.length || /404|not-?found/i.test(String(m.name || ''))) return false;
-      r.push(path).catch(function () { location.href = path; });
-      return true;
-    } catch (err) { return false; }
-  }
   document.addEventListener('click', function (e) {
     if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     var a = e.target.closest && e.target.closest('#p75tn a[href], #p75tf a[href], #p75sib a[href], .p75d a[href], .p75edu a[href], .p75pulse a[href], .p75debt a[href], .p75cr a[href], .p75ind a[href], .p75ins a[href], .p75bonds a[href], .p75hubpg a[href]');
@@ -883,8 +869,9 @@
     var path = norm(href);
     if (path === norm(location.pathname)) return;
     var site = siteLink(path);
-    if (site) { e.preventDefault(); site.click(); return; }
-    if (routerGo(path)) e.preventDefault();                        // else: normal navigation
+    if (!site) return;                                             // not in the menu (Credit Stress...): normal page load
+    e.preventDefault();
+    site.click();
   }, true);
   var soonT = [];
   function soon() {
