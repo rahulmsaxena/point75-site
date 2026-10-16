@@ -27,6 +27,7 @@ BODY_CHARS = 1500
 
 # Pages drawn by our scripts (their text isn't in the server HTML), described by hand.
 PAGES = [
+    ("/start-here", "Start here", "Section", "New to bonds? Three short reading paths, from the basics to the live market, and what the Easy, Medium and Advanced labels mean."),
     ("/kinetics", "Kinetics", "Section", "The forces moving the bond market: Pulse, News, Bond Summary and Economic Indicators."),
     ("/bond-summary", "Bond Summary", "Section", "How credit markets are holding up: the daily summary, credit stress, sector credit, lenders and investor insights."),
     ("/pulse", "Pulse", "Data", "The bond market’s vital signs: positioning, rates volatility, funding pressure, term premium, inflation expectations and live headlines."),

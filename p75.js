@@ -4,7 +4,7 @@
 (function () {
   // ---------- Settings ----------
   var TENANT_ID = 'NgvHdCEMvUY';                          // FastComments
-  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-introduction', '/bond-history', '/bond-types', '/cash-logistics', '/bond-dictionary', '/bond-players', '/bond-fortunes', '/pulse', '/debt-trap', '/economic-indicators', '/bonds', '/insights', '/sector-credit', '/lenders', '/credit-stress', '/intellegent-summary', '/intelligent-summary', '/kinetics', '/bond-summary'];    // no add-ons on these pages
+  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-introduction', '/bond-history', '/bond-types', '/cash-logistics', '/bond-dictionary', '/bond-players', '/bond-fortunes', '/pulse', '/debt-trap', '/economic-indicators', '/bonds', '/insights', '/sector-credit', '/lenders', '/credit-stress', '/intellegent-summary', '/intelligent-summary', '/kinetics', '/bond-summary', '/start-here'];    // no add-ons on these pages
 
   // Difficulty level per post
   var LEVELS = {
@@ -723,7 +723,7 @@
       document.head.appendChild(st);
     }
   }
-  var PAGE_HOSTS = '.p75edu, .p75debt, .p75ins, .p75pulse, .p75bonds, .p75ind, .p75cr, .p75hubpg';
+  var PAGE_HOSTS = '.p75edu, .p75debt, .p75ins, .p75pulse, .p75bonds, .p75ind, .p75cr, .p75hubpg, .p75start';
 
   // ---------- Page navigation: back / forward at the top of every page in a series ----------
   // One row at the top of the page: back (or previous) on the left, where you are in the middle, next on
@@ -867,7 +867,7 @@
   }
   document.addEventListener('click', function (e) {
     if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-    var a = e.target.closest && e.target.closest('#p75tn a[href], #p75tf a[href], #p75sib a[href], .p75d a[href], .p75edu a[href], .p75pulse a[href], .p75debt a[href], .p75cr a[href], .p75ind a[href], .p75ins a[href], .p75bonds a[href], .p75hubpg a[href]');
+    var a = e.target.closest && e.target.closest('#p75tn a[href], #p75tf a[href], #p75sib a[href], .p75d a[href], .p75edu a[href], .p75pulse a[href], .p75debt a[href], .p75cr a[href], .p75ind a[href], .p75ins a[href], .p75bonds a[href], .p75hubpg a[href], .p75start a[href]');
     if (!a || a.hasAttribute('data-hash') || a.target === '_blank') return;
     var href = a.getAttribute('href') || '';
     if (!/^\/(?!\/)/.test(href) || /[?#]/.test(href)) return;      // same-site page links only
@@ -916,6 +916,59 @@
     if (host.nextSibling !== sib) parent.insertBefore(sib, host.nextSibling);
   }
 
+  // ---------- Reading levels and Start here ----------
+  // Every data page and guide carries an Easy / Medium / Advanced label beside its name (essays already show
+  // theirs on the cards). Advanced pages add a line pointing to the Bond Dictionary for the terms they use.
+  var PAGE_LEVEL = {
+    '/education': 'Easy', '/bond-introduction': 'Easy', '/bond-history': 'Easy', '/bond-types': 'Easy', '/cash-logistics': 'Easy',
+    '/bond-dictionary': 'Easy', '/bond-players': 'Easy', '/bond-fortunes': 'Easy',
+    '/pulse': 'Medium', '/economic-indicators': 'Medium',
+    '/debt-trap': 'Advanced', '/credit-stress': 'Advanced', '/sector-credit': 'Advanced', '/lenders': 'Advanced', '/insights': 'Advanced'
+  };
+  // Terms each Advanced page leans on; each links to its Bond Dictionary entry
+  var PAGE_TERMS = {
+    '/debt-trap': ['refinancing', 'term premium'], '/credit-stress': ['PIK', 'delinquency'], '/sector-credit': ['Debt to EBITDA', 'interest coverage'],
+    '/lenders': ['commercial paper', 'money market fund'], '/insights': ['duration', 'credit spread']
+  };
+  (function levelCss() {
+    if (document.getElementById('p75-lvl')) return;
+    var st = document.createElement('style'); st.id = 'p75-lvl';
+    st.textContent =
+      '.p75lvl{display:inline-block;vertical-align:middle;margin-left:12px;border:1px solid;border-radius:99px;padding:2px 10px;font:800 12px/1.5 Manrope,system-ui,sans-serif;letter-spacing:.02em;text-transform:none}' +
+      '.p75lvl--easy{border-color:#6fa8a0;color:#9fd0c8}.p75lvl--medium{border-color:#c9a227;color:#e0b53a}.p75lvl--advanced{border-color:#d08a6a;color:#e8a98a}' +
+      '.p75start .p75lvl{margin-left:0}' +
+      '.p75help{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin:14px 0 4px;padding:12px 16px;border:1px solid #2A2B2F;background:#17181B;border-radius:10px;font:500 14.5px/1.5 Manrope,system-ui,sans-serif;color:#D9D3C6;max-width:640px}' +
+      '.p75help a{color:#fff;font-weight:700;text-decoration:underline;text-decoration-color:rgba(201,162,39,.6);text-underline-offset:3px}' +
+      '.p75help a.go{color:#C9A227;text-decoration:none;font-weight:800;white-space:nowrap}' +
+      '.p75cta{max-width:1224px;margin:22px auto 6px;width:calc(100% - 40px);box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;' +
+        'border:1px solid rgba(201,162,39,.5);background:rgba(201,162,39,.06);border-radius:12px;padding:14px 20px;text-decoration:none!important;font:500 15.5px/1.5 Manrope,system-ui,sans-serif;color:#D9D3C6!important}' +
+      '.p75cta b{color:#fff;font-weight:700}.p75cta .go{color:#C9A227;font-weight:800;white-space:nowrap}' +
+      '.p75cta:hover,.p75cta:focus-visible{background:rgba(201,162,39,.12);outline:none}';
+    document.head.appendChild(st);
+  })();
+  function levelBadges(path) {
+    var lvl = PAGE_LEVEL[path]; if (!lvl) return;
+    var host = document.querySelector('.p75pulse, .p75debt, .p75cr, .p75ind, .p75ins, .p75edu');
+    var h1 = host && host.querySelector('h1'); if (!h1 || host.querySelector('.p75lvl')) return;
+    var b = '<span class="p75lvl p75lvl--' + lvl.toLowerCase() + '" title="Reading level: see Start here">' + lvl + '</span>';
+    var eb = h1.previousElementSibling;
+    if (eb && /eyebrow/.test(eb.className)) eb.insertAdjacentHTML('beforeend', b);
+    else h1.insertAdjacentHTML('beforebegin', '<div style="margin-bottom:6px">' + b.replace('margin-left:12px', '') + '</div>');
+    var terms = PAGE_TERMS[path];
+    if (lvl === 'Advanced' && terms) {
+      var link = function (t) { return '<a href="/bond-dictionary?q=' + encodeURIComponent(t) + '">' + t + '</a>'; };
+      var after = h1.nextElementSibling && h1.nextElementSibling.tagName === 'P' ? h1.nextElementSibling : h1;
+      after.insertAdjacentHTML('afterend', '<p class="p75help">New to terms like ' + link(terms[0]) + ' or ' + link(terms[1]) +
+        '? The Bond Dictionary explains them in plain English. <a class="go" href="/bond-dictionary">Open it &rarr;</a></p>');
+    }
+  }
+  function startHereLine(path) {
+    if (path !== '/' || document.querySelector('.p75cta')) return;
+    var list = document.querySelector('.block-blog-list'), sec = list && list.closest('section');
+    if (!sec) return;
+    sec.insertAdjacentHTML('beforebegin', '<a class="p75cta" href="/start-here"><span><b>New to bonds?</b> Three short paths, from the basics to the live market.</span><span class="go">Start here &rarr;</span></a>');
+  }
+
   function update() {
     var path = location.pathname.replace(/\/+$/, '') || '/';
 
@@ -944,6 +997,8 @@
     var fams = navFamilies(menuFams); familyLinks(path, fams);
     if (navFrame && navFrame.path !== path) navFrame = null;
     pageNav(path, navSpecFor(path, fams));
+    startHereLine(path);
+    levelBadges(path);
 
     // Level + Editor's pick next to the reading time (homepage cards and post headers)
     document.querySelectorAll('.blog-list-item-meta__subtitle').forEach(function (s) {
@@ -970,6 +1025,18 @@
     // News (/news): the Coupon briefing is a Hostinger embed (same-origin iframe). Bring it in line with
     // the rest of the site: cream text tones, Manrope + Hedvig type, one label style, and a clear search bar.
     if (path === '/news') polishNews();
+
+    // Start here (/start-here) is drawn by starthere/starthere.js
+    if (path === '/start-here') {
+      if (window.P75START) window.P75START.render();
+      else if (!document.getElementById('p75start-js')) {
+        var sh = document.createElement('script'); sh.id = 'p75start-js';
+        sh.src = 'https://rahulmsaxena.github.io/point75-site/starthere/starthere.js?v=' + Math.floor(Date.now() / 36e5);
+        sh.onload = function () { update(); };
+        document.body.appendChild(sh);
+      }
+      return;
+    } else if (window.P75START) window.P75START.clear();
 
     // Hub pages (/kinetics, /bond-summary) are drawn by hubs/hubs.js from SECTIONS above
     var hub = sectionNode(path);
