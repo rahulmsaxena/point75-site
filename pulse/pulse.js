@@ -341,7 +341,8 @@
       var votes = b.votes || [], bear = votes.filter(function (v) { return v.vote < 0; }).length, bull = votes.filter(function (v) { return v.vote > 0; }).length;
       var last = a && a.recent && a.recent[0];
       var now = {
-        why: votes.length ? votes.length + ' signals: ' + bull + ' bullish, ' + bear + ' bearish' + ((s.components || []).length ? ' · ' + s.components.length + ' stress readings' : '') : '',
+        why: votes.length ? votes.length + ' signals: ' + [[bull, 'bullish'], [bear, 'bearish'], [votes.length - bull - bear, 'neutral']].filter(function (x) { return x[0]; })
+          .map(function (x) { return x[0] + ' ' + x[1]; }).join(', ') + ((s.components || []).length ? ' · ' + s.components.length + ' stress readings' : '') : '',
         auctions: last ? esc(last.term.replace(' ', '-')) + ' auction, ' + fmtDate(last.date) + ': ' + last.grade + ' demand' : '',
         plumbing: tp ? 'Term premium ' + tp.value.toFixed(2) + '%' + (r ? ' · 10-year swinging ' + r.vol.value.toFixed(1) + 'bp a day' : '') : '',
         wire: '<span data-wire-top>The latest headlines</span>'
@@ -425,8 +426,7 @@
         var k = a.getAttribute('data-sec');
         history.replaceState(history.state, '', location.pathname + location.search + (k ? '#' + k : ''));
         draw(host, j);
-        var y = host.getBoundingClientRect().top + window.pageYOffset - 90;
-        if (window.pageYOffset > y) window.scrollTo({ top: y });
+        window.scrollTo({ top: 0 });
       });
     });
   }
