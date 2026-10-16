@@ -636,7 +636,7 @@
         { href: '/lenders', text: 'Lenders' },
         { href: '/insights', text: 'Insights' }
       ] },
-      { href: '/economic-indicators', text: 'Economic Indicators', kids: [
+      { href: '/economic-indicators', text: 'Economic Indicators', hub: false, kids: [
         { href: '/debt-trap', text: 'Debt Trap' }
       ] }
     ] }
@@ -747,7 +747,8 @@
     fams.forEach(function (f) {
       f.kids.forEach(function (k, j) {
         if (k.href !== path) return;
-        s.prev = j ? f.kids[j - 1] : { href: f.href, text: f.text + ' overview' };
+        // back from the first page: to a landing page "overview", or by name to a page that has its own content
+        s.prev = j ? f.kids[j - 1] : { href: f.href, text: f.text + (f.hub === false ? '' : ' overview') };
         s.next = f.kids[j + 1] || null;
         s.mid = { href: f.href, text: f.text, title: HUB_LABEL[f.href] || (f.text + ' overview') };
       });
