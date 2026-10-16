@@ -11,7 +11,7 @@
   var CSS =
     '.p75s-btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px;border-radius:19px;border:1px solid rgba(201,162,39,.7);background:rgba(201,162,39,.08);color:#EDE8DC;font:600 14px Manrope,system-ui,sans-serif;cursor:pointer;white-space:nowrap}' +
     '.p75s-btn svg{color:#C9A227}.p75s-btn:hover{background:rgba(201,162,39,.18)}.p75s-btn kbd{font:500 11.5px Manrope,sans-serif;color:#8d887e;border:1px solid #3a3b40;border-radius:5px;padding:0 5px}' +
-    '.p75s-li{display:flex;align-items:center;margin-left:8px;list-style:none}' +
+    '.p75s-li{display:flex;align-items:center;height:21px;align-self:flex-start;margin-left:8px;list-style:none}' +   // same line box as the menu text, so the button centres on it
     '.p75s-mob{list-style:none;padding:14px 0 6px}.p75s-mob .p75s-btn{width:100%;justify-content:center;height:46px;font-size:16px}.p75s-mob kbd{display:none}' +
     '.p75s-ov{position:fixed;inset:0;z-index:99999;background:rgba(8,9,10,.6);display:flex;justify-content:center;align-items:flex-start;padding:10vh 16px 16px;font-family:Manrope,system-ui,sans-serif}' +
     '.p75s-box{width:100%;max-width:700px;max-height:78vh;display:flex;flex-direction:column;background:#17181B;border:1px solid #3a3b40;border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.55);overflow:hidden;color:#EDE8DC}' +

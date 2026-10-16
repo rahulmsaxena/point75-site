@@ -69,7 +69,11 @@
       M + '.block-header-item__dropdown .block-header-item__item{padding:9px 0!important;margin:0!important}' +
       L + '.block-header-item__dropdown .block-header-item .item-content{font-size:16px!important;font-weight:400!important;color:#A9A7A1!important;margin:0!important}' +
       L + '.block-header-item__dropdown .block-header-item .item-content-wrapper--active>.item-content{color:#C9A227!important}' +
-    '}';
+    '}' +
+    // desktop: the dropdown caret hugs its label, so every visible gap in the menu is the same 40px
+    '.block-header-layout-desktop .block-header__nav-links .item-content__icon-container-wrapper{width:auto!important;padding:0!important;margin:0!important}' +
+    '.block-header-layout-desktop .block-header__nav-links .item-content__icon-container{margin-left:6px!important;width:auto!important;padding:0!important}' +
+    '.block-header-layout-desktop .block-header__nav-links .item-content__icon-container svg{margin:0!important}';
     document.head.appendChild(st);
   })();
 
