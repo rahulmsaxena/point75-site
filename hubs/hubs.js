@@ -103,9 +103,11 @@
     return html + '</div>';
   }
 
-  var latest = null, loading = false;
+  // The site can rebuild the page while the summary is loading, so callers queue up and all hear back
+  var latest = null, loading = false, waiting = [];
   function loadLatest(cb) {
     if (latest) return cb(latest);
+    waiting.push(cb);
     if (loading) return; loading = true;
     fetch(EDITIONS).then(function (r) { return r.json(); }).then(function (j) {
       var s = (j && j.summaries || []).filter(function (e) { return e && e.title; })
@@ -115,23 +117,25 @@
         latest = { title: s.title, regime: s.regime || '', note: s.regime_note || '',
           when: isNaN(d) ? '' : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }) };
       }
-      loading = false; cb(latest);
-    }).catch(function () { loading = false; cb(null); });
+      loading = false; var w = waiting; waiting = []; w.forEach(function (f) { f(latest); });
+    }).catch(function () { loading = false; var w = waiting; waiting = []; w.forEach(function (f) { f(null); }); });
   }
 
   // node: { href, text, kids }, parent: the same shape or null. Both come from SECTIONS in p75.js.
   function render(path, node, parent) {
     var main = document.querySelector('main') || document.body;
     var host = document.querySelector('.p75hubpg');
-    if (host && host.getAttribute('data-path') === path) return;
+    var state = path + (latest ? '|latest' : '');
+    if (host && host.getAttribute('data-state') === state) return;
     if (host) host.remove();
     once();
-    host = document.createElement('div'); host.className = 'p75hubpg'; host.setAttribute('data-path', path);
+    host = document.createElement('div'); host.className = 'p75hubpg'; host.setAttribute('data-path', path); host.setAttribute('data-state', state);
     host.innerHTML = page(path, node, parent, latest);
     var blocks = main.querySelector('.page__blocks');
     (blocks || main).appendChild(host);
     if (path === '/bond-summary' && !latest) loadLatest(function (l) {
-      if (l && document.body.contains(host)) host.innerHTML = page(path, node, parent, l);
+      var h = document.querySelector('.p75hubpg');
+      if (l && h && h.getAttribute('data-path') === path) { h.innerHTML = page(path, node, parent, l); h.setAttribute('data-state', path + '|latest'); }
     });
   }
   function clear() { var h = document.querySelector('.p75hubpg'); if (h) h.remove(); }
