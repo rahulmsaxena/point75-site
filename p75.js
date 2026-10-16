@@ -996,6 +996,20 @@
       '.block-header-layout-mobile .p75tools-li .item-content{color:#C9A227!important}';
     document.head.appendChild(st);
   })();
+  // ---------- Journal cards: quieter type so the page invites reading instead of shouting.
+  // Titles use the serif's real weight (it has no bold, so 700 was a thickened fake), summaries are
+  // smaller and capped at three lines, the meta line is smaller, and rows get more air. ----------
+  (function cardCss() {
+    if (document.getElementById('p75-cards')) return;
+    var C = '.block-blog-list .block-blog-list-item';
+    var st = document.createElement('style'); st.id = 'p75-cards';
+    st.textContent =
+      C + ' .block-blog-list-item__title{font-size:22px!important;font-weight:400!important;line-height:1.28!important;letter-spacing:-.005em}' +
+      C + ' .block-blog-list-item__description{font-size:15.5px!important;line-height:1.6!important;color:#C4BEB1!important;display:-webkit-box!important;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}' +
+      C + ' .blog-list-item-meta__author-name,' + C + ' .blog-list-item-meta__subtitle,' + C + ' .blog-list-item-meta__subtitle *{font-size:13px!important}' +
+      '.block-blog-list__list{row-gap:56px!important}';
+    document.head.appendChild(st);
+  })();
   function decorateMenu() {
     document.querySelectorAll('.block-header__nav-links').forEach(function (ul) {
       var tools = ul.querySelector(':scope>.block-header-item>.block-header-item__label a.item-content[href*="tools.point75.io"]');
