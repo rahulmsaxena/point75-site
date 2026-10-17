@@ -467,7 +467,7 @@
         '<div class="x">Tap any gauge. Its needle swings to today’s reading, and this screen explains what it measures in plain words.</div>';
       return;
     }
-    var gl = /\bbp\b/.test(it.now) ? '<div class="gl">bp = basis point, one hundredth of a percentage point (0.01%).</div>' : '';
+    var gl = /bp\b/.test(it.now) ? '<div class="gl">bp = basis point, one hundredth of a percentage point (0.01%).</div>' : '';
     box.innerHTML = '<div class="tp"><span>Info screen</span><span>' + esc(it.name) + '</span></div>' +
       '<div><div class="tt">' + esc(it.name) + '</div><div class="st">' + esc(it.sub) + '</div></div>' +
       '<div><div class="k">WHAT IT MEANS</div><div class="x">' + esc(it.what) + '</div></div>' +
