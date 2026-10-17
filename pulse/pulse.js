@@ -499,7 +499,10 @@
       ckApply(bt, it, 0);
       if (mv) void mv.getBoundingClientRect();
       requestAnimationFrame(function () { if (mv) mv.classList.remove('ck-snap'); requestAnimationFrame(function () { ckApply(bt, it, it.target); }); });
-      if (scroll && window.innerWidth <= 880) box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (scroll && window.innerWidth <= 880) {   // phones: jump to the explanation, landing just below the sticky header
+        var tb = document.querySelector('.top-blocks--sticky'), off = (tb ? tb.getBoundingClientRect().height : 0) + 12;
+        window.scrollTo({ top: box.getBoundingClientRect().top + window.pageYOffset - off, behavior: 'smooth' });
+      }
     }
     host.addEventListener('click', function (e) {
       var r = e.target.closest('[data-ck-replay]'); if (r) { play(r.getAttribute('data-ck-replay'), false); return; }
