@@ -97,6 +97,55 @@
     '.p75pulse .pn a{color:var(--soft);font-weight:600;text-decoration:none;font-size:15px}.p75pulse .pn a.nx{color:var(--gold);font-weight:800}' +
     '.p75pulse .view > h2:first-child{margin-top:28px}' +
     '@media (max-width:700px){.p75pulse .secs{grid-template-columns:1fr;gap:14px}.p75pulse a.sec{min-height:0;padding:22px 20px}.p75pulse a.sec .nm{font-size:23px}.p75pulse .strip a{margin-left:0}}' +
+    // cockpit (the #why view): one instrument per signal, plus an info screen that explains the one you tap
+    '.p75pulse .ck{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start;margin-top:8px}' +
+    '.p75pulse .ck-main{flex:999 1 600px;min-width:0;display:flex;flex-direction:column;gap:16px;padding:20px;border-radius:16px;' +
+      'background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold);box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 18px 40px rgba(0,0,0,.45)}' +
+    '.p75pulse .ck-h{color:var(--gold);font-size:13px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}' +
+    '.p75pulse .ck-h2{color:var(--muted);font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-top:4px}' +
+    '.p75pulse .ck-bb{display:flex;flex-wrap:wrap;gap:16px}' +
+    '.p75pulse .ck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:14px}' +
+    '.p75pulse .ck-i{display:flex;flex-direction:column;width:100%;padding:10px;border-radius:14px;cursor:pointer;font:inherit;color:inherit;text-align:left;' +
+      'background:#1E2024;border:2px solid #8C7424;box-shadow:0 0 10px rgba(201,162,39,.10);transition:border-color .15s,box-shadow .15s,background .15s}' +
+    '.p75pulse .ck-i:hover{border-color:var(--gold)}' +
+    '.p75pulse .ck-i:focus-visible{outline:3px solid #F2D27A;outline-offset:3px}' +
+    '.p75pulse .ck-i[aria-pressed="true"]{background:#2A2C31;border-color:#F2D27A;box-shadow:0 0 0 4px rgba(242,210,122,.18),0 0 22px rgba(242,210,122,.22)}' +
+    '.p75pulse .ck-i svg{display:block;width:100%;max-width:220px;height:auto;margin:0 auto}' +
+    '.p75pulse .ck-att{flex:0 1 280px;min-width:220px;width:auto}.p75pulse .ck-att svg{max-width:260px}' +
+    '.p75pulse .ck-nm{font-size:14px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#fff;line-height:1.2;margin-top:8px;display:flex;justify-content:space-between;align-items:center;gap:8px}' +
+    '.p75pulse .ck-v{display:flex;align-items:baseline;gap:6px;margin-top:6px}' +
+    '.p75pulse .ck-v b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:32px;line-height:1;font-variant-numeric:tabular-nums}' +
+    '.p75pulse .ck-v small{color:var(--muted);font-size:13px}' +
+    '.p75pulse .ck-chip{margin-left:auto;padding:3px 9px;border-radius:99px;font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#0b0c0e;white-space:nowrap}' +
+    '.p75pulse .ck-w{color:var(--muted);font-size:12px;margin-top:4px}' +
+    '.p75pulse .ck-lamp{flex:0 0 auto;width:11px;height:11px;border-radius:50%}' +
+    '.p75pulse .ck-count{flex:1 1 280px;min-width:0;display:flex;flex-direction:column;gap:14px;padding:18px;border-radius:14px;background:#151619;border:2px solid #8C7424}' +
+    '.p75pulse .ck-tally{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}' +
+    '.p75pulse .ck-tally div{display:flex;flex-direction:column;align-items:center;gap:3px;padding:12px 4px;border-radius:10px;border:2px solid}' +
+    '.p75pulse .ck-tally b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:38px;line-height:1}' +
+    '.p75pulse .ck-tally span{font-size:13px;font-weight:800;letter-spacing:.12em}' +
+    '.p75pulse .ck-line{margin:0;font-size:17px;line-height:1.6;color:#fff}' +
+    '.p75pulse .ck-how{padding:12px 14px;border-radius:10px;background:#1E2024;font-size:15px;line-height:1.6;color:var(--soft)}' +
+    '.p75pulse .ck-how p{margin:0}.p75pulse .ck-how p + p{margin-top:6px}' +
+    '.p75pulse .ck-how .k{display:block;color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}' +
+    '.p75pulse .ck-mfdw{flex:1 1 300px;min-width:0;position:sticky;top:16px;padding:12px;border-radius:16px;background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold)}' +
+    '.p75pulse .ck-mfd{display:flex;flex-direction:column;gap:16px;min-height:380px;padding:20px;border-radius:10px;background:#050807;border:2px solid #0F1512;' +
+      'box-shadow:inset 0 0 40px rgba(60,220,120,.06);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#7CE0A0}' +
+    '.p75pulse .ck-mfd .tp{display:flex;justify-content:space-between;gap:8px;font-size:11px;letter-spacing:.14em;color:#4E9C6C;text-transform:uppercase}' +
+    '.p75pulse .ck-mfd .tt{font-size:21px;font-weight:700;color:#A9F0C2;text-transform:uppercase;line-height:1.2}' +
+    '.p75pulse .ck-mfd .st{font-size:13px;color:#7CE0A0;margin-top:4px}' +
+    '.p75pulse .ck-mfd .k{font-size:11px;letter-spacing:.14em;color:#E8C766;margin-bottom:5px}' +
+    '.p75pulse .ck-mfd .x{font-family:Manrope,system-ui,sans-serif;font-size:16px;line-height:1.6;color:#D6F7E2}' +
+    '.p75pulse .ck-mfd .gl{font-family:Manrope,system-ui,sans-serif;font-size:13px;color:#8FCBA6}' +
+    '.p75pulse .ck-mfd button{align-self:flex-start;min-height:44px;padding:0 16px;border-radius:6px;border:1px solid var(--gold);background:#0B1410;color:#E8C766;' +
+      'font:inherit;font-size:13px;letter-spacing:.1em;cursor:pointer}' +
+    '.p75pulse .ck-mfd .bk{display:none}' +
+    '.p75pulse .ck-n,.p75pulse .ck-hz{transition:transform 1.8s cubic-bezier(.25,1.4,.5,1)}' +
+    '.p75pulse .ck-snap{transition:none!important}' +
+    '@media (prefers-reduced-motion:reduce){.p75pulse .ck-n,.p75pulse .ck-hz{transition:none}}' +
+    '@media (max-width:880px){.p75pulse .ck-mfdw{position:static}.p75pulse .ck-mfd{min-height:0}.p75pulse .ck-mfd .bk{display:inline-block}}' +
+    '@media (max-width:560px){.p75pulse .ck-main{padding:14px}.p75pulse .ck-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}' +
+      '.p75pulse .ck-v b{font-size:26px}.p75pulse .ck-nm{font-size:12.5px}.p75pulse .ck-att{flex-basis:100%}}' +
     '.p75pulse .foot{color:#77736a;font-size:12px;line-height:1.6;margin-top:48px;border-top:1px solid var(--line);padding-top:18px}' +
     '.p75pulse .load{color:var(--muted);padding:40px 0}' +
     '@media (max-width:980px){.p75pulse .grid{grid-template-columns:repeat(2,minmax(0,1fr))}}' +
@@ -237,6 +286,223 @@
   }
   function tone(v) { return v > 0 ? BEAR : v < 0 ? BULL : NEUT; }   // for yields/spreads: up = bearish for bonds
 
+  // ---------- Cockpit (the #why view) ----------
+  // Each signal from the feed becomes an instrument. Tapping one swings its needle to today's reading and the
+  // info screen explains it. "What it means" and "why you might care" are plain-English and fixed per signal;
+  // "right now" is the feed's own live sentence, so the words always match the numbers.
+  var CK_TEXT = {
+    bull: { what: 'Which way the bond market is leaning. Each signal below casts a vote, and the score is their average. Bullish means bond prices rising and interest rates falling; bearish means the opposite. Read it like a plane’s attitude: nose up is bullish, nose down is bearish.',
+      care: 'A bearish bond market usually means mortgage and loan rates are drifting higher. A bullish one means they may be heading lower.' },
+    stress: { what: 'How much strain the bond market is under, combining the readings below by their weights. 0 is calm, 100 is panic.',
+      care: 'When stress runs high, borrowing costs for mortgages, car loans and businesses get less predictable, and bond funds can swing more.' },
+    v_auctions: { what: 'How eagerly investors buy new government bonds at Treasury auctions. Strong demand is bullish; weak demand is bearish.',
+      care: 'When the government can borrow cheaply, rates on mortgages and loans tend to follow it down.' },
+    v_positioning: { what: 'What long-term investors such as pension and mutual funds are doing in Treasury futures. Steady buying from this patient money is bullish.',
+      care: 'This money moves slowly, so when it turns, the trend usually lasts.' },
+    v_dealers: { what: 'How many Treasuries the big bank dealers are holding. Dealers piling up bonds they can’t pass on to end buyers is bearish.',
+      care: 'Dealers with room to spare can absorb selling, which keeps markets calm.' },
+    v_trend: { what: 'Whether the 10-year interest rate is trending up or down. Rising yields mean falling bond prices, which is bearish.',
+      care: 'The 10-year yield is the anchor for most U.S. mortgage rates.' },
+    v_inflation: { what: 'How much inflation the bond market expects over the next 10 years. Rising expectations are bearish for bonds.',
+      care: 'Higher expected inflation makes lenders demand more interest to protect their money.' },
+    v_term_premium: { what: 'The extra interest investors demand to lock money into a 10-year bond. When it rises, investors are wary of lending long, which is bearish.',
+      care: 'A rising term premium pushes long-term borrowing costs up even when the Fed does nothing.' },
+    s_rates_vol: { what: 'How wildly interest rates swing from day to day. Think of it as turbulence: the higher the needle, the bumpier the ride.',
+      care: 'Bumpy rates make lenders cautious, so mortgage quotes jump around and bond funds swing more than usual.' },
+    s_term_premium: { what: 'The extra interest investors demand for holding a 10-year bond. A high premium means they want more pay for the risk of lending for a long time.',
+      care: 'A high term premium keeps long-term rates, including mortgage rates, elevated.' },
+    s_funding: { what: 'How hard it is for banks to borrow cash overnight. Like oil pressure in an engine, it shows whether money is flowing where it’s needed.',
+      care: 'Smooth funding means banks keep lending. Trouble here is often when the Federal Reserve steps in.' },
+    s_dealers: { what: 'How loaded the big bank dealers are with Treasuries. Full dealers have less room to absorb selling, which makes markets jumpy.',
+      care: 'Dealers with spare room keep trading smooth in the background.' },
+    s_auctions: { what: 'How many recent Treasury auctions drew weak demand from buyers.',
+      care: 'If the government has to pay more to borrow, rates on everyday loans often follow.' }
+  };
+  var CK_STRESS_WORD = function (p) { return p < 30 ? 'Calm' : p < 55 ? 'Moderate' : p < 75 ? 'Elevated' : 'High'; };
+  var CK_VOTE = { '1': ['▲ Bull', BULL], '0': ['• Hold', NEUT], '-1': ['▼ Bear', BEAR] };
+  var CK_ITEMS = {};
+
+  function ckBezel() {
+    return '<rect x="4" y="4" width="192" height="192" rx="18" fill="#17181B" stroke="#33353B" stroke-width="2"/>' +
+      '<circle cx="18" cy="18" r="4" fill="#33353B"/><circle cx="182" cy="18" r="4" fill="#33353B"/>' +
+      '<circle cx="18" cy="182" r="4" fill="#33353B"/><circle cx="182" cy="182" r="4" fill="#33353B"/>' +
+      '<circle cx="100" cy="100" r="90" fill="url(#p75ckBezel)"/>';
+  }
+  var CK_NEEDLE = '<path d="M100 116 L97 104 L99 32 L100 26 L101 32 L103 104 Z" fill="#F4F1EA"/><path d="M99 32 L100 26 L101 32 L101 46 L99 46 Z" fill="#FF7A3D"/>';
+  var CK_CAP = '<circle cx="100" cy="100" r="9" fill="url(#p75ckCap)" stroke="#05060A" stroke-width="1.5"/><ellipse cx="82" cy="58" rx="58" ry="30" fill="#fff" opacity=".05"/>';
+  function ckPt(r, deg) { var a = deg * Math.PI / 180; return [(100 + r * Math.sin(a)).toFixed(2), (100 - r * Math.cos(a)).toFixed(2)]; }
+  function ckArc(r, d0, d1, col, w) {
+    var a = ckPt(r, d0), b = ckPt(r, d1), large = Math.abs(d1 - d0) > 180 ? 1 : 0, sweep = d1 > d0 ? 1 : 0;
+    return '<path d="M' + a[0] + ' ' + a[1] + ' A' + r + ' ' + r + ' 0 ' + large + ' ' + sweep + ' ' + b[0] + ' ' + b[1] + '" fill="none" stroke="' + col + '" stroke-width="' + w + '"/>';
+  }
+  function ckTicks(d0, d1, step, majorEvery) {
+    var s = '';
+    for (var i = 0, d = d0; d <= d1 + .01; d += step, i++) {
+      var maj = i % majorEvery === 0, p = ckPt(maj ? 66 : 71, d), q = ckPt(78, d);
+      s += '<line x1="' + p[0] + '" y1="' + p[1] + '" x2="' + q[0] + '" y2="' + q[1] + '" stroke="#E4DED1" stroke-width="' + (maj ? 2.4 : 1.1) + '"/>';
+    }
+    return s;
+  }
+  function ckLabel(x, y, t, size, col) {
+    return '<text x="' + x + '" y="' + y + '" text-anchor="middle" font-size="' + (size || 16) + '" font-weight="800" font-family="Manrope,sans-serif" fill="' + (col || '#fff') + '">' + t + '</text>';
+  }
+
+  // Stress dial: 0 at lower-left, 100 at lower-right (270° sweep), banded like the overview gauge
+  var ckStressAng = function (v) { return -135 + Math.max(0, Math.min(100, v)) * 2.7; };
+  function ckStressDial(code, value) {
+    var bands = [[0, 30, '#2BD17E'], [30, 55, '#B8D43A'], [55, 75, '#F2A33A'], [75, 100, '#FF4D4D']], z = '';
+    bands.forEach(function (b, i) { z += ckArc(84, ckStressAng(b[0] + (i ? .5 : 0)), ckStressAng(b[1] - (i < 3 ? .5 : 0)), b[2], 5); });
+    var nums = [0, 20, 40, 60, 80, 100].map(function (n) { var p = ckPt(53, ckStressAng(n)); return ckLabel(p[0], (+p[1] + 5.5).toFixed(2), n, 15); }).join('');
+    var col = stressColor(value);
+    return '<circle cx="100" cy="100" r="84" fill="url(#p75ckDial)" stroke="#05060A" stroke-width="2"/>' + z + ckTicks(-135, 135, 13.5, 4) + nums +
+      ckLabel(100, 78, esc(code), 11, '#C2BCAF') +
+      '<rect x="70" y="126" width="60" height="30" rx="4" fill="#05060A" stroke="#44474E"/>' +
+      '<text x="100" y="148" text-anchor="middle" font-size="21" font-weight="700" font-family="ui-monospace,Menlo,Consolas,monospace" fill="' + col + '">' + Math.round(value) + '</text>';
+  }
+  // Vote dial (like a vertical-speed indicator): 0 at 9 o'clock, +1 up into the blue, −1 down into the red
+  function ckVoteDial() {
+    return '<circle cx="100" cy="100" r="84" fill="url(#p75ckDial)" stroke="#05060A" stroke-width="2"/>' +
+      ckArc(84, -66, 80, BULL, 6) + ckArc(84, -114, -66, '#6B6F76', 6) + ckArc(84, -114, -260, BEAR, 6) +
+      ckTicks(-260, 80, 17, 5) +
+      ckLabel(44, 106, '0', 18) + ckLabel(111, 54, '+1', 18) + ckLabel(111, 160, '−1', 18) +
+      ckLabel(130, 79, 'BULL ▲', 13, BULL) + ckLabel(130, 131, 'BEAR ▼', 13, BEAR);
+  }
+  function ckAttitude() {
+    return '<g clip-path="url(#p75ckClip)"><g class="ck-hz">' +
+      '<rect x="-60" y="-220" width="320" height="320" fill="url(#p75ckSky)"/><rect x="-60" y="100" width="320" height="320" fill="url(#p75ckGround)"/>' +
+      '<line x1="-60" y1="100" x2="260" y2="100" stroke="#fff" stroke-width="2.5"/>' +
+      '<path d="M85 80H115M75 60H125M85 120H115M75 140H125" stroke="#fff" stroke-width="2"/>' +
+      ckLabel(146, 64, '+80', 13) + ckLabel(136, 84, '+40', 13) + ckLabel(136, 124, '−40', 13) + ckLabel(146, 144, '−80', 13) +
+      ckLabel(100, 42, 'BULL', 16) + ckLabel(100, 170, 'BEAR', 16) +
+      '</g></g><circle cx="100" cy="100" r="80" fill="none" stroke="#05060A" stroke-width="3"/>' +
+      '<path d="M100 22 L94 33 H106 Z" fill="#FF9F1C"/>' +
+      '<path d="M56 100 H84 L91 109M144 100 H116 L109 109" fill="none" stroke="#FF9F1C" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<circle cx="100" cy="100" r="4.5" fill="#FF9F1C"/><ellipse cx="82" cy="58" rx="58" ry="30" fill="#fff" opacity=".06"/>';
+  }
+  var CK_DEFS = '<svg width="0" height="0" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"><defs>' +
+    '<radialGradient id="p75ckDial" cx="50%" cy="40%" r="65%"><stop offset="0%" stop-color="#202328"/><stop offset="100%" stop-color="#0B0C0F"/></radialGradient>' +
+    '<linearGradient id="p75ckBezel" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4A4D55"/><stop offset="50%" stop-color="#2A2C32"/><stop offset="100%" stop-color="#15161A"/></linearGradient>' +
+    '<radialGradient id="p75ckCap" cx="40%" cy="35%" r="70%"><stop offset="0%" stop-color="#8A8F98"/><stop offset="100%" stop-color="#2A2C32"/></radialGradient>' +
+    '<clipPath id="p75ckClip"><circle cx="100" cy="100" r="80"/></clipPath>' +
+    '<linearGradient id="p75ckSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1B4F86"/><stop offset="100%" stop-color="#3D8BD1"/></linearGradient>' +
+    '<linearGradient id="p75ckGround" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7A4E26"/><stop offset="100%" stop-color="#4A2E14"/></linearGradient>' +
+    '</defs></svg>';
+
+  function ckButton(key, aria, svgInner, mover, label, extraClass) {
+    return '<button type="button" class="ck-i' + (extraClass ? ' ' + extraClass : '') + '" data-ck="' + key + '" aria-pressed="false" aria-label="' + esc(aria).replace(/"/g, '&quot;') + '">' +
+      '<svg viewBox="0 0 200 200" aria-hidden="true">' + ckBezel() + svgInner + (mover === 'needle' ? '<g class="ck-n">' + CK_NEEDLE + '</g>' + CK_CAP : '') + '</svg>' + label + '</button>';
+  }
+  function signedInt(n) { return (n > 0 ? '+' : n < 0 ? '−' : '') + Math.abs(n); }
+
+  function cockpit(b, s) {
+    CK_ITEMS = {};
+    var votes = b.votes || [], comps = s.components || [];
+    var nb = 0, nr = 0, nh = 0, bulls = [], bears = [];
+    votes.forEach(function (v) {
+      if (v.vote > 0) { nb++; bulls.push(v.name.toLowerCase()); } else if (v.vote < 0) { nr++; bears.push(v.name.toLowerCase()); } else nh++;
+    });
+    var list = function (a) { return a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1]; };
+    var score = b.score != null ? b.score : 0, word = esc(b.label || '');
+    var line = votes.length ? nh + ' of ' + votes.length + ' signals say Hold. ' +
+      (nr ? nr + ' say Bear: ' + list(bears) + '. ' : 'None say Bear. ') + (nb ? nb + ' say Bull: ' + list(bulls) + '. ' : 'None say Bull. ') +
+      'That adds up to a score of ' + signedInt(score) + (b.label ? ', ' + b.label.toLowerCase() : '') + '.' : '';
+    var bc = bullColor(score);
+
+    CK_ITEMS.bull = { mover: 'horizon', target: score, name: 'Bull / bear score', sub: 'Now ' + signedInt(score) + (b.label ? ' · ' + b.label.toLowerCase() : ''),
+      what: CK_TEXT.bull.what, now: line, care: CK_TEXT.bull.care };
+    var h = CK_DEFS + '<div class="ck"><div class="ck-main">' +
+      '<div class="ck-h">Bull / bear vote</div><div class="ck-bb">' +
+      ckButton('bull', 'Bull / bear score ' + signedInt(score) + ', ' + (b.label || '') + '. Show what it means.', ckAttitude(), 'horizon',
+        '<div class="ck-nm">Bull / bear score</div><div class="ck-v"><b style="color:' + bc + '">' + signedInt(score) + '</b><span class="ck-chip" style="background:' + bc + '">' + word + '</span></div>', 'ck-att') +
+      '<div class="ck-count"><div class="ck-nm" style="margin:0">Vote count</div><div class="ck-tally">' +
+        '<div style="background:' + BULL + '1f;border-color:' + BULL + '"><b style="color:' + BULL + '">' + nb + '</b><span style="color:' + BULL + '">▲ BULL</span></div>' +
+        '<div style="background:#9AA0A61a;border-color:' + NEUT + '"><b style="color:#E4DED1">' + nh + '</b><span style="color:#E4DED1">• HOLD</span></div>' +
+        '<div style="background:' + BEAR + '1f;border-color:' + BEAR + '"><b style="color:' + BEAR + '">' + nr + '</b><span style="color:' + BEAR + '">▼ BEAR</span></div>' +
+      '</div><p class="ck-line">' + esc(line) + '</p>' +
+      '<div class="ck-how"><span class="k">How the vote works</span><p>Each signal casts one vote: <b style="color:' + BULL + '">Bull +1</b>, <b style="color:#E4DED1">Hold 0</b> or <b style="color:' + BEAR + '">Bear −1</b>. The score is the average, times 100.</p>' +
+        '<p>Bull means bond prices up and interest rates down. Bear means the opposite.</p></div></div></div>' +
+      '<div class="ck-h2">The ' + (votes.length === 6 ? 'six' : votes.length) + ' voters · tap any instrument</div><div class="ck-grid">';
+
+    votes.forEach(function (v) {
+      var key = 'v_' + v.key, t = CK_TEXT[key] || {}, c = CK_VOTE[String(Math.max(-1, Math.min(1, v.vote)))];
+      var verdict = v.vote > 0 ? ' That counts as a Bull vote.' : v.vote < 0 ? ' That counts as a Bear vote.' : ' That’s not a big enough move to count either way, so it votes Hold.';
+      CK_ITEMS[key] = { mover: 'vote', target: v.vote * 60, name: v.name, sub: 'Votes ' + c[0].slice(2) + ' (' + signedInt(v.vote) + ')',
+        what: t.what || '', now: (v.why || '') + verdict, care: t.care || '' };
+      h += ckButton(key, v.name + ': votes ' + c[0].slice(2) + '. Show what it means.', ckVoteDial(), 'needle',
+        '<div class="ck-nm">' + esc(v.name) + '</div><div class="ck-v"><b style="color:' + c[1] + '">' + signedInt(v.vote) + '</b><span class="ck-chip" style="background:' + c[1] + '">' + c[0] + '</span></div>');
+    });
+
+    var sc = s.score != null ? Math.round(s.score) : 0, scol = stressColor(sc);
+    var top = comps.slice().sort(function (x, y) { return y.pct * y.weight - x.pct * x.weight; }).slice(0, 2).map(function (c) { return c.name.toLowerCase(); });
+    CK_ITEMS.stress = { mover: 'stress', target: sc, name: 'Overall stress', sub: 'Now ' + sc + '/100 · ' + (s.label || CK_STRESS_WORD(sc)).toLowerCase(),
+      what: CK_TEXT.stress.what, now: sc + ' out of 100, which is ' + (s.label || CK_STRESS_WORD(sc)).toLowerCase() + '.' + (top.length ? ' The biggest contributors right now are ' + list(top) + '.' : ''),
+      care: CK_TEXT.stress.care };
+    h += '</div><div class="ck-h" style="margin-top:8px">Stress monitor</div><div class="ck-grid">' +
+      ckButton('stress', 'Overall stress ' + sc + ' out of 100, ' + (s.label || '') + '. Show what it means.', ckStressDial('MASTER', sc), 'needle',
+        '<div class="ck-nm">Overall stress<span class="ck-lamp" style="background:' + scol + ';box-shadow:0 0 9px ' + scol + '"></span></div>' +
+        '<div class="ck-v"><b style="color:' + scol + '">' + sc + '</b><small>/100</small><span class="ck-chip" style="background:' + scol + '">' + esc(s.label || CK_STRESS_WORD(sc)) + '</span></div><div class="ck-w">All readings, weighted</div>');
+    comps.forEach(function (c) {
+      var key = 's_' + c.key, t = CK_TEXT[key] || {}, p = Math.round(c.pct), col = stressColor(p), w = CK_STRESS_WORD(p);
+      CK_ITEMS[key] = { mover: 'stress', target: p, name: c.name, sub: 'Now ' + p + '/100 · ' + w.toLowerCase() + ' · weight ' + c.weight + '%',
+        what: t.what || '', now: (c.why || '') + ' That ranks ' + p + ' out of 100 against the past year.', care: t.care || '' };
+      var code = c.name.toUpperCase().replace('VOLATILITY', 'VOL').replace('PRESSURE', '').replace('INVENTORY', '').trim();
+      h += ckButton(key, c.name + ' ' + p + ' out of 100, ' + w + '. Show what it means.', ckStressDial(code, p), 'needle',
+        '<div class="ck-nm">' + esc(c.name) + '<span class="ck-lamp" style="background:' + col + ';box-shadow:0 0 9px ' + col + '"></span></div>' +
+        '<div class="ck-v"><b style="color:' + col + '">' + p + '</b><small>/100</small><span class="ck-chip" style="background:' + col + '">' + w + '</span></div><div class="ck-w">Weight ' + c.weight + '%</div>');
+    });
+    h += '</div><div class="note">' + esc(s.note || '') + '</div></div>' +
+      '<aside class="ck-mfdw" aria-live="polite"><div class="ck-mfd" data-ck-mfd></div></aside></div>';
+    return h;
+  }
+
+  function ckApply(btn, it, val) {
+    if (it.mover === 'horizon') { var hz = btn.querySelector('.ck-hz'); if (hz) hz.style.transform = 'translateY(' + (val * 0.5).toFixed(1) + 'px)'; return; }
+    var n = btn.querySelector('.ck-n'); if (!n) return;
+    var deg = it.mover === 'vote' ? -90 + val * 1.7 : ckStressAng(val);
+    n.style.transformOrigin = '100px 100px'; n.style.transform = 'rotate(' + deg.toFixed(1) + 'deg)';
+  }
+  function ckScreen(box, it, key) {
+    if (!it) {
+      box.innerHTML = '<div class="tp"><span>Info screen</span><span>Standby</span></div><div class="tt" style="font-size:19px">Select an instrument</div>' +
+        '<div class="x">Tap any gauge. Its needle swings to today’s reading, and this screen explains what it measures in plain words.</div>';
+      return;
+    }
+    var gl = /\bbp\b/.test(it.now) ? '<div class="gl">bp = basis point, one hundredth of a percentage point (0.01%).</div>' : '';
+    box.innerHTML = '<div class="tp"><span>Info screen</span><span>' + esc(it.name) + '</span></div>' +
+      '<div><div class="tt">' + esc(it.name) + '</div><div class="st">' + esc(it.sub) + '</div></div>' +
+      '<div><div class="k">WHAT IT MEANS</div><div class="x">' + esc(it.what) + '</div></div>' +
+      '<div><div class="k">RIGHT NOW</div><div class="x">' + esc(it.now) + '</div>' + gl + '</div>' +
+      '<div><div class="k">WHY YOU MIGHT CARE</div><div class="x">' + esc(it.care) + '</div></div>' +
+      '<div style="display:flex;flex-wrap:wrap;gap:10px"><button type="button" data-ck-replay="' + key + '">REPLAY NEEDLE</button><button type="button" class="bk" data-ck-back="' + key + '">↑ BACK TO THE PANEL</button></div>';
+  }
+  function wireCockpit(host) {
+    var box = host.querySelector('[data-ck-mfd]'); if (!box) return;
+    var btns = host.querySelectorAll('.ck-i[data-ck]');
+    ckScreen(box, null);
+    btns.forEach(function (bt) { var it = CK_ITEMS[bt.getAttribute('data-ck')]; if (it) ckApply(bt, it, 0); });
+    setTimeout(function () { btns.forEach(function (bt) { var it = CK_ITEMS[bt.getAttribute('data-ck')]; if (it) ckApply(bt, it, it.target); }); }, 250);   // power-on sweep
+    if (host.getAttribute('data-ck-wired')) return;   // the page redraws on every section switch; listen only once
+    host.setAttribute('data-ck-wired', '1');
+    function play(key, scroll) {
+      var box = host.querySelector('[data-ck-mfd]'), btns = host.querySelectorAll('.ck-i[data-ck]');
+      var it = CK_ITEMS[key], bt = host.querySelector('.ck-i[data-ck="' + key + '"]'); if (!it || !bt || !box) return;
+      btns.forEach(function (x) { x.setAttribute('aria-pressed', x === bt ? 'true' : 'false'); });
+      ckScreen(box, it, key);
+      var mv = bt.querySelector('.ck-n, .ck-hz');
+      if (mv) mv.classList.add('ck-snap');
+      ckApply(bt, it, 0);
+      if (mv) void mv.getBoundingClientRect();
+      requestAnimationFrame(function () { if (mv) mv.classList.remove('ck-snap'); requestAnimationFrame(function () { ckApply(bt, it, it.target); }); });
+      if (scroll && window.innerWidth <= 880) box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    host.addEventListener('click', function (e) {
+      var r = e.target.closest('[data-ck-replay]'); if (r) { play(r.getAttribute('data-ck-replay'), false); return; }
+      var k = e.target.closest('[data-ck-back]');
+      if (k) { var t = host.querySelector('.ck-i[data-ck="' + k.getAttribute('data-ck-back') + '"]'); if (t) { t.scrollIntoView({ behavior: 'smooth', block: 'center' }); t.focus({ preventScroll: true }); } return; }
+      var bt = e.target.closest('.ck-i[data-ck]'); if (bt) play(bt.getAttribute('data-ck'), true);
+    });
+  }
+
   // ---------- Page ----------
   function page(j) {
     var g = j.gauges || {}, b = g.bull || {}, s = g.stress || {};
@@ -262,18 +528,9 @@
       '</div>';
 
     var head = h; h = '';
-    // why
-    var icon = function (v) { var c = v > 0 ? BULL : v < 0 ? BEAR : NEUT; return '<span class="ic" style="background:' + c + '">' + (v > 0 ? '▲' : v < 0 ? '▼' : '•') + '</span>'; };
-    h += '<h2>Why the needles are where they are</h2><p class="sub">Every signal is shown, with the rule it follows. Nothing is hidden in a black box.</p><div class="why">' +
-      '<div class="card"><h3>Bull / Bear votes</h3>' + (b.votes || []).map(function (v) {
-        return '<div class="row">' + icon(v.vote) + '<div><div class="nm"><span>' + esc(v.name) + '</span><span style="color:' + (v.vote > 0 ? BULL : v.vote < 0 ? BEAR : NEUT) + '">' +
-          (v.vote > 0 ? 'Bullish' : v.vote < 0 ? 'Bearish' : 'Neutral') + '</span></div><div class="tx">' + esc(v.why) + '</div></div></div>';
-      }).join('') + '<div class="note">' + esc(b.note || '') + '</div></div>' +
-      '<div class="card"><h3>Stress readings</h3>' + (s.components || []).map(function (c) {
-        return '<div class="row" style="grid-template-columns:1fr"><div><div class="nm"><span>' + esc(c.name) + ' <span style="color:var(--muted);font-weight:500;font-size:12px">· weight ' + c.weight + '%</span></span>' +
-          '<span class="num" style="color:' + stressColor(c.pct) + '">' + Math.round(c.pct) + '</span></div>' +
-          '<div class="bar"><i style="width:' + Math.max(3, c.pct) + '%;background:' + stressColor(c.pct) + '"></i></div><div class="tx">' + esc(c.why) + '</div></div></div>';
-      }).join('') + '<div class="note">' + esc(s.note || '') + '</div></div></div>';
+    // why: the cockpit, one instrument per signal (see Cockpit above)
+    h += '<h2>Why the needles are where they are</h2><p class="sub">Every signal behind the two gauges, as its own instrument. Tap one to see what it measures, what it says right now and why it matters. Nothing is hidden in a black box.</p>' +
+      cockpit(b, s);
 
     var SEC = { why: h }; h = '';
     // auctions
@@ -430,7 +687,7 @@
       });
     });
   }
-  function draw(host, j) { host.innerHTML = page(j); wireSparks(host); animate(host); wire(host); }
+  function draw(host, j) { host.innerHTML = page(j); wireSparks(host); animate(host); wire(host); wireCockpit(host); }
   window.addEventListener('hashchange', function () {
     var host = document.querySelector('.p75pulse'); if (host && cache) draw(host, cache);
   });
