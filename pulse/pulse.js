@@ -682,6 +682,12 @@
     host.innerHTML = '<div class="wrap"><div class="eyebrow">Pulse</div><h1>The bond market’s vital signs</h1><div class="load">Taking the market’s pulse…</div></div>';
     var blocks = main.querySelector('.page__blocks');
     (blocks || main).appendChild(host);
+    // The Hostinger page keeps an empty section (it only holds the embed); left alone it shows as a tall blank band
+    // above Pulse. Hide any section with nothing visible in it; clear() puts them back.
+    if (blocks) [].forEach.call(blocks.children, function (sec) {
+      if (sec.tagName !== 'SECTION' || (sec.innerText || '').trim() || sec.querySelector('img, iframe, video, canvas, svg, form')) return;
+      sec.setAttribute('data-p75pulse-hid', '1'); sec.style.display = 'none';
+    });
     load(function (j) {
       if (!document.body.contains(host)) return;
       if (!j || !j.gauges) { host.querySelector('.load').textContent = 'Pulse data is unavailable right now. Please try again shortly.'; return; }
@@ -700,7 +706,10 @@
   window.addEventListener('hashchange', function () {
     var host = document.querySelector('.p75pulse'); if (host && cache) draw(host, cache);
   });
-  function clear() { var h = document.querySelector('.p75pulse'); if (h) h.remove(); }
+  function clear() {
+    var h = document.querySelector('.p75pulse'); if (h) h.remove();
+    document.querySelectorAll('[data-p75pulse-hid]').forEach(function (s) { s.style.display = ''; s.removeAttribute('data-p75pulse-hid'); });
+  }
 
   window.P75PULSE = { render: render, clear: clear };
 })();
