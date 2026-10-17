@@ -988,6 +988,11 @@
       D + '>.p75s-li{order:6;height:auto!important;align-self:center!important;margin-left:0!important}' +
       D + '>.p75tools-li .item-content{display:inline-flex!important;align-items:center;height:40px;padding:0 18px!important;border-radius:20px;background:#C9A227!important;color:#111214!important;font-weight:800!important;font-size:15px!important;text-decoration:none!important}' +
       D + '>.p75tools-li .item-content:hover{background:#E0B53A!important;color:#111214!important}' +
+      // the general menu-link rules above (TOP ... .item-content, and its :hover) are more specific than the two Tools
+      // rules, so they won: white text on the gold button, and gold-on-gold (invisible) text on hover. Match them and add one class.
+      D + '>.p75tools-li.block-header-item>.block-header-item__label>.item-content-wrapper>.item-content,' +
+      D + '>.p75tools-li.block-header-item>.block-header-item__label>.item-content-wrapper>.item-content:hover,' +
+      D + '>.p75tools-li.block-header-item>.block-header-item__label>.item-content-wrapper>.item-content:focus-visible{color:#111214!important}' +
       D + ' .p75s-btn{height:40px;padding:0 16px;font-size:15px;font-weight:700;border-color:rgba(201,162,39,.8)}' +
       D + '>.p75start-li{order:-1;list-style:none}' +
       D + '>.p75start-li a{display:inline-flex;align-items:center;height:32px;padding:0 12px;border:1px dashed rgba(201,162,39,.6);border-radius:99px;color:#C9A227!important;font:700 13.5px Manrope,system-ui,sans-serif;text-decoration:none!important;white-space:nowrap}' +
