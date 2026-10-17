@@ -128,7 +128,7 @@
     '.p75pulse .ck-how{padding:12px 14px;border-radius:10px;background:#1E2024;font-size:15px;line-height:1.6;color:var(--soft)}' +
     '.p75pulse .ck-how p{margin:0}.p75pulse .ck-how p + p{margin-top:6px}' +
     '.p75pulse .ck-how .k{display:block;color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}' +
-    '.p75pulse .ck-mfdw{flex:1 1 300px;min-width:0;position:sticky;top:16px;padding:12px;border-radius:16px;background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold)}' +
+    '.p75pulse .ck-mfdw{flex:1 1 300px;min-width:0;position:sticky;top:var(--ck-top,16px);max-height:calc(100vh - var(--ck-top,16px) - 16px);overflow-y:auto;padding:12px;border-radius:16px;background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold)}' +
     '.p75pulse .ck-mfd{display:flex;flex-direction:column;gap:16px;min-height:380px;padding:20px;border-radius:10px;background:#050807;border:2px solid #0F1512;' +
       'box-shadow:inset 0 0 40px rgba(60,220,120,.06);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#7CE0A0}' +
     '.p75pulse .ck-mfd .tp{display:flex;justify-content:space-between;gap:8px;font-size:11px;letter-spacing:.14em;color:#4E9C6C;text-transform:uppercase}' +
@@ -143,7 +143,7 @@
     '.p75pulse .ck-n,.p75pulse .ck-hz{transition:transform 1.8s cubic-bezier(.25,1.4,.5,1)}' +
     '.p75pulse .ck-snap{transition:none!important}' +
     '@media (prefers-reduced-motion:reduce){.p75pulse .ck-n,.p75pulse .ck-hz{transition:none}}' +
-    '@media (max-width:880px){.p75pulse .ck-mfdw{position:static}.p75pulse .ck-mfd{min-height:0}.p75pulse .ck-mfd .bk{display:inline-block}}' +
+    '@media (max-width:880px){.p75pulse .ck-mfdw{position:static;max-height:none;overflow:visible}.p75pulse .ck-mfd{min-height:0}.p75pulse .ck-mfd .bk{display:inline-block}}' +
     '@media (max-width:560px){.p75pulse .ck-main{padding:14px}.p75pulse .ck-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}' +
       '.p75pulse .ck-v b{font-size:26px}.p75pulse .ck-nm{font-size:12.5px}.p75pulse .ck-att{flex-basis:100%}}' +
     '.p75pulse .foot{color:#77736a;font-size:12px;line-height:1.6;margin-top:48px;border-top:1px solid var(--line);padding-top:18px}' +
@@ -479,10 +479,16 @@
     var box = host.querySelector('[data-ck-mfd]'); if (!box) return;
     var btns = host.querySelectorAll('.ck-i[data-ck]');
     ckScreen(box, null);
+    var ckTop = function () {   // keep the sticky info screen clear of the site's sticky header, whatever its height
+      var tb = document.querySelector('.top-blocks--sticky');
+      host.style.setProperty('--ck-top', ((tb ? tb.getBoundingClientRect().height : 0) + 14) + 'px');
+    };
+    ckTop();
     btns.forEach(function (bt) { var it = CK_ITEMS[bt.getAttribute('data-ck')]; if (it) ckApply(bt, it, 0); });
     setTimeout(function () { btns.forEach(function (bt) { var it = CK_ITEMS[bt.getAttribute('data-ck')]; if (it) ckApply(bt, it, it.target); }); }, 250);   // power-on sweep
     if (host.getAttribute('data-ck-wired')) return;   // the page redraws on every section switch; listen only once
     host.setAttribute('data-ck-wired', '1');
+    window.addEventListener('resize', ckTop);
     function play(key, scroll) {
       var box = host.querySelector('[data-ck-mfd]'), btns = host.querySelectorAll('.ck-i[data-ck]');
       var it = CK_ITEMS[key], bt = host.querySelector('.ck-i[data-ck="' + key + '"]'); if (!it || !bt || !box) return;
