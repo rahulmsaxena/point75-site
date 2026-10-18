@@ -1135,6 +1135,18 @@
     // the rest of the site: cream text tones, Manrope + Hedvig type, one label style, and a clear search bar.
     if (path === '/news') polishNews();
 
+    // Homepage (/): Pulse strip, the salon-wall gallery (one painting at a time on phones) and Explore,
+    // drawn by home/home.js on top of the Journal cards decorated above
+    if (path === '/') {
+      if (window.P75HOME) window.P75HOME.render();
+      else if (!document.getElementById('p75home-js')) {
+        var hm = document.createElement('script'); hm.id = 'p75home-js';
+        hm.src = 'https://rahulmsaxena.github.io/point75-site/home/home.js?v=' + Math.floor(Date.now() / 36e5);
+        hm.onload = function () { update(); };
+        document.body.appendChild(hm);
+      }
+    } else if (window.P75HOME) window.P75HOME.clear();
+
     // Start here (/start-here) is drawn by starthere/starthere.js
     if (path === '/start-here') {
       if (window.P75START) window.P75START.render();
