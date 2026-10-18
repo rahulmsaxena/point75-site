@@ -91,7 +91,7 @@
       '.p75top>.p75ps{flex:1.5 1 0;width:auto;margin:0;max-width:none}' +
       '.p75top>.p75cta{flex:1 1 0;width:auto;margin:0!important;max-width:none}' +
       // Explore, compact
-      L + ' .p75ex{margin-top:18px}' + L + ' .p75ex .eb{margin-bottom:10px}' +
+      L + ' .p75ex{margin-top:10px}' + L + ' .p75ex .eb{margin-bottom:10px}' +
       L + ' .p75ex a{padding:14px 18px;gap:4px}' + L + ' .p75ex a b{font-size:20px}' + L + ' .p75ex a b svg{width:26px;height:26px}' + L + ' .p75ex a span{font-size:14px}' + L + ' .p75ex a em{padding-top:4px}' +
     '}' +
     // The site builder slides each card in as it scrolls into view. On a sideways carousel that fires on every
