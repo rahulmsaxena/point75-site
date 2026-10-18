@@ -2,6 +2,14 @@
 
 **The mantra:** show as much as possible in a single view, without scrolling. Every pixel earns its place. No dead space, no capped text widths, nothing "just sitting there".
 
+**First principle: crisp, attractive, effortless.** Before building anything, ask how to make the page more crisp, eye-catching and less scrollable, so the reader never spends effort working out what they are looking at and their attention never drifts. In practice:
+- The number and the picture speak first; words only where they add meaning. Cut any sentence that repeats what a heading, tab name, label or colour already says.
+- One idea per screen. If a section scrolls, split it (tabs, folds) rather than shrinking the text.
+- Colour carries meaning (Blue good, Red bad, gold for "look here") and key words glow in their colour.
+- Every card and dial is itself the link; no "Check the ..." or "Read more" lines.
+- Bright, readable text (no faint grey body copy); generous type for numbers.
+- Propose these improvements unprompted, not only when asked.
+
 Reference implementation: the Pulse page (`pulse/pulse.js`). Header rules are already applied to every page module.
 
 ## 1. Header (every page)
