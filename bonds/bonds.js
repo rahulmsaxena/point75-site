@@ -297,7 +297,7 @@
 
   function page(j) {
     var asof = day(j.asof);
-    return '<div class="wrap"><div class="eyebrow">Bonds</div><h1>Find a bond</h1>' +
+    return '<div class="wrap"><div class="eyebrow">Bonds</div><h1>Find a Bond</h1>' +
       '<p class="lede">Search any U.S. Treasury by CUSIP or in plain words. See its yield, what it’s worth, how it has performed and how much it moves when rates change.</p>' +
       '<div class="asof">Yield curve as of <b>' + fmtD(asof) + '</b> · ' + j.count + ' Treasuries · updated every weekday</div>' +
       '<div class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>' +
@@ -350,7 +350,7 @@
     if (document.querySelector('.p75bonds')) return;
     once();
     var host = document.createElement('div'); host.className = 'p75bonds';
-    host.innerHTML = '<div class="wrap"><div class="eyebrow">Bonds</div><h1>Find a bond</h1><div class="load">Loading today’s Treasuries…</div></div>';
+    host.innerHTML = '<div class="wrap"><div class="eyebrow">Bonds</div><h1>Find a Bond</h1><div class="load">Loading today’s Treasuries…</div></div>';
     var blocks = main.querySelector('.page__blocks'); (blocks || main).appendChild(host);
     load(function (j) {
       if (!document.body.contains(host)) return;

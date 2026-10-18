@@ -63,7 +63,7 @@
   function badge(key, label) { return '<span class="p75lvl p75lvl--' + key + '">' + label + '</span>'; }
 
   function page() {
-    return '<div class="wrap"><div class="eyebrow">Start here</div><h1>Where would you like to begin?</h1>' +
+    return '<div class="wrap"><div class="eyebrow">Start here</div><h1>Where Would You Like to Begin?</h1>' +
       '<p class="lede">Point75 covers bonds from the very first idea to the plumbing of the market. Pick the path that sounds like you. Each one ends somewhere useful.</p>' +
       '<div class="paths">' + PATHS.map(function (p) {
         return '<section class="path" aria-label="' + p[1] + '"><span class="tag">' + p[0] + '</span><h2>' + p[1] + '</h2><p class="who">' + p[2] + '</p><ol>' +

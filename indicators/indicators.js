@@ -202,7 +202,7 @@
   function page(d) {
     var by = {}; d.indicators.forEach(function (i) { by[i.id] = i; });
     var asof = new Date(d.generated_at).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' });
-    var h = '<div class="wrap"><div class="eyebrow">Kinetics</div><h1>Economic indicators</h1>' +
+    var h = '<div class="wrap"><div class="eyebrow">Kinetics</div><h1>Economic Indicators</h1>' +
       '<p class="lede">The numbers that move bonds, in one place: inflation, growth, jobs, rates and housing starts. Tap a category for its indicators, then tap any indicator for its full history.</p>' +
       '<div class="asof">Updated <b>' + asof + '</b> · refreshed every weekday from FRED</div>';
     h += '<div class="tiles">' + d.indicators.filter(function (i) { return i.headline && i.id !== 'fedfunds' && i.id !== 't10'; }).map(function (i) {
@@ -415,7 +415,7 @@
     if (document.querySelector('.p75ind')) return;
     once();
     var host = document.createElement('div'); host.className = 'p75ind';
-    host.innerHTML = '<div class="wrap"><div class="eyebrow">Kinetics</div><h1>Economic indicators</h1><div class="load">Loading the latest readings…</div></div>';
+    host.innerHTML = '<div class="wrap"><div class="eyebrow">Kinetics</div><h1>Economic Indicators</h1><div class="load">Loading the latest readings…</div></div>';
     var blocks = main.querySelector('.page__blocks');
     (blocks || main).appendChild(host);
     load(function (j) {

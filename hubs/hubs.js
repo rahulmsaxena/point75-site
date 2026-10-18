@@ -22,7 +22,7 @@
 
   // Page heading and introduction per hub
   var HEAD = {
-    '/kinetics': { eyebrow: 'Kinetics', title: 'The forces moving the bond market', lede: 'Four ways in: the market’s pulse, the state of credit, the day’s news and the economic numbers underneath. Pick where you’d like to start.' },
+    '/kinetics': { eyebrow: 'Kinetics', title: 'The Forces Moving the Bond Market', lede: 'Four ways in: the market’s pulse, the state of credit, the day’s news and the economic numbers underneath. Pick where you’d like to start.' },
     '/bond-summary': { eyebrow: 'Kinetics', title: 'Bond Summary', lede: 'How credit markets are holding up. Start with the daily summary, or go straight to the part you care about.' }
   };
 

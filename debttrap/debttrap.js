@@ -215,7 +215,7 @@
     CHARTS = [];
     var w = j.wall, rt = j.rates, it = j.interest, ow = j.owners, R = {};
     (j.readings || []).forEach(function (r) { R[r.key] = r; });
-    var h = '<div class="wrap"><div class="eyebrow"><a href="/pulse">Pulse</a> · Debt Trap</div><h1>The debt trap</h1>' +
+    var h = '<div class="wrap"><div class="eyebrow"><a href="/pulse">Pulse</a> · Debt Trap</div><h1>The Debt Trap</h1>' +
       '<p class="lede">America borrows short, rolls its debt constantly, and pays whatever the market charges each time. ' +
       'Three questions decide whether that becomes a trap: how much has to be refinanced, what it costs, and who is still willing to lend.</p>' +
       '<div class="asof">Updated <b>' + new Date(j.generated_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) +
@@ -322,7 +322,7 @@
     if (document.querySelector('.p75debt')) return;
     once();
     var host = document.createElement('div'); host.className = 'p75debt';
-    host.innerHTML = '<div class="wrap"><div class="eyebrow">Pulse · Debt Trap</div><h1>The debt trap</h1><div class="load">Adding up the debt…</div></div>';
+    host.innerHTML = '<div class="wrap"><div class="eyebrow">Pulse · Debt Trap</div><h1>The Debt Trap</h1><div class="load">Adding up the debt…</div></div>';
     var blocks = main.querySelector('.page__blocks');
     (blocks || main).appendChild(host);
     load(function (j) {

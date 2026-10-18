@@ -450,7 +450,7 @@
     new Date().getFullYear() + ' Rahul Saxena. All rights reserved.</p>'; };
 
   function landing() {
-    return '<div class="wrap text"><div class="eyebrow">Education</div><h1>Learn the language of bonds</h1>' +
+    return '<div class="wrap text"><div class="eyebrow">Education</div><h1>Learn the Language of Bonds</h1>' +
       '<p class="lead">Short, plain-English guides to the ideas behind the essays, so you can follow the argument without a finance degree.</p>' +
       '<div class="cards">' +
         '<a class="card" href="/bond-introduction"><div class="eyebrow">Start here</div><h3>Introduction: Bonds, Futures and Options</h3>' +
