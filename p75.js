@@ -991,7 +991,6 @@
       TOP + '.item-content-wrapper--active>.item-content{text-decoration:underline!important;text-decoration-color:#C9A227!important;text-decoration-thickness:2px!important;text-underline-offset:9px!important}' +
       TOP + '.item-content-wrapper>.item-content:hover{color:#E0B53A!important}' +
       D + ' .item-content__icon-container svg,' + D + ' .item-content__icon-container svg *{fill:#C9A227!important;color:#C9A227!important}' +
-      D + '>.p75tools-li{order:5}' +
       D + '>.p75s-li{order:6;height:auto!important;align-self:center!important;margin-left:0!important}' +
       D + '>.p75tools-li .item-content{display:inline-flex!important;align-items:center;height:40px;padding:0 18px!important;border-radius:20px;background:#C9A227!important;color:#111214!important;font-weight:800!important;font-size:15px!important;text-decoration:none!important}' +
       D + '>.p75tools-li .item-content:hover{background:#E0B53A!important;color:#111214!important}' +
