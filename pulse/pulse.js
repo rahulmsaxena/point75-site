@@ -224,6 +224,12 @@
     '.p75pulse .auc-up .ui{color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.04em;white-space:nowrap}' +
     '.p75pulse .ac-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}' +
     '.p75pulse .ac{display:flex;flex-direction:column;gap:4px;padding:12px 14px 10px;border-radius:14px;background:#17181B;border:1px solid var(--line);border-top:3px solid}' +
+    '.p75pulse .ck-i .am svg{width:100%;max-width:96px;margin:0 auto}.p75pulse .ck-i.auc-meter > svg{width:170px;max-width:none;margin:0}' +
+    '.p75pulse .auc .ac-grid{grid-template-columns:repeat(auto-fill,minmax(min(270px,100%),1fr));gap:10px}' +
+    '.p75pulse .ck-i.ac{border-width:1px;border-top-width:3px;border-color:var(--line);box-shadow:none;padding:12px 14px 10px}' +
+    '.p75pulse .ck-i.ac[aria-pressed="true"]{border-color:#F2D27A}' +
+    '.p75pulse .ck-i.auc-meter{flex-direction:row;flex-wrap:wrap;align-items:center;gap:18px;padding:12px 14px;border-width:1px;border-color:var(--line);box-shadow:none}' +
+    '.p75pulse .ck-i.auc-meter[aria-pressed="true"]{border-color:#F2D27A}.p75pulse .ck-i.auc-meter .ck-tap{margin-top:4px}' +
     '.p75pulse .ac-h{display:flex;align-items:center;gap:8px}' +
     '.p75pulse .ac-t{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:24px;line-height:1;color:#fff}' +
     '.p75pulse .ac-r{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}' +
@@ -233,7 +239,7 @@
     '.p75pulse .am{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1px}' +
     '.p75pulse .am svg{display:block;width:100%;max-width:104px;height:auto;overflow:visible}' +
     '.p75pulse .am .mv{font-size:17px;font-weight:800;line-height:1.1;margin-top:2px;font-variant-numeric:tabular-nums}' +
-    '.p75pulse .am .mn{font-size:11.5px;font-weight:700;color:var(--cream);line-height:1.25}' +
+    '.p75pulse .am .mn{font-size:11.5px;font-weight:700;color:var(--cream);line-height:1.25;white-space:nowrap}' +
     '.p75pulse .am .ma{font-size:11px;color:#F2D27A;font-variant-numeric:tabular-nums}' +
     '.p75pulse .ck-body.go .p75f{stroke-dashoffset:0}' +
     '@media (max-width:560px){.p75pulse .auc-meter svg{width:140px}.p75pulse .ac-grid{grid-template-columns:1fr}.p75pulse .auc-up li{grid-template-columns:46px minmax(0,1fr) auto;gap:8px}.p75pulse .auc-up .us{display:none}}' +
@@ -290,6 +296,12 @@
     '.p75ck-sheet .sh-bar button:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
     '.p75ck-sheet .sh-pos{flex:1;text-align:center;color:var(--muted);font-size:13px;letter-spacing:.06em}' +
     '.p75ck-sheet .sh-dial{float:right;width:112px;margin:6px 4px 4px 10px}.p75ck-sheet .sh-dial svg{display:block;width:100%;height:auto}' +
+    '.p75ck-sheet .sh-dial.wide{float:none;width:auto;margin:4px 0 8px;padding:8px 6px 6px;border-radius:12px;background:#17181B;border:1px solid #2A2B2F}' +
+    '.p75ck-sheet .sh-dial .ac-m{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}' +
+    '.p75ck-sheet .sh-dial .am{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1px}.p75ck-sheet .sh-dial .am svg{max-width:92px;margin:0 auto;overflow:visible}' +
+    '.p75ck-sheet .sh-dial .am .mv{font:800 16px/1.1 Manrope,sans-serif}.p75ck-sheet .sh-dial .am .mn{font:700 11.5px/1.25 Manrope,sans-serif;color:#EDE8DC}.p75ck-sheet .sh-dial .am .ma{font:600 11px Manrope,sans-serif;color:#F2D27A}' +
+    '.p75ck-sheet .sh-dial .p75f{stroke-dashoffset:0}' +
+    '.p75ck-sheet .ck-mfd .tp{flex-wrap:nowrap;white-space:nowrap}.p75ck-sheet .ck-mfd .tp span:last-child{overflow:hidden;text-overflow:ellipsis;min-width:0}' +
     '.p75ck-sheet .sh-dial .ck-n,.p75ck-sheet .sh-dial .ck-hz,.p75ck-sheet .sh-dial .p75n{transition:transform 4.5s cubic-bezier(.37,0,.3,1)}.p75ck-sheet .sh-dial .ck-snap{transition:none!important}' +
     '.p75ck-sheet .sh-body{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}' +
     '@media (min-width:600px){.p75ck-sheet .sh{left:50%;right:auto;width:560px;margin-left:-280px}}' +
@@ -346,7 +358,7 @@
   function dial(o) {
     var ang = function (v) { return -DSWEEP / 2 + (Math.max(o.min, Math.min(o.max, v)) - o.min) / (o.max - o.min) * DSWEEP; };
     var a0 = ang(o.rest), a1 = ang(o.v), sw = o.big ? 7 : 11, svg = '';
-    svg += '<path d="' + dArc(-DSWEEP / 2, DSWEEP / 2, DR) + '" fill="none" stroke="#2A2C31" stroke-width="' + sw + '" stroke-linecap="round"/>';
+    svg += '<path d="' + dArc(-DSWEEP / 2, DSWEEP / 2, DR) + '" fill="none" stroke="' + (o.big ? '#2A2C31' : '#3A3D45') + '" stroke-width="' + sw + '" stroke-linecap="round"/>';
     (o.zones || []).forEach(function (z) {
       svg += '<path d="' + dArc(ang(z[0]), ang(z[1]), DR + sw / 2 + 4) + '" fill="none" stroke="' + z[2] + '" stroke-opacity=".55" stroke-width="2"/>';
     });
@@ -768,9 +780,9 @@
       });
       if (ckPhone()) {   // phones: explanation slides up from the bottom, with its own copy of the dial so the needle is always in view
         ckSheetOpen(host, key, it, bt, play);
-        var sd = SH.el && SH.el.querySelector('.sh-dial'), sv = bt.querySelector('svg');
+        var sd = SH.el && SH.el.querySelector('.sh-dial'), row = bt.querySelector('.ac-m'), sv = row || bt.querySelector('svg');
         if (sd && sv) {
-          sd.innerHTML = sv.outerHTML;
+          sd.innerHTML = sv.outerHTML; sd.classList.toggle('wide', !!row);
           var smv = sd.querySelector('.ck-n, .ck-hz');
           if (smv) {
             smv.classList.add('ck-snap'); ckApply(sd, it, 0); void smv.getBoundingClientRect();
@@ -792,7 +804,7 @@
         var on = t.getAttribute('data-ck-sec') === CK_OPEN, body = host.querySelector('#cks-' + t.getAttribute('data-ck-sec'));
         t.setAttribute('aria-expanded', on ? 'true' : 'false'); if (body) body.hidden = !on;
       });
-      ck.classList.toggle('ck-on', !!CK_OPEN);
+      ck.classList.toggle('ck-on', !!CK_OPEN && !!(host.querySelector('#cks-' + CK_OPEN + ' .ck-i[data-ck]')));
       if (!CK_OPEN) return;
       var body = host.querySelector('#cks-' + CK_OPEN), first = body && body.querySelector('.ck-i[data-ck]');
       if (body) body.querySelectorAll('.ck-i[data-ck]').forEach(function (bt) {
@@ -885,32 +897,41 @@
       h += '<h2>Who’s buying the debt?</h2><p class="sub">Every Treasury auction, graded against the last six of the same maturity: how many bids came in, who won the bonds, and how much the dealers were left holding.</p>' +
         '<div class="ck auc"><div class="ck-main">' +
         ckSec('a_meter', 'Demand meter', '<b style="color:' + dcol + '">' + signedInt(dm) + '</b><span class="w" style="color:' + dcol + '">' + dword + '</span>') +
-          '<div class="auc-meter"><svg viewBox="0 0 200 200" role="img" aria-label="Auction demand ' + signedInt(dm) + ': ' + dword + '">' + ckBezel() + ckBBDial(dm, 'WEAK', 'STRONG') +
+          '<button type="button" class="ck-i auc-meter" data-ck="a_dm" aria-pressed="false" aria-label="Demand meter ' + signedInt(dm) + ', ' + dword + '. Show what it means."><svg viewBox="0 0 200 200" aria-hidden="true">' + ckBezel() + ckBBDial(dm, 'WEAK', 'STRONG') +
             '<g class="ck-n" data-a="' + ckBBAng(dm).toFixed(1) + '" data-r="-135" style="transform-origin:100px 100px;transform:rotate(-135deg)">' + CK_NEEDLE + '</g>' + CK_CAP + '</svg>' +
             '<div class="auc-mt"><div class="auc-w" style="color:' + dcol + '">' + dword + '</div>' +
             '<div class="ck-pills">' + apill(gn.strong, '▲ Strong', BULL) + apill(gn.average, '• Average', '#C2BCAF') + apill(gn.weak, '▼ Weak', BEAR) + '</div>' +
-            '<p class="ck-how1">Strong means more bids per bond and less left with the dealers. Foreign and fund buyers show up as “indirect” bidders.</p></div></div>' +
+            '<p class="ck-how1">Strong means more bids per bond and less left with the dealers. Foreign and fund buyers show up as “indirect” bidders.</p>' + '<span class="ck-tap" aria-hidden="true"><span class="a">What it means ›</span><span class="b">Showing ▸</span></span>' + '</div></button>' +
         '</div></section>' +
         ckSec('a_recent', 'Recent auctions', '<span style="color:' + BULL + '">' + gn.strong + ' strong</span> · ' + gn.average + ' average · <span style="color:' + BEAR + '">' + gn.weak + ' weak</span>') +
         '<div class="ac-grid">' + a.recent.map(function (r) {
-          var gc = gcol[r.grade] || '#C2BCAF';
-          return '<article class="ac" style="border-top-color:' + gc + '">' +
+          var gc = gcol[r.grade] || '#C2BCAF', ri = a.recent.indexOf(r), nm = r.term.replace(' ', '-');
+          var cmp = function (v, avg, good, f) { var better = good > 0 ? v >= avg : v <= avg, same = Math.abs(v - avg) / (avg || 1) < .02; return f(v) + ' vs ' + f(avg) + ' average (' + (same ? 'about the same' : better ? 'better' : 'worse') + ')'; };
+          CK_ITEMS['a_r' + ri] = { mover: 'none', target: 0, name: nm + ' auction', sub: fmtDate(r.date, true) + ' · $' + r.size_bn + 'bn · graded ' + r.grade,
+            what: 'Each auction is graded against the last six of the same maturity on three things: bids per dollar sold (more is better), the share won by foreign and fund buyers (more is better), and the share left with the big bank dealers (less is better).',
+            now: 'Bids per $1: ' + cmp(r.btc, r.avg_btc, 1, x2) + '. Foreign buyers: ' + cmp(r.indirect, r.avg_indirect, 1, pc) + '. Dealers kept: ' + cmp(r.dealer, r.avg_dealer, -1, pc) + '. It sold at a ' + r.high_yield.toFixed(3) + '% yield' + (r.reopening ? ', as a reopening of an existing bond.' : '.'),
+            care: r.grade === 'strong' ? 'Plenty of demand: the Treasury sold this debt easily, which helps keep yields and loan rates in check.' : r.grade === 'weak' ? 'Buyers were scarce, so dealers had to absorb more and the Treasury paid up. Weak auctions can push yields, and loan rates, higher.' : 'Demand was in line with recent auctions of this maturity, so no signal either way.' };
+          return '<button type="button" class="ck-i ac" data-ck="a_r' + ri + '" aria-pressed="false" aria-label="' + esc(nm + ' auction, graded ' + r.grade + '. Show what it means.') + '" style="border-top-color:' + gc + '">' +
             '<div class="ac-h"><b class="ac-t">' + esc(r.term.replace(' ', '-')) + '</b>' + (r.reopening ? '<span class="ac-r">reopening</span>' : '') +
               '<span class="ac-g" style="color:' + gc + ';border-color:' + gc + '88;background:' + gc + '14">' + esc(r.grade.charAt(0).toUpperCase() + r.grade.slice(1)) + '</span></div>' +
             '<div class="ac-d">' + fmtDate(r.date, true) + ' · $' + r.size_bn + 'bn · sold at ' + r.high_yield.toFixed(3) + '%</div>' +
             '<div class="ac-m">' +
               gauge(r.btc, r.avg_btc, .6, 1, x2, 'Bids per $1') +
-              gauge(r.indirect, r.avg_indirect, 15, 1, pc, 'Foreign &amp; funds') +
+              gauge(r.indirect, r.avg_indirect, 15, 1, pc, 'Foreign buyers') +
               gauge(r.dealer, r.avg_dealer, 12, -1, pc, 'Dealers kept') +
-            '</div></article>';
+            '</div>' + '<span class="ck-tap" aria-hidden="true"><span class="a">What it means ›</span><span class="b">Showing ▸</span></span>' + '</button>';
         }).join('') + '</div>' +
-        '<div class="note">Bids per $1: dollars bid for each dollar sold. Foreign &amp; funds: the share won by “indirect” bidders. Dealers kept: what the big banks had to take because nobody else wanted it (lower is better). Source: U.S. Treasury, Fiscal Data. Nominal notes and bonds only.</div>' +
+        '<div class="note">Bids per $1: dollars bid for each dollar sold. Foreign buyers: the share won by “indirect” bidders, mostly foreign buyers and funds. Dealers kept: what the big banks had to take because nobody else wanted it (lower is better). Source: U.S. Treasury, Fiscal Data. Nominal notes and bonds only.</div>' +
         '</div></section>' +
         (nx ? ckSec('a_up', 'Coming up', 'Next: <b style="font-family:Manrope,sans-serif;font-size:14px;color:#fff">' + esc(nx.label) + '</b> <span style="color:var(--gold)">' + inDays(nx.date) + '</span>') +
           '<ol class="auc-up">' + a.upcoming.map(function (u) {
             return '<li><span class="ud">' + fmtDate(u.date) + '</span><b>' + esc(u.label) + '</b><span class="us">' + (u.size_bn ? '$' + u.size_bn + 'bn' : '') + '</span><span class="ui">' + inDays(u.date) + '</span></li>';
           }).join('') + '</ol></div></section>' : '') +
-        '</div></div>';
+        '</div><aside class="ck-mfdw" aria-live="polite"><div class="ck-mfd" data-ck-mfd></div></aside></div>';
+      CK_ITEMS.a_dm = { mover: 'bb', target: dm, name: 'Demand meter', sub: 'Now ' + signedInt(dm) + ' · ' + dword.toLowerCase(),
+        what: 'How hungry buyers are at Treasury auctions. Each recent auction is graded against the last six of the same maturity: strong counts +1, average 0 and weak −1, and the needle shows the average × 100.',
+        now: gn.strong + ' of the last ' + a.recent.length + ' auctions were strong, ' + gn.average + ' average and ' + gn.weak + ' weak, which adds up to ' + signedInt(dm) + ': ' + dword.toLowerCase() + '.',
+        care: 'When auctions go well the government borrows cheaply, and mortgage and loan rates tend to stay lower. A run of weak auctions pushes yields up.' };
     }
 
     SEC.auctions = h; h = '';
