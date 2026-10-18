@@ -55,6 +55,7 @@
       '.p75top>.p75cta b{font-size:15px}' +
       '.p75top>.p75cta:hover,.p75top>.p75cta:focus-visible{background:rgba(201,162,39,.08)!important}' +
     '}' +
+    L + '{padding-bottom:24px!important}' +   // the builder's 60px under the Journal, before the disclaimer
     // Captions on the paintings (shared by desktop and phone)
     I + ' .p75ht{display:flex;flex-direction:column;gap:6px}' +
     I + ' .p75ht .m{display:flex;align-items:center;gap:8px;font:500 12px Manrope,system-ui,sans-serif;color:#C4BEB1}' +
@@ -324,12 +325,24 @@
     explore(list);
     var ex = list.querySelector(':scope > .p75ex');
     if (ex && list.lastElementChild !== ex) list.appendChild(ex);
+    spacers(list);
+  }
+  // The homepage has an empty builder section after the Journal: a ~100px blank band above the disclaimer.
+  // Hide sections after the Journal with nothing visible in them; clear() puts them back.
+  function spacers(list) {
+    var sec = list.closest('section'); if (!sec) return;
+    for (var n = sec.nextElementSibling; n; n = n.nextElementSibling) {
+      if (n.tagName !== 'SECTION' || n.getAttribute('data-p75home-hid') || getComputedStyle(n).display === 'none') continue;
+      if ((n.innerText || '').trim() || n.querySelector('img, iframe, video, canvas, svg, form')) continue;
+      n.setAttribute('data-p75home-hid', '1'); n.style.display = 'none';
+    }
   }
   function clear() {
     var top = document.querySelector('.p75top'), cta = top && top.querySelector('.p75cta');
     if (cta) top.parentNode.insertBefore(cta, top);
     document.querySelectorAll('.p75top, .p75ps, .p75ex, .p75dots').forEach(function (x) { x.remove(); });
     var list = document.querySelector('.block-blog-list.p75wall'); if (list) list.classList.remove('p75wall');
+    document.querySelectorAll('[data-p75home-hid]').forEach(function (n) { n.style.display = ''; n.removeAttribute('data-p75home-hid'); });
   }
 
   window.P75HOME = { render: render, clear: clear };
