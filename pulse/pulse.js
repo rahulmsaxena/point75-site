@@ -38,17 +38,8 @@
     '.p75pulse .big small{font-family:Manrope,sans-serif;font-size:14px;color:var(--muted);margin-left:4px}' +
     '.p75pulse .verdict{font-size:12.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}' +
     '.p75pulse .hint{color:var(--soft);font-size:13.5px;line-height:1.5;text-align:justify;hyphens:auto;-webkit-hyphens:auto}' +
-    '.p75pulse .more{flex:1;display:flex;flex-direction:column;margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}' +
-    '.p75pulse .more .k{display:flex;flex-wrap:wrap;gap:4px 12px;color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}.p75pulse .more .k i{font-style:normal;margin-left:auto;letter-spacing:.06em}' +
-    '.p75pulse .minis{flex:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}' +
-    '.p75pulse .mini{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:6px 4px 7px;border-radius:12px;background:#121316;border:1px solid var(--line);text-align:center}' +
-    '.p75pulse .mini svg{display:block;width:100%;max-width:104px;height:auto;overflow:visible}' +
-    '.p75pulse .mini .mn{font-size:12.5px;font-weight:700;color:var(--cream);line-height:1.3}' +
-    '.p75pulse .mini .mw{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}' +
-    '.p75pulse .tl b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:44px;line-height:1;font-variant-numeric:tabular-nums}' +
     '.p75pulse .p75n{transition:transform 1.6s cubic-bezier(.3,1.3,.5,1)}' +
-    '.p75pulse .p75f{stroke-dashoffset:100;transition:stroke-dashoffset 1.6s cubic-bezier(.2,.8,.2,1)}' +
-    '.p75pulse .inst.on .p75f{stroke-dashoffset:0}' +
+    '.p75pulse .p75f{stroke-dashoffset:100;transition:stroke-dashoffset 1.6s cubic-bezier(.2,.8,.2,1)}.p75pulse .inst.on .p75f{stroke-dashoffset:0}' +
     '@media (prefers-reduced-motion:reduce){.p75pulse .p75n,.p75pulse .p75f{transition:none!important}}' +
     // why lists
     '.p75pulse .why{display:grid;grid-template-columns:1fr 1fr;gap:18px}' +
@@ -197,7 +188,7 @@
       '.p75pulse .inst .card{padding:12px 10px 14px;align-items:center;text-align:center}.p75pulse .inst .card h3{font-size:10.5px;letter-spacing:.1em}' +
       '.p75pulse .inst .meter{flex-direction:column;gap:2px;align-items:center}.p75pulse .inst .dial{width:100%;max-width:170px}' +
       '.p75pulse .inst .reading{text-align:center}.p75pulse .inst .big{font-size:34px;margin:0}.p75pulse .inst .verdict{font-size:11px;margin:0}' +
-      '.p75pulse .inst .hint,.p75pulse .inst .more{display:none}}' +
+      '.p75pulse .inst .hint}' +
     '@media (max-width:560px){.p75pulse .wrap{padding:12px 16px 56px}.p75pulse h1{font-size:30px}.p75pulse .grid{grid-template-columns:1fr}' +
       '.p75pulse .card{padding:18px}' +
       '.p75pulse .hide-s{display:none}.p75pulse table{font-size:13px}}';
@@ -275,10 +266,6 @@
       zones: [[0, 30, '#2BD17E'], [30, 55, '#B8D43A'], [55, 75, '#F2A33A'], [75, 100, '#FF4D4D']],
       labels: [[0, '0'], [50, '50'], [100, '100']],
       aria: 'Stress reading ' + stress + ' out of 100' + (label ? ', ' + label : '') });
-  }
-  function miniDial(v, name) {
-    var p = Math.round(v);
-    return dial({ v: p, min: 0, max: 100, rest: 0, color: stressColor(p), center: p, aria: name + ' ' + p + ' out of 100' });
   }
 
   // ---------- Sparkline with hover ----------
@@ -636,32 +623,20 @@
       '<div class="asof">Updated <b>' + new Date(j.generated_at).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' }) +
       '</b> · refreshed hourly on weekdays</div>';
 
-    // instruments: two dials, each with its reading beside it and a row of three underneath
-    var votes = b.votes || [], nb = 0, nh = 0, nr = 0;
-    votes.forEach(function (v) { if (v.vote > 0) nb++; else if (v.vote < 0) nr++; else nh++; });
+    // instruments: two dials, each with its reading and a short note beside it; the Signals tab has the detail
     var bc = bullColor(b.score), sc = s.score != null ? Math.round(s.score) : null, scol = stressColor(sc);
-    var drivers = (s.components || []).slice().sort(function (x, y) { return y.pct * y.weight - x.pct * x.weight; }).slice(0, 3);
     h += '<div class="inst">' +
       '<div class="card"><h3>Bull / Bear</h3><div class="meter">' +
         (b.score != null ? '<div class="dial">' + bullDial(b.score) + '</div>' : '') +
         '<div class="reading"><div class="big num" style="color:' + bc + '">' + (b.score > 0 ? '+' : '') + (b.score != null ? b.score : '–') + '</div>' +
         '<div class="verdict" style="color:' + bc + '">' + esc(b.label || 'No reading') + '</div>' +
         '<div class="hint"><b style="color:' + BULL + '">Blue</b> is bullish for bonds: prices up, yields down. <b style="color:' + BEAR + '">Red</b> is bearish: prices down, yields up. The needle runs from −100 to +100.</div></div></div>' +
-        (votes.length ? '<div class="more"><div class="k">How the ' + votes.length + ' signals voted</div><div class="minis">' +
-          [[nb, '▲ Bull', BULL], [nh, '• Hold', '#C2BCAF'], [nr, '▼ Bear', BEAR]].map(function (t) {
-            return '<div class="mini tl" style="border-color:' + t[2] + '55;background:' + t[2] + '12"><b style="color:' + t[2] + '">' + t[0] + '</b><span class="mw" style="color:' + t[2] + '">' + t[1] + '</span></div>';
-          }).join('') + '</div></div>' : '') +
       '</div>' +
       '<div class="card"><h3>Stress monitor</h3><div class="meter">' +
         (sc != null ? '<div class="dial">' + stressDial(sc, s.label) + '</div>' : '') +
         '<div class="reading"><div class="big num" style="color:' + scol + '">' + (sc != null ? sc : '–') + '<small>/100</small></div>' +
         '<div class="verdict" style="color:' + scol + '">' + esc(s.label || (sc != null ? CK_STRESS_WORD(sc) : 'No reading')) + '</div>' +
         '<div class="hint">How much strain the bond market is under, from rate swings, funding, dealer balance sheets and auction demand. 0 is calm, 100 is panic.</div></div></div>' +
-        (drivers.length ? '<div class="more"><div class="k">Biggest drivers right now</div><div class="minis">' +
-          drivers.map(function (c) {
-            var p = Math.round(c.pct);
-            return '<div class="mini">' + miniDial(p, c.name) + '<span class="mn">' + esc(c.name) + '</span><span class="mw" style="color:' + stressColor(p) + '">' + CK_STRESS_WORD(p) + '</span></div>';
-          }).join('') + '</div></div>' : '') +
       '</div>' +
       '</div>';
 
