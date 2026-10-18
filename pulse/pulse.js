@@ -114,7 +114,7 @@
     '@media (max-width:700px){.p75pulse .secs{grid-template-columns:1fr;gap:14px}.p75pulse a.sec{min-height:0;padding:22px 20px}.p75pulse a.sec .nm{font-size:23px}.p75pulse .strip a{margin-left:0}}' +
     // cockpit (the #why view): one instrument per signal, plus an info screen that explains the one you tap
     '.p75pulse .ck{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start;margin-top:8px}' +
-    '.p75pulse .ck-main{flex:999 1 600px;min-width:0;display:flex;flex-direction:column;gap:16px;padding:20px;border-radius:16px;' +
+    '.p75pulse .ck-main{flex:999 1 560px;min-width:0;display:flex;flex-direction:column;gap:16px;padding:20px;border-radius:16px;' +
       'background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold);box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 18px 40px rgba(0,0,0,.45)}' +
     '.p75pulse .ck-h{color:var(--gold);font-size:13px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}' +
     '.p75pulse .ck-main{gap:0;padding:6px 20px}' +
@@ -157,22 +157,22 @@
     '.p75pulse .ck-i[aria-pressed="true"]{background:#2A2C31;border-color:#F2D27A;box-shadow:0 0 0 4px rgba(242,210,122,.18),0 0 22px rgba(242,210,122,.22)}' +
     '.p75pulse .ck-i svg{display:block;width:100%;max-width:220px;height:auto;margin:0 auto}' +
     '.p75pulse .ck-att{flex:0 1 280px;min-width:220px;width:auto}.p75pulse .ck-att svg{max-width:260px}' +
-    '.p75pulse .ck-nm{font-size:14px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#fff;line-height:1.2;margin-top:8px;display:flex;justify-content:space-between;align-items:center;gap:8px}' +
+    '.p75pulse .ck-nm{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#fff;line-height:1.2;margin-top:8px;display:flex;justify-content:space-between;align-items:center;gap:8px}' +
     '.p75pulse .ck-v{display:flex;align-items:baseline;gap:6px;margin-top:6px}' +
     '.p75pulse .ck-v b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:32px;line-height:1;font-variant-numeric:tabular-nums}' +
     '.p75pulse .ck-v small{color:var(--muted);font-size:13px}' +
-    '.p75pulse .ck-chip{margin-left:auto;padding:3px 9px;border-radius:99px;font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#0b0c0e;white-space:nowrap}' +
+    '.p75pulse .ck-chip{margin-left:auto;padding:3px 7px;border-radius:99px;font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#0b0c0e;white-space:nowrap}' +
     '.p75pulse .ck-w{color:var(--muted);font-size:12px;margin-top:4px}' +
     '.p75pulse .ck-lamp{flex:0 0 auto;width:11px;height:11px;border-radius:50%}' +
-    '.p75pulse .ck-mfdw{flex:1 1 300px;min-width:0;position:sticky;top:var(--ck-top,16px);max-height:calc(100vh - var(--ck-top,16px) - 16px);overflow-y:auto;padding:12px;border-radius:16px;background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold)}' +
-    '.p75pulse .ck-mfd{display:flex;flex-direction:column;gap:16px;min-height:380px;padding:20px;border-radius:10px;background:#050807;border:2px solid #0F1512;' +
+    '.p75pulse .ck-mfdw{flex:1 1 350px;min-width:0;position:sticky;top:var(--ck-top,16px);max-height:calc(100vh - var(--ck-top,16px) - 16px);overflow-y:auto;padding:12px;border-radius:16px;background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold)}' +
+    '.p75pulse .ck-mfd{display:flex;flex-direction:column;gap:13px;min-height:380px;padding:20px;border-radius:10px;background:#050807;border:2px solid #0F1512;' +
       'box-shadow:inset 0 0 40px rgba(60,220,120,.06);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#7CE0A0}' +
     '.p75pulse .ck-mfd .tp{display:flex;justify-content:space-between;gap:8px;font-size:11px;letter-spacing:.14em;color:#4E9C6C;text-transform:uppercase}' +
-    '.p75pulse .ck-mfd .tt{font-size:21px;font-weight:700;color:#A9F0C2;text-transform:uppercase;line-height:1.2}' +
-    '.p75pulse .ck-mfd .st{font-size:13px;color:#7CE0A0;margin-top:4px}' +
+    '.p75pulse .ck-mfd .tt{font-size:18px;font-weight:700;color:#A9F0C2;text-transform:uppercase;line-height:1.2}' +
+    '.p75pulse .ck-mfd .st{font-size:12px;color:#7CE0A0;margin-top:4px}' +
     '.p75pulse .ck-mfd .k{font-size:11px;letter-spacing:.14em;color:#E8C766;margin-bottom:5px}' +
-    '.p75pulse .ck-mfd .x{font-family:Manrope,system-ui,sans-serif;font-size:16px;line-height:1.6;color:#D6F7E2}' +
-    '.p75pulse .ck-mfd .gl{font-family:Manrope,system-ui,sans-serif;font-size:13px;color:#8FCBA6}' +
+    '.p75pulse .ck-mfd .x{font-family:Manrope,system-ui,sans-serif;font-size:14.5px;line-height:1.55;color:#D6F7E2}' +
+    '.p75pulse .ck-mfd .gl{font-family:Manrope,system-ui,sans-serif;font-size:12px;color:#8FCBA6}' +
     '.p75pulse .ck-mfd button{align-self:flex-start;min-height:44px;padding:0 16px;border-radius:6px;border:1px solid var(--gold);background:#0B1410;color:#E8C766;' +
       'font:inherit;font-size:13px;letter-spacing:.1em;cursor:pointer}' +
     '.p75pulse .ck-mfd .bk{display:none}' +
@@ -455,7 +455,7 @@
   function ckButton(key, aria, svgInner, mover, label, extraClass) {
     return '<button type="button" class="ck-i' + (extraClass ? ' ' + extraClass : '') + '" data-ck="' + key + '" aria-pressed="false" aria-label="' + esc(aria).replace(/"/g, '&quot;') + '">' +
       '<svg viewBox="0 0 200 200" aria-hidden="true">' + ckBezel() + svgInner + (mover === 'needle' ? '<g class="ck-n">' + CK_NEEDLE + '</g>' + CK_CAP : '') + '</svg>' + label +
-      '<span class="ck-tap" aria-hidden="true"><span class="a">What it means ›</span><span class="b">On the info screen ▸</span></span></button>';
+      '<span class="ck-tap" aria-hidden="true"><span class="a">What it means ›</span><span class="b">Showing ▸</span></span></button>';
   }
   function signedInt(n) { return (n > 0 ? '+' : n < 0 ? '−' : '') + Math.abs(n); }
 
