@@ -47,7 +47,31 @@
     '.p75ind .foot a{color:var(--gold);text-decoration:none}' +
     '.p75ind .note{color:var(--muted);font-size:12px;line-height:1.55;margin-top:18px}' +
     '.p75ind .load{color:var(--muted);margin-top:24px}' +
-    '.p75ind .rates{margin:0 0 34px}' +
+    '.p75ind .rates{margin:0 0 20px}' +
+    // collapsible Rates today / Fed policy bars
+    '.p75ind .fold{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin-bottom:10px}' +
+    '.p75ind .fold summary{list-style:none;display:flex;align-items:center;gap:12px;padding:15px 20px;cursor:pointer}' +
+    '.p75ind .fold summary::-webkit-details-marker{display:none}' +
+    '.p75ind .fold summary:hover{background:var(--panel2);border-radius:14px}' +
+    '.p75ind .fold summary:focus-visible{outline:2px solid var(--gold);outline-offset:-2px;border-radius:14px}' +
+    '.p75ind .fold .fn{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:21px;flex:1;min-width:0}' +
+    '.p75ind .fold .fs{font-size:14px;color:var(--muted);white-space:nowrap}.p75ind .fold .fs b{color:#fff;font-weight:700;margin-right:4px}' +
+    '.p75ind .fold[open] .chev{transform:rotate(180deg)}' +
+    '.p75ind .fold .in{padding:0 20px 16px}.p75ind .fold .rsub{margin:0 0 10px}' +
+    '.p75ind .fold .rcard{background:none;border:0;padding:0;margin:0}' +
+    // category tabs
+    '.p75ind .ctabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:22px 0 12px;padding-bottom:2px}' +
+    '.p75ind .ctabs::-webkit-scrollbar{display:none}' +
+    '.p75ind .ctab{flex:none;min-height:40px;padding:0 17px;border-radius:999px;border:1px solid #3A3C42;background:none;color:var(--soft,#D9D3C6);font:700 14.5px Manrope,system-ui,sans-serif;cursor:pointer;white-space:nowrap}' +
+    '.p75ind .ctab:hover{border-color:var(--gold);color:#fff}' +
+    '.p75ind .ctab.on{background:var(--gold);border-color:var(--gold);color:#111214}' +
+    '.p75ind .ctab:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
+    '.p75ind .cstat{display:flex;align-items:center;gap:12px;padding:14px 20px 12px}' +
+    '.p75ind .cstat .n{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:20px;flex:1}' +
+    '.p75ind .body .ind{padding-left:20px}' +
+    '@media (max-width:600px){.p75ind .fold summary{flex-wrap:wrap;gap:4px 10px;padding:13px 14px}.p75ind .fold .fn{font-size:19px;flex:1 1 calc(100% - 30px)}' +
+      '.p75ind .fold .chev{order:2}.p75ind .fold .fs{order:3;flex-basis:100%;white-space:normal}.p75ind .fold .in{padding:0 14px 14px}' +
+      '.p75ind .cstat{padding:12px 14px 10px}.p75ind .ctabs{margin:16px 0 10px;gap:6px}.p75ind .ctab{min-height:38px;padding:0 14px;font-size:14px}}' +
     '.p75ind .yc{margin-top:40px}' +
     '.p75ind .yc h2{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:26px;margin:0 0 4px}' +
     '.p75ind .yc .rsub{color:#DDD7CA;font-size:14.5px;line-height:1.55;margin:0 0 14px;max-width:680px}' +
@@ -178,7 +202,7 @@
   function page(d) {
     var by = {}; d.indicators.forEach(function (i) { by[i.id] = i; });
     var asof = new Date(d.generated_at).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' });
-    var h = '<div class="wrap"><div class="eyebrow">News</div><h1>Economic indicators</h1>' +
+    var h = '<div class="wrap"><div class="eyebrow">Kinetics</div><h1>Economic indicators</h1>' +
       '<p class="lede">The numbers that move bonds, in one place: inflation, growth, jobs, rates and housing starts. Tap a category for its indicators, then tap any indicator for its full history.</p>' +
       '<div class="asof">Updated <b>' + asof + '</b> · refreshed every weekday from FRED</div>';
     h += '<div class="tiles">' + d.indicators.filter(function (i) { return i.headline && i.id !== 'fedfunds' && i.id !== 't10'; }).map(function (i) {
@@ -187,11 +211,14 @@
         '<div class="c num" style="color:' + c.col + '">' + c.txt + '<span class="p">' + period(i.latest.period, i.freq) + '</span></div></div>';
     }).join('') + '</div>';
     h += '<section class="rates" id="p75rates" hidden></section>';
-    var chev = '<svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>';
-    h += '<div class="list">' + d.categories.map(function (cat) {
-      return '<button class="cat" type="button" aria-expanded="false" data-c="' + cat.id + '"><span class="n">' + esc(cat.name) + '</span>' +
-        (cat.status ? '<span class="pill" style="color:' + toneCol(cat.tone) + '">' + esc(cat.status) + '</span>' : '') + chev + '</button>' +
-        '<div class="body" id="p75c-' + cat.id + '" hidden>' + cat.items.map(function (iid) {
+    // Categories are tabs: one shows at a time (the first by default), so the page stays short
+    h += '<div class="ctabs" role="tablist" aria-label="Indicator categories">' + d.categories.map(function (cat, k) {
+      return '<button class="ctab' + (k ? '' : ' on') + '" type="button" role="tab" aria-selected="' + !k + '" aria-controls="p75c-' + cat.id + '" data-tab="' + cat.id + '">' + esc(cat.name) + '</button>';
+    }).join('') + '</div>';
+    h += '<div class="list">' + d.categories.map(function (cat, k) {
+      return '<div class="body" role="tabpanel" id="p75c-' + cat.id + '"' + (k ? ' hidden' : '') + '>' +
+        (cat.status ? '<div class="cstat"><span class="n">' + esc(cat.name) + '</span><span class="pill" style="color:' + toneCol(cat.tone) + '">' + esc(cat.status) + '</span></div>' : '') +
+        cat.items.map(function (iid) {
           var i = by[iid]; if (!i) return ''; var c = change(i);
           return '<button class="ind" type="button" aria-expanded="false" data-i="' + i.id + '"><span class="nm">' + esc(i.name) + '<span>' + esc(i.unit) + ' · ' + period(i.latest.period, i.freq) + '</span></span>' +
             spark(i.series.slice(i.freq === 'Q' ? -8 : -24), 84, 26) +
@@ -306,23 +333,29 @@
       '<polyline fill="none" stroke="' + GOLD + '" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round" points="' + pts.join(' ') + '"/></svg>';
   }
   function asof(d) { try { return new Date(d + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }); } catch (e) { return d; } }
+  var CHEV = '<svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>';
   function ratesHTML(s) {
-    var y = s.yields || {}, t = y.DGS10, h = '<h2>Rates today</h2><p class="rsub">Treasury yields and the Fed’s policy rates, updated every weekday.</p>';
+    var y = s.yields || {}, t = y.DGS10, h = '';
     if (t) {
-      h += '<div class="rcard"><div class="r10"><div><div class="rlab">US 10-year Treasury</div><div class="big num">' + t.value.toFixed(2) + '%<span class="dl" style="color:' + bcol(t.change_1d_bps) + '">' + bps(t.change_1d_bps) + ' today</span></div>' +
+      h += '<details class="fold"><summary><span class="fn">Rates today</span><span class="fs">10-year <b class="num">' + t.value.toFixed(2) + '%</b> ' +
+        '<span style="color:' + bcol(t.change_1d_bps) + '">' + bps(t.change_1d_bps) + '</span></span>' + CHEV + '</summary>' +
+        '<div class="in"><p class="rsub">Treasury yields, updated every weekday.</p><div class="rcard"><div class="r10"><div><div class="rlab">US 10-year Treasury</div><div class="big num">' + t.value.toFixed(2) + '%<span class="dl" style="color:' + bcol(t.change_1d_bps) + '">' + bps(t.change_1d_bps) + ' today</span></div>' +
         (t.change_1w_bps != null ? '<div class="wk">' + (t.change_1w_bps >= 0 ? '+' : '') + Math.round(t.change_1w_bps) + 'bp over the past week · as of ' + asof(t.date) + '</div>' : '') + '</div>' + mini(t.history, 340, 70) + '</div>' +
         (s.narrative ? '<p class="rnarr">' + esc(s.narrative) + '</p>' : '') +
         '<div class="rmini">' + ['DGS2', 'DGS30'].filter(function (k) { return y[k]; }).map(function (k) {
           var m = y[k]; return '<div class="rm"><div class="rlab" style="color:#CFC9BC">' + esc(m.label) + '</div><div class="v num">' + m.value.toFixed(2) + '%<span style="color:' + bcol(m.change_1d_bps) + '">' + bps(m.change_1d_bps) + '</span></div>' + mini(m.history, 220, 34) + '</div>';
-        }).join('') + '</div></div>';
+        }).join('') + '</div></div></div></details>';
     }
     var r = s.policy_rates || {}, cards = POL.filter(function (p) { return r[p[0]] && typeof r[p[0]].value === 'number'; }).map(function (p) {
       var x = r[p[0]], val = p[0] === 'FFR' && typeof x.lower === 'number' ? x.lower.toFixed(2) + '–' + x.value.toFixed(2) + '%' : x.value.toFixed(2) + '%';
       return '<div class="rc"><div class="n">' + p[1] + '</div><div class="t">' + p[2] + '</div><div class="v num">' + val + '</div>' +
         '<div class="s"><span style="color:' + bcol(x.change_1w_bps) + '">' + bps(x.change_1w_bps) + (x.change_1w_bps != null ? ' 1w' : '') + '</span><span>as of ' + asof(x.date) + '</span></div><p>' + p[3] + '</p></div>';
     }).join('');
-    if (cards) h += '<div class="rcard"><div class="rlab">Fed policy and overnight funding rates</div><div class="rgrid">' + cards + '</div>' +
-      '<p class="rsrc">Source: FRED. EFFR and SOFR are published by the Federal Reserve Bank of New York. This product uses the FRED® API but is not endorsed or certified by the Federal Reserve Bank of St. Louis.</p></div>';
+    var ffr = r.FFR, ffrTxt = ffr && typeof ffr.value === 'number' ? (typeof ffr.lower === 'number' ? ffr.lower.toFixed(2) + '–' : '') + ffr.value.toFixed(2) + '%' : '';
+    if (cards) h += '<details class="fold"><summary><span class="fn">Fed policy and overnight funding rates</span>' +
+      (ffrTxt ? '<span class="fs">Fed funds <b class="num">' + ffrTxt + '</b></span>' : '') + CHEV + '</summary>' +
+      '<div class="in"><div class="rcard"><div class="rgrid">' + cards + '</div>' +
+      '<p class="rsrc">Source: FRED. EFFR and SOFR are published by the Federal Reserve Bank of New York. This product uses the FRED® API but is not endorsed or certified by the Federal Reserve Bank of St. Louis.</p></div></div></details>';
     return h;
   }
   function loadRates(host) {
@@ -335,17 +368,36 @@
 
   function wire(host) {
     var by = {}; D.indicators.forEach(function (i) { by[i.id] = i; });
+    // One thing open at a time, so the page stays short: opening a rates panel, switching tab or opening an
+    // indicator's chart closes whatever else was open.
+    function closeFolds(except) { host.querySelectorAll('details.fold[open]').forEach(function (d) { if (d !== except) d.open = false; }); }
+    function closeCharts(except) {
+      host.querySelectorAll('.ind[aria-expanded="true"]').forEach(function (b) {
+        if (b === except) return; b.setAttribute('aria-expanded', 'false');
+        var d = host.querySelector('#p75d-' + b.getAttribute('data-i')); if (d) d.hidden = true;
+      });
+    }
+    // (details' toggle event doesn't bubble, so listen in the capture phase)
+    host.addEventListener('toggle', function (e) { if (e.target.matches && e.target.matches('details.fold') && e.target.open) { closeFolds(e.target); closeCharts(null); } }, true);
     host.addEventListener('click', function (e) {
       var rb = e.target.closest('.rb');
       if (rb) { var p = rb.getAttribute('data-r').split(':'), box = host.querySelector('#p75d-' + p[0]); box.innerHTML = detail(by[p[0]], +p[1]); wireChart(box); return; }
       var ib = e.target.closest('.ind');
       if (ib) {
         var id = ib.getAttribute('data-i'), dt = host.querySelector('#p75d-' + id), open = dt.hidden;
-        if (open) { dt.innerHTML = detail(by[id], 60); wireChart(dt); }
+        if (open) {
+          var y0 = ib.getBoundingClientRect().top;   // keep the tapped row where it was when charts above it close
+          closeFolds(null); closeCharts(ib); dt.innerHTML = detail(by[id], 60); wireChart(dt);
+          var dy = ib.getBoundingClientRect().top - y0; if (Math.abs(dy) > 1) window.scrollBy(0, dy);
+        }
         dt.hidden = !open; ib.setAttribute('aria-expanded', open); return;
       }
-      var cb = e.target.closest('.cat');
-      if (cb) { var body = host.querySelector('#p75c-' + cb.getAttribute('data-c')), o = body.hidden; body.hidden = !o; cb.setAttribute('aria-expanded', o); }
+      var tb = e.target.closest('.ctab');
+      if (tb) {
+        closeFolds(null); closeCharts(null);
+        host.querySelectorAll('.ctab').forEach(function (x) { var on = x === tb; x.classList.toggle('on', on); x.setAttribute('aria-selected', on); });
+        host.querySelectorAll('.list > .body').forEach(function (b) { b.hidden = b.id !== 'p75c-' + tb.getAttribute('data-tab'); });
+      }
     });
   }
 
@@ -363,7 +415,7 @@
     if (document.querySelector('.p75ind')) return;
     once();
     var host = document.createElement('div'); host.className = 'p75ind';
-    host.innerHTML = '<div class="wrap"><div class="eyebrow">News</div><h1>Economic indicators</h1><div class="load">Loading the latest readings…</div></div>';
+    host.innerHTML = '<div class="wrap"><div class="eyebrow">Kinetics</div><h1>Economic indicators</h1><div class="load">Loading the latest readings…</div></div>';
     var blocks = main.querySelector('.page__blocks');
     (blocks || main).appendChild(host);
     load(function (j) {
