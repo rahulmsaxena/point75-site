@@ -734,7 +734,10 @@
   //   next in menu order; the first page goes back to the section overview and the overview goes on to the
   //   first page. NAV_FIX overrides specific pages. Bond Summary and Intelligent Summary articles live in an
   //   iframe sized to its content: they send {type:'nav'} with older/newer and we send {type:'go'} back.
-  var NAV_FIX = {};
+  var NAV_FIX = {
+    // Start here sits outside the menu sections, so it had no way back; it is reached from the homepage
+    '/start-here': { prev: { href: '/', text: 'Journal', title: 'Back to the Journal' } }
+  };
   var navFrame = null;
   window.addEventListener('message', function (e) {
     var m = e.data;
