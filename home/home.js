@@ -37,6 +37,24 @@
     '@media (max-width:640px){.p75ps{gap:10px 12px;padding:12px 14px}.p75ps .lb{flex-basis:100%;flex-direction:row;gap:8px;align-items:baseline}' +
       '.p75ps .rd{flex:1 1 0;min-width:0;gap:8px}.p75ps .rd svg[width="80"]{width:52px}.p75ps .rd .v{font-size:20px}.p75ps .rd .w{font-size:12px}' +
       '.p75ps .go{margin-left:0;flex-basis:100%}}' +
+    // "New to bonds?" (drawn by p75.js as .p75cta), restyled on the homepage as a light signpost rather than a box
+    '.p75top>.p75cta{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none}' +
+    '.p75top>.p75cta .go{transition:transform .2s}' +
+    '.p75top>.p75cta:hover .go,.p75top>.p75cta:focus-visible .go{transform:translateX(4px)}' +
+    '@media (min-width:' + (PHONE + 1) + 'px){' +
+      '.p75top>.p75cta{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:6px;flex-wrap:nowrap;' +
+        'border-left:2px solid #C9A227!important;padding:4px 0 4px 20px!important;font-size:14px;line-height:1.45;color:#A9A396!important}' +
+      '.p75top>.p75cta b{display:block;margin-bottom:2px;font:400 21px/1.15 "Hedvig Letters Serif",Georgia,serif;color:#EDE8DC}' +
+      '.p75top>.p75cta .go{font-size:13.5px}' +
+      '.p75top>.p75cta:hover,.p75top>.p75cta:focus-visible{background:transparent!important}' +
+      '.p75top>.p75cta:hover b{color:#fff}' +
+    '}' +
+    '@media (max-width:' + PHONE + 'px){' +
+      '.p75top>.p75cta{flex-wrap:nowrap;margin:0 auto 18px!important;padding:11px 18px!important;border:1px solid rgba(201,162,39,.4)!important;border-radius:99px!important;font-size:14.5px}' +
+      '.p75top>.p75cta>span:first-child{font-size:0}' +   // keeps the line read aloud, shows only the question
+      '.p75top>.p75cta b{font-size:15px}' +
+      '.p75top>.p75cta:hover,.p75top>.p75cta:focus-visible{background:rgba(201,162,39,.08)!important}' +
+    '}' +
     // Captions on the paintings (shared by desktop and phone)
     I + ' .p75ht{display:flex;flex-direction:column;gap:6px}' +
     I + ' .p75ht .m{display:flex;align-items:center;gap:8px;font:500 12px Manrope,system-ui,sans-serif;color:#C4BEB1}' +
