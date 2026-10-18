@@ -1,4 +1,4 @@
-/* Point75 - Debt Trap page (/debt-trap, under Pulse). Loaded by p75.js; data from news.point75.io/api/debttrap.
+/* Point75 - Debt Trap page (/debt-trap, under Kinetics). Loaded by p75.js; data from news.point75.io/api/debttrap.
    How much U.S. debt must be refinanced, what it costs, and who is buying it. All data is U.S. government.
    (c) Rahul Saxena. All rights reserved. */
 (function () {
@@ -29,7 +29,7 @@
     '.p75debt .tile .v{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:44px;line-height:1.05;margin:10px 0 6px}' +
     '.p75debt .tile .l{color:var(--soft);font-size:14px;line-height:1.5}' +
     '.p75debt .tile .l a{color:var(--gold);text-decoration:none;font-weight:700;white-space:nowrap}' +
-    '.p75debt .means{border-left:3px solid var(--gold);padding:4px 0 4px 16px;margin:0 0 18px;max-width:760px}' +
+    '.p75debt .means{border-left:3px solid var(--gold);padding:4px 0 4px 16px;margin:0 0 18px}' +
     '.p75debt .means b{display:block;color:var(--gold);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px}' +
     '.p75debt .means p{margin:0;font-size:16px;line-height:1.6;color:var(--cream)}' +
     '.p75debt .two{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:14px}' +
@@ -52,12 +52,49 @@
     '.p75debt table{width:100%;border-collapse:collapse;font-size:14px}' +
     '.p75debt th{text-align:left;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:0 8px 10px 0;border-bottom:1px solid var(--line)}' +
     '.p75debt th.r,.p75debt td.r{text-align:right}' +
-    '.p75debt td{padding:9px 8px 9px 0;border-bottom:1px solid var(--line)}' +
+    '.p75debt td{padding:9px 8px 9px 0;border-bottom:1px solid var(--line);color:var(--cream)}' +
     '.p75debt .num{font-variant-numeric:tabular-nums}' +
     '.p75debt .dn{color:var(--soft)}' +
     '.p75debt .note{color:var(--faint);font-size:12px;line-height:1.5;margin-top:12px}' +
-    '.p75debt .foot{color:#77736a;font-size:12px;line-height:1.6;margin-top:52px;border-top:1px solid var(--line);padding-top:18px}' +
+    '.p75debt .foot{color:#A8A398;font-size:12px;line-height:1.6;margin-top:32px;border-top:1px solid var(--line);padding-top:18px}' +
     '.p75debt .load{color:var(--muted);padding:40px 0}' +
+    // One Shot: title line, overview dials, sections that fold open one at a time
+    '.p75debt .hd-t{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin-bottom:8px}.p75debt .hd-t h1{margin:0}.p75debt .hd-t .asof{margin:0 0 0 auto}' +
+    '.p75debt .hd-t .eyebrow{display:inline}' +
+    '.p75debt .dt-ov{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:16px 0 14px}' +
+    '.p75debt button.dt-ovc{display:flex;flex-direction:column;gap:6px;width:100%;padding:14px 16px;border-radius:14px;background:var(--panel);border:1px solid var(--line);border-top:2px solid var(--gold);color:inherit;font:inherit;text-align:left;cursor:pointer;transition:border-color .15s,transform .15s}' +
+    '.p75debt button.dt-ovc:hover,.p75debt button.dt-ovc:focus-visible{border-color:var(--gold);outline:none}' +
+    '@media (hover:hover){.p75debt button.dt-ovc:hover{transform:translateY(-2px)}}' +
+    '.p75debt .dt-ovh{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#E2DDD2;font-weight:800}' +
+    '.p75debt .dt-go{color:var(--gold);letter-spacing:.02em;text-transform:none;font-size:13.5px}' +
+    '.p75debt .dt-m{display:flex;align-items:center;gap:12px}' +
+    '.p75debt .dt-d{flex:0 0 auto;width:112px}.p75debt .dt-d svg{display:block;width:100%;height:auto;overflow:visible}' +
+    '.p75debt .dt-r{display:flex;flex-direction:column;gap:3px;min-width:0}' +
+    '.p75debt .dt-r b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:36px;line-height:1;text-shadow:0 0 14px currentColor}' +
+    '.p75debt .dt-r em{font-style:normal;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}' +
+    '.p75debt .dt-r > span{font-size:14px;line-height:1.45;color:#F1ECE2}' +
+    '.p75debt .p75n{transition:transform 4.5s cubic-bezier(.37,0,.3,1);filter:drop-shadow(0 0 3px rgba(255,255,255,.6))}' +
+    '.p75debt .p75f{stroke-dashoffset:100;transition:stroke-dashoffset 4.5s cubic-bezier(.37,0,.3,1)}.p75debt .dt-ov.go .p75f{stroke-dashoffset:0}' +
+    '.p75debt .dt-panel{display:flex;flex-direction:column;padding:4px 20px;border-radius:16px;background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold);box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 18px 40px rgba(0,0,0,.45)}' +
+    '.p75debt .dt-sec + .dt-sec{border-top:1px solid #34363C}' +
+    '.p75debt .dt-tg{display:flex;align-items:center;gap:14px;width:100%;min-height:56px;padding:10px 0;background:none;border:0;color:inherit;font:inherit;cursor:pointer;text-align:left}' +
+    '.p75debt .dt-tg:focus-visible{outline:3px solid #F2D27A;outline-offset:2px;border-radius:6px}' +
+    '.p75debt .dt-h{color:var(--gold);font-size:13px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.p75debt .dt-h .n{margin-right:10px;opacity:.75}' +
+    '.p75debt .dt-tg:hover .dt-h{color:#F2D27A}' +
+    '.p75debt .dt-sum{margin-left:auto;font-size:14.5px;font-weight:800;white-space:nowrap;text-shadow:0 0 10px currentColor}' +
+    '.p75debt .dt-car{flex:0 0 auto;width:28px;height:28px;border-radius:50%;border:1.5px solid #8C7424;display:grid;place-items:center;transition:transform .2s,border-color .15s}' +
+    '.p75debt .dt-car:after{content:"";width:7px;height:7px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:translateY(-2px) rotate(45deg)}' +
+    '.p75debt .dt-tg[aria-expanded="true"] .dt-car{transform:rotate(180deg);border-color:var(--gold)}' +
+    '.p75debt .dt-body{padding:0 0 18px}.p75debt .dt-body[hidden]{display:none}' +
+    '.p75debt .dt-body .sub{margin:0 0 12px}' +
+    '.p75debt .dt-means{display:flex;align-items:flex-start;gap:10px;margin:0 0 10px;font-size:15.5px;line-height:1.55;color:#F1ECE2}.p75debt .dt-means b{color:#FFD23F}' +
+    '.p75debt .dt-means i{flex:0 0 auto;width:9px;height:9px;margin-top:7px;border-radius:50%;background:var(--gold);animation:p75dping 1.8s ease-out infinite}' +
+    '@keyframes p75dping{0%{box-shadow:0 0 0 0 rgba(242,210,122,.6)}80%,100%{box-shadow:0 0 0 9px rgba(242,210,122,0)}}' +
+    '.p75debt .dt-body .card{background:#17181B}' +
+    '@media (max-width:880px){.p75debt .dt-ov{grid-template-columns:1fr;gap:10px}.p75debt .hd-t{flex-direction:column;align-items:flex-start;gap:2px}.p75debt .hd-t .asof{margin:4px 0 0}.p75debt .lede{text-align:left}}' +
+    '@media (max-width:560px){.p75debt .dt-panel{padding:2px 14px}.p75debt .dt-sum{display:none}.p75debt .dt-car{margin-left:auto}.p75debt .dt-d{width:96px}.p75debt .dt-r b{font-size:30px}}' +
+    '@media (prefers-reduced-motion:reduce){.p75debt .dt-means i{animation:none}.p75debt button.dt-ovc:hover{transform:none}}' +
+
     '@media (max-width:880px){.p75debt .two{grid-template-columns:1fr}.p75debt .tiles{grid-template-columns:1fr}.p75debt .ownk{grid-template-columns:repeat(2,minmax(0,1fr))}}' +
     '@media (max-width:560px){.p75debt .wrap{padding:12px 16px 56px}.p75debt h1{font-size:24px}.p75debt .card{padding:16px}.p75debt .tile .v{font-size:38px}}';
 
@@ -209,6 +246,49 @@
     });
   }
 
+  // ---------- Dials: the same tools-style speedometer as Pulse (220° sweep, coloured fill, tapered needle, hub) ----------
+  var DCX = 100, DCY = 96, DR = 80, DSWEEP = 220;
+  function dPt(deg, r) { var a = deg * Math.PI / 180; return [(DCX + r * Math.sin(a)).toFixed(2), (DCY - r * Math.cos(a)).toFixed(2)]; }
+  function dArc(d0, d1, r) {
+    var a = dPt(d0, r), b = dPt(d1, r);
+    return 'M' + a[0] + ',' + a[1] + ' A' + r + ',' + r + ' 0 ' + (Math.abs(d1 - d0) > 180 ? 1 : 0) + ' ' + (d1 > d0 ? 1 : 0) + ' ' + b[0] + ',' + b[1];
+  }
+  // o: { v, min, max, rest, color, ticks:[values], labels:[[value,text,color]], aria, big:true|false, center:text }
+  function dial(o) {
+    var ang = function (v) { return -DSWEEP / 2 + (Math.max(o.min, Math.min(o.max, v)) - o.min) / (o.max - o.min) * DSWEEP; };
+    var a0 = ang(o.rest), a1 = ang(o.v), sw = o.big ? 7 : 11, svg = '';
+    svg += '<path d="' + dArc(-DSWEEP / 2, DSWEEP / 2, DR) + '" fill="none" stroke="#2A2C31" stroke-width="' + sw + '" stroke-linecap="round"/>';
+    (o.zones || []).forEach(function (z) {
+      svg += '<path d="' + dArc(ang(z[0]), ang(z[1]), DR + sw / 2 + 4) + '" fill="none" stroke="' + z[2] + '" stroke-opacity=".55" stroke-width="2"/>';
+    });
+    if (o.notch != null) {
+      var nq = ang(o.notch), n1 = dPt(nq, DR - sw / 2 - 5), n2 = dPt(nq, DR + sw / 2 + 6);
+      svg += '<line x1="' + n1[0] + '" y1="' + n1[1] + '" x2="' + n2[0] + '" y2="' + n2[1] + '" stroke="#F2D27A" stroke-width="4" stroke-linecap="round"/>';
+    }
+    if (Math.abs(a1 - a0) > .5)
+      svg += '<path class="p75f" color="' + o.color + '" pathLength="100" stroke-dasharray="100 200" d="' + dArc(a0, a1, DR) + '" fill="none" stroke="' + o.color + '" stroke-width="' + sw + '" stroke-linecap="round" style="filter:drop-shadow(0 0 5px ' + o.color + '66)"/>';
+    if (o.big) {
+      for (var t = 0; t <= 40; t++) {
+        var d = -DSWEEP / 2 + DSWEEP * t / 40, maj = t % 10 === 0, p = dPt(d, DR - (maj ? 16 : 13)), q = dPt(d, DR - 9);
+        svg += '<line x1="' + p[0] + '" y1="' + p[1] + '" x2="' + q[0] + '" y2="' + q[1] + '" stroke="' + (maj ? '#8A8D93' : '#3A3C42') + '" stroke-width="' + (maj ? 1.6 : 1) + '"/>';
+      }
+      (o.labels || []).forEach(function (l) {
+        var d = ang(l[0]), p = dPt(d, DR + 20), anc = Math.abs(d) > 95 ? 'middle' : d < -20 ? 'end' : d > 20 ? 'start' : 'middle';
+        svg += '<text x="' + p[0] + '" y="' + p[1] + '" dy=".35em" text-anchor="' + anc + '" font-size="11" font-weight="700" letter-spacing=".04em" fill="' + (l[2] || '#8A8D93') + '" font-family="Manrope,sans-serif">' + l[1] + '</text>';
+      });
+    }
+    var len = o.big ? DR - 22 : DR - 26, nw = o.big ? 3.2 : 5;
+    var as = o.from != null ? ang(o.from) : a0;   // needle start for the sweep (fill still grows from rest)
+    svg += '<g class="p75n" data-a="' + a1.toFixed(1) + '" data-r="' + as.toFixed(1) + '" style="transform-origin:' + DCX + 'px ' + DCY + 'px;transform:rotate(' + as.toFixed(1) + 'deg)">' +
+      '<path d="M' + (DCX - nw) + ',' + DCY + ' L' + DCX + ',' + (DCY - len) + ' L' + (DCX + nw) + ',' + DCY + ' Z" fill="#F4F1EA"/>' +
+      '<line x1="' + DCX + '" y1="' + DCY + '" x2="' + DCX + '" y2="' + (DCY + (o.big ? 12 : 14)) + '" stroke="#F4F1EA" stroke-width="' + (o.big ? 3 : 4.5) + '" stroke-linecap="round"/></g>' +
+      '<circle cx="' + DCX + '" cy="' + DCY + '" r="' + (o.big ? 8 : 11) + '" fill="#17181B" stroke="' + o.color + '" stroke-width="' + (o.big ? 2 : 3) + '"/>' +
+      '<circle cx="' + DCX + '" cy="' + DCY + '" r="' + (o.big ? 2.6 : 3.6) + '" fill="#F4F1EA"/>';
+    if (o.center != null)
+      svg += '<text x="' + DCX + '" y="' + (DCY + 50) + '" text-anchor="middle" font-size="' + (o.centerSize || 34) + '" font-weight="800" fill="' + o.color + '" font-family="Manrope,sans-serif" style="font-variant-numeric:tabular-nums">' + o.center + '</text>';
+    return '<svg viewBox="' + (o.big ? '-6 -12 212 146' : o.center == null ? '2 6 196 124' : '0 8 200 142') + '" role="img" aria-label="' + esc(o.aria || '').replace(/"/g, '&quot;') + '">' + svg + '</svg>';
+  }
+
   function means(r) { return r ? '<div class="means"><b>What it means</b><p>' + esc(r.text) + '</p></div>' : ''; }
 
   // ---------- Page ----------
@@ -216,36 +296,56 @@
     CHARTS = [];
     var w = j.wall, rt = j.rates, it = j.interest, ow = j.owners, R = {};
     (j.readings || []).forEach(function (r) { R[r.key] = r; });
-    var h = '<div class="wrap"><div class="eyebrow"><a href="/pulse">Pulse</a> · Debt Trap</div><h1>The Debt Trap</h1>' +
-      '<p class="lede">America borrows short, rolls its debt constantly, and pays whatever the market charges each time. ' +
-      'Three questions decide whether that becomes a trap: how much has to be refinanced, what it costs, and who is still willing to lend.</p>' +
+    var h = '<div class="wrap"><div class="hd-t"><span class="eyebrow"><a href="/kinetics">Kinetics</a> · Debt Trap</span><h1>The Debt Trap</h1>' +
       '<div class="asof">Updated <b>' + new Date(j.generated_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) +
-      '</b> · official data, most of it published monthly</div>';
+      '</b> · official data, most of it published monthly</div></div>' +
+      '<p class="lede">America borrows short, rolls its debt constantly, and pays whatever the market charges each time. ' +
+      'Three questions decide whether that becomes a trap: how much has to be refinanced, what it costs, and who is still willing to lend.</p>';
 
-    h += '<div class="tiles">' +
-      (w ? '<div class="card tile"><h3>Due in 12 months</h3><div class="v num">' + money(w.next12_bn) + '</div><div class="l">' + Math.round(w.next12_share) + '% of all marketable Treasury debt must be rolled over within a year. <a href="#p75d-wall">The wall &rarr;</a></div></div>' : '') +
-      (it ? '<div class="card tile"><h3>Interest per tax dollar</h3><div class="v num">' + Math.round(it.cents_per_tax_dollar) + '¢</div><div class="l">of every federal tax dollar goes to interest this fiscal year' + (it.cents_per_tax_dollar_prior != null ? ', up from ' + Math.round(it.cents_per_tax_dollar_prior) + '¢ a year ago' : '') + '. <a href="#p75d-cost">The cost &rarr;</a></div></div>' : '') +
-      (ow ? '<div class="card tile"><h3>Held by foreigners</h3><div class="v num">' + Math.round(ow.foreign_share) + '%</div><div class="l">of debt held by the public' + (ow.share_peak ? ', down from ' + Math.round(ow.share_peak.value) + '% in ' + ow.share_peak.date.slice(0, 4) : '') + '. <a href="#p75d-buyers">The buyers &rarr;</a></div></div>' : '') +
+    // Overview: one dial per question. Tap a card to open its section below.
+    var ov = function (k, title, dialHtml, big, col, word, line) {
+      return '<button type="button" class="dt-ovc" data-open="' + k + '" aria-label="' + esc(title + ': ' + big + '. Show the detail.') + '">' +
+        '<span class="dt-ovh"><span>' + title + '</span><span class="dt-go">Details ›</span></span>' +
+        '<span class="dt-m"><span class="dt-d">' + dialHtml + '</span><span class="dt-r"><b style="color:' + col + '">' + big + '</b>' +
+        (word ? '<em style="color:' + col + '">' + word + '</em>' : '') + '<span>' + line + '</span></span></span></button>';
+    };
+    h += '<div class="dt-ov">' +
+      (w ? ov('wall', 'Due in 12 months', dial({ v: w.next12_share, min: 0, max: 50, rest: 0, from: 0, color: '#FFB224', aria: Math.round(w.next12_share) + '% of marketable debt due within a year' }),
+        money(w.next12_bn), '#FFB224', Math.round(w.next12_share) + '% of the debt', 'must be refinanced within a year.') : '') +
+      (it ? ov('cost', 'Interest per tax dollar', dial({ v: it.cents_per_tax_dollar, min: 0, max: 40, rest: 0, from: 0, notch: it.cents_per_tax_dollar_prior, color: '#FF3D5E', aria: Math.round(it.cents_per_tax_dollar) + ' cents of every tax dollar goes to interest' }),
+        Math.round(it.cents_per_tax_dollar) + '¢', '#FF3D5E', it.cents_per_tax_dollar_prior != null ? 'Up from ' + Math.round(it.cents_per_tax_dollar_prior) + '¢' : '', 'of every tax dollar goes to interest.' + (it.cents_per_tax_dollar_prior != null ? ' Notch: a year ago.' : '')) : '') +
+      (ow ? ov('buyers', 'Held by foreigners', dial({ v: ow.foreign_share, min: 0, max: 60, rest: 0, from: 0, notch: ow.share_peak ? ow.share_peak.value : null, color: '#1FD8FF', aria: Math.round(ow.foreign_share) + '% of the debt is held abroad' }),
+        Math.round(ow.foreign_share) + '%', '#1FD8FF', ow.share_peak ? 'Peak ' + Math.round(ow.share_peak.value) + '% in ' + ow.share_peak.date.slice(0, 4) : '', 'of public debt is held abroad.' + (ow.share_peak ? ' Notch: the peak.' : '')) : '') +
       '</div>';
+
+    // Detail: three sections that fold open one at a time
+    var sec = function (k, n, title, sum, col, reading, sub) {
+      var on = OPEN === k;
+      return '<section class="dt-sec"><button type="button" class="dt-tg" data-dt="' + k + '" aria-expanded="' + on + '" aria-controls="dts-' + k + '">' +
+        '<span class="dt-h"><span class="n">' + n + '</span>' + title + '</span><span class="dt-sum" style="color:' + col + '">' + sum + '</span><span class="dt-car" aria-hidden="true"></span></button>' +
+        '<div class="dt-body" id="dts-' + k + '"' + (on ? '' : ' hidden') + '>' +
+        (reading ? '<p class="dt-means"><i aria-hidden="true"></i><span><b>What it means:</b> ' + esc(reading.text) + '</span></p>' : '') +
+        '<p class="sub">' + sub + '</p>';
+    };
+    h += '<div class="dt-panel">';
 
     // 1. The wall
     if (w) {
       var keys = [{ k: 'bills', name: 'Bills (under 1 year)', color: C1 }, { k: 'notes', name: 'Notes (2–10 years)', color: C2 },
                   { k: 'bonds', name: 'Bonds (20–30 years)', color: C3 }, { k: 'other', name: 'TIPS and floating-rate', color: C4 }];
       var yrs = w.by_year.map(function (r) { return { year: r.year, bills: r.bills, notes: r.notes, bonds: r.bonds, other: (r.tips || 0) + (r.frn || 0) }; });
-      h += '<h2 id="p75d-wall"><span class="n">01</span>The wall</h2><p class="sub">Every marketable Treasury outstanding, grouped by the year it comes due. Each one has to be repaid, almost always with new borrowing at whatever rates are then.</p>' +
-        means(R.wall) +
+      h += sec('wall', '01', 'The wall', money(w.next12_bn) + ' due in 12 months', '#FFB224', R.wall, 'Every marketable Treasury outstanding, grouped by the year it comes due. Each one has to be repaid, almost always with new borrowing at whatever rates are then.') +
         '<div class="card"><h3>Treasury debt maturing each year</h3><p class="cap">' + money(w.total_bn) + ' outstanding across ' + w.securities + ' securities as of ' + mon(w.as_of) +
         '. Average time to maturity: ' + w.avg_years_to_maturity + ' years. ' + new Date().getFullYear() + ' shows only what is left of this year.</p>' +
         '<div class="legend">' + keys.map(function (k) { return '<span><i style="background:' + k.color + '"></i>' + k.name + '</span>'; }).join('') + '</div>' +
-        stackChart(yrs, keys, function (r) { return String(r.year); }, 300) + '</div>';
+        stackChart(yrs, keys, function (r) { return String(r.year); }, 230) + '</div>';
     }
     if (rt) {
       var am = rt.avg_marketable;
       h += '<div class="gap"></div><div class="two"><div class="card"><h3>Average rate the government pays</h3><p class="cap">On all marketable debt. It moves slowly because only the debt that rolls over reprices.</p>' +
-        lineChart([{ name: 'Average rate', color: C1, points: am.history }], function (v) { return v.toFixed(v < 10 && arguments[1] ? 1 : 2) + '%'; }, 240,
+        lineChart([{ name: 'Average rate', color: C1, points: am.history }], function (v) { return v.toFixed(v < 10 && arguments[1] ? 1 : 2) + '%'; }, 190,
           { aria: 'Average interest rate on marketable Treasury debt', marks: [{ date: am.low.date, value: am.low.value, text: 'Low ' + am.low.value.toFixed(2) + '%', below: true }, { date: am.date, value: am.value, text: am.value.toFixed(2) + '%' }] }) +
-        '</div><div class="card"><h3>The repricing</h3>' + means(R.reprice).replace('class="means"', 'class="means" style="margin:10px 0 14px"') +
+        '</div><div class="card"><h3>The repricing</h3>' + (R.reprice ? '<p class="cap" style="margin:6px 0 12px;font-size:14px;color:#F1ECE2">' + esc(R.reprice.text) + '</p>' : '') +
         '<table><thead><tr><th>Rate</th><th class="r">Level</th></tr></thead><tbody>' +
         (w && w.maturing_coupon_rate != null ? '<tr><td>Coupon on notes and bonds maturing in 12 months</td><td class="r num">' + w.maturing_coupon_rate.toFixed(2) + '%</td></tr>' : '') +
         '<tr><td>Average rate on all marketable debt</td><td class="r num">' + am.value.toFixed(2) + '%</td></tr>' +
@@ -253,6 +353,7 @@
         '<tr><td>3-month bill today</td><td class="r num">' + rt.market.t3m.value.toFixed(2) + '%</td></tr>' +
         '<tr><td>10-year note today</td><td class="r num">' + rt.market.t10.value.toFixed(2) + '%</td></tr></tbody></table></div></div>';
     }
+    if (w) h += '</div></section>';
 
     // 2. The cost
     if (it) {
@@ -261,18 +362,17 @@
       var lines = [{ name: 'Interest', label: 'Interest', color: C1, points: pts('interest') },
                    { name: 'Medicare', label: 'Medicare', color: C2, points: pts('medicare') },
                    { name: 'Defense', label: 'Defense', color: C3, points: pts('defense') }];
-      h += '<h2 id="p75d-cost"><span class="n">02</span>The cost</h2><p class="sub">Net interest the government pays on its debt, compared with its biggest programs. Each point is a rolling 12-month total, so seasonal swings wash out.</p>' +
-        means(R.cost) +
+      h += sec('cost', '02', 'The cost', Math.round(it.cents_per_tax_dollar) + '¢ of each tax dollar', '#FF3D5E', R.cost, 'Net interest the government pays on its debt, compared with its biggest programs. Each point is a rolling 12-month total, so seasonal swings wash out.') +
         '<div class="two"><div class="card"><h3>Yearly spending, rolling 12 months</h3><p class="cap">Social Security, the largest line at ' + money(it.ttm.social_security) + ', is left off so the others stay readable. Medicare zigzags because its payment dates shift between months.</p>' +
         '<div class="legend">' + lines.map(function (l) { return '<span><i style="background:' + l.color + '"></i>' + l.name + '</span>'; }).join('') + '</div>' +
-        lineChart(lines, function (v, ax) { return ax ? (v >= 1000 ? '$' + +(v / 1000).toFixed(2) + 'T' : '$' + Math.round(v) + 'B') : money(v); }, 280, { endLabels: true, aria: 'Interest, Medicare and defense spending' }) + '</div>' +
+        lineChart(lines, function (v, ax) { return ax ? (v >= 1000 ? '$' + +(v / 1000).toFixed(2) + 'T' : '$' + Math.round(v) + 'B') : money(v); }, 220, { endLabels: true, aria: 'Interest, Medicare and defense spending' }) + '</div>' +
         '<div class="card"><h3>Cents of each tax dollar</h3><p class="cap">Interest as a share of federal revenue, rolling 12 months.</p>' +
-        lineChart([{ name: 'Interest share', color: C1, points: it.cents_history }], function (v) { return Math.round(v) + '¢'; }, 200, { aria: 'Interest as cents per tax dollar' }) +
+        lineChart([{ name: 'Interest share', color: C1, points: it.cents_history }], function (v) { return Math.round(v) + '¢'; }, 165, { aria: 'Interest as cents per tax dollar' }) +
         '<table style="margin-top:14px"><tbody>' +
         '<tr><td>Interest, fiscal ' + it.fy + ' to date</td><td class="r num">' + money(it.fytd_interest_bn) + '</td></tr>' +
         (it.prior_fytd_interest_bn ? '<tr><td>Same point last year</td><td class="r num">' + money(it.prior_fytd_interest_bn) + '</td></tr>' : '') +
         '<tr><td>Tax revenue, fiscal ' + it.fy + ' to date</td><td class="r num">' + money(it.fytd_receipts_bn) + '</td></tr></tbody></table></div></div>' +
-        '<p class="note">Through ' + mon(it.as_of) + '. The fiscal year runs October to September. Net interest is interest paid to the public minus interest the Treasury earns.</p>';
+        '<p class="note">Through ' + mon(it.as_of) + '. The fiscal year runs October to September. Net interest is interest paid to the public minus interest the Treasury earns.</p></div></section>';
     }
 
     // 3. The buyers
@@ -283,8 +383,7 @@
                    { n: 'Foreign governments', v: ow.foreign_official_bn || 0, c: C4, d: 'Central banks, sovereign funds' },
                    { n: 'Federal Reserve', v: ow.fed_bn, c: C3, d: 'Held on the Fed’s balance sheet' }];
       var sum = parts.reduce(function (s, p) { return s + p.v; }, 0);
-      h += '<h2 id="p75d-buyers"><span class="n">03</span>The buyers</h2><p class="sub">Who owns the ' + money(ow.public_bn) + ' of debt held by the public. The more of it that rests with price-sensitive buyers, the more yields have to rise to attract them.</p>' +
-        means(R.buyers) +
+      h += sec('buyers', '03', 'The buyers', Math.round(ow.foreign_share) + '% held abroad', '#1FD8FF', R.buyers, 'Who owns the ' + money(ow.public_bn) + ' of debt held by the public. The more of it that rests with price-sensitive buyers, the more yields have to rise to attract them.') +
         '<div class="card"><h3>Who holds U.S. debt</h3><p class="cap">As of ' + mon(ow.as_of + '-01') + '. U.S. investors are what is left after foreign holders and the Fed.</p>' +
         '<div class="own" role="img" aria-label="Ownership split">' + parts.map(function (p) {
           return '<div title="' + esc(p.n) + ': ' + money(p.v) + ' (' + (100 * p.v / sum).toFixed(0) + '%)" style="width:' + (100 * p.v / sum).toFixed(2) + '%;background:' + p.c + '"></div>';
@@ -292,7 +391,7 @@
           return '<div><div class="k"><i style="background:' + p.c + '"></i>' + esc(p.n) + '</div><div class="a num">' + money(p.v) + '</div><div class="p">' + (100 * p.v / sum).toFixed(0) + '% · ' + esc(p.d) + '</div></div>';
         }).join('') + '</div></div><div class="gap"></div>' +
         '<div class="two"><div class="card"><h3>Foreign share since 2000</h3><p class="cap">Share of debt held by the public owned by foreign investors, quarterly.</p>' +
-        lineChart([{ name: 'Foreign share', color: C2, points: ow.share_history }], function (v) { return Math.round(v) + '%'; }, 260,
+        lineChart([{ name: 'Foreign share', color: C2, points: ow.share_history }], function (v) { return Math.round(v) + '%'; }, 200,
           { aria: 'Foreign share of U.S. debt since 2000', tipDate: function (d) { var x = d8(d); return 'Q' + (Math.floor(x.getUTCMonth() / 3) + 1) + ' ' + x.getUTCFullYear(); },
             marks: ow.share_peak ? [{ date: ow.share_peak.date, value: ow.share_peak.value, text: 'Peak ' + Math.round(ow.share_peak.value) + '%' }] : [] }) +
         '</div><div class="card"><h3>Largest foreign holders</h3><p class="cap">Change over the 12 months to ' + mon(ow.as_of + '-01') + '.</p>' +
@@ -300,14 +399,41 @@
         ow.countries.map(function (c) {
           return '<tr><td>' + esc(c.name) + '</td><td class="r num">' + money(c.value, 2) + '</td><td class="r num dn">' + (c.change_12m == null ? '–' : (c.change_12m >= 0 ? '▲ ' : '▼ ') + signedMoney(c.change_12m)) + '</td></tr>';
         }).join('') + '</tbody></table></div></div>' +
-        '<p class="note">Countries are where the securities are held in custody, not always who owns them: Belgium, Luxembourg and the Cayman Islands hold large amounts for investors elsewhere.</p>';
+        '<p class="note">Countries are where the securities are held in custody, not always who owns them: Belgium, Luxembourg and the Cayman Islands hold large amounts for investors elsewhere.</p></div></section>';
     }
+    h += '</div>';   // the sections panel
 
     h += '<p class="foot">Debt Trap is built from U.S. Treasury data (Monthly Statement of the Public Debt, Monthly Treasury Statement, Average Interest Rates, Debt to the Penny and Treasury International Capital) and FRED (Federal Reserve Bank of St. Louis). ' +
       'This product uses the FRED® API but is not endorsed or certified by the Federal Reserve Bank of St. Louis. For education, not financial advice.<br>&copy; ' + new Date().getFullYear() + ' Rahul Saxena. All rights reserved.</p></div>';
     return h;
   }
 
+  var OPEN = null;   // which section is open: wall, cost, buyers or none
+  function wireSections(host) {
+    if (host.getAttribute('data-dt-wired')) return; host.setAttribute('data-dt-wired', '1');
+    host.addEventListener('click', function (e) {
+      var oc = e.target.closest('[data-open]');   // an overview card: open its section and bring it into view
+      if (oc) {
+        var t = host.querySelector('.dt-tg[data-dt="' + oc.getAttribute('data-open') + '"]'); if (!t) return;
+        if (t.getAttribute('aria-expanded') !== 'true') t.click();
+        t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+      var tg = e.target.closest('.dt-tg'); if (!tg) return;
+      var k = tg.getAttribute('data-dt'); OPEN = OPEN === k ? null : k;
+      host.querySelectorAll('.dt-tg').forEach(function (t) {
+        var on = t.getAttribute('data-dt') === OPEN, body = host.querySelector('#dts-' + t.getAttribute('data-dt'));
+        t.setAttribute('aria-expanded', on ? 'true' : 'false'); if (body) body.hidden = !on;
+      });
+      if (OPEN) drawAll(host);   // charts in a just-opened section need their real width
+    });
+  }
+  function sweep(host) {   // overview dials glide from the left end to their reading once the page settles
+    setTimeout(function () { requestAnimationFrame(function () {
+      var o = host.querySelector('.dt-ov'); if (!o) return; o.classList.add('go');
+      o.querySelectorAll('.p75n').forEach(function (n) { n.style.transform = 'rotate(' + n.getAttribute('data-a') + 'deg)'; });
+    }); }, 650);
+  }
   var cache = null, loading = false, waiting = [];
   function load(cb) {
     // Queue every caller: the site can rebuild the page while data is loading, and the redrawn page must hear back too
@@ -323,13 +449,13 @@
     if (document.querySelector('.p75debt')) return;
     once();
     var host = document.createElement('div'); host.className = 'p75debt';
-    host.innerHTML = '<div class="wrap"><div class="eyebrow">Pulse · Debt Trap</div><h1>The Debt Trap</h1><div class="load">Adding up the debt…</div></div>';
+    host.innerHTML = '<div class="wrap"><div class="eyebrow">Kinetics · Debt Trap</div><h1>The Debt Trap</h1><div class="load">Adding up the debt…</div></div>';
     var blocks = main.querySelector('.page__blocks');
     (blocks || main).appendChild(host);
     load(function (j) {
       if (!document.body.contains(host)) return;
       if (!j || !(j.wall || j.interest || j.owners)) { host.querySelector('.load').textContent = 'Debt Trap data is unavailable right now. Please try again shortly.'; return; }
-      host.innerHTML = page(j); drawAll(host);
+      host.innerHTML = page(j); drawAll(host); wireSections(host); sweep(host);
       var last = host.clientWidth, t;
       onResize = function () { clearTimeout(t); t = setTimeout(function () { if (host.clientWidth !== last) { last = host.clientWidth; drawAll(host); } }, 150); };
       window.addEventListener('resize', onResize);
