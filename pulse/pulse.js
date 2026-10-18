@@ -279,7 +279,7 @@
     '.p75ck-sheet.open{pointer-events:auto;visibility:visible;transition:none}' +
     '.p75ck-sheet .sh-bd{position:absolute;inset:0;background:rgba(0,0,0,.4);opacity:0;transition:opacity .3s;touch-action:none}' +
     '.p75ck-sheet.open .sh-bd{opacity:1}' +
-    '.p75ck-sheet .sh{position:absolute;left:0;right:0;bottom:0;max-height:62vh;display:flex;flex-direction:column;padding:0 10px calc(10px + env(safe-area-inset-bottom));' +
+    '.p75ck-sheet .sh{position:absolute;left:0;right:0;bottom:0;max-height:52vh;display:flex;flex-direction:column;padding:0 10px calc(10px + env(safe-area-inset-bottom));' +
       'background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold);border-bottom:0;border-radius:18px 18px 0 0;' +
       'transform:translateY(105%);transition:transform .3s cubic-bezier(.2,.8,.2,1)}' +
     '.p75ck-sheet.open .sh{transform:none}' +
@@ -289,6 +289,8 @@
     '.p75ck-sheet .sh-bar button{min-width:44px;min-height:44px;border-radius:10px;border:1px solid #3A3C42;background:#111214;color:var(--cream);font:inherit;font-size:18px;cursor:pointer}' +
     '.p75ck-sheet .sh-bar button:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
     '.p75ck-sheet .sh-pos{flex:1;text-align:center;color:var(--muted);font-size:13px;letter-spacing:.06em}' +
+    '.p75ck-sheet .sh-dial{float:right;width:112px;margin:6px 4px 4px 10px}.p75ck-sheet .sh-dial svg{display:block;width:100%;height:auto}' +
+    '.p75ck-sheet .sh-dial .ck-n,.p75ck-sheet .sh-dial .ck-hz,.p75ck-sheet .sh-dial .p75n{transition:transform 4.5s cubic-bezier(.37,0,.3,1)}.p75ck-sheet .sh-dial .ck-snap{transition:none!important}' +
     '.p75ck-sheet .sh-body{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}' +
     '@media (min-width:600px){.p75ck-sheet .sh{left:50%;right:auto;width:560px;margin-left:-280px}}' +
     '@media (prefers-reduced-motion:reduce){.p75ck-sheet .sh,.p75ck-sheet .sh-bd{transition:none}}' +
@@ -672,7 +674,7 @@
           '<button type="button" data-sh-step="-1" aria-label="Previous gauge">&larr;</button><span class="sh-pos"></span>' +
           '<button type="button" data-sh-step="1" aria-label="Next gauge">&rarr;</button>' +
           '<button type="button" data-sh-close data-sh-x aria-label="Close">&times;</button></div></div>' +
-        '<div class="sh-body"><div class="ck-mfd" aria-live="polite"></div></div></div>';
+        '<div class="sh-body"><div class="sh-dial" aria-hidden="true"></div><div class="ck-mfd" aria-live="polite"></div></div></div>';
     document.body.appendChild(s);
     SH.el = s;
     s.addEventListener('click', function (e) {
@@ -713,10 +715,10 @@
       s.classList.add('open'); s.setAttribute('aria-hidden', 'false');
       var x = s.querySelector('[data-sh-x]'); if (x) x.focus({ preventScroll: true });
     }
-    // Keep the gauge visible in the space above the sheet (sheet tops out at 62% of the screen)
+    // Keep the tapped dial visible in the space above the sheet, measured from the sheet's real height
     var tb = document.querySelector('.top-blocks--sticky'), bar = host.querySelector('.tabs');
     var top = (tb ? tb.getBoundingClientRect().height : 0) + (bar ? bar.getBoundingClientRect().height : 0) + 8;
-    var r = bt.getBoundingClientRect(), room = window.innerHeight * 0.38;
+    var dv = bt.querySelector('svg') || bt, r = dv.getBoundingClientRect(), room = window.innerHeight - s.querySelector('.sh').offsetHeight - 8;
     if (r.top < top || r.bottom > room) {
       var want = r.top + window.pageYOffset - top - Math.max(0, (room - top - r.height) / 2);
       window.scrollTo({ top: Math.max(0, want), behavior: 'smooth' });
@@ -764,7 +766,22 @@
         n.style.transition = 'none'; n.style.transform = 'rotate(' + (n.getAttribute('data-r') || 0) + 'deg)'; void n.getBoundingClientRect();
         n.style.transition = ''; setTimeout(function () { n.style.transform = 'rotate(' + n.getAttribute('data-a') + 'deg)'; }, 120);
       });
-      if (ckPhone()) ckSheetOpen(host, key, it, bt, play);   // phones: explanation slides up from the bottom, gauge stays in view
+      if (ckPhone()) {   // phones: explanation slides up from the bottom, with its own copy of the dial so the needle is always in view
+        ckSheetOpen(host, key, it, bt, play);
+        var sd = SH.el && SH.el.querySelector('.sh-dial'), sv = bt.querySelector('svg');
+        if (sd && sv) {
+          sd.innerHTML = sv.outerHTML;
+          var smv = sd.querySelector('.ck-n, .ck-hz');
+          if (smv) {
+            smv.classList.add('ck-snap'); ckApply(sd, it, 0); void smv.getBoundingClientRect();
+            requestAnimationFrame(function () { smv.classList.remove('ck-snap'); setTimeout(function () { ckApply(sd, it, it.target); }, 250); });
+          }
+          sd.querySelectorAll('.p75n').forEach(function (n) {
+            n.style.transition = 'none'; n.style.transform = 'rotate(' + (n.getAttribute('data-r') || 0) + 'deg)'; void n.getBoundingClientRect();
+            n.style.transition = ''; setTimeout(function () { n.style.transform = 'rotate(' + n.getAttribute('data-a') + 'deg)'; }, 250);
+          });
+        }
+      }
     }
     // Open one section at a time. Opening one shows the info screen beside it, swings that section's needles
     // and (on wider screens) puts its first instrument on the info screen so it is never blank.
