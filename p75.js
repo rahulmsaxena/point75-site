@@ -1006,7 +1006,10 @@
       // phone menu: Tools in gold so it stands out there too
       '.block-header-layout-mobile .p75tools-li .item-content{color:#C9A227!important}' +
       // phone header: 12px above and below the logo instead of 24px, since it stays pinned while reading
-      '.block-header-layout-mobile{padding-top:12px!important;padding-bottom:12px!important}';
+      '.block-header-layout-mobile{padding-top:12px!important;padding-bottom:12px!important}' +
+      // desktop header: 14px above and below instead of 30px, logo 58px tall instead of 73px (133px -> 101px)
+      '.block-header-layout-desktop{padding-top:14px!important;padding-bottom:14px!important}' +
+      '.block-header-layout-desktop .block-header-logo__image{height:58px!important;width:auto!important;max-width:none!important}';
     document.head.appendChild(st);
   })();
   // ---------- Journal cards: quieter type so the page invites reading instead of shouting.
