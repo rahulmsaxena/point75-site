@@ -170,23 +170,26 @@
     '.p75pulse .ck-pill b{font-size:17px;font-variant-numeric:tabular-nums}' +
     // takeaway
     '.p75pulse .tk{display:flex;flex-direction:column;gap:12px}' +
-    '.p75pulse .tk-head{margin:0;padding:16px 20px;border-radius:16px;background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold);' +
-      'font-family:"Hedvig Letters Serif",Georgia,serif;font-size:21px;line-height:1.45;color:#fff}' +
-    '.p75pulse .tk-watch{display:flex;align-items:center;gap:10px;margin:0;font-size:15px;color:var(--soft)}.p75pulse .tk-watch b{color:#FFD23F}' +
+    '.p75pulse .tk-head{margin:0;padding:18px 22px;border-radius:16px;background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold);' +
+      'font-family:"Hedvig Letters Serif",Georgia,serif;font-size:24px;line-height:1.45;color:#fff}' +
+    '.p75pulse .tk .hl{text-shadow:0 0 12px currentColor}' +
+    '.p75pulse .tk-watch{display:flex;align-items:center;gap:10px;margin:0;font-size:17px;color:#F1ECE2}.p75pulse .tk-watch b{color:#FFD23F}' +
     '.p75pulse .tk-watch i{flex:0 0 auto;width:9px;height:9px;border-radius:50%;background:#FF3D5E;animation:p75ping 1.8s ease-out infinite}' +
     '.p75pulse .tk-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}' +
     '.p75pulse a.tk-c{display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:14px;background:var(--panel);border:1px solid var(--line);border-top:2px solid var(--gold);color:inherit;text-decoration:none;transition:border-color .15s,transform .15s}' +
     '.p75pulse a.tk-c:hover,.p75pulse a.tk-c:focus-visible{border-color:var(--gold);outline:none}' +
     '@media (hover:hover){.p75pulse a.tk-c:hover{transform:translateY(-2px)}}' +
-    '.p75pulse .tk-h{display:flex;align-items:center;justify-content:space-between}.p75pulse .tk-go{color:var(--gold);font-size:13px;font-weight:800}' +
+    '.p75pulse .tk-h{display:flex;align-items:center;justify-content:space-between}.p75pulse .tk-go{color:var(--gold);font-size:14.5px;font-weight:800}' +
     '.p75pulse .tk-b{display:flex;align-items:center;gap:16px}' +
-    '.p75pulse .tk-d{flex:0 0 auto;width:96px}.p75pulse .tk-d svg{display:block;width:100%;height:auto;overflow:visible}' +
+    '.p75pulse .tk-d{flex:0 0 auto;width:108px}.p75pulse .tk-d svg{display:block;width:100%;height:auto;overflow:visible}' +
     '.p75pulse .tk-t{display:flex;flex-direction:column;gap:3px;min-width:0}' +
-    '.p75pulse .tk-t > b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:30px;line-height:1;text-shadow:0 0 14px currentColor}.p75pulse .tk-t > b small{font-size:16px;opacity:.75}' +
-    '.p75pulse .tk-t em{font-style:normal;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}' +
-    '.p75pulse .tk-l{font-size:14px;line-height:1.5;color:var(--soft)}.p75pulse .tk-news{display:block;font-size:15px;color:#fff;font-weight:600;line-height:1.45}' +
+    '.p75pulse .tk-t > b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:34px;line-height:1;text-shadow:0 0 14px currentColor}.p75pulse .tk-t > b small{font-size:16px;opacity:.75}' +
+    '.p75pulse .tk-t em{font-style:normal;font-size:13.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}' +
+    '.p75pulse .tk-l{font-size:16.5px;line-height:1.5;color:#F1ECE2}.p75pulse .tk-news{display:block;font-size:17.5px;color:#fff;font-weight:600;line-height:1.45}' +
     '.p75pulse .tk.go .p75f{stroke-dashoffset:0}' +
-    '@media (max-width:760px){.p75pulse .tk-grid{grid-template-columns:1fr}.p75pulse .tk-head{font-size:18px;padding:14px 16px}.p75pulse .tk-d{width:80px}}' +
+    '.p75pulse a.tk-back{display:inline-flex;align-items:center;gap:8px;min-height:40px;margin:12px 0 -4px;padding:0 16px;border-radius:99px;border:1px solid var(--gold);background:rgba(201,162,39,.1);color:#FFD23F;font-weight:800;font-size:14.5px;text-decoration:none}' +
+    '.p75pulse a.tk-back:hover,.p75pulse a.tk-back:focus-visible{background:rgba(201,162,39,.22);outline:none}' +
+    '@media (max-width:760px){.p75pulse .tk-grid{grid-template-columns:1fr}.p75pulse .tk-head{font-size:20px;padding:14px 16px}.p75pulse .tk-l{font-size:15.5px}.p75pulse .tk-d{width:80px}}' +
     // plumbing gauge board
     '.p75pulse .pl-rows{display:flex;flex-direction:column;gap:6px}' +
     '.p75pulse .pl-board .ck-sum{font-size:13px;gap:6px}.p75pulse .pl-sep{color:var(--muted)}' +
@@ -937,7 +940,7 @@
       var dc = pc == null ? NEUT : o.bad > 0 ? NEON(pc) : o.bad < 0 ? NEON(100 - pc) : '#C8A8FF';
       CK_ITEMS[key] = { mover: 'none', target: 0, name: o.name, sub: o.value + ' · ' + o.change,
         what: o.what, now: o.value + ', ' + o.change + '.' + (pc != null && !/year/.test(o.change) ? ' That is ' + (pc >= 99 ? 'the highest reading of the past year.' : pc <= 1 ? 'the lowest reading of the past year.' : 'higher than ' + pc + '% of readings over the past year.') : ''), care: o.care, src: o.src };
-      rows.push({ grp: grp, nm: o.name, pc: pc, bad: o.bad, sum: '<span style="color:' + dc + '">' + esc(o.tag || o.name) + ' ' + o.value + '</span>', html: '<button type="button" class="ck-i pl" data-ck="' + key + '" aria-pressed="false" aria-label="' + esc(o.name + ': ' + o.value + ', ' + o.change + '. Show what it means.').replace(/"/g, '&quot;') + '">' +
+      rows.push({ grp: grp, nm: o.name, pc: pc, bad: o.bad, dc: dc, sum: '<span style="color:' + dc + '">' + esc(o.tag || o.name) + ' ' + o.value + '</span>', html: '<button type="button" class="ck-i pl" data-ck="' + key + '" aria-pressed="false" aria-label="' + esc(o.name + ': ' + o.value + ', ' + o.change + '. Show what it means.').replace(/"/g, '&quot;') + '">' +
         '<span class="pl-d">' + (pc != null ? dial({ v: pc, min: 0, max: 100, rest: 0, from: 0, color: dc, aria: o.name + ' at the ' + ord(pc) + ' percentile of its past year' }) : '') +
           '<small>' + (pc != null ? ord(pc) + ' pct' : '') + '</small></span>' +
         '<span class="pl-n"><b>' + esc(o.name) + '</b><small>' + esc(o.short) + '</small></span>' +
@@ -1003,12 +1006,14 @@
       var lean = bsc == null ? '' : bsc >= 20 ? 'Bonds lean bullish, so rates are drifting lower' : bsc <= -20 ? 'Bonds lean bearish, so rates are drifting higher' : 'Bonds are on the fence';
       var sw = ssc == null ? '' : ssc < 30 ? 'calm' : ssc < 55 ? 'moderate' : ssc < 75 ? 'elevated' : 'high';
       var drv = (s.components || []).slice().sort(function (x, y) { return y.pct * y.weight - x.pct * x.weight; }).slice(0, 2).map(function (c) { return lc(c.name); });
-      var head = (lean ? lean : '') + (sw ? (lean ? ', and stress is ' : 'Stress is ') + sw + (ssc >= 55 && drv.length ? ', mostly from ' + list(drv) : '') : '') + '.';
-      if (typeof dword !== 'undefined' && dword) head += ' At Treasury auctions: ' + lc(dword) + '.';
+      var C = function (txt, col) { return '<span class="hl" style="color:' + col + '">' + esc(txt) + '</span>'; };
+      var leanH = bsc == null ? '' : bsc >= 20 ? 'Bonds lean ' + C('bullish', BULL) + ', so rates are drifting ' + C('lower', BULL) : bsc <= -20 ? 'Bonds lean ' + C('bearish', BEAR) + ', so rates are drifting ' + C('higher', BEAR) : 'Bonds are ' + C('on the fence', '#E6E2D8');
+      var head = leanH + (sw ? (leanH ? ', and stress is ' : 'Stress is ') + C(sw, stressColor(ssc)) + (ssc >= 55 && drv.length ? ', mostly from ' + drv.map(function (d) { return C(d, '#FFB224'); }).join(' and ') : '') : '') + '.';
+      if (typeof dword !== 'undefined' && dword) head += ' At Treasury auctions: ' + C(lc(dword), dcol) + '.';
       // the most extreme plumbing readings
       var hot = rows.filter(function (x) { return x.pc != null && x.bad && (x.bad > 0 ? x.pc : 100 - x.pc) >= 75; })
         .sort(function (x, y) { return (y.bad > 0 ? y.pc : 100 - y.pc) - (x.bad > 0 ? x.pc : 100 - x.pc); });
-      var watch = hot.length ? hot[0].nm + (hot[0].pc >= 99 ? ' is at its highest in a year' : hot[0].pc <= 1 ? ' is at its lowest in a year' : ' is higher than ' + hot[0].pc + '% of the past year') + '.' : '';
+      var watch = hot.length ? C(hot[0].nm, hot[0].dc) + (hot[0].pc >= 99 ? ' is at its highest in a year' : hot[0].pc <= 1 ? ' is at its lowest in a year' : ' is higher than ' + hot[0].pc + '% of the past year') + '.' : '';
       var votes = b.votes || [], vb = [], vr = [];
       votes.forEach(function (v) { if (v.vote > 0) vb.push(lc(v.name)); else if (v.vote < 0) vr.push(lc(v.name)); });
       var card = function (key, tab, dialHtml, big, bigCol, word, line) {
@@ -1021,20 +1026,20 @@
       var cards = '';
       if (bsc != null) cards += card('why', 'Signals', dial({ v: bsc, min: -100, max: 100, rest: 0, from: -100, color: bullColor(bsc), aria: 'Bull / Bear ' + signedInt(bsc) }),
         signedInt(bsc), bullColor(bsc), esc(b.label || ''),
-        (vr.length ? '<b style="color:' + BEAR + '">Bear</b>: ' + esc(list(vr)) + '. ' : '') + (vb.length ? '<b style="color:' + BULL + '">Bull</b>: ' + esc(list(vb)) + '. ' : '') +
-        (votes.length - vr.length - vb.length) + ' of ' + votes.length + ' signals hold.' + (ssc != null && drv.length ? ' Stress ' + ssc + ', led by ' + esc(list(drv)) + '.' : ''));
+        (vr.length ? C('Bear', BEAR) + ': ' + vr.map(function (v) { return C(v, BEAR); }).join(', ') + '. ' : '') + (vb.length ? C('Bull', BULL) + ': ' + vb.map(function (v) { return C(v, BULL); }).join(', ') + '. ' : '') +
+        (votes.length - vr.length - vb.length) + ' of ' + votes.length + ' signals hold.' + (ssc != null && drv.length ? ' Stress ' + C(String(ssc), stressColor(ssc)) + ', led by ' + drv.map(function (d) { return C(d, '#FFB224'); }).join(' and ') + '.' : ''));
       if (typeof dm !== 'undefined') cards += card('auctions', 'Auctions', dial({ v: dm, min: -100, max: 100, rest: 0, from: -100, color: dcol, aria: 'Auction demand ' + signedInt(dm) }),
         signedInt(dm), dcol, esc(dword),
-        gn.strong + ' strong, ' + gn.average + ' average, ' + gn.weak + ' weak of the last ' + a.recent.length + '.' +
-        (a.recent[0] ? ' Latest: ' + esc(a.recent[0].term.replace(' ', '-')) + ', ' + esc(a.recent[0].grade) + '.' : '') +
+        C(gn.strong + ' strong', BULL) + ', ' + gn.average + ' average, ' + C(gn.weak + ' weak', BEAR) + ' of the last ' + a.recent.length + '.' +
+        (a.recent[0] ? ' Latest: ' + esc(a.recent[0].term.replace(' ', '-')) + ', ' + C(a.recent[0].grade, gcol[a.recent[0].grade] || '#E6E2D8') + '.' : '') +
         (nx ? ' Next: ' + esc(nx.label) + ' ' + inDays(nx.date) + '.' : ''));
       if (rows.length) cards += card('plumbing', 'Plumbing', '',
         hot.length + '<small>/' + rows.length + '</small>', hot.length ? '#FF3D5E' : '#2BFF88', hot.length ? 'flashing' : 'all quiet',
-        hot.length ? esc(list(hot.slice(0, 3).map(function (x) { return x.nm + ' (' + (x.pc >= 99 ? 'year high' : x.pc + 'th pct') + ')'; }))) + '.' : 'No reading is in the top quarter of its past year.');
+        hot.length ? list(hot.slice(0, 3).map(function (x) { return C(x.nm, x.dc) + ' (' + (x.pc >= 99 ? 'year high' : x.pc + 'th pct') + ')'; })) + '.' : 'No reading is in the top quarter of its past year.');
       cards += card('wire', 'Live wire', '', '', '#fff', '', '<span class="tk-news" data-wire-top>Loading the latest headline…</span>');
       SEC.takeaway = '<h2>The takeaway</h2><p class="sub">Everything on this page in one screen, written from today’s readings. Tap a card for the detail behind it.</p>' +
-        '<div class="tk"><p class="tk-head">' + esc(head) + '</p>' +
-        (watch ? '<p class="tk-watch"><i aria-hidden="true"></i><b>Watch:</b> ' + esc(watch) + '</p>' : '') +
+        '<div class="tk"><p class="tk-head">' + head + '</p>' +
+        (watch ? '<p class="tk-watch"><i aria-hidden="true"></i><span><b>Watch:</b> ' + watch + '</span></p>' : '') +
         '<div class="tk-grid">' + cards + '</div></div>';
     })();
     SEC.wire = '<h2>Live wire</h2><p class="sub wire-sub">The latest bond, central-bank and macro headlines. Updated daily.</p><div class="wire" data-wire>Loading headlines…</div>';
@@ -1045,7 +1050,9 @@
     h = '<div class="wrap">' + head + '<nav class="tabs" role="tablist" aria-label="Pulse views">' + live.map(function (x) {
       var on = x.key === cur.key;
       return '<a role="tab" class="tab' + (on ? ' on' : '') + '" href="#' + x.key + '" data-sec="' + x.key + '" aria-selected="' + on + '"' + (on ? ' aria-current="page"' : '') + '>' + x.tab + '</a>';
-    }).join('') + '</nav><div class="view" role="tabpanel" aria-label="' + esc(cur.tab) + '">' + SEC[cur.key] + '</div>' + dt;
+    }).join('') + '</nav><div class="view" role="tabpanel" aria-label="' + esc(cur.tab) + '">' +
+      (FROM_TK && cur.key !== 'takeaway' ? '<a class="tk-back" href="#takeaway" data-sec="takeaway"><span aria-hidden="true">←</span> Back to the takeaway</a>' : '') +
+      SEC[cur.key] + '</div>' + dt;
 
     h += '<p class="foot">Pulse is built from public data: U.S. Treasury (Fiscal Data), CFTC Traders in Financial Futures, Federal Reserve Bank of New York, and FRED (Federal Reserve Bank of St. Louis), including SOFR from the Federal Reserve Bank of New York. This product uses the FRED® API but is not endorsed or certified by the Federal Reserve Bank of St. Louis. ' +
       'Signals are simple rules for education and are not financial advice.<br>&copy; ' + new Date().getFullYear() + ' Rahul Saxena. All rights reserved.</p></div>';
@@ -1091,7 +1098,7 @@
     }); }, 650);
   }
 
-  var FOLD = !!location.hash.slice(1), FOLD_ANIM = false;   // header and dials folded into the strip?
+  var FOLD = !!location.hash.slice(1), FOLD_ANIM = false, FROM_TK = false;   // header and dials folded into the strip?
   var cache = null, loading = false, waiting = [];
   function load(cb) {
     // Queue every caller: the site can rebuild the page while data is loading, and the redrawn page must hear back too
@@ -1132,6 +1139,7 @@
         }
         e.preventDefault();
         var k = a.getAttribute('data-sec');
+        FROM_TK = !!a.closest('.tk-c');   // a Takeaway card leaves a "Back to the takeaway" link on the tab it opens
         // Switch the view in place. If the reader had scrolled past the tab bar, bring the bar back to the
         // top (under the site header) so the new view starts in sight; otherwise leave the page where it is.
         var bar = host.querySelector('.tabs'), barTop = bar ? bar.getBoundingClientRect().top + window.pageYOffset : 0;
