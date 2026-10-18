@@ -56,6 +56,7 @@
       '.p75top>.p75cta:hover,.p75top>.p75cta:focus-visible{background:rgba(201,162,39,.08)!important}' +
     '}' +
     L + '{padding-bottom:24px!important}' +   // the builder's 60px under the Journal, before the disclaimer
+    I + ' .block-blog-list-item__cover-image-container{padding-bottom:0!important}' +   // the builder's 20px under every painting
     // Captions on the paintings (shared by desktop and phone)
     I + ' .p75ht{display:flex;flex-direction:column;gap:6px}' +
     I + ' .p75ht .m{display:flex;align-items:center;gap:8px;font:500 12px Manrope,system-ui,sans-serif;color:#C4BEB1}' +
@@ -71,7 +72,7 @@
     '@media (min-width:' + (PHONE + 1) + 'px){' +
       L + '{padding-top:20px!important;--p75H:clamp(220px,calc(100vh - 500px),440px)}' +
       L + ' .block-blog-list__list{display:flex!important;flex-wrap:nowrap!important;align-items:center;gap:24px!important;overflow-x:auto;overscroll-behavior-x:contain;' +
-        'scroll-snap-type:x proximity;scroll-padding:0 20px;padding:10px 20px 16px!important;grid-template-columns:none!important;scrollbar-width:none}' +
+        'scroll-snap-type:x proximity;scroll-padding:0 20px;padding:10px 20px 10px!important;grid-template-columns:none!important;scrollbar-width:none}' +
       L + ' .block-blog-list__list::-webkit-scrollbar{display:none}' +
       I + '{flex:0 0 auto;height:calc(var(--p75H) * var(--p75k));width:calc(var(--p75H) * var(--p75k) * 5 / 3);min-width:0;margin:0!important;' +
         'grid-column:auto!important;grid-row:auto!important;display:flex!important;flex-direction:column;scroll-snap-align:start}' +
@@ -121,7 +122,7 @@
       I + '.p75show .p75tap{opacity:0}' +
     '}' +
     // Arrows and dots (desktop and phones)
-    '.p75dots{display:flex;align-items:center;justify-content:center;gap:14px;margin:6px auto 0}' +
+    '.p75dots{display:flex;align-items:center;justify-content:center;gap:14px;margin:2px auto 0}' +
     '.p75dots>button{min-width:44px;min-height:44px;border-radius:22px;border:1px solid #3A3C42;background:#17181B;color:#EDE8DC;font:700 18px Manrope,system-ui,sans-serif;cursor:pointer}' +
     '.p75dots>button:hover,.p75dots>button:focus-visible{border-color:#C9A227;outline:none}' +
     '.p75dots .ds{display:flex;gap:2px}' +
