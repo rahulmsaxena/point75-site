@@ -27,27 +27,27 @@
     '.p75pulse h2{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:25px;margin:54px 0 6px}' +
     '.p75pulse h2 + .sub{color:var(--soft);font-size:14.5px;line-height:1.55;margin:0 0 18px;max-width:720px}' +
     // instruments
-    '.p75pulse .inst{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;margin-top:30px}' +
-    '.p75pulse .inst .card{display:flex;flex-direction:column}' +
+    '.p75pulse .inst{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;margin-top:18px}' +
+    '.p75pulse .inst .card{display:flex;flex-direction:column;padding:16px 18px}' +
     '.p75pulse .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}' +
-    '.p75pulse .card h3{margin:0 0 2px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}' +
-    '.p75pulse .meter{display:flex;gap:20px;align-items:center}' +
-    '.p75pulse .dial{flex:0 0 auto;width:196px}.p75pulse .dial svg{display:block;width:100%;height:auto;overflow:visible}' +
+    '.p75pulse .card h3{margin:0 0 6px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}' +
+    '.p75pulse .meter{display:flex;gap:16px;align-items:center}' +
+    '.p75pulse .dial{flex:0 0 auto;width:176px}.p75pulse .dial svg{display:block;width:100%;height:auto;overflow:visible}' +
     '.p75pulse .reading{flex:1;min-width:0}' +
-    '.p75pulse .big{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:52px;line-height:1;margin:2px 0 4px;font-variant-numeric:tabular-nums}' +
+    '.p75pulse .big{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:48px;line-height:1;margin:0 0 2px;font-variant-numeric:tabular-nums}' +
     '.p75pulse .big small{font-family:Manrope,sans-serif;font-size:14px;color:var(--muted);margin-left:4px}' +
-    '.p75pulse .verdict{font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}' +
-    '.p75pulse .hint{color:var(--soft);font-size:13.5px;line-height:1.6;text-align:justify;hyphens:auto;-webkit-hyphens:auto}' +
-    '.p75pulse .more{margin-top:auto;padding-top:18px;border-top:1px solid var(--line)}' +
-    '.p75pulse .inst .card > .more{margin-top:18px}' +
-    '.p75pulse .more .k{color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}' +
-    '.p75pulse .minis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}' +
-    '.p75pulse .mini{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 6px 10px;border-radius:12px;background:#121316;border:1px solid var(--line);text-align:center}' +
-    '.p75pulse .mini svg{display:block;width:100%;max-width:112px;height:auto;overflow:visible}' +
+    '.p75pulse .verdict{font-size:12.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}' +
+    '.p75pulse .hint{color:var(--soft);font-size:13.5px;line-height:1.5;text-align:justify;hyphens:auto;-webkit-hyphens:auto}' +
+    '.p75pulse .more{flex:1;display:flex;flex-direction:column;margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}' +
+    '.p75pulse .more .k{display:flex;flex-wrap:wrap;gap:4px 12px;color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}.p75pulse .more .k i{font-style:normal;margin-left:auto;letter-spacing:.06em}' +
+    '.p75pulse .minis{flex:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}' +
+    '.p75pulse .mini{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:6px 4px 7px;border-radius:12px;background:#121316;border:1px solid var(--line);text-align:center}' +
+    '.p75pulse .mini svg{display:block;width:100%;max-width:104px;height:auto;overflow:visible}' +
     '.p75pulse .mini .mn{font-size:12.5px;font-weight:700;color:var(--cream);line-height:1.3}' +
     '.p75pulse .mini .mw{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}' +
-    '.p75pulse .tally b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:34px;line-height:1.05;font-variant-numeric:tabular-nums}' +
-    '.p75pulse .tally .mini{padding:12px 6px}' +
+    '.p75pulse .votes{flex:1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:1fr;gap:6px}' +
+    '.p75pulse .vt{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:10px;background:#121316;border:1px solid var(--line);font-size:13px;font-weight:700;color:var(--cream);line-height:1.25;min-width:0}' +
+    '.p75pulse .vt b{flex:0 0 auto;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11px;color:#0b0c0e}' +
     '.p75pulse .p75n{transition:transform 1.6s cubic-bezier(.3,1.3,.5,1)}' +
     '.p75pulse .p75f{stroke-dashoffset:100;transition:stroke-dashoffset 1.6s cubic-bezier(.2,.8,.2,1)}' +
     '.p75pulse .inst.on .p75f{stroke-dashoffset:0}' +
@@ -109,7 +109,7 @@
     '.p75pulse .pn{display:flex;justify-content:space-between;gap:12px;margin-top:40px;border-top:1px solid var(--line);padding-top:16px}' +
     '.p75pulse .pn a{color:var(--soft);font-weight:600;text-decoration:none;font-size:15px}.p75pulse .pn a.nx{color:var(--gold);font-weight:800}' +
     '.p75pulse .view > h2:first-child{margin-top:26px}' +
-    '.p75pulse .tabs{position:sticky;top:var(--tabs-top,0px);z-index:6;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:36px -20px 0;padding:12px 20px;background:var(--ink);border-bottom:1px solid var(--line)}' +
+    '.p75pulse .tabs{position:sticky;top:var(--tabs-top,0px);z-index:6;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:22px -20px 0;padding:10px 20px;background:var(--ink);border-bottom:1px solid var(--line)}' +
     '.p75pulse .tabs::-webkit-scrollbar{display:none}' +
     // the tab bar is what follows the reader down this page, so the site's floating back/next bar stays hidden here
     'html.p75tabs #p75tf{display:none!important}' +
@@ -263,7 +263,7 @@
       '<circle cx="' + DCX + '" cy="' + DCY + '" r="' + (o.big ? 2.6 : 3.6) + '" fill="#F4F1EA"/>';
     if (o.center != null)
       svg += '<text x="' + DCX + '" y="' + (DCY + 50) + '" text-anchor="middle" font-size="34" font-weight="800" fill="' + o.color + '" font-family="Manrope,sans-serif" style="font-variant-numeric:tabular-nums">' + o.center + '</text>';
-    return '<svg viewBox="0 ' + (o.big ? -14 : 6) + ' 200 ' + (o.big ? 152 : 150) + '" role="img" aria-label="' + esc(o.aria || '').replace(/"/g, '&quot;') + '">' + svg + '</svg>';
+    return '<svg viewBox="' + (o.big ? '-6 -12 212 146' : '0 8 200 142') + '" role="img" aria-label="' + esc(o.aria || '').replace(/"/g, '&quot;') + '">' + svg + '</svg>';
   }
   // Bull / Bear: −100 (bear) on the left, 0 at the top, +100 (bull) on the right; the fill grows out of the middle
   function bullDial(score) {
@@ -643,17 +643,17 @@
     votes.forEach(function (v) { if (v.vote > 0) nb++; else if (v.vote < 0) nr++; else nh++; });
     var bc = bullColor(b.score), sc = s.score != null ? Math.round(s.score) : null, scol = stressColor(sc);
     var drivers = (s.components || []).slice().sort(function (x, y) { return y.pct * y.weight - x.pct * x.weight; }).slice(0, 3);
-    var tile = function (n, word, col) {
-      return '<div class="mini" style="border-color:' + col + '55;background:' + col + '14"><b style="color:' + col + '">' + n + '</b><span class="mw" style="color:' + col + '">' + word + '</span></div>';
-    };
     h += '<div class="inst">' +
       '<div class="card"><h3>Bull / Bear</h3><div class="meter">' +
         (b.score != null ? '<div class="dial">' + bullDial(b.score) + '</div>' : '') +
         '<div class="reading"><div class="big num" style="color:' + bc + '">' + (b.score > 0 ? '+' : '') + (b.score != null ? b.score : '–') + '</div>' +
         '<div class="verdict" style="color:' + bc + '">' + esc(b.label || 'No reading') + '</div>' +
         '<div class="hint"><b style="color:' + BULL + '">Blue</b> is bullish for bonds: prices up, yields down. <b style="color:' + BEAR + '">Red</b> is bearish: prices down, yields up. The needle runs from −100 to +100.</div></div></div>' +
-        (votes.length ? '<div class="more"><div class="k">How the ' + votes.length + ' signals voted</div><div class="minis tally">' +
-          tile(nb, '▲ Bull', BULL) + tile(nh, '• Hold', '#C2BCAF') + tile(nr, '▼ Bear', BEAR) + '</div></div>' : '') +
+        (votes.length ? '<div class="more"><div class="k">How the ' + votes.length + ' signals voted<i><span style="color:' + BULL + '">' + nb + ' bull</span> · ' + nh + ' hold · <span style="color:' + BEAR + '">' + nr + ' bear</span></i></div><div class="votes">' +
+          votes.map(function (v) {
+            var c = v.vote > 0 ? BULL : v.vote < 0 ? BEAR : '#C2BCAF', m = v.vote > 0 ? '▲' : v.vote < 0 ? '▼' : '•';
+            return '<div class="vt"><b style="background:' + c + '">' + m + '</b><span>' + esc(v.name) + '</span></div>';
+          }).join('') + '</div></div>' : '') +
       '</div>' +
       '<div class="card"><h3>Stress monitor</h3><div class="meter">' +
         (sc != null ? '<div class="dial">' + stressDial(sc, s.label) + '</div>' : '') +
