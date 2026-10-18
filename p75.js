@@ -735,6 +735,47 @@
   //   first page. NAV_FIX overrides specific pages. Bond Summary and Intelligent Summary articles live in an
   //   iframe sized to its content: they send {type:'nav'} with older/newer and we send {type:'go'} back.
   var HUB_BACK = ['/kinetics'];   // sections whose pages all go back to the section overview
+  var TABBED = ['/bond-summary'];  // sections whose pages are tabs of one another (see tabsRow)
+  function tabFamily(path) {
+    var out = null;
+    SECTION_FAMS.forEach(function (f) {
+      if (TABBED.indexOf(f.href) > -1 && (f.href === path || f.kids.some(function (k) { return k.href === path; }))) out = f;
+    });
+    return out;
+  }
+  // The tab strip under the top row on every page of a tabbed section: Overview, then each page.
+  function tabsRow(path) {
+    var row = document.getElementById('p75tabsrow'), f = tabFamily(path);
+    if (!f) { if (row) row.remove(); return; }
+    var tabs = [{ href: f.href, text: 'Overview' }].concat(f.kids.map(function (k) { return { href: k.href, text: k.text }; }));
+    var key = path + '|' + tabs.length;
+    if (!row || row.getAttribute('data-k') !== key) {
+      if (row) row.remove();
+      if (!document.getElementById('p75tabs-css')) {
+        var st = document.createElement('style'); st.id = 'p75tabs-css';
+        st.textContent =
+          '#p75tabsrow{display:flex!important;gap:8px;overflow-x:auto;scrollbar-width:none;width:100%;box-sizing:border-box;margin:0;' +
+            'padding:10px max(20px,calc((100% - 860px)/2)) 14px;background:#111214;border-bottom:1px solid #2A2B2F;font-family:Manrope,system-ui,sans-serif}' +
+          '#p75tabsrow::-webkit-scrollbar{display:none}' +
+          '#p75tabsrow a{flex:none;display:inline-flex!important;align-items:center;min-height:40px;padding:0 17px;border-radius:999px;border:1px solid #3A3C42;' +
+            'color:#D9D3C6!important;font-weight:700;font-size:14.5px;text-decoration:none!important;white-space:nowrap;transition:border-color .15s,background .15s,color .15s}' +
+          '#p75tabsrow a:hover{border-color:#C9A227;color:#fff!important}' +
+          '#p75tabsrow a.on{background:#C9A227;border-color:#C9A227;color:#111214!important}' +
+          '#p75tabsrow a:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
+          '@media (max-width:600px){#p75tabsrow{padding:8px 16px 12px;gap:6px}#p75tabsrow a{min-height:38px;padding:0 14px;font-size:14px}}';
+        document.head.appendChild(st);
+      }
+      row = document.createElement('nav'); row.id = 'p75tabsrow'; row.setAttribute('aria-label', f.text + ' pages'); row.setAttribute('data-k', key);
+      row.innerHTML = tabs.map(function (t) {
+        var on = t.href === path;
+        return '<a href="' + escH(t.href) + '"' + (on ? ' class="on" aria-current="page"' : '') + '>' + escH(t.text) + '</a>';
+      }).join('');
+    }
+    var top = document.getElementById('p75tn');
+    if (top && top.parentNode && top.nextSibling !== row) top.parentNode.insertBefore(row, top.nextSibling);
+    var on = row.querySelector('a.on');   // phones: keep the current tab in view inside the strip
+    if (on && !row.getAttribute('data-scrolled')) { row.setAttribute('data-scrolled', '1'); row.scrollLeft = Math.max(0, on.offsetLeft - 16); }
+  }
   var NAV_FIX = {
     // Start here sits outside the menu sections, so it had no way back; it is reached from the homepage
     '/start-here': { prev: { href: '/', text: 'Journal', title: 'Back to the Journal' } },
@@ -750,6 +791,9 @@
   });
   function navSpecFor(path, fams) {
     if (navFrame && navFrame.path === path) return { prev: navFrame.prev, mid: navFrame.mid, next: navFrame.next, frame: true };
+    // Pages inside a tabbed section (Bond Summary) move between each other with the tab strip, so their top
+    // row is the section's own: back to Kinetics overview, on to the next Kinetics page.
+    var tf = tabFamily(path); if (tf && tf.href !== path) path = tf.href;
     if (path === '/') return null;
     var s = {};
     if (EXCLUDED.indexOf(path) === -1 && document.querySelector('.block-blog-header')) s.prev = { href: '/', text: 'All essays' };
@@ -856,14 +900,14 @@
     var list = document.querySelectorAll('.block-header a[href], header a[href]');
     for (var i = 0; i < list.length; i++) {
       var a = list[i];
-      if (a.closest('#p75tn, #p75tf, #p75sib') || a.hasAttribute('data-p75hub')) continue;
+      if (a.closest('#p75tn, #p75tf, #p75sib, #p75tabsrow') || a.hasAttribute('data-p75hub')) continue;
       if (norm(a.getAttribute('href')) === path) return a;
     }
     return null;
   }
   document.addEventListener('click', function (e) {
     if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-    var a = e.target.closest && e.target.closest('#p75tn a[href], #p75tf a[href], #p75sib a[href], .p75d a[href], .p75edu a[href], .p75pulse a[href], .p75debt a[href], .p75cr a[href], .p75ind a[href], .p75ins a[href], .p75bonds a[href], .p75hubpg a[href], .p75start a[href]');
+    var a = e.target.closest && e.target.closest('#p75tn a[href], #p75tf a[href], #p75tabsrow a[href], #p75sib a[href], .p75d a[href], .p75edu a[href], .p75pulse a[href], .p75debt a[href], .p75cr a[href], .p75ind a[href], .p75ins a[href], .p75bonds a[href], .p75hubpg a[href], .p75start a[href]');
     if (!a || a.hasAttribute('data-hash') || a.target === '_blank') return;
     var href = a.getAttribute('href') || '';
     if (!/^\/(?!\/)/.test(href) || /[?#]/.test(href)) return;      // same-site page links only
@@ -893,7 +937,9 @@
     fams.forEach(function (f) { f.kids.forEach(function (k, j) { if (k.href === path) { fam = f; i = j; } }); });
     var old = document.getElementById('p75crumb'); if (old) old.remove();
     var sib = document.getElementById('p75sib');
-    if (!fam) { if (sib) sib.remove(); return; }
+    // Kinetics pages (top row) and tabbed sections (tab strip) have their own navigation: no bottom cards there.
+    // They stay on reading sequences such as the Education guides.
+    if (!fam || HUB_BACK.indexOf(fam.href) > -1 || TABBED.indexOf(fam.href) > -1) { if (sib) sib.remove(); return; }
     var host = document.querySelector(PAGE_HOSTS);
     if (!host) return;                                   // bottom links wait until the page has drawn
     var parent = host.parentNode;
@@ -1112,6 +1158,7 @@
     var fams = navFamilies(menuFams); familyLinks(path, fams);
     if (navFrame && navFrame.path !== path) navFrame = null;
     pageNav(path, navSpecFor(path, fams));
+    tabsRow(path);
     startHereLine(path);
     decorateMenu();
     journalGallery(path);
