@@ -365,17 +365,29 @@
 
   function wire(host) {
     var by = {}; D.indicators.forEach(function (i) { by[i.id] = i; });
+    // One thing open at a time, so the page stays short: opening a rates panel, switching tab or opening an
+    // indicator's chart closes whatever else was open.
+    function closeFolds(except) { host.querySelectorAll('details.fold[open]').forEach(function (d) { if (d !== except) d.open = false; }); }
+    function closeCharts(except) {
+      host.querySelectorAll('.ind[aria-expanded="true"]').forEach(function (b) {
+        if (b === except) return; b.setAttribute('aria-expanded', 'false');
+        var d = host.querySelector('#p75d-' + b.getAttribute('data-i')); if (d) d.hidden = true;
+      });
+    }
+    // (details' toggle event doesn't bubble, so listen in the capture phase)
+    host.addEventListener('toggle', function (e) { if (e.target.matches && e.target.matches('details.fold') && e.target.open) { closeFolds(e.target); closeCharts(null); } }, true);
     host.addEventListener('click', function (e) {
       var rb = e.target.closest('.rb');
       if (rb) { var p = rb.getAttribute('data-r').split(':'), box = host.querySelector('#p75d-' + p[0]); box.innerHTML = detail(by[p[0]], +p[1]); wireChart(box); return; }
       var ib = e.target.closest('.ind');
       if (ib) {
         var id = ib.getAttribute('data-i'), dt = host.querySelector('#p75d-' + id), open = dt.hidden;
-        if (open) { dt.innerHTML = detail(by[id], 60); wireChart(dt); }
+        if (open) { closeFolds(null); closeCharts(ib); dt.innerHTML = detail(by[id], 60); wireChart(dt); }
         dt.hidden = !open; ib.setAttribute('aria-expanded', open); return;
       }
       var tb = e.target.closest('.ctab');
       if (tb) {
+        closeFolds(null); closeCharts(null);
         host.querySelectorAll('.ctab').forEach(function (x) { var on = x === tb; x.classList.toggle('on', on); x.setAttribute('aria-selected', on); });
         host.querySelectorAll('.list > .body').forEach(function (b) { b.hidden = b.id !== 'p75c-' + tb.getAttribute('data-tab'); });
       }
