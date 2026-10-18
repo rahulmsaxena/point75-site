@@ -28,31 +28,34 @@
   };
 
   var CSS =
-    '.p75hubpg{--ink:#111214;--panel:#17181B;--line:#2A2B2F;--cream:#EDE8DC;--soft:#D9D3C6;--muted:#8D887E;--gold:#C9A227;' +
+    '.p75hubpg{--ink:#111214;--panel:#17181B;--line:#2A2B2F;--cream:#EDE8DC;--soft:#EDE8DE;--muted:#BDB7AA;--gold:#C9A227;' +
       'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box}' +
     '.p75hubpg *{box-sizing:border-box}' +
     '.p75hubpg .wrap{max-width:1040px;margin:0 auto;padding:16px 20px 64px}' +
-    '.p75hubpg .crumb{font-size:13.5px;color:var(--muted);margin:0 0 22px}' +
-    '.p75hubpg .crumb a{color:#A9A396;text-decoration:none}.p75hubpg .crumb a:hover{color:var(--cream)}' +
+    '.p75hubpg .crumb{font-size:13.5px;color:var(--muted);margin:0 0 8px}' +
+    '.p75hubpg .crumb a{color:#D2CCBF;text-decoration:none}.p75hubpg .crumb a:hover{color:var(--cream)}' +
     '.p75hubpg .crumb span{margin:0 8px}' +
     '.p75hubpg .eyebrow{color:var(--gold);letter-spacing:.14em;font-size:12px;font-weight:700;text-transform:uppercase}' +
     '.p75hubpg h1{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:28px;line-height:1.15;margin:4px 0 8px;letter-spacing:-.01em;color:#fff;display:inline-block;vertical-align:baseline;max-width:100%}' +
     '.p75hubpg .eyebrow:has(+ h1){display:inline-block;margin-right:14px;vertical-align:baseline}' +
     '.p75hubpg .lede{color:var(--soft);font-size:15.5px;line-height:1.6;margin:0;text-align:justify;hyphens:auto;-webkit-hyphens:auto}' +
-    '.p75hubpg .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:40px}' +
+    '.p75hubpg .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}' +
     '.p75hubpg .grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}' +
-    '.p75hubpg a.card{display:flex;flex-direction:column;gap:10px;min-height:220px;padding:28px 26px 24px;background:var(--panel);border:1px solid var(--line);' +
-      'border-top:2px solid var(--gold);border-radius:4px;color:var(--cream);text-decoration:none;transition:border-color .15s,background .15s}' +
+    '.p75hubpg a.card{display:flex;flex-direction:column;gap:6px;padding:14px 16px 14px;background:var(--panel);border:1px solid var(--line);' +
+      'border-top:2px solid var(--gold);border-radius:6px;color:var(--cream);text-decoration:none;transition:border-color .15s,background .15s,transform .15s}' +
+    '@media (hover:hover){.p75hubpg a.card:hover{transform:translateY(-2px)}}' +
+    '.p75hubpg .ch{display:flex;align-items:baseline;gap:10px}.p75hubpg .ch .arr{margin-left:auto;color:var(--gold);font-size:22px;line-height:1;transition:transform .15s}' +
+    '.p75hubpg a.card:hover .arr,.p75hubpg a.card:focus-visible .arr{transform:translateX(3px)}' +
     '.p75hubpg a.card:hover,.p75hubpg a.card:focus-visible{border-color:var(--gold);background:#1C1D21;outline:none}' +
     '.p75hubpg .num{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:15px;color:var(--gold)}' +
-    '.p75hubpg .nm{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:28px;line-height:1.15;color:#fff}' +
-    '.p75hubpg .bl{font-size:15px;line-height:1.6;color:var(--soft)}' +
-    '.p75hubpg .inside{margin-top:auto;font-size:13px;line-height:1.7;color:var(--muted)}' +
+    '.p75hubpg .nm{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:22px;line-height:1.15;color:#fff}' +
+    '.p75hubpg .bl{font-size:14.5px;line-height:1.5;color:var(--soft)}' +
+    '.p75hubpg .inside{margin-top:auto;font-size:12.5px;line-height:1.5;color:#D2CCBF}' +
     '.p75hubpg .go{font-size:14.5px;font-weight:700;color:var(--gold)}' +
     '.p75hubpg .inside + .go{margin-top:0}.p75hubpg .bl + .go{margin-top:auto}' +
-    '.p75hubpg .grid.four a.card{border-top-width:1px;min-height:230px}.p75hubpg .grid.four .nm{font-size:23px}' +
+    '.p75hubpg .grid.four a.card{border-top-width:1px}.p75hubpg .grid.four .nm{font-size:19px}' +
     // the featured summary card on Bond Summary
-    '.p75hubpg a.feat{display:flex;align-items:center;justify-content:space-between;gap:32px;margin-top:36px;padding:28px 30px;background:var(--panel);' +
+    '.p75hubpg a.feat{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:14px;padding:16px 20px;background:var(--panel);' +
       'border:1px solid var(--line);border-left:2px solid var(--gold);border-radius:4px;color:var(--cream);text-decoration:none;transition:border-color .15s,background .15s}' +
     '.p75hubpg a.feat:hover,.p75hubpg a.feat:focus-visible{border-color:var(--gold);background:#1C1D21;outline:none}' +
     '.p75hubpg .feat .t{display:flex;flex-direction:column;gap:8px;min-width:0}' +
@@ -60,23 +63,23 @@
     '.p75hubpg .feat .hd{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:25px;line-height:1.25;color:#fff}' +
     '.p75hubpg .feat .tk{font-size:15px;line-height:1.6;color:var(--soft)}' +
     '.p75hubpg .feat .go{white-space:nowrap}' +
-    '.p75hubpg .grid.four{margin-top:20px}' +
-    '@media (max-width:900px){.p75hubpg .grid.four{grid-template-columns:repeat(2,minmax(0,1fr))}}' +
+    '.p75hubpg .grid.four{margin-top:12px}' +
+    '@media (max-width:900px){.p75hubpg .grid.four,.p75hubpg .grid{grid-template-columns:repeat(2,minmax(0,1fr))}}' +
     // Bond Summary overview: latest summary line and a plain list of its tabs
-    '.p75hubpg .latest{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin-top:26px;padding:4px 0 4px 18px;border-left:2px solid var(--gold);text-decoration:none;color:var(--cream)}' +
+    '.p75hubpg .latest{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin-top:12px;padding:4px 0 4px 18px;border-left:2px solid var(--gold);text-decoration:none;color:var(--cream)}' +
     '.p75hubpg .latest .ey{flex-basis:100%;color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}' +
     '.p75hubpg .latest .hd{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:22px;line-height:1.3;color:#fff}' +
     '.p75hubpg .latest .go{color:var(--gold);font-weight:800;font-size:14px;white-space:nowrap}' +
     '.p75hubpg .latest:hover .hd{color:#F2D27A}' +
-    '.p75hubpg .what{margin:30px 0 0;border-top:1px solid var(--line)}' +
-    '.p75hubpg .what div{display:grid;grid-template-columns:200px minmax(0,1fr);gap:6px 20px;padding:14px 0;border-bottom:1px solid var(--line)}' +
+    '.p75hubpg .what{margin:14px 0 0;border-top:1px solid var(--line)}' +
+    '.p75hubpg .what div{display:grid;grid-template-columns:200px minmax(0,1fr);gap:6px 20px;padding:10px 0;border-bottom:1px solid var(--line)}' +
     '.p75hubpg .what dt a{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:19px;color:#fff;text-decoration:none}' +
     '.p75hubpg .what dt a:hover{color:var(--gold)}' +
     '.p75hubpg .what dd{margin:0;color:var(--soft);font-size:15px;line-height:1.55}' +
     '@media (max-width:640px){.p75hubpg .what div{grid-template-columns:1fr}.p75hubpg .latest .hd{font-size:19px}}' +
     '@media (max-width:640px){.p75hubpg .wrap{padding:12px 16px 48px}.p75hubpg h1{font-size:24px}.p75hubpg .lede{font-size:16px}' +
-      '.p75hubpg .grid,.p75hubpg .grid.four{grid-template-columns:1fr;gap:14px;margin-top:28px}.p75hubpg a.card{min-height:0;padding:22px 20px}' +
-      '.p75hubpg .nm{font-size:25px}.p75hubpg a.feat{flex-direction:column;align-items:flex-start;gap:14px;padding:22px 20px}.p75hubpg .feat .hd{font-size:22px}}';
+      '.p75hubpg .grid,.p75hubpg .grid.four{grid-template-columns:1fr;gap:10px;margin-top:14px}.p75hubpg a.card{padding:12px 14px}' +
+      '.p75hubpg .nm{font-size:20px}.p75hubpg .bl{font-size:14px}.p75hubpg a.feat{flex-direction:column;align-items:flex-start;gap:14px;padding:22px 20px}.p75hubpg .feat .hd{font-size:22px}}';
 
   function esc(x) { return String(x == null ? '' : x).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function once() {
@@ -88,12 +91,11 @@
   function card(k, i, numbered) {
     var c = CARD[k.href] || {};
     var inside = k.kids && k.kids.length ? k.kids.map(function (x) { return esc(x.text); }).join(' · ') : '';
-    return '<a class="card" href="' + esc(k.href) + '">' +
-      (numbered ? '<span class="num">' + (i < 9 ? '0' : '') + (i + 1) + '</span>' : '') +
-      '<span class="nm">' + esc(k.text) + '</span>' +
+    return '<a class="card" href="' + esc(k.href) + '" aria-label="' + esc(k.text + (c.blurb ? ': ' + c.blurb : '')) + '">' +
+      '<span class="ch">' + (numbered ? '<span class="num">' + (i < 9 ? '0' : '') + (i + 1) + '</span>' : '') +
+      '<span class="nm">' + esc(k.text) + '</span><span class="arr" aria-hidden="true">›</span></span>' +
       (c.blurb ? '<span class="bl">' + esc(c.blurb) + '</span>' : '') +
-      (inside ? '<span class="inside">' + inside + '</span>' : '') +
-      '<span class="go">' + esc(c.cta || 'Open') + ' →</span></a>';
+      (inside ? '<span class="inside">' + inside + '</span>' : '') + '</a>';
   }
 
   function page(path, node, parent, latest) {
