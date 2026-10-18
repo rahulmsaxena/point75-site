@@ -44,8 +44,17 @@
     '.p75hubpg a.card{display:flex;flex-direction:column;gap:6px;padding:14px 16px 14px;background:var(--panel);border:1px solid var(--line);' +
       'border-top:2px solid var(--gold);border-radius:6px;color:var(--cream);text-decoration:none;transition:border-color .15s,background .15s,transform .15s}' +
     '@media (hover:hover){.p75hubpg a.card:hover{transform:translateY(-2px)}}' +
-    '.p75hubpg .ch{display:flex;align-items:baseline;gap:10px}.p75hubpg .ch .arr{margin-left:auto;color:var(--gold);font-size:22px;line-height:1;transition:transform .15s}' +
-    '.p75hubpg a.card:hover .arr,.p75hubpg a.card:focus-visible .arr{transform:translateX(3px)}' +
+    '.p75hubpg .ch{display:flex;align-items:baseline;gap:10px}' +
+    '.p75hubpg .ic{margin-left:auto;align-self:flex-start;flex:0 0 auto;width:30px;height:30px;fill:none;stroke:var(--gold);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:.9}' +
+    '.p75hubpg a.card{position:relative}.p75hubpg .arr{position:absolute;right:16px;bottom:10px;color:var(--gold);font-size:26px;line-height:1;transition:transform .15s}' +
+    '.p75hubpg a.card:hover .arr,.p75hubpg a.card:focus-visible .arr{transform:translateX(4px)}' +
+    // fill the screen: rows stretch to the window, five cards as a bento (the first spans two columns)
+    '.p75hubpg .grid.fill{grid-auto-rows:minmax(0,1fr);height:max(420px,calc(100vh - 300px))}' +
+    '.p75hubpg .grid.fill a.card{padding:20px 22px 34px;gap:10px;border-top-width:3px;background:linear-gradient(160deg,#1D1E23 0%,#151619 100%)}' +
+    '.p75hubpg .grid.fill .nm{font-size:27px}.p75hubpg .grid.fill .num{font-size:16px}.p75hubpg .grid.fill .bl{font-size:16px;line-height:1.55}' +
+    '.p75hubpg .grid.fill .ic{width:40px;height:40px}' +
+    '.p75hubpg .grid.n5 a.card:first-child{grid-column:span 2}.p75hubpg .grid.n5 a.card:first-child .nm{font-size:34px}.p75hubpg .grid.n5 a.card:first-child .bl{font-size:17px;max-width:60ch}' +
+    '.p75hubpg .grid.n4,.p75hubpg .grid.n2{grid-template-columns:repeat(2,minmax(0,1fr))}' +
     '.p75hubpg a.card:hover,.p75hubpg a.card:focus-visible{border-color:var(--gold);background:#1C1D21;outline:none}' +
     '.p75hubpg .num{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:15px;color:var(--gold)}' +
     '.p75hubpg .nm{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:22px;line-height:1.15;color:#fff}' +
@@ -64,7 +73,7 @@
     '.p75hubpg .feat .tk{font-size:15px;line-height:1.6;color:var(--soft)}' +
     '.p75hubpg .feat .go{white-space:nowrap}' +
     '.p75hubpg .grid.four{margin-top:12px}' +
-    '@media (max-width:900px){.p75hubpg .grid.four,.p75hubpg .grid{grid-template-columns:repeat(2,minmax(0,1fr))}}' +
+    '@media (max-width:900px){.p75hubpg .grid.four,.p75hubpg .grid{grid-template-columns:repeat(2,minmax(0,1fr))}.p75hubpg .grid.fill{height:auto}.p75hubpg .grid.fill a.card{min-height:170px}}' +
     // Bond Summary overview: latest summary line and a plain list of its tabs
     '.p75hubpg .latest{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin-top:12px;padding:4px 0 4px 18px;border-left:2px solid var(--gold);text-decoration:none;color:var(--cream)}' +
     '.p75hubpg .latest .ey{flex-basis:100%;color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}' +
@@ -77,9 +86,9 @@
     '.p75hubpg .what dt a:hover{color:var(--gold)}' +
     '.p75hubpg .what dd{margin:0;color:var(--soft);font-size:15px;line-height:1.55}' +
     '@media (max-width:640px){.p75hubpg .what div{grid-template-columns:1fr}.p75hubpg .latest .hd{font-size:19px}}' +
-    '@media (max-width:640px){.p75hubpg .wrap{padding:12px 16px 48px}.p75hubpg h1{font-size:24px}.p75hubpg .lede{font-size:16px}' +
+    '@media (max-width:640px){.p75hubpg .wrap{padding:12px 16px 48px}.p75hubpg h1{font-size:24px}.p75hubpg .lede{font-size:16px;text-align:left}.p75hubpg .grid.fill a.card{min-height:0}' +
       '.p75hubpg .grid,.p75hubpg .grid.four{grid-template-columns:1fr;gap:10px;margin-top:14px}.p75hubpg a.card{padding:12px 14px}' +
-      '.p75hubpg .nm{font-size:20px}.p75hubpg .bl{font-size:14px}.p75hubpg a.feat{flex-direction:column;align-items:flex-start;gap:14px;padding:22px 20px}.p75hubpg .feat .hd{font-size:22px}}';
+      '.p75hubpg .nm{font-size:20px}.p75hubpg .bl{font-size:14px}.p75hubpg .grid.n5 a.card:first-child{grid-column:auto}.p75hubpg .grid.fill a.card{min-height:0;padding:14px 16px 30px}.p75hubpg .grid.fill .nm,.p75hubpg .grid.n5 a.card:first-child .nm{font-size:22px}.p75hubpg .grid.fill .bl{font-size:14.5px}.p75hubpg .grid.fill .ic{width:30px;height:30px}.p75hubpg a.feat{flex-direction:column;align-items:flex-start;gap:14px;padding:22px 20px}.p75hubpg .feat .hd{font-size:22px}}';
 
   function esc(x) { return String(x == null ? '' : x).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function once() {
@@ -88,14 +97,22 @@
   }
 
   // A card for one page. `inside` lists the pages under it (shown as a hint of what's there).
+  // A simple gold line icon per page (24px grid, drawn with strokes)
+  var ICON = {
+    '/pulse': '<path d="M4 17a8 8 0 1 1 16 0"/><path d="M12 17l4-5"/><circle cx="12" cy="17" r="1.4"/><path d="M6.5 11.5l1 .8M12 8.5v1.3M17.5 11.5l-1 .8"/>',
+    '/debt-trap': '<rect x="4" y="15" width="4" height="5" rx=".6"/><rect x="10" y="10" width="4" height="10" rx=".6"/><rect x="16" y="5" width="4" height="15" rx=".6"/><path d="M3 20.5h18"/>',
+    '/news': '<rect x="4" y="5" width="13" height="14" rx="1.5"/><path d="M17 9h2.5a.5.5 0 0 1 .5.5V17a2 2 0 0 1-2 2H7"/><path d="M7 9h7M7 12h7M7 15h4"/>',
+    '/bond-summary': '<path d="M7 4h7l4 4v12H7z"/><path d="M14 4v4h4"/><path d="M9.5 16l2-2.5 2 1.5 2.5-3.5"/>',
+    '/economic-indicators': '<path d="M4 20h16"/><path d="M6 20v-6M10 20V9M14 20v-4M18 20V6"/><path d="M5 11l5-4 4 3 5-5"/>'
+  };
   function card(k, i, numbered) {
     var c = CARD[k.href] || {};
     var inside = k.kids && k.kids.length ? k.kids.map(function (x) { return esc(x.text); }).join(' · ') : '';
     return '<a class="card" href="' + esc(k.href) + '" aria-label="' + esc(k.text + (c.blurb ? ': ' + c.blurb : '')) + '">' +
       '<span class="ch">' + (numbered ? '<span class="num">' + (i < 9 ? '0' : '') + (i + 1) + '</span>' : '') +
-      '<span class="nm">' + esc(k.text) + '</span><span class="arr" aria-hidden="true">›</span></span>' +
+      '<span class="nm">' + esc(k.text) + '</span>' + (ICON[k.href] ? '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">' + ICON[k.href] + '</svg>' : '') + '</span>' +
       (c.blurb ? '<span class="bl">' + esc(c.blurb) + '</span>' : '') +
-      (inside ? '<span class="inside">' + inside + '</span>' : '') + '</a>';
+      (inside ? '<span class="inside">' + inside + '</span>' : '') + '<span class="arr" aria-hidden="true">›</span></a>';
   }
 
   function page(path, node, parent, latest) {
@@ -114,7 +131,8 @@
         return '<div><dt><a href="' + esc(k.href) + '">' + esc(k.text) + '</a></dt><dd>' + esc((CARD[k.href] || {}).blurb || '') + '</dd></div>';
       }).join('') + '</dl>';
     } else {
-      html += '<div class="grid">' + kids.map(function (k, i) { return card(k, i, true); }).join('') + '</div>';
+      // The cards fill the rest of the screen: a bento grid whose rows stretch to the window's height
+      html += '<div class="grid fill n' + kids.length + '">' + kids.map(function (k, i) { return card(k, i, true); }).join('') + '</div>';
     }
     return html + '</div>';
   }
