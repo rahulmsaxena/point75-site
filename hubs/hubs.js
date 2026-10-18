@@ -60,6 +60,18 @@
     '.p75hubpg .feat .go{white-space:nowrap}' +
     '.p75hubpg .grid.four{margin-top:20px}' +
     '@media (max-width:900px){.p75hubpg .grid.four{grid-template-columns:repeat(2,minmax(0,1fr))}}' +
+    // Bond Summary overview: latest summary line and a plain list of its tabs
+    '.p75hubpg .latest{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin-top:26px;padding:4px 0 4px 18px;border-left:2px solid var(--gold);text-decoration:none;color:var(--cream)}' +
+    '.p75hubpg .latest .ey{flex-basis:100%;color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}' +
+    '.p75hubpg .latest .hd{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:22px;line-height:1.3;color:#fff}' +
+    '.p75hubpg .latest .go{color:var(--gold);font-weight:800;font-size:14px;white-space:nowrap}' +
+    '.p75hubpg .latest:hover .hd{color:#F2D27A}' +
+    '.p75hubpg .what{margin:30px 0 0;border-top:1px solid var(--line)}' +
+    '.p75hubpg .what div{display:grid;grid-template-columns:200px minmax(0,1fr);gap:6px 20px;padding:14px 0;border-bottom:1px solid var(--line)}' +
+    '.p75hubpg .what dt a{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:19px;color:#fff;text-decoration:none}' +
+    '.p75hubpg .what dt a:hover{color:var(--gold)}' +
+    '.p75hubpg .what dd{margin:0;color:var(--soft);font-size:15px;line-height:1.55}' +
+    '@media (max-width:640px){.p75hubpg .what div{grid-template-columns:1fr}.p75hubpg .latest .hd{font-size:19px}}' +
     '@media (max-width:640px){.p75hubpg .wrap{padding:28px 16px 48px}.p75hubpg h1{font-size:34px}.p75hubpg .lede{font-size:16px}' +
       '.p75hubpg .grid,.p75hubpg .grid.four{grid-template-columns:1fr;gap:14px;margin-top:28px}.p75hubpg a.card{min-height:0;padding:22px 20px}' +
       '.p75hubpg .nm{font-size:25px}.p75hubpg a.feat{flex-direction:column;align-items:flex-start;gap:14px;padding:22px 20px}.p75hubpg .feat .hd{font-size:22px}}';
@@ -89,14 +101,14 @@
     html += '<div class="eyebrow">' + esc(h.eyebrow) + '</div><h1>' + esc(h.title) + '</h1>' + (h.lede ? '<p class="lede">' + esc(h.lede) + '</p>' : '');
     var kids = node.kids || [];
     if (path === '/bond-summary') {
-      // The daily summary leads, as a wide card with the latest edition's headline; the rest follow in a row
-      var first = kids[0], rest = kids.slice(1), c = CARD[first.href] || {};
-      html += '<a class="feat" href="' + esc(first.href) + '"><span class="t"><span class="ey">' +
-        (latest ? 'Latest summary · ' + esc(latest.when) : 'The daily summary') + '</span>' +
-        '<span class="hd">' + esc(latest ? latest.title : first.text) + '</span>' +
-        '<span class="tk">' + esc(latest && latest.regime ? latest.regime + (latest.note ? ': ' + latest.note : '') : c.blurb) + '</span></span>' +
-        '<span class="go">' + esc(c.cta || 'Open') + ' →</span></a>';
-      html += '<div class="grid four">' + rest.map(function (k, i) { return card(k, i, false); }).join('') + '</div>';
+      // Bond Summary's pages are tabs (the strip above, drawn by p75.js), so the overview has no cards:
+      // the latest daily summary's headline on one line, then what each tab holds, as a plain list.
+      var first = kids[0];
+      html += '<a class="latest" href="' + esc(first.href) + '"><span class="ey">' + (latest ? 'Latest summary · ' + esc(latest.when) : 'The daily summary') + '</span>' +
+        '<span class="hd">' + esc(latest ? latest.title : (CARD[first.href] || {}).blurb || first.text) + '</span><span class="go">Read it →</span></a>';
+      html += '<dl class="what">' + kids.map(function (k) {
+        return '<div><dt><a href="' + esc(k.href) + '">' + esc(k.text) + '</a></dt><dd>' + esc((CARD[k.href] || {}).blurb || '') + '</dd></div>';
+      }).join('') + '</dl>';
     } else {
       html += '<div class="grid">' + kids.map(function (k, i) { return card(k, i, true); }).join('') + '</div>';
     }
