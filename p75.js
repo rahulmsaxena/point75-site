@@ -1020,8 +1020,8 @@
     var D = '.block-header-layout-desktop .block-header__nav-links', TOP = D + '>.block-header-item>.block-header-item__label>';
     var st = document.createElement('style'); st.id = 'p75-menu3';
     st.textContent =
-      D + '{align-items:center!important;gap:16px!important}' +   // 16px (was 28px) so Intelligence and Contact fit on one line with Search
-      '@media (max-width:1240px){' + D + '{gap:12px!important}}' +
+      D + '{align-items:center!important;gap:14px!important}' +   // 14px (was 28px) so Intelligence (with its dropdown) and Contact fit beside Search
+      '@media (max-width:1340px){' + D + '{gap:10px!important}}' +
       TOP + '.item-content-wrapper{display:inline-flex!important;align-items:center!important;height:40px!important}' +
       TOP + '.item-content-wrapper>.item-content{font-size:15px!important;font-weight:600!important;color:#fff!important;letter-spacing:.01em}' +
       TOP + '.item-content-wrapper--active>.item-content{text-decoration:underline!important;text-decoration-color:#C9A227!important;text-decoration-thickness:2px!important;text-underline-offset:9px!important}' +
@@ -1114,11 +1114,11 @@
       wrap.insertAdjacentHTML('beforeend', '<div class="p75hook" aria-hidden="true">' + (hook ? '<i>' + hook + '</i>' : '') + '<b>Read the essay &rarr;</b></div>');
     });
   }
-  // Intelligence (a link to tools.point75.io) gets a dropdown of its tools, like Kinetics and Education.
+  // Intelligence (a link to tools.point75.io) gets a dropdown of its tools, like Kinetics and Education
+  // (hubMenus adds the "Intelligence overview" link at the top, as it does for the others).
   // The site styles its dropdowns through scoped attributes, so the pieces are copied from an existing
   // dropdown (its arrow, panel and one item) and added to the Intelligence item in place.
   var INTEL_TOOLS = [
-    ['All of Intelligence', 'https://tools.point75.io/market-intelligence'],
     ['Treasury Finder', 'https://tools.point75.io/market-intelligence/treasury-finder'],
     ['Congressional Trading', 'https://tools.point75.io/market-intelligence/congressional-trading'],
     ['AI Investment', 'https://tools.point75.io/market-intelligence/ai-investment']
