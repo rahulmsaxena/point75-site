@@ -30,12 +30,16 @@ Reference implementation: the Pulse page (`pulse/pulse.js`). Header rules are al
 - Tap cues: hint line with a pulsing gold dot at the top of each open section, "What it means ›" label on every card ("Showing ▸" on the active one), hover lift, one-time glow when a section first opens.
 - Phones: explanation opens as a bottom sheet on tap (never automatically).
 
-## 5. Fold-away top
+## 5. Takeaway first
+- A page with several tabs opens on a **Takeaway** tab: a headline sentence written from the live numbers by simple rules, a **Watch** line for the most extreme reading, and one card per tab (reading, mini dial where it fits, one plain line, "See why ›" jumping to that tab).
+- Takeaway never repeats the detail; it points to it.
+
+## 6. Fold-away top
 - Picking a tab folds the header and overview dials into a **one-line strip** (eyebrow + key readings + "Show dials" with a gently bobbing down arrow). The tab content slides up into the freed space.
 - Stays folded across tabs until the reader taps the strip. Deep links to a tab (`/page#tab`) arrive folded.
 - Animate with `grid-template-rows: 1fr ↔ 0fr` (~0.5s); never scroll-jack.
 
-## 6. Every change
+## 7. Every change
 - Respect `prefers-reduced-motion` for decoration (no bobbing, pulsing, glow, hover lift, fold animation). **Needle sweeps stay on**: they are how the reading is shown.
 - Touch targets ≥ 44px; real `<button>`s with `aria-expanded` / `aria-pressed`.
 - **Check for clipped text** at 320, 360, 390, 768, 1024, 1280 and 1440px, open and folded. Nothing may overflow, clip or run off screen.
