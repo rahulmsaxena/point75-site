@@ -22,9 +22,10 @@
     '.p75pulse .eyebrow{color:var(--gold);letter-spacing:.14em;font-size:12px;font-weight:700;text-transform:uppercase}' +
     '.p75pulse h1{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:28px;line-height:1.15;margin:6px 0 6px;letter-spacing:-.01em}' +
     '.p75pulse .lede{color:var(--soft);font-size:15px;line-height:1.55;margin:0;text-align:justify;hyphens:auto;-webkit-hyphens:auto}' +
-    '.p75pulse .hd{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 28px;align-items:center}.p75pulse .hd h1{margin-bottom:0;white-space:nowrap}' +
-    '.p75pulse .hd-r{border-left:1px solid var(--line);padding:4px 0 4px 26px}' +
-    '@media (max-width:880px){.p75pulse .hd{grid-template-columns:1fr}.p75pulse .hd h1{white-space:normal;margin-bottom:4px}.p75pulse .hd-r{border:0;padding:0}}' +
+    '.p75pulse .hd{display:flex;flex-direction:column;gap:8px}' +
+    '.p75pulse .hd-t{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px}.p75pulse .hd-t h1{margin:0}' +
+    '.p75pulse .hd-t .asof{margin:0 0 0 auto}' +
+    '@media (max-width:880px){.p75pulse .hd-t{flex-direction:column;align-items:flex-start;gap:2px}.p75pulse .hd-t .asof{margin:4px 0 0}}' +
     '.p75pulse .asof{font-size:12.5px;color:var(--muted);margin-top:6px}' +
     '.p75pulse .asof b{color:var(--cream);font-weight:600}' +
     '.p75pulse h2{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:25px;margin:54px 0 6px}' +
@@ -690,10 +691,10 @@
   // ---------- Page ----------
   function page(j) {
     var g = j.gauges || {}, b = g.bull || {}, s = g.stress || {};
-    var h = '<div class="wrap"><div class="hd"><div><div class="eyebrow">Pulse</div><h1>The Bond Market’s Vital Signs</h1>' +
+    var h = '<div class="wrap"><div class="hd"><div class="hd-t"><span class="eyebrow">Pulse</span><h1>The Bond Market’s Vital Signs</h1>' +
       '<div class="asof">Updated <b>' + new Date(j.generated_at).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' }) +
       '</b> · refreshed hourly on weekdays</div></div>' +
-      '<div class="hd-r"><p class="lede">Two readings, taken from where real money moves: Treasury auctions, futures positioning, dealer balance sheets, overnight funding, the term premium and rate swings. No opinions, no chatter.</p></div></div>';
+      '<p class="lede">Two readings, taken from where real money moves: Treasury auctions, futures positioning, dealer balance sheets, overnight funding, the term premium and rate swings. No opinions, no chatter.</p></div>';
 
     // instruments: two dials, each with its reading and a short note beside it; the Signals tab has the detail
     var bc = bullColor(b.score), sc = s.score != null ? Math.round(s.score) : null, scol = stressColor(sc);
