@@ -171,6 +171,13 @@
     '.p75pulse .pl-g{color:var(--gold);font-size:11.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin:8px 2px 0}' +
     '.p75pulse .ck-i.pl{display:grid;grid-template-columns:64px minmax(0,1.3fr) minmax(0,.9fr) minmax(0,1.4fr) 14px;align-items:center;gap:14px;padding:6px 12px 6px 8px;border-width:1px;border-radius:12px;box-shadow:none}' +
     '.p75pulse .pl-board.go .p75f{stroke-dashoffset:0}' +
+    '.p75pulse .pl-board .p75f{filter:drop-shadow(0 0 6px currentColor)}' +
+    '.p75pulse .pl-board .p75n{filter:drop-shadow(0 0 4px rgba(255,255,255,.85))}.p75pulse .pl-board .p75n path,.p75pulse .pl-board .p75n line{fill:#fff;stroke:#fff}' +
+    '.p75pulse .pl-board .pl-d path[stroke="#2A2C31"]{stroke:#3A3D44}' +
+    '.p75pulse .pl-board .pl-v b{text-shadow:0 0 14px currentColor}' +
+    '.p75pulse .pl-board .pl-v small{filter:drop-shadow(0 0 5px currentColor)}' +
+    '.p75pulse .pl-board .spark path:nth-of-type(2){stroke-width:2.6;filter:brightness(1.25) drop-shadow(0 0 3px rgba(255,255,255,.35))}' +
+    '.p75pulse .pl-board .pl-n small,.p75pulse .pl-board .pl-d small{color:#E2DDD2}.p75pulse .pl-board .pl-g{color:#FFD23F;text-shadow:0 0 10px rgba(255,210,63,.45)}' +
     '.p75pulse .pl-d{display:flex;flex-direction:column;align-items:center}.p75pulse .ck-i .pl-d svg{width:62px;max-width:none;height:auto;margin:0;overflow:visible}' +
     '.p75pulse .pl-d small{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:.04em;margin-top:-2px}' +
     '.p75pulse .pl-n b{display:block;font-size:14.5px;color:#fff;font-weight:800;line-height:1.2}.p75pulse .pl-n small{display:block;font-size:12px;color:var(--muted);line-height:1.3;margin-top:2px}' +
@@ -320,7 +327,7 @@
       svg += '<line x1="' + n1[0] + '" y1="' + n1[1] + '" x2="' + n2[0] + '" y2="' + n2[1] + '" stroke="#F2D27A" stroke-width="4" stroke-linecap="round"/>';
     }
     if (Math.abs(a1 - a0) > .5)
-      svg += '<path class="p75f" pathLength="100" stroke-dasharray="100 200" d="' + dArc(a0, a1, DR) + '" fill="none" stroke="' + o.color + '" stroke-width="' + sw + '" stroke-linecap="round" style="filter:drop-shadow(0 0 5px ' + o.color + '66)"/>';
+      svg += '<path class="p75f" color="' + o.color + '" pathLength="100" stroke-dasharray="100 200" d="' + dArc(a0, a1, DR) + '" fill="none" stroke="' + o.color + '" stroke-width="' + sw + '" stroke-linecap="round" style="filter:drop-shadow(0 0 5px ' + o.color + '66)"/>';
     if (o.big) {
       for (var t = 0; t <= 40; t++) {
         var d = -DSWEEP / 2 + DSWEEP * t / 40, maj = t % 10 === 0, p = dPt(d, DR - (maj ? 16 : 13)), q = dPt(d, DR - 9);
@@ -898,52 +905,53 @@
     var pctOf = function (hist, v) { if (!hist || !hist.length) return null; var n = 0; hist.forEach(function (x) { if (x.value <= v) n++; }); return Math.round(n / hist.length * 100); };
     var yr = function (pc, word) { pc = Math.round(pc); return pc >= 99 ? 'highest in a year' : pc <= 1 ? 'lowest in a year' : word + ' than ' + pc + '% of year'; };
     var ord = function (n) { var k = n % 100; return n + (k > 10 && k < 14 ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' })[n % 10] || 'th'); };
+    var NEON = function (pc) { return pc < 30 ? '#2BFF88' : pc < 55 ? '#D8FF3D' : pc < 75 ? '#FFB224' : '#FF3D5E'; };
     var addRow = function (grp, key, o) {   // o: name, short, value, change, changeColor, pct, bad (+1 high is bad, −1 high is good, 0 neutral), hist, color, fmt, what, care, src
       var pc = o.pct == null ? null : Math.max(0, Math.min(100, Math.round(o.pct)));
-      var dc = pc == null ? NEUT : o.bad > 0 ? stressColor(pc) : o.bad < 0 ? stressColor(100 - pc) : '#B7A8FF';
+      var dc = pc == null ? NEUT : o.bad > 0 ? NEON(pc) : o.bad < 0 ? NEON(100 - pc) : '#C8A8FF';
       CK_ITEMS[key] = { mover: 'none', target: 0, name: o.name, sub: o.value + ' · ' + o.change,
         what: o.what, now: o.value + ', ' + o.change + '.' + (pc != null && !/year/.test(o.change) ? ' That is ' + (pc >= 99 ? 'the highest reading of the past year.' : pc <= 1 ? 'the lowest reading of the past year.' : 'higher than ' + pc + '% of readings over the past year.') : ''), care: o.care, src: o.src };
       rows.push({ grp: grp, html: '<button type="button" class="ck-i pl" data-ck="' + key + '" aria-pressed="false" aria-label="' + esc(o.name + ': ' + o.value + ', ' + o.change + '. Show what it means.').replace(/"/g, '&quot;') + '">' +
         '<span class="pl-d">' + (pc != null ? dial({ v: pc, min: 0, max: 100, rest: 0, from: 0, color: dc, aria: o.name + ' at the ' + ord(pc) + ' percentile of its past year' }) : '') +
           '<small>' + (pc != null ? ord(pc) + ' pct' : '') + '</small></span>' +
         '<span class="pl-n"><b>' + esc(o.name) + '</b><small>' + esc(o.short) + '</small></span>' +
-        '<span class="pl-v"><b class="num">' + o.value + '</b><small style="color:' + o.changeColor + '">' + o.change + '</small></span>' +
+        '<span class="pl-v"><b class="num" style="color:' + dc + '">' + o.value + '</b><small style="color:' + (o.changeColor === NEUT ? '#D6DAE0' : o.changeColor === BEAR ? '#FF3D5E' : o.changeColor === BULL ? '#1FE0FF' : o.changeColor) + '">' + o.change + '</small></span>' +
         '<span class="pl-s">' + spark(o.hist, o.color, o.fmt) + '</span>' +
         '<span class="pl-go" aria-hidden="true">›</span></button>' });
     };
     if (p) {
       var am = p.asset_managers, hf = p.hedge_funds;
       addRow('Big money', 'p_am', { name: 'Asset managers', short: 'Pension & fund bets on Treasuries', value: bn(am.value), change: signed(am.change_4w, 0, 'bn') + ' in 4 wks', changeColor: am.change_4w >= 0 ? BULL : BEAR,
-        pct: pctOf(am.history, am.value), bad: -1, hist: am.history, color: BULL, fmt: bn,
+        pct: pctOf(am.history, am.value), bad: -1, hist: am.history, color: '#1FE0FF', fmt: bn,
         what: 'Pension and mutual-fund money, net long Treasury futures. These are real, patient buyers.', care: 'When this rises, real buyers are adding to bonds, which tends to support prices and keep rates lower.',
         src: 'CFTC, week of ' + fmtDate(am.date) + ', 10-year-note equivalent' });
       addRow('Big money', 'p_hf', { name: 'Hedge funds', short: 'Mostly the “basis trade”', value: bn(hf.value), change: signed(hf.change_4w, 0, 'bn') + ' in 4 wks', changeColor: NEUT,
-        pct: pctOf(hf.history, hf.value), bad: 0, hist: hf.history, color: '#B7A8FF', fmt: bn,
+        pct: pctOf(hf.history, hf.value), bad: 0, hist: hf.history, color: '#C8A8FF', fmt: bn,
         what: 'Mostly the “basis trade”: hedge funds short futures against bonds they own, so a big short position is normal.', care: 'The risk is a sudden unwind: if funds rush out together, they dump bonds and rates can jump.',
         src: 'CFTC, week of ' + fmtDate(hf.date) + ', 10-year-note equivalent' });
     }
     if (dl) addRow('Plumbing', 'p_dl', { name: 'Dealer inventory', short: 'Treasuries the big banks hold', value: '$' + Math.round(dl.value) + 'bn', change: signed(dl.change_4w_pct, 1, '%') + ' in 4 wks', changeColor: dl.change_4w_pct > 0 ? BEAR : BULL,
-      pct: pctOf(dl.history, dl.value), bad: 1, hist: dl.history, color: '#E0B84A', fmt: function (v) { return '$' + Math.round(v) + 'bn'; },
+      pct: pctOf(dl.history, dl.value), bad: 1, hist: dl.history, color: '#FFD23F', fmt: function (v) { return '$' + Math.round(v) + 'bn'; },
       what: 'Treasuries the big bank dealers are holding on their own books.', care: 'Piling up means end buyers aren’t absorbing new supply, and full dealers have less room to calm a selloff.',
       src: 'NY Fed, week of ' + fmtDate(dl.date) });
     var fu = j.funding;
-    if (fu) addRow('Plumbing', 'p_fu', { name: 'Funding pressure', short: 'Overnight cash vs the Fed’s rate', value: signed(fu.spread_avg20_bp, 0, 'bp'), change: yr(fu.pct_1y, 'tighter'), changeColor: stressColor(fu.pct_1y),
-      pct: fu.pct_1y, bad: 1, hist: fu.history, color: stressColor(fu.pct_1y), fmt: function (v) { return signed(v, 1, 'bp'); },
+    if (fu) addRow('Plumbing', 'p_fu', { name: 'Funding pressure', short: 'Overnight cash vs the Fed’s rate', value: signed(fu.spread_avg20_bp, 0, 'bp'), change: yr(fu.pct_1y, 'tighter'), changeColor: NEON(fu.pct_1y),
+      pct: fu.pct_1y, bad: 1, hist: fu.history, color: NEON(fu.pct_1y), fmt: function (v) { return signed(v, 1, 'bp'); },
       what: 'The overnight repo rate (SOFR) minus what the Fed pays banks on reserves (IORB), 20-day average. Above zero means cash is scarce.',
       care: 'Smooth funding keeps banks lending. Bank reserves stand at $' + (fu.reserves.value / 1000).toFixed(2) + 'T' + (fu.srf && fu.srf.days_used_20d ? ', and banks tapped the Fed’s standing repo facility on ' + fu.srf.days_used_20d + ' of the last 20 days.' : '.'),
       src: 'FRED, NY Fed SOFR and Fed Board IORB, ' + fmtDate(fu.date) });
-    if (r) addRow('Plumbing', 'p_rv', { name: 'Rates volatility', short: 'Daily swing in the 10-year yield', value: r.vol.value.toFixed(1) + 'bp/day', change: yr(r.vol.pct_1y, 'higher'), changeColor: stressColor(r.vol.pct_1y),
-      pct: r.vol.pct_1y, bad: 1, hist: r.vol.history, color: stressColor(r.vol.pct_1y), fmt: function (v) { return v.toFixed(1) + 'bp/day'; },
+    if (r) addRow('Plumbing', 'p_rv', { name: 'Rates volatility', short: 'Daily swing in the 10-year yield', value: r.vol.value.toFixed(1) + 'bp/day', change: yr(r.vol.pct_1y, 'higher'), changeColor: NEON(r.vol.pct_1y),
+      pct: r.vol.pct_1y, bad: 1, hist: r.vol.history, color: NEON(r.vol.pct_1y), fmt: function (v) { return v.toFixed(1) + 'bp/day'; },
       what: 'How much the 10-year yield swings on a typical day (20-day average). The free cousin of the MOVE index.',
       care: 'Bumpy rates make lenders cautious, so mortgage quotes jump around and bond funds swing more.',
       src: 'FRED, 10-year at ' + r.yield.value.toFixed(2) + '% on ' + fmtDate(r.yield.date) });
     if (tp) addRow('The long end', 'p_tp', { name: 'Term premium', short: 'Extra pay for lending 10 years', value: tp.value.toFixed(2) + '%', change: signed(tp.change * 100, 0, 'bp') + ' in 4 wks', changeColor: tone(tp.change),
-      pct: pctOf(tp.history, tp.value), bad: 1, hist: tp.history, color: '#5FD0C5', fmt: function (v) { return v.toFixed(2) + '%'; },
+      pct: pctOf(tp.history, tp.value), bad: 1, hist: tp.history, color: '#3FFFE0', fmt: function (v) { return v.toFixed(2) + '%'; },
       what: 'The extra yield investors demand to lock money up for 10 years instead of rolling short-term bills.',
       care: 'A rising term premium means less trust in the long end, and it pushes up mortgage rates even if the Fed does nothing.',
       src: 'FRED, Fed Board (Kim-Wright), ' + fmtDate(tp.date) });
     if (be) addRow('The long end', 'p_be', { name: 'Inflation expectations', short: 'What the market expects for 10 years', value: be.value.toFixed(2) + '%', change: signed(be.change * 100, 0, 'bp') + ' in 4 wks', changeColor: tone(be.change),
-      pct: pctOf(be.history, be.value), bad: 1, hist: be.history, color: '#D88BFF', fmt: function (v) { return v.toFixed(2) + '%'; },
+      pct: pctOf(be.history, be.value), bad: 1, hist: be.history, color: '#E59BFF', fmt: function (v) { return v.toFixed(2) + '%'; },
       what: 'The inflation the bond market expects over the next 10 years: the breakeven between regular and inflation-protected Treasuries.',
       care: 'Higher expected inflation makes lenders demand more interest, which pushes long-term rates up.',
       src: 'FRED, ' + fmtDate(be.date) });
