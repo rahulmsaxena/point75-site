@@ -66,7 +66,7 @@
     '.p75debt .dt-ovc:hover,.p75debt .dt-ovc:focus-visible{border-color:var(--gold);outline:none}' +
     '@media (hover:hover){.p75debt .dt-ovc:hover{transform:translateY(-2px)}}' +
     '.p75debt .dt-ovh{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#E2DDD2;font-weight:800}' +
-    '.p75debt .dt-go{color:var(--gold);letter-spacing:.02em;text-transform:none;font-size:13.5px}' +
+    '.p75debt .dt-go{flex:none;white-space:nowrap;color:var(--gold);letter-spacing:.02em;text-transform:none;font-size:13.5px}' +
     '.p75debt .dt-m{display:flex;align-items:center;gap:12px}' +
     '.p75debt .dt-d{flex:0 0 auto;width:112px}.p75debt .dt-d svg{display:block;width:100%;height:auto;overflow:visible}' +
     '.p75debt .dt-r{display:flex;flex-direction:column;gap:3px;min-width:0}' +
@@ -307,6 +307,11 @@
         svg += '<text x="' + p[0] + '" y="' + p[1] + '" dy=".35em" text-anchor="' + anc + '" font-size="11" font-weight="700" letter-spacing=".04em" fill="' + (l[2] || '#8A8D93') + '" font-family="Manrope,sans-serif">' + l[1] + '</text>';
       });
     }
+    // start and end of the scale under the two arc ends, so the needle reads against something
+    if (!o.big && o.ends) [[-DSWEEP / 2, o.ends[0]], [DSWEEP / 2, o.ends[1]]].forEach(function (e) {
+      var p = dPt(e[0], DR);
+      svg += '<text x="' + p[0] + '" y="' + (+p[1] + sw / 2 + 19).toFixed(1) + '" text-anchor="middle" font-size="21" font-weight="800" fill="#C9C4B8" font-family="Manrope,sans-serif" style="font-variant-numeric:tabular-nums">' + e[1] + '</text>';
+    });
     var len = o.big ? DR - 22 : DR - 26, nw = o.big ? 3.2 : 5;
     var as = o.from != null ? ang(o.from) : a0;   // needle start for the sweep (fill still grows from rest)
     svg += '<g class="p75n" data-a="' + a1.toFixed(1) + '" data-r="' + as.toFixed(1) + '" style="transform-origin:' + DCX + 'px ' + DCY + 'px;transform:rotate(' + as.toFixed(1) + 'deg)">' +
@@ -316,7 +321,7 @@
       '<circle cx="' + DCX + '" cy="' + DCY + '" r="' + (o.big ? 2.6 : 3.6) + '" fill="#F4F1EA"/>';
     if (o.center != null)
       svg += '<text x="' + DCX + '" y="' + (DCY + 50) + '" text-anchor="middle" font-size="' + (o.centerSize || 34) + '" font-weight="800" fill="' + o.color + '" font-family="Manrope,sans-serif" style="font-variant-numeric:tabular-nums">' + o.center + '</text>';
-    return '<svg viewBox="' + (o.big ? '-6 -12 212 146' : o.center == null ? '2 6 196 124' : '0 8 200 142') + '" role="img" aria-label="' + esc(o.aria || '').replace(/"/g, '&quot;') + '">' + svg + '</svg>';
+    return '<svg viewBox="' + (o.big ? '-6 -12 212 146' : o.center == null ? (o.ends ? '0 6 200 148' : '2 6 196 124') : '0 8 200 142') + '" role="img" aria-label="' + esc(o.aria || '').replace(/"/g, '&quot;') + '">' + svg + '</svg>';
   }
 
   function means(r) { return r ? '<div class="means"><b>What it means</b><p>' + esc(r.text) + '</p></div>' : ''; }
@@ -366,13 +371,13 @@
     };
     var am = rt && rt.avg_marketable;
     SEC.takeaway = '<div class="dt-tk"><p class="dt-head">' + head + '</p><div class="dt-ov">' +
-      (w ? ov('wall', 'The wall · due in 12 months', dial({ v: w.next12_share, min: 0, max: 50, rest: 0, from: 0, color: AMB, aria: Math.round(w.next12_share) + '% of marketable debt due within a year' }),
+      (w ? ov('wall', 'The wall · due in 12 months', dial({ v: w.next12_share, min: 0, max: 50, rest: 0, from: 0, color: AMB, ends: ['0%', '50%'], aria: Math.round(w.next12_share) + '% of marketable debt due within a year' }),
         money(w.next12_bn), AMB, Math.round(w.next12_share) + '% of the debt', 'must be refinanced within a year.') : '') +
-      (am ? ov('rates', 'Rates · what the government pays', dial({ v: am.value, min: 0, max: 6, rest: 0, from: 0, notch: rt.market.t10.value, color: AMB, aria: 'Average rate ' + am.value.toFixed(2) + '%' }),
+      (am ? ov('rates', 'Rates · what the government pays', dial({ v: am.value, min: 0, max: 6, rest: 0, from: 0, ends: ['0%', '6%'], notch: rt.market.t10.value, color: AMB, aria: 'Average rate ' + am.value.toFixed(2) + '%' }),
         am.value.toFixed(2) + '%', AMB, 'vs ' + rt.market.t10.value.toFixed(2) + '% for a new 10-year', 'average rate on all marketable debt.') : '') +
-      (it ? ov('cost', 'The cost · interest per tax dollar', dial({ v: it.cents_per_tax_dollar, min: 0, max: 40, rest: 0, from: 0, notch: it.cents_per_tax_dollar_prior, color: RED, aria: Math.round(it.cents_per_tax_dollar) + ' cents of every tax dollar goes to interest' }),
+      (it ? ov('cost', 'The cost · interest per tax dollar', dial({ v: it.cents_per_tax_dollar, min: 0, max: 40, rest: 0, from: 0, ends: ['0¢', '40¢'], notch: it.cents_per_tax_dollar_prior, color: RED, aria: Math.round(it.cents_per_tax_dollar) + ' cents of every tax dollar goes to interest' }),
         Math.round(it.cents_per_tax_dollar) + '¢', RED, it.cents_per_tax_dollar_prior != null ? 'Up from ' + Math.round(it.cents_per_tax_dollar_prior) + '¢' : '', 'of every tax dollar goes to interest.') : '') +
-      (ow ? ov('buyers', 'The buyers · held abroad', dial({ v: ow.foreign_share, min: 0, max: 60, rest: 0, from: 0, notch: ow.share_peak ? ow.share_peak.value : null, color: BLU, aria: Math.round(ow.foreign_share) + '% of the debt is held abroad' }),
+      (ow ? ov('buyers', 'The buyers · held abroad', dial({ v: ow.foreign_share, min: 0, max: 60, rest: 0, from: 0, ends: ['0%', '60%'], notch: ow.share_peak ? ow.share_peak.value : null, color: BLU, aria: Math.round(ow.foreign_share) + '% of the debt is held abroad' }),
         Math.round(ow.foreign_share) + '%', BLU, ow.share_peak ? 'Peak ' + Math.round(ow.share_peak.value) + '% in ' + ow.share_peak.date.slice(0, 4) : '', 'of public debt is held by foreigners.') : '') +
       '</div></div>';
 
