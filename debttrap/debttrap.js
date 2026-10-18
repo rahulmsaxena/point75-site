@@ -96,6 +96,19 @@
     '.p75debt .fo-c{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--gold);display:grid;place-items:center;animation:p75dbob 2.4s ease-in-out infinite}' +
     '.p75debt .fo-c:after{content:"";width:7px;height:7px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:translateY(-2px) rotate(45deg)}' +
     '@keyframes p75dbob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}' +
+    // buyers circle-pack (Congressional Trading style)
+    '.p75debt .dt-strip{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:0 0 10px;padding:10px 16px;border-radius:12px;background:var(--panel);border:1px solid var(--line);font-size:14px;color:#F1ECE2}' +
+    '.p75debt .dt-strip > b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:28px;line-height:1;color:#fff}' +
+    '.p75debt .dt-strip .pk2{color:#fff;font-weight:800}' +
+    '.p75debt .dt-spk{width:150px;height:34px}' +
+    '.p75debt .dt-key{margin-left:auto;display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;font-size:12.5px;color:#E2DDD2}' +
+    '.p75debt .dt-key .k{display:inline-flex;align-items:center;gap:6px}.p75debt .dt-key i{width:11px;height:11px;border-radius:50%}' +
+    '.p75debt .dt-bub{padding:8px}.p75debt .dt-pack{display:block;width:100%;height:auto}' +
+    '.p75debt .pk{cursor:default}.p75debt .pk circle{stroke:var(--panel);stroke-width:2;transition:stroke .15s}.p75debt .pk:hover circle{stroke:var(--cream)}' +
+    '.p75debt .pk-t{fill:#fff;font-weight:800;font-family:Manrope,sans-serif}' +
+    '.p75debt .pk-n{fill:rgba(255,255,255,.88);font-weight:700;font-family:Manrope,sans-serif}' +
+    '.p75debt .pk-p{fill:rgba(255,255,255,.75);font-size:13px;font-weight:700;font-family:Manrope,sans-serif}' +
+    '@media (max-width:760px){.p75debt .dt-key{margin-left:0}.p75debt .dt-spk{width:110px}}' +
     // takeaway
     '.p75debt .dt-tk{display:flex;flex-direction:column;gap:12px}' +
     '.p75debt .dt-head{margin:0;padding:16px 20px;border-radius:16px;background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold);font-family:"Hedvig Letters Serif",Georgia,serif;font-size:22px;line-height:1.45;color:#fff}' +
@@ -413,32 +426,73 @@
         '<p class="note">Through ' + mon(it.as_of) + '. The fiscal year runs October to September. Net interest is interest paid to the public minus interest the Treasury earns.</p>';
     }
 
-    // ---- The buyers ----
+    // ---- The buyers: one circle-pack of every holder (same build as the Congressional Trading member bubbles).
+    // Flat fills on a diverging scale: foreign holders blue if they added over 12 months, orange if they sold;
+    // domestic holders (U.S. investors, the Fed) neutral grey. A thin dark gap separates every bubble. ----
     if (ow) {
-      var priv = ow.foreign_bn - (ow.foreign_official_bn || 0);
-      var own = [{ n: 'U.S. investors', v: ow.domestic_bn, c: C1, d: 'Funds, banks, pensions, households' },
-                 { n: 'Foreign private', v: priv, c: C2, d: 'Foreign funds and investors' },
-                 { n: 'Foreign governments', v: ow.foreign_official_bn || 0, c: C4, d: 'Central banks, sovereign funds' },
-                 { n: 'Federal Reserve', v: ow.fed_bn, c: C3, d: 'Held on the Fed’s balance sheet' }];
-      var sum = own.reduce(function (s, p) { return s + p.v; }, 0);
-      SEC.buyers = '' +
-        mean(R.buyers) +
-        '<div class="card"><h3>Who holds U.S. debt</h3><p class="cap">As of ' + mon(ow.as_of + '-01') + '. U.S. investors are what is left after foreign holders and the Fed.</p>' +
-        '<div class="own" role="img" aria-label="Ownership split">' + own.map(function (p) {
-          return '<div title="' + esc(p.n) + ': ' + money(p.v) + ' (' + (100 * p.v / sum).toFixed(0) + '%)" style="width:' + (100 * p.v / sum).toFixed(2) + '%;background:' + p.c + '"></div>';
-        }).join('') + '</div><div class="ownk">' + own.map(function (p) {
-          return '<div><div class="k"><i style="background:' + p.c + '"></i>' + esc(p.n) + '</div><div class="a num">' + money(p.v) + '</div><div class="p">' + (100 * p.v / sum).toFixed(0) + '% · ' + esc(p.d) + '</div></div>';
-        }).join('') + '</div></div><div class="gap"></div>' +
-        '<div class="two"><div class="card"><h3>Foreign share since 2000</h3><p class="cap">Share of debt held by the public owned by foreign investors, quarterly.</p>' +
-        lineChart([{ name: 'Foreign share', color: C2, points: ow.share_history }], function (v) { return Math.round(v) + '%'; }, 200,
-          { aria: 'Foreign share of U.S. debt since 2000', tipDate: function (d) { var x = d8(d); return 'Q' + (Math.floor(x.getUTCMonth() / 3) + 1) + ' ' + x.getUTCFullYear(); },
-            marks: ow.share_peak ? [{ date: ow.share_peak.date, value: ow.share_peak.value, text: 'Peak ' + Math.round(ow.share_peak.value) + '%' }] : [] }) +
-        '</div><div class="card"><h3>Largest foreign holders</h3><p class="cap">Change over the 12 months to ' + mon(ow.as_of + '-01') + '.</p>' +
-        '<table><thead><tr><th>Holder</th><th class="r">Holds</th><th class="r">12-month change</th></tr></thead><tbody>' +
-        ow.countries.map(function (c) {
-          return '<tr><td>' + esc(c.name) + '</td><td class="r num">' + money(c.value, 2) + '</td><td class="r num dn">' + (c.change_12m == null ? '–' : (c.change_12m >= 0 ? '▲ ' : '▼ ') + signedMoney(c.change_12m)) + '</td></tr>';
-        }).join('') + '</tbody></table></div></div>' +
-        '<p class="note">Countries are where the securities are held in custody, not always who owns them: Belgium, Luxembourg and the Cayman Islands hold large amounts for investors elsewhere.</p>';
+      var LEAN = ['#3987e5', '#2b5a96', '#4a4b52', '#8e4424', '#d95926'];   // added a lot · added · flat · sold · sold a lot
+      var leanOf = function (ch, v) { if (ch == null || !v) return LEAN[2]; var x = ch / v; return x >= .06 ? LEAN[0] : x >= .015 ? LEAN[1] : x > -.015 ? LEAN[2] : x > -.06 ? LEAN[3] : LEAN[4]; };
+      var SHORT = { 'United Kingdom': 'UK', 'Cayman Islands': 'Cayman', 'Luxembourg': 'Lux', 'Switzerland': 'Swiss', 'Saudi Arabia': 'Saudi', 'Hong Kong': 'HK', 'United Arab Emirates': 'UAE', 'Korea, South': 'Korea', 'Netherlands': 'Neth.' };
+      var CTY = (ow.countries || []).slice(), named = CTY.reduce(function (t, c) { return t + c.value; }, 0);
+      var HOLD = [{ n: 'U.S. investors', v: ow.domestic_bn, fill: '#5b5d66', d: 'Funds, banks, pensions, households' },
+                  { n: 'Federal Reserve', s: 'The Fed', v: ow.fed_bn, fill: '#5b5d66', d: 'Held on the Fed’s balance sheet' }]
+        .concat(CTY.map(function (c) { return { n: c.name, s: SHORT[c.name] || c.name, v: c.value, ch: c.change_12m, fill: leanOf(c.change_12m, c.value), foreign: true }; }))
+        .concat(ow.foreign_bn - named > 1 ? [{ n: 'Other foreign holders', s: 'Others', v: ow.foreign_bn - named, fill: '#2f3138', d: 'Every other foreign holder', foreign: true }] : [])
+        .filter(function (h) { return h.v > 0; });
+      var hsum = HOLD.reduce(function (t, h) { return t + h.v; }, 0);
+      var pack = slot(function (el, Wd) {
+        var W = Wd, H = W < 560 ? W : Math.min(400, Math.round(W * 0.44)), pad = 3;
+        // circle packing: largest first, each new circle placed touching two placed ones as close to the centre as possible
+        var items = HOLD.map(function (h) { return { h: h, r: Math.sqrt(h.v) }; }).sort(function (x, y) { return y.r - x.r; });
+        var placed = [];
+        items.forEach(function (c, i) {
+          if (i === 0) { c.x = 0; c.y = 0; placed.push(c); return; }
+          if (i === 1) { c.x = placed[0].r + c.r + pad; c.y = 0; placed.push(c); return; }
+          var best = null;
+          for (var a = 0; a < placed.length; a++) for (var b = a + 1; b < placed.length; b++) {
+            var A = placed[a], B = placed[b], ra = A.r + c.r + pad, rb = B.r + c.r + pad, dx = B.x - A.x, dy = B.y - A.y, d = Math.sqrt(dx * dx + dy * dy);
+            if (d > ra + rb || d < Math.abs(ra - rb) || !d) continue;
+            var l = (ra * ra - rb * rb + d * d) / (2 * d), hh = Math.sqrt(Math.max(0, ra * ra - l * l)), mx = A.x + dx * l / d, my = A.y + dy * l / d;
+            [[mx + hh * dy / d, my - hh * dx / d], [mx - hh * dy / d, my + hh * dx / d]].forEach(function (pt) {
+              var ok = placed.every(function (o) { var ex = pt[0] - o.x, ey = pt[1] - o.y; return Math.sqrt(ex * ex + ey * ey) >= o.r + c.r + pad - .01; });
+              if (ok) { var dist = pt[0] * pt[0] + pt[1] * pt[1]; if (!best || dist < best[2]) best = [pt[0], pt[1], dist]; }
+            });
+          }
+          if (!best) best = [placed[0].r + c.r * 2 + i * 4, 0, 0];
+          c.x = best[0]; c.y = best[1]; placed.push(c);
+        });
+        var x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+        placed.forEach(function (c) { x0 = Math.min(x0, c.x - c.r); x1 = Math.max(x1, c.x + c.r); y0 = Math.min(y0, c.y - c.r); y1 = Math.max(y1, c.y + c.r); });
+        var k = Math.min((W - 8) / (x1 - x0), (H - 8) / (y1 - y0)), ox = (W - (x1 - x0) * k) / 2 - x0 * k, oy = (H - (y1 - y0) * k) / 2 - y0 * k;
+        var fit = function (t, w, px) { var max = Math.floor(w / (px * .58)); return t.length <= max ? t : (max > 3 ? t.slice(0, max - 1) + '…' : ''); };
+        var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '" class="dt-pack" role="img" aria-label="Who holds U.S. debt, sized by amount held: ' +
+          HOLD.map(function (h) { return h.n + ' ' + money(h.v); }).join(', ') + '">';
+        placed.forEach(function (c) {
+          var h = c.h, r = c.r * k, x = c.x * k + ox, y = c.y * k + oy, pc = Math.round(100 * h.v / hsum);
+          var tipTxt = h.n + ': ' + money(h.v, 2) + ' (' + pc + '%)' + (h.ch != null ? ', ' + signedMoney(h.ch) + ' in 12 months' : '') + (h.d ? '. ' + h.d : '');
+          var nameSize = r > 80 ? 17 : r > 46 ? 14 : r > 30 ? 12 : 10, lbl = h.s || h.n;
+          svg += '<g class="pk" transform="translate(' + x.toFixed(1) + ',' + y.toFixed(1) + ')"><title>' + esc(tipTxt) + '</title><circle r="' + r.toFixed(1) + '" fill="' + h.fill + '"/>' +
+            (r > 21
+              ? '<text y="' + (r > 80 ? -10 : r > 30 ? -4 : -2) + '" text-anchor="middle" class="pk-t" font-size="' + nameSize + '">' + esc(fit(h.n, r * 1.8, nameSize) === h.n ? h.n : fit(lbl, r * 1.8, nameSize)) + '</text>' +
+                '<text y="' + (r > 80 ? 22 : r > 30 ? 13 : 10) + '" text-anchor="middle" class="pk-n" font-size="' + (r > 80 ? 26 : r > 46 ? 15 : r > 30 ? 12.5 : 10) + '">' + money(h.v, h.v < 1000 ? 0 : 1) + '</text>' +
+                (r > 80 ? '<text y="44" text-anchor="middle" class="pk-p">' + pc + '%</text>' : '')
+              : r > 13 ? '<text y="3.5" text-anchor="middle" class="pk-t" font-size="9.5">' + esc(fit(lbl, r * 1.9, 9.5)) + '</text>' : '') + '</g>';
+        });
+        el.innerHTML = svg + '</svg>';
+      });
+      var sh = ow.share_history || [], spark = '';
+      if (sh.length > 1) {
+        var sv = sh.map(function (p) { return p.value; }), lo = Math.min.apply(null, sv), hi = Math.max.apply(null, sv), rg = (hi - lo) || 1;
+        spark = '<svg class="dt-spk" viewBox="0 0 160 34" preserveAspectRatio="none" aria-hidden="true"><polyline fill="none" stroke="#d95926" stroke-width="2" vector-effect="non-scaling-stroke" points="' +
+          sv.map(function (v, i) { return (i * 160 / (sv.length - 1)).toFixed(1) + ',' + (31 - (v - lo) / rg * 28).toFixed(1); }).join(' ') + '"/></svg>';
+      }
+      SEC.buyers = mean(R.buyers) +
+        '<div class="dt-strip"><span>Foreign share</span><b>' + Math.round(ow.foreign_share) + '%</b>' + spark +
+        (ow.share_peak ? '<span>peak <b class="pk2">' + Math.round(ow.share_peak.value) + '%</b> in ' + ow.share_peak.date.slice(0, 4) + '</span>' : '') +
+        '<span class="dt-key"><span>Foreign holders, last 12 months:</span>' + [['Added a lot', LEAN[0]], ['Added', LEAN[1]], ['Flat', LEAN[2]], ['Sold', LEAN[3]], ['Sold a lot', LEAN[4]]].map(function (l) {
+          return '<span class="k"><i style="background:' + l[1] + '"></i>' + l[0] + '</span>'; }).join('') + '<span class="k"><i style="background:#5b5d66"></i>Domestic</span><span class="k"><i style="background:#2f3138;outline:1px solid #6b6d75"></i>Other foreign</span></span></div>' +
+        '<div class="card dt-bub">' + pack + '</div>' +
+        '<p class="note">' + money(ow.public_bn) + ' held by the public, as of ' + mon(ow.as_of + '-01') + '. Countries are where bonds are held in custody, not always who owns them.</p>';
     }
 
     var view = location.hash.slice(1), live = TABS.filter(function (x) { return SEC[x.key]; });
