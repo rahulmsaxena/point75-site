@@ -23,20 +23,20 @@
   var CSS =
     // Pulse strip
     '.p75ps{max-width:1224px;width:calc(100% - 40px);margin:0 auto 14px;box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;gap:12px 28px;' +
-      'padding:14px 20px;border:1px solid #2A2B2F;border-radius:12px;background:#17181B;color:#EDE8DC!important;text-decoration:none!important;font:500 14px/1.4 Manrope,system-ui,sans-serif}' +
+      'padding:14px 20px;border:1px solid rgba(201,162,39,.32);border-radius:12px;background:#1B1C20;color:#EDE8DC!important;text-decoration:none!important;font:500 14px/1.4 Manrope,system-ui,sans-serif}' +
     '.p75ps:hover,.p75ps:focus-visible{border-color:rgba(201,162,39,.7);outline:none}' +
     '.p75ps .lb{display:flex;flex-direction:column;gap:2px}' +
     '.p75ps .lb b{color:#C9A227;font-weight:800;font-size:12px;letter-spacing:.14em;text-transform:uppercase}' +
-    '.p75ps .lb span{color:#A9A396;font-size:12.5px}.p75ps .lb .u{font-style:normal}' +
+    '.p75ps .lb span{color:#E4DED1;font-size:13px;font-weight:600}.p75ps .lb .u{font-style:normal}' +
     '.p75ps .rd{display:flex;align-items:center;gap:10px}' +
     '.p75ps .rd svg{flex:none}' +
-    '.p75ps .rd .k{color:#A9A396;font-size:12px;letter-spacing:.04em}' +
-    '.p75ps .rd .v{font:400 22px/1 "Hedvig Letters Serif",Georgia,serif;font-variant-numeric:tabular-nums}' +
-    '.p75ps .rd .w{font-size:13px;font-weight:700}' +
+    '.p75ps .rd .k{color:#E4DED1;font-size:12.5px;font-weight:700;letter-spacing:.03em}' +
+    '.p75ps .rd .v{font:400 26px/1 "Hedvig Letters Serif",Georgia,serif;font-variant-numeric:tabular-nums;filter:brightness(1.15)}' +
+    '.p75ps .rd .w{font-size:13.5px;font-weight:800;filter:brightness(1.15)}' +
     '.p75ps .go{margin-left:auto;color:#C9A227;font-weight:800;white-space:nowrap}' +
     '@media (max-width:640px){.p75ps{gap:8px 12px;padding:10px 14px}.p75ps .lb{flex:1 1 auto;order:0;flex-direction:row;gap:8px;align-items:baseline}' +
       '.p75ps .lb .u{display:none}.p75ps .go{order:1;margin-left:auto;font-size:13px}' +
-      '.p75ps .rd{order:2;flex:1 1 40%;min-width:0;gap:8px}.p75ps .rd svg[width="80"]{width:52px}.p75ps .rd .v{font-size:20px}.p75ps .rd .w{font-size:12px}}' +
+      '.p75ps .rd{order:2;flex:1 1 40%;min-width:0;gap:8px}.p75ps .rd svg[width="80"]{width:52px}.p75ps .rd .v{font-size:24px}.p75ps .rd .w{font-size:13px}}' +
     // "New to bonds?" (drawn by p75.js as .p75cta), restyled on the homepage as a light signpost rather than a box
     '.p75top>.p75cta{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none}' +
     '.p75top>.p75cta .go{transition:transform .2s}' +
@@ -133,10 +133,10 @@
     '.p75ex{max-width:1224px;width:calc(100% - 40px);margin:64px auto 0;box-sizing:border-box}' +
     '.p75ex .eb{color:#C9A227;font:800 12px Manrope,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}' +
     '.p75ex .g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}' +
-    '.p75ex a{display:flex;flex-direction:column;gap:8px;padding:20px 22px;border:1px solid #2A2B2F;border-radius:12px;background:#17181B;text-decoration:none!important;transition:border-color .2s}' +
+    '.p75ex a{display:flex;flex-direction:column;gap:8px;padding:20px 22px;border:1px solid #34363C;border-radius:12px;background:#1B1C20;text-decoration:none!important;transition:border-color .2s}' +
     '.p75ex a:hover,.p75ex a:focus-visible{border-color:rgba(201,162,39,.7);outline:none}' +
-    '.p75ex a b{font:400 23px/1.2 "Hedvig Letters Serif",Georgia,serif;color:#EDE8DC}' +
-    '.p75ex a span{font:500 14.5px/1.55 Manrope,system-ui,sans-serif;color:#C4BEB1}' +
+    '.p75ex a b{font:400 23px/1.2 "Hedvig Letters Serif",Georgia,serif;color:#fff}' +
+    '.p75ex a span{font:600 14.5px/1.55 Manrope,system-ui,sans-serif;color:#E4DED1}' +
     '.p75ex a em{margin-top:auto;padding-top:6px;font:800 13.5px Manrope,system-ui,sans-serif;font-style:normal;color:#C9A227}' +
     '@media (max-width:760px){.p75ex .g{grid-template-columns:1fr;gap:10px}' + L + ' .p75ex{margin-top:24px}' + L + ' .p75ex .eb{margin-bottom:10px}' +
       L + ' .p75ex a{padding:14px 18px;gap:4px}' + L + ' .p75ex a b{font-size:20px}' + L + ' .p75ex a span{font-size:14px}' + L + ' .p75ex a em{padding-top:4px}}' +
