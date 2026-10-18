@@ -45,9 +45,7 @@
     '.p75pulse .mini svg{display:block;width:100%;max-width:104px;height:auto;overflow:visible}' +
     '.p75pulse .mini .mn{font-size:12.5px;font-weight:700;color:var(--cream);line-height:1.3}' +
     '.p75pulse .mini .mw{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}' +
-    '.p75pulse .votes{flex:1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:1fr;gap:6px}' +
-    '.p75pulse .vt{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:10px;background:#121316;border:1px solid var(--line);font-size:13px;font-weight:700;color:var(--cream);line-height:1.25;min-width:0}' +
-    '.p75pulse .vt b{flex:0 0 auto;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11px;color:#0b0c0e}' +
+    '.p75pulse .tl b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:44px;line-height:1;font-variant-numeric:tabular-nums}' +
     '.p75pulse .p75n{transition:transform 1.6s cubic-bezier(.3,1.3,.5,1)}' +
     '.p75pulse .p75f{stroke-dashoffset:100;transition:stroke-dashoffset 1.6s cubic-bezier(.2,.8,.2,1)}' +
     '.p75pulse .inst.on .p75f{stroke-dashoffset:0}' +
@@ -649,10 +647,9 @@
         '<div class="reading"><div class="big num" style="color:' + bc + '">' + (b.score > 0 ? '+' : '') + (b.score != null ? b.score : '–') + '</div>' +
         '<div class="verdict" style="color:' + bc + '">' + esc(b.label || 'No reading') + '</div>' +
         '<div class="hint"><b style="color:' + BULL + '">Blue</b> is bullish for bonds: prices up, yields down. <b style="color:' + BEAR + '">Red</b> is bearish: prices down, yields up. The needle runs from −100 to +100.</div></div></div>' +
-        (votes.length ? '<div class="more"><div class="k">How the ' + votes.length + ' signals voted<i><span style="color:' + BULL + '">' + nb + ' bull</span> · ' + nh + ' hold · <span style="color:' + BEAR + '">' + nr + ' bear</span></i></div><div class="votes">' +
-          votes.map(function (v) {
-            var c = v.vote > 0 ? BULL : v.vote < 0 ? BEAR : '#C2BCAF', m = v.vote > 0 ? '▲' : v.vote < 0 ? '▼' : '•';
-            return '<div class="vt"><b style="background:' + c + '">' + m + '</b><span>' + esc(v.name) + '</span></div>';
+        (votes.length ? '<div class="more"><div class="k">How the ' + votes.length + ' signals voted</div><div class="minis">' +
+          [[nb, '▲ Bull', BULL], [nh, '• Hold', '#C2BCAF'], [nr, '▼ Bear', BEAR]].map(function (t) {
+            return '<div class="mini tl" style="border-color:' + t[2] + '55;background:' + t[2] + '12"><b style="color:' + t[2] + '">' + t[0] + '</b><span class="mw" style="color:' + t[2] + '">' + t[1] + '</span></div>';
           }).join('') + '</div></div>' : '') +
       '</div>' +
       '<div class="card"><h3>Stress monitor</h3><div class="meter">' +
