@@ -5,12 +5,13 @@
   var API = 'https://news.point75.io/api/pulse';
   var BULL = '#3D8BFF', BEAR = '#E5484D', NEUT = '#9AA0A6';
 
-  // The overview shows the two gauges and one card per section; a card opens that section on its own (/pulse#auctions)
+  // The page shows the two gauges, then a tab bar: each tab swaps the view below it in place (/pulse#auctions).
+  // Signals is open by default.
   var SECTIONS = [
-    { key: 'why', title: 'Why the needles are where they are', blurb: 'Every signal behind the two gauges, with the rule it follows. Nothing hidden in a black box.', cta: 'See every signal' },
-    { key: 'auctions', title: 'Who’s buying the debt?', blurb: 'Each Treasury auction graded against the last six of the same maturity, and what’s coming up.', cta: 'See the auctions' },
-    { key: 'plumbing', title: 'The pros and the plumbing', blurb: 'What big money is doing in futures, dealer balance sheets, funding, rates swings and inflation expectations.', cta: 'Open the gauges' },
-    { key: 'wire', title: 'Live wire', blurb: 'The latest bond, central-bank and macro headlines, linking to the source.', cta: 'Read the headlines' }
+    { key: 'why', tab: 'Signals', title: 'Why the needles are where they are', blurb: 'Every signal behind the two gauges, with the rule it follows. Nothing hidden in a black box.', cta: 'See every signal' },
+    { key: 'auctions', tab: 'Auctions', title: 'Who’s buying the debt?', blurb: 'Each Treasury auction graded against the last six of the same maturity, and what’s coming up.', cta: 'See the auctions' },
+    { key: 'plumbing', tab: 'Plumbing', title: 'The pros and the plumbing', blurb: 'What big money is doing in futures, dealer balance sheets, funding, rates swings and inflation expectations.', cta: 'Open the gauges' },
+    { key: 'wire', tab: 'Live wire', title: 'Live wire', blurb: 'The latest bond, central-bank and macro headlines, linking to the source.', cta: 'Read the headlines' }
   ];
 
   var CSS =
@@ -95,7 +96,14 @@
     '.p75pulse .strip a{margin-left:auto;color:var(--gold);font-weight:700;text-decoration:none}' +
     '.p75pulse .pn{display:flex;justify-content:space-between;gap:12px;margin-top:40px;border-top:1px solid var(--line);padding-top:16px}' +
     '.p75pulse .pn a{color:var(--soft);font-weight:600;text-decoration:none;font-size:15px}.p75pulse .pn a.nx{color:var(--gold);font-weight:800}' +
-    '.p75pulse .view > h2:first-child{margin-top:28px}' +
+    '.p75pulse .view > h2:first-child{margin-top:26px}' +
+    '.p75pulse .tabs{position:sticky;top:var(--tabs-top,0px);z-index:6;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:36px -20px 0;padding:12px 20px;background:var(--ink);border-bottom:1px solid var(--line)}' +
+    '.p75pulse .tabs::-webkit-scrollbar{display:none}' +
+    '.p75pulse .tab{flex:none;display:inline-flex;align-items:center;min-height:40px;padding:0 18px;border-radius:999px;border:1px solid #3A3C42;color:var(--soft);font-weight:700;font-size:14.5px;text-decoration:none;white-space:nowrap;transition:border-color .15s,background .15s,color .15s}' +
+    '.p75pulse .tab:hover{border-color:var(--gold);color:#fff}' +
+    '.p75pulse .tab.on{background:var(--gold);border-color:var(--gold);color:#111214}' +
+    '.p75pulse .tab:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
+    '@media (max-width:560px){.p75pulse .tabs{margin:28px -16px 0;padding:10px 16px;gap:6px}.p75pulse .tab{min-height:38px;padding:0 15px;font-size:14px}}' +
     '@media (max-width:700px){.p75pulse .secs{grid-template-columns:1fr;gap:14px}.p75pulse a.sec{min-height:0;padding:22px 20px}.p75pulse a.sec .nm{font-size:23px}.p75pulse .strip a{margin-left:0}}' +
     // cockpit (the #why view): one instrument per signal, plus an info screen that explains the one you tap
     '.p75pulse .ck{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start;margin-top:8px}' +
@@ -559,7 +567,8 @@
       var x = s.querySelector('[data-sh-x]'); if (x) x.focus({ preventScroll: true });
     }
     // Keep the gauge visible in the space above the sheet (sheet tops out at 62% of the screen)
-    var tb = document.querySelector('.top-blocks--sticky'), top = (tb ? tb.getBoundingClientRect().height : 0) + 8;
+    var tb = document.querySelector('.top-blocks--sticky'), bar = host.querySelector('.tabs');
+    var top = (tb ? tb.getBoundingClientRect().height : 0) + (bar ? bar.getBoundingClientRect().height : 0) + 8;
     var r = bt.getBoundingClientRect(), room = window.innerHeight * 0.38;
     if (r.top < top || r.bottom > room) {
       var want = r.top + window.pageYOffset - top - Math.max(0, (room - top - r.height) / 2);
@@ -584,7 +593,9 @@
     ckScreen(box, null);
     var ckTop = function () {   // keep the sticky info screen clear of the site's sticky header, whatever its height
       var tb = document.querySelector('.top-blocks--sticky');
-      host.style.setProperty('--ck-top', ((tb ? tb.getBoundingClientRect().height : 0) + 14) + 'px');
+      var bar = host.querySelector('.tabs');   // the sticky tab bar sits under the header too
+      host.style.setProperty('--tabs-top', (tb ? Math.round(tb.getBoundingClientRect().height) : 0) + 'px');
+      host.style.setProperty('--ck-top', ((tb ? tb.getBoundingClientRect().height : 0) + (bar ? bar.getBoundingClientRect().height : 0) + 14) + 'px');
     };
     ckTop();
     btns.forEach(function (bt) { var it = CK_ITEMS[bt.getAttribute('data-ck')]; if (it) ckApply(bt, it, 0); });
@@ -700,32 +711,12 @@
     SEC.wire = '<h2>Live wire</h2><p class="sub wire-sub">The latest bond, central-bank and macro headlines. Updated daily.</p><div class="wire" data-wire>Loading headlines…</div>';
     var dt = '<a class="dtlink" href="/debt-trap"><span>Next</span><b>The debt trap</b> How much U.S. debt has to be refinanced, what it costs and who is still buying it &rarr;</a>';
 
-    var view = location.hash.slice(1), idx = -1;
-    SECTIONS.forEach(function (x, i) { if (x.key === view && SEC[x.key]) idx = i; });
-    if (idx < 0) {
-      // Overview: the two gauges, then one card per section with what it says right now
-      var votes = b.votes || [], bear = votes.filter(function (v) { return v.vote < 0; }).length, bull = votes.filter(function (v) { return v.vote > 0; }).length;
-      var last = a && a.recent && a.recent[0];
-      var now = {
-        why: votes.length ? votes.length + ' signals: ' + [[bull, 'bullish'], [bear, 'bearish'], [votes.length - bull - bear, 'neutral']].filter(function (x) { return x[0]; })
-          .map(function (x) { return x[0] + ' ' + x[1]; }).join(', ') + ((s.components || []).length ? ' · ' + s.components.length + ' stress readings' : '') : '',
-        auctions: last ? esc(last.term.replace(' ', '-')) + ' auction, ' + fmtDate(last.date) + ': ' + last.grade + ' demand' : '',
-        plumbing: tp ? 'Term premium ' + tp.value.toFixed(2) + '%' + (r ? ' · 10-year swinging ' + r.vol.value.toFixed(1) + 'bp a day' : '') : '',
-        wire: '<span data-wire-top>The latest headlines</span>'
-      };
-      h = head + '<div class="secs">' + SECTIONS.filter(function (x) { return SEC[x.key]; }).map(function (x, i) {
-        return '<a class="sec" href="#' + x.key + '" data-sec="' + x.key + '"><span class="n">0' + (i + 1) + '</span><span class="nm">' + x.title + '</span><span class="bl">' + x.blurb + '</span>' +
-          (now[x.key] ? '<span class="now"><b>Now</b>' + now[x.key] + '</span>' : '') + '<span class="go">' + x.cta + ' &rarr;</span></a>';
-      }).join('') + '</div>' + dt;
-    } else {
-      var cur = SECTIONS[idx], prev = SECTIONS[idx - 1], next = SECTIONS[idx + 1];
-      h = '<div class="wrap"><p class="crumb"><a href="#" data-sec="">&larr; Pulse overview</a></p><div class="eyebrow">Pulse · ' + cur.title + '</div>' +
-        '<div class="strip"><span><b class="num" style="color:' + bullColor(b.score) + '">' + (b.score > 0 ? '+' : '') + (b.score != null ? b.score : '–') + '</b>' + esc(b.label || '') + '</span>' +
-        '<span><b class="num" style="color:' + stressColor(s.score) + '">' + (s.score != null ? Math.round(s.score) : '–') + '</b>stress, ' + esc(s.label || '') + '</span>' +
-        '<a href="#" data-sec="">See the gauges</a></div><div class="view">' + SEC[cur.key] + '</div>' +
-        '<nav class="pn" aria-label="Pulse sections">' + (prev ? '<a href="#' + prev.key + '" data-sec="' + prev.key + '">&larr; ' + prev.title + '</a>' : '<a href="#" data-sec="">&larr; Pulse overview</a>') +
-        (next ? '<a class="nx" href="#' + next.key + '" data-sec="' + next.key + '">Next: ' + next.title + ' &rarr;</a>' : '<a class="nx" href="/debt-trap">Next: The debt trap &rarr;</a>') + '</nav>';
-    }
+    var view = location.hash.slice(1), live = SECTIONS.filter(function (x) { return SEC[x.key]; });
+    var cur = live.filter(function (x) { return x.key === view; })[0] || live[0];
+    h = head + '<nav class="tabs" role="tablist" aria-label="Pulse views">' + live.map(function (x) {
+      var on = x.key === cur.key;
+      return '<a role="tab" class="tab' + (on ? ' on' : '') + '" href="#' + x.key + '" data-sec="' + x.key + '" aria-selected="' + on + '"' + (on ? ' aria-current="page"' : '') + '>' + x.tab + '</a>';
+    }).join('') + '</nav><div class="view" role="tabpanel" aria-label="' + esc(cur.tab) + '">' + SEC[cur.key] + '</div>' + dt;
 
     h += '<p class="foot">Pulse is built from public data: U.S. Treasury (Fiscal Data), CFTC Traders in Financial Futures, Federal Reserve Bank of New York, and FRED (Federal Reserve Bank of St. Louis), including SOFR from the Federal Reserve Bank of New York. This product uses the FRED® API but is not endorsed or certified by the Federal Reserve Bank of St. Louis. ' +
       'Signals are simple rules for education and are not financial advice.<br>&copy; ' + new Date().getFullYear() + ' Rahul Saxena. All rights reserved.</p></div>';
@@ -796,13 +787,23 @@
         var a = e.target.closest('a[data-sec]'); if (!a) return;
         e.preventDefault();
         var k = a.getAttribute('data-sec');
+        // Switch the view in place. If the reader had scrolled past the tab bar, bring the bar back to the
+        // top (under the site header) so the new view starts in sight; otherwise leave the page where it is.
+        var bar = host.querySelector('.tabs'), barTop = bar ? bar.getBoundingClientRect().top + window.pageYOffset : 0;
+        var stuck = bar && window.pageYOffset > barTop - tabsTop() - 2;
         history.replaceState(history.state, '', location.pathname + location.search + (k ? '#' + k : ''));
         draw(host, j);
-        window.scrollTo({ top: 0 });
+        var bar2 = host.querySelector('.tabs');
+        if (stuck && bar2) window.scrollTo({ top: bar2.getBoundingClientRect().top + window.pageYOffset - tabsTop() });
+        var on = host.querySelector('.tab.on'); if (on) { on.focus({ preventScroll: true }); if (on.scrollIntoView) on.scrollIntoView({ block: 'nearest', inline: 'nearest' }); }
       });
     });
   }
-  function draw(host, j) { host.innerHTML = page(j); wireSparks(host); animate(host); wire(host); wireCockpit(host); }
+  function tabsTop() { var tb = document.querySelector('.top-blocks--sticky'); return tb ? Math.round(tb.getBoundingClientRect().height) : 0; }
+  function draw(host, j) {
+    host.innerHTML = page(j); host.style.setProperty('--tabs-top', tabsTop() + 'px');
+    wireSparks(host); animate(host); wire(host); wireCockpit(host);
+  }
   window.addEventListener('hashchange', function () {
     var host = document.querySelector('.p75pulse'); if (host && cache) draw(host, cache);
   });
