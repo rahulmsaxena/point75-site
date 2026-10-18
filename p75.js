@@ -4,7 +4,7 @@
 (function () {
   // ---------- Settings ----------
   var TENANT_ID = 'NgvHdCEMvUY';                          // FastComments
-  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-introduction', '/bond-history', '/bond-types', '/cash-logistics', '/bond-dictionary', '/bond-players', '/bond-fortunes', '/pulse', '/debt-trap', '/economic-indicators', '/bonds', '/insights', '/sector-credit', '/lenders', '/credit-stress', '/intellegent-summary', '/intelligent-summary', '/kinetics', '/bond-summary', '/start-here'];    // no add-ons on these pages
+  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-introduction', '/bond-history', '/bond-types', '/cash-logistics', '/bond-dictionary', '/bond-players', '/bond-fortunes', '/pulse', '/debt-trap', '/economic-indicators', '/bonds', '/insights', '/sector-credit', '/lenders', '/credit-stress', '/intellegent-summary', '/intelligent-summary', '/kinetics', '/bond-summary', '/start-here', '/contact'];    // no add-ons on these pages
 
   // Difficulty level per post
   var LEVELS = {
@@ -723,7 +723,7 @@
       document.head.appendChild(st);
     }
   }
-  var PAGE_HOSTS = '.p75edu, .p75debt, .p75ins, .p75pulse, .p75bonds, .p75ind, .p75cr, .p75hubpg, .p75start';
+  var PAGE_HOSTS = '.p75edu, .p75debt, .p75ins, .p75pulse, .p75bonds, .p75ind, .p75cr, .p75hubpg, .p75start, .p75contact';
 
   // ---------- Page navigation: back / forward at the top of every page in a series ----------
   // One row at the top of the page: back (or previous) on the left, where you are in the middle, next on
@@ -736,7 +736,8 @@
   //   iframe sized to its content: they send {type:'nav'} with older/newer and we send {type:'go'} back.
   var NAV_FIX = {
     // Start here sits outside the menu sections, so it had no way back; it is reached from the homepage
-    '/start-here': { prev: { href: '/', text: 'Journal', title: 'Back to the Journal' } }
+    '/start-here': { prev: { href: '/', text: 'Journal', title: 'Back to the Journal' } },
+    '/contact': { prev: { href: '/', text: 'Journal', title: 'Back to the Journal' } }
   };
   var navFrame = null;
   window.addEventListener('message', function (e) {
@@ -1165,6 +1166,18 @@
       }
     } else if (window.P75HOME) window.P75HOME.clear();
 
+    // Contact (/contact) is drawn by contact/contact.js into a blank Hostinger page
+    if (path === '/contact') {
+      if (window.P75CONTACT) window.P75CONTACT.render();
+      else if (!document.getElementById('p75contact-js')) {
+        var ct = document.createElement('script'); ct.id = 'p75contact-js';
+        ct.src = 'https://rahulmsaxena.github.io/point75-site/contact/contact.js?v=' + Math.floor(Date.now() / 36e5);
+        ct.onload = function () { update(); };
+        document.body.appendChild(ct);
+      }
+      return;
+    } else if (window.P75CONTACT) window.P75CONTACT.clear();
+
     // Start here (/start-here) is drawn by starthere/starthere.js
     if (path === '/start-here') {
       if (window.P75START) window.P75START.render();
@@ -1285,9 +1298,11 @@
 
     if (!disc) {
       target.appendChild(band('p75d',
-        (isPost ? '<a href="/" style="color:' + GOLD + ';text-decoration:none;font-weight:600">&larr; All essays</a><div style="height:14px"></div>' : '') +
+        (isPost ? '<a href="/" style="color:' + GOLD + ';text-decoration:none;font-weight:600">&larr; All essays</a><div style="height:14px"></div>' +
+          '<div style="margin-bottom:18px;font-size:16px;color:#EDE8DC">Disagree, or have a question? <a href="/contact" style="color:' + GOLD + ';text-decoration:none;font-weight:700">Write to me &rarr;</a></div>' : '') +
         '<div style="border-left:3px solid ' + GOLD + ';padding-left:14px">' + DISCLAIMER + '</div>' +
-        '<div style="margin-top:12px;color:#9a9a9a;font-size:13px">' + COPYRIGHT + '</div>'));
+        '<div style="margin-top:12px;color:#9a9a9a;font-size:13px">' + COPYRIGHT +
+          ' <a href="/contact" style="color:' + GOLD + ';text-decoration:none;font-weight:700;white-space:nowrap;margin-left:6px">Write to Point75 &rarr;</a></div>'));
     }
 
     if (isPost && !comments) {
