@@ -142,11 +142,11 @@
     // Pulse: gold edge, a live dot, and a heartbeat that draws itself across the icon like a monitor
     '.p75ex a.live{border-color:rgba(201,162,39,.75);background:linear-gradient(160deg,#211F18 0%,#1B1C20 70%);box-shadow:0 0 22px rgba(201,162,39,.12)}' +
     '.p75ex a.live b svg{stroke:#2BFF88;filter:drop-shadow(0 0 4px rgba(43,255,136,.7))}' +
-    '.p75ex .ecg{stroke-dasharray:100 100;stroke-dashoffset:100;animation:p75ecg 2.2s linear infinite}' +
-    '@keyframes p75ecg{0%{stroke-dashoffset:100}55%{stroke-dashoffset:0}80%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}' +
+    '.p75ex .zl{stroke-dasharray:2.2 1.6;animation:p75zl .45s linear infinite}.p75ex .zc{animation:p75zc 1.2s ease-in-out infinite}' +
+    '@keyframes p75zl{to{stroke-dashoffset:3.8}}@keyframes p75zc{0%,100%{transform:translate(0,0)}50%{transform:translate(.6px,-.4px)}}' +
     '.p75ex .lv{width:8px;height:8px;margin-left:2px;border-radius:50%;background:#2BFF88;box-shadow:0 0 0 0 rgba(43,255,136,.6);animation:p75lv 1.8s ease-out infinite;align-self:center}' +
     '@keyframes p75lv{0%{box-shadow:0 0 0 0 rgba(43,255,136,.6)}80%,100%{box-shadow:0 0 0 8px rgba(43,255,136,0)}}' +
-    '@media (prefers-reduced-motion:reduce){.p75ex .ecg{animation:none;stroke-dashoffset:0}.p75ex .lv{animation:none}}' +
+    '@media (prefers-reduced-motion:reduce){.p75ex .zl,.p75ex .zc{animation:none}.p75ex .lv{animation:none}}' +
     '.p75ex a{display:flex;flex-direction:column;gap:6px;padding:14px 34px 14px 18px;border:1px solid #34363C;border-radius:12px;background:#1B1C20;text-decoration:none!important;transition:border-color .2s}' +
     '.p75ex a:hover,.p75ex a:focus-visible{border-color:rgba(201,162,39,.7);outline:none}' +
     '.p75ex a b{display:flex;align-items:center;gap:10px;font:400 23px/1.2 "Hedvig Letters Serif",Georgia,serif;color:#fff}' +
@@ -162,7 +162,10 @@
 
   // Line icons (24px grid, gold stroke) beside each Explore title: a brain, a toolbox, a stack of books.
   var EXPLORE_ICON = {
-    ecg: '<path class="ecg" pathLength="100" d="M2 12.5h4.2l1.6-3.2 2.1 8.4 2.6-13.2 2.2 10.6 1.4-2.6H22"/>',
+    // Kinetics: a low sports car with speed lines streaming behind it
+    zoom: '<g class="zc"><path d="M7.6 16.2H6.9a1 1 0 0 1-1-1v-1.5c0-.6.4-1.1 1-1.3l3.3-1 2.6-2.3c.4-.4.9-.6 1.5-.6h3.2c.7 0 1.3.3 1.7.9l1.5 2.2 1.5.5c.5.2.8.6.8 1.1v1a1 1 0 0 1-1 1h-.6M10.8 16.2h5.8"/>' +
+      '<path d="M12.3 11.5l1.8-1.6h3l1.1 1.6z"/><circle cx="9.2" cy="16.3" r="1.6"/><circle cx="18.2" cy="16.3" r="1.6"/></g>' +
+      '<path class="zl" d="M.8 10.6h4.4M2.2 13.2h2.8M.8 15.8h3"/>',
     brain: '<path d="M12 5.5A2.6 2.6 0 0 0 7.2 4.6 2.8 2.8 0 0 0 4.6 8a2.9 2.9 0 0 0-.9 4.6 3 3 0 0 0 1.8 4.6A2.8 2.8 0 0 0 10 19.3a2.2 2.2 0 0 0 2-1.2Z"/>' +
       '<path d="M12 5.5a2.6 2.6 0 0 1 4.8-.9A2.8 2.8 0 0 1 19.4 8a2.9 2.9 0 0 1 .9 4.6 3 3 0 0 1-1.8 4.6 2.8 2.8 0 0 1-4.5 2.1 2.2 2.2 0 0 1-2-1.2Z"/>' +
       '<path d="M12 5.5v12.6"/><path d="M8 9.2c1 .1 1.8.8 2 1.8M6.6 13.6c1-.4 2.2 0 2.8.9M16 9.2c-1 .1-1.8.8-2 1.8M17.4 13.6c-1-.4-2.2 0-2.8.9"/>',
@@ -172,7 +175,7 @@
       '<path d="M14.4 6.6l3.7-1 3.6 13.2-3.7 1z"/><path d="M3.5 8h4.2M7.7 7h4.6M7.7 16h4.6M3.5 16.5h4.2M15.2 9.5l3.7-1"/>'
   };
   var EXPLORE = [
-    ['/pulse', 'Pulse', 'Live vital signs: which way bonds lean and how stressed they are.', '', 'ecg'],
+    ['/kinetics', 'Kinetics', 'What moves bonds now: the Pulse, daily summary, news and debt.', '', 'zoom'],
     ['https://tools.point75.io/market-intelligence', 'Market Intelligence', 'Rates, credit, sectors and flows, as clear dashboards.', 'Open the dashboards', 'brain'],
     ['https://tools.point75.io/', 'Tools', 'Portfolio, tax and retirement, with honest numbers.', 'Try the tools', 'toolbox'],
     ['/education', 'Education', 'Bonds from first principles, in plain English.', 'Start learning', 'books']
@@ -342,8 +345,8 @@
     if (list.querySelector(':scope > .p75ex')) return;
     list.insertAdjacentHTML('beforeend', '<nav class="p75ex" aria-label="Explore Point75"><div class="eb">Explore</div><div class="g">' +
       // each box is the link itself (no "Open the ..." line); Pulse leads, with a live heartbeat trace
-      EXPLORE.map(function (x) { return '<a href="' + x[0] + '"' + (x[4] === 'ecg' ? ' class="live"' : '') + '><b><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + EXPLORE_ICON[x[4]] + '</svg>' + x[1].replace('Market ', '<i class="lg" style="font-style:normal">Market </i>') +
-        (x[4] === 'ecg' ? '<i class="lv" aria-hidden="true"></i>' : '') + '</b><span>' + x[2] + '</span><i class="ar" aria-hidden="true">›</i></a>'; }).join('') + '</div></nav>');
+      EXPLORE.map(function (x) { return '<a href="' + x[0] + '"' + (x[4] === 'zoom' ? ' class="live"' : '') + '><b><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + EXPLORE_ICON[x[4]] + '</svg>' + x[1].replace('Market ', '<i class="lg" style="font-style:normal">Market </i>') +
+        (x[4] === 'zoom' ? '<i class="lv" aria-hidden="true"></i>' : '') + '</b><span>' + x[2] + '</span><i class="ar" aria-hidden="true">›</i></a>'; }).join('') + '</div></nav>');
   }
 
   function render() {
