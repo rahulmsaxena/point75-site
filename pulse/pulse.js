@@ -190,7 +190,7 @@
       '.p75pulse .inst .card{padding:12px 10px 14px;align-items:center;text-align:center}.p75pulse .inst .card h3{font-size:10.5px;letter-spacing:.1em}' +
       '.p75pulse .inst .meter{flex-direction:column;gap:2px;align-items:center}.p75pulse .inst .dial{width:100%;max-width:170px}' +
       '.p75pulse .inst .reading{text-align:center}.p75pulse .inst .big{font-size:34px;margin:0}.p75pulse .inst .verdict{font-size:11px;margin:0}' +
-      '.p75pulse .inst .hint}' +
+      '.p75pulse .inst .hint{display:none}.p75pulse .lede{text-align:left}}' +
     '@media (max-width:560px){.p75pulse .wrap{padding:12px 16px 56px}.p75pulse h1{font-size:30px}.p75pulse .grid{grid-template-columns:1fr}' +
       '.p75pulse .card{padding:18px}' +
       '.p75pulse .hide-s{display:none}.p75pulse table{font-size:13px}}';
