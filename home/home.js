@@ -134,22 +134,33 @@
     // Explore
     '.p75ex{max-width:1224px;width:calc(100% - 40px);margin:64px auto 0;box-sizing:border-box}' +
     '.p75ex .eb{color:#C9A227;font:800 12px Manrope,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}' +
-    '.p75ex .g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}' +
-    '.p75ex a{display:flex;flex-direction:column;gap:8px;padding:20px 22px;border:1px solid #34363C;border-radius:12px;background:#1B1C20;text-decoration:none!important;transition:border-color .2s}' +
+    '.p75ex .g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}' +
+    '.p75ex a{position:relative}.p75ex a .ar{position:absolute;right:14px;bottom:10px;color:#C9A227;font:400 24px/1 Manrope,sans-serif;font-style:normal;transition:transform .15s}' +
+    '.p75ex a:hover .ar,.p75ex a:focus-visible .ar{transform:translateX(4px)}' +
+    // Pulse: gold edge, a live dot, and a heartbeat that draws itself across the icon like a monitor
+    '.p75ex a.live{border-color:rgba(201,162,39,.75);background:linear-gradient(160deg,#211F18 0%,#1B1C20 70%);box-shadow:0 0 22px rgba(201,162,39,.12)}' +
+    '.p75ex a.live b svg{stroke:#2BFF88;filter:drop-shadow(0 0 4px rgba(43,255,136,.7))}' +
+    '.p75ex .ecg{stroke-dasharray:100 100;stroke-dashoffset:100;animation:p75ecg 2.2s linear infinite}' +
+    '@keyframes p75ecg{0%{stroke-dashoffset:100}55%{stroke-dashoffset:0}80%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}' +
+    '.p75ex .lv{width:8px;height:8px;margin-left:2px;border-radius:50%;background:#2BFF88;box-shadow:0 0 0 0 rgba(43,255,136,.6);animation:p75lv 1.8s ease-out infinite;align-self:center}' +
+    '@keyframes p75lv{0%{box-shadow:0 0 0 0 rgba(43,255,136,.6)}80%,100%{box-shadow:0 0 0 8px rgba(43,255,136,0)}}' +
+    '@media (prefers-reduced-motion:reduce){.p75ex .ecg{animation:none;stroke-dashoffset:0}.p75ex .lv{animation:none}}' +
+    '.p75ex a{display:flex;flex-direction:column;gap:8px;padding:18px 20px 30px;border:1px solid #34363C;border-radius:12px;background:#1B1C20;text-decoration:none!important;transition:border-color .2s}' +
     '.p75ex a:hover,.p75ex a:focus-visible{border-color:rgba(201,162,39,.7);outline:none}' +
     '.p75ex a b{display:flex;align-items:center;gap:10px;font:400 23px/1.2 "Hedvig Letters Serif",Georgia,serif;color:#fff}' +
     '.p75ex a b svg{flex:none;width:28px;height:28px;fill:none;stroke:#C9A227;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}' +
-    '.p75ex a span{font:600 14.5px/1.55 Manrope,system-ui,sans-serif;color:#E4DED1}' +
+    '.p75ex a span{font:600 14.5px/1.55 Manrope,system-ui,sans-serif;color:#F1ECE2}' +
     '.p75ex a em{margin-top:auto;padding-top:6px;font:800 13.5px Manrope,system-ui,sans-serif;font-style:normal;color:#C9A227}' +
     // Phones: three small tiles in one row, icon over a short name (the descriptions stay on desktop)
-    '@media (max-width:760px){.p75ex .g{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}' + L + ' .p75ex{margin-top:22px}' + L + ' .p75ex .eb{margin-bottom:10px}' +
-      L + ' .p75ex a{align-items:center;justify-content:center;gap:0;padding:14px 6px 12px;border-radius:10px;text-align:center}' +
+    '@media (max-width:760px){.p75ex .g{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.p75ex a .ar{display:none}.p75ex .lv{display:none}' + L + ' .p75ex{margin-top:22px}' + L + ' .p75ex .eb{margin-bottom:10px}' +
+      L + ' .p75ex a{align-items:center;justify-content:center;gap:0;padding:14px 4px 12px;border-radius:10px;text-align:center}' +
       L + ' .p75ex a b{flex-direction:column;gap:7px;font:700 13.5px/1.2 Manrope,system-ui,sans-serif;color:#EDE8DC}' +
       L + ' .p75ex a b svg{width:28px;height:28px}' + L + ' .p75ex a span,' + L + ' .p75ex a em,' + L + ' .p75ex .lg{display:none}}' +
     '@media (prefers-reduced-motion:reduce){' + I + ' .block-blog-list-item__cover-image{transition:none}}';
 
   // Line icons (24px grid, gold stroke) beside each Explore title: a brain, a toolbox, a stack of books.
   var EXPLORE_ICON = {
+    ecg: '<path class="ecg" pathLength="100" d="M2 12.5h4.2l1.6-3.2 2.1 8.4 2.6-13.2 2.2 10.6 1.4-2.6H22"/>',
     brain: '<path d="M12 5.5A2.6 2.6 0 0 0 7.2 4.6 2.8 2.8 0 0 0 4.6 8a2.9 2.9 0 0 0-.9 4.6 3 3 0 0 0 1.8 4.6A2.8 2.8 0 0 0 10 19.3a2.2 2.2 0 0 0 2-1.2Z"/>' +
       '<path d="M12 5.5a2.6 2.6 0 0 1 4.8-.9A2.8 2.8 0 0 1 19.4 8a2.9 2.9 0 0 1 .9 4.6 3 3 0 0 1-1.8 4.6 2.8 2.8 0 0 1-4.5 2.1 2.2 2.2 0 0 1-2-1.2Z"/>' +
       '<path d="M12 5.5v12.6"/><path d="M8 9.2c1 .1 1.8.8 2 1.8M6.6 13.6c1-.4 2.2 0 2.8.9M16 9.2c-1 .1-1.8.8-2 1.8M17.4 13.6c-1-.4-2.2 0-2.8.9"/>',
@@ -159,6 +170,7 @@
       '<path d="M14.4 6.6l3.7-1 3.6 13.2-3.7 1z"/><path d="M3.5 8h4.2M7.7 7h4.6M7.7 16h4.6M3.5 16.5h4.2M15.2 9.5l3.7-1"/>'
   };
   var EXPLORE = [
+    ['/pulse', 'Pulse', 'Live vital signs: which way bonds lean and how stressed they are.', '', 'ecg'],
     ['https://tools.point75.io/market-intelligence', 'Market Intelligence', 'Rates, credit, sectors and flows, as clear dashboards.', 'Open the dashboards', 'brain'],
     ['https://tools.point75.io/', 'Tools', 'Portfolio, tax and retirement, with honest numbers.', 'Try the tools', 'toolbox'],
     ['/education', 'Education', 'Bonds from first principles, in plain English.', 'Start learning', 'books']
@@ -327,7 +339,9 @@
   function explore(list) {
     if (list.querySelector(':scope > .p75ex')) return;
     list.insertAdjacentHTML('beforeend', '<nav class="p75ex" aria-label="Explore Point75"><div class="eb">Explore</div><div class="g">' +
-      EXPLORE.map(function (x) { return '<a href="' + x[0] + '"><b><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + EXPLORE_ICON[x[4]] + '</svg>' + x[1].replace('Market ', '<i class="lg" style="font-style:normal">Market </i>') + '</b><span>' + x[2] + '</span><em>' + x[3] + ' &rarr;</em></a>'; }).join('') + '</div></nav>');
+      // each box is the link itself (no "Open the ..." line); Pulse leads, with a live heartbeat trace
+      EXPLORE.map(function (x) { return '<a href="' + x[0] + '"' + (x[4] === 'ecg' ? ' class="live"' : '') + '><b><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + EXPLORE_ICON[x[4]] + '</svg>' + x[1].replace('Market ', '<i class="lg" style="font-style:normal">Market </i>') +
+        (x[4] === 'ecg' ? '<i class="lv" aria-hidden="true"></i>' : '') + '</b><span>' + x[2] + '</span><i class="ar" aria-hidden="true">›</i></a>'; }).join('') + '</div></nav>');
   }
 
   function render() {
