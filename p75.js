@@ -788,7 +788,7 @@
         'border:1px solid rgba(201,162,39,.55);border-radius:99px;padding:8px 15px;background:rgba(201,162,39,.06);opacity:1!important;visibility:visible!important;transition:background .15s}' +
       '#p75tn a.pill:hover,#p75tn a.pill:focus-visible{background:rgba(201,162,39,.18)!important;color:' + G + '!important;outline:none}' +
       '#p75tn a.pill span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:inherit!important}' +
-      '#p75tn a.nx{justify-self:end}' +
+      '#p75tn a.nx{justify-self:end}#p75tn a.up{justify-self:center}' +
       // middle: the section's home page, drawn as a gold ring with a dot (the "." in Point75)
       '#p75tn a.mid{display:inline-flex!important;align-items:center;justify-content:center;box-sizing:border-box;width:36px;height:36px;padding:0;border:1.5px solid ' + G + ';border-radius:50%;' +
         'background:transparent;text-decoration:none!important;opacity:1!important;visibility:visible!important;transition:background .15s}' +
@@ -815,8 +815,6 @@
   function navAttrs(s, it) {
     return ' href="' + escH(navHref(s, it)) + '" title="' + escH(it.title || it.text) + '" aria-label="' + escH(it.title || it.text) + '"' + (s.frame ? ' data-hash="' + escH(it.hash) + '"' : '');
   }
-  // Middle link: the section's home page, a gold ring with a dot; the name shows as a tooltip
-  function midHtml(m) { return '<span class="p75dot"></span>'; }
   function pageNav(path, s) {
     var top = document.getElementById('p75tn'), bar = document.getElementById('p75tf');
     if (!s) { if (top) top.remove(); if (bar) bar.remove(); return; }
@@ -827,37 +825,21 @@
       top = document.createElement('div'); top.id = 'p75tn'; top.setAttribute('role', 'navigation'); top.setAttribute('aria-label', 'Page navigation'); top.setAttribute('data-k', key);
       top.innerHTML = '<div class="r">' +
         (s.prev ? '<a class="pill pv"' + navAttrs(s, s.prev) + '>&larr; <span>' + escH(s.prev.text) + '</span></a>' : '<span></span>') +
-        (s.mid ? '<a class="mid"' + navAttrs(s, s.mid) + '>' + midHtml(s.mid) + '</a>' : '<span></span>') +
+        // Just two pills: back on the left, next on the right. (The gold-dot link to the section's home page
+        // and the floating copy of this row that followed the reader down the page are gone.) An article
+        // inside an iframe (Daily Summary) keeps its "up to the list" link as a plain pill in the middle.
+        (s.frame && s.mid ? '<a class="pill up"' + navAttrs(s, s.mid) + '><span>' + escH(s.mid.text || 'All') + '</span></a>' : '<span></span>') +
         (s.next ? '<a class="pill nx"' + navAttrs(s, s.next) + '><span>' + escH(s.next.text) + '</span> &rarr;</a>' : '<span></span>') + '</div>';
-      if (!bar) { bar = document.createElement('div'); bar.id = 'p75tf'; bar.setAttribute('role', 'navigation'); bar.setAttribute('aria-label', 'Page navigation'); document.body.appendChild(bar); }
-      bar.innerHTML = (s.prev ? '<a class="pv"' + navAttrs(s, s.prev) + '>&larr; <span>' + escH(s.prev.text) + '</span></a>' : '') +
-        (s.mid ? '<a class="mid"' + navAttrs(s, s.mid) + '>' + midHtml(s.mid) + '</a>' : '') +
-        (s.next ? '<a class="nx"' + navAttrs(s, s.next) + '><span>' + escH(s.next.text) + '</span> &rarr;</a>' : '');
     }
+    if (bar) bar.remove();
     var host = document.querySelector(PAGE_HOSTS);
     var parent = host ? host.parentNode : document.querySelector('.page__blocks');
     if (parent) {
       if (host) { if (top.nextSibling !== host) parent.insertBefore(top, host); }
       else if (parent.firstChild !== top) parent.insertBefore(top, parent.firstChild);
     }
-    pinNav();
   }
-  // Show the pinned bar once the top row has scrolled out of view (below the site header if it stays put)
-  function headerBottom() {
-    var h = document.querySelector('.top-blocks--sticky, header');      // same lookup as education.js
-    if (!h) return 0;
-    var r = h.getBoundingClientRect();
-    return (r.bottom > 0 && r.bottom < innerHeight / 2) ? r.bottom : 0;
-  }
-  function pinNav() {
-    var top = document.getElementById('p75tn'), bar = document.getElementById('p75tf');
-    if (!bar) return;
-    var off = headerBottom();
-    bar.style.top = (off + 10) + 'px';
-    bar.classList.toggle('on', !!top && top.isConnected && top.getBoundingClientRect().bottom < off);
-  }
-  window.addEventListener('scroll', pinNav, { passive: true });
-  window.addEventListener('resize', pinNav);
+  // (The floating bar that used to follow the reader down the page has been removed; see pageNav.)
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('#p75tn a[data-hash], #p75tf a[data-hash]');
     if (!a || !navFrame || !navFrame.src) return;
@@ -992,10 +974,10 @@
     var D = '.block-header-layout-desktop .block-header__nav-links', TOP = D + '>.block-header-item>.block-header-item__label>';
     var st = document.createElement('style'); st.id = 'p75-menu3';
     st.textContent =
-      D + '{align-items:center!important;gap:20px!important}' +   // 20px (was 28px) so Intelligence fits on one line with Search
-      '@media (max-width:1240px){' + D + '{gap:14px!important}}' +
+      D + '{align-items:center!important;gap:16px!important}' +   // 16px (was 28px) so Intelligence and Contact fit on one line with Search
+      '@media (max-width:1240px){' + D + '{gap:12px!important}}' +
       TOP + '.item-content-wrapper{display:inline-flex!important;align-items:center!important;height:40px!important}' +
-      TOP + '.item-content-wrapper>.item-content{font-size:16px!important;font-weight:600!important;color:#fff!important;letter-spacing:.01em}' +
+      TOP + '.item-content-wrapper>.item-content{font-size:15px!important;font-weight:600!important;color:#fff!important;letter-spacing:.01em}' +
       TOP + '.item-content-wrapper--active>.item-content{text-decoration:underline!important;text-decoration-color:#C9A227!important;text-decoration-thickness:2px!important;text-underline-offset:9px!important}' +
       TOP + '.item-content-wrapper>.item-content:hover{color:#E0B53A!important}' +
       D + ' .item-content__icon-container svg,' + D + ' .item-content__icon-container svg *{fill:#C9A227!important;color:#C9A227!important}' +
@@ -1007,9 +989,9 @@
       D + '>.p75tools-li.block-header-item>.block-header-item__label>.item-content-wrapper>.item-content,' +
       D + '>.p75tools-li.block-header-item>.block-header-item__label>.item-content-wrapper>.item-content:hover,' +
       D + '>.p75tools-li.block-header-item>.block-header-item__label>.item-content-wrapper>.item-content:focus-visible{color:#111214!important}' +
-      D + ' .p75s-btn{height:40px;padding:0 16px;font-size:15px;font-weight:700;border-color:rgba(201,162,39,.8)}' +
+      D + ' .p75s-btn{height:40px;padding:0 12px;font-size:15px;font-weight:700;border-color:rgba(201,162,39,.8)}' +
       D + '>.p75start-li{order:-1;list-style:none}' +
-      D + '>.p75start-li a{display:inline-flex;align-items:center;height:32px;padding:0 12px;border:1px dashed rgba(201,162,39,.6);border-radius:99px;color:#C9A227!important;font:700 13.5px Manrope,system-ui,sans-serif;text-decoration:none!important;white-space:nowrap}' +
+      D + '>.p75start-li a{display:inline-flex;align-items:center;height:32px;padding:0 10px;border:1px dashed rgba(201,162,39,.6);border-radius:99px;color:#C9A227!important;font:700 13.5px Manrope,system-ui,sans-serif;text-decoration:none!important;white-space:nowrap}' +
       D + '>.p75start-li a:hover,' + D + '>.p75start-li a:focus-visible{border-style:solid;outline:none}' +
       // phone menu: Tools in gold so it stands out there too
       '.block-header-layout-mobile .p75tools-li .item-content{color:#C9A227!important}' +
