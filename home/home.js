@@ -50,9 +50,9 @@
     I + ' .p75tap{display:none}' +
     // Desktop: one salon row along a centre line; arrows and dots below move along it
     '@media (min-width:' + (PHONE + 1) + 'px){' +
-      L + '{padding-top:24px!important;--p75H:clamp(230px,calc(100vh - 600px),430px)}' +
+      L + '{padding-top:20px!important;--p75H:clamp(220px,calc(100vh - 500px),440px)}' +
       L + ' .block-blog-list__list{display:flex!important;flex-wrap:nowrap!important;align-items:center;gap:24px!important;overflow-x:auto;overscroll-behavior-x:contain;' +
-        'scroll-snap-type:x proximity;scroll-padding:0 20px;padding:14px 20px 22px!important;grid-template-columns:none!important;scrollbar-width:none}' +
+        'scroll-snap-type:x proximity;scroll-padding:0 20px;padding:10px 20px 16px!important;grid-template-columns:none!important;scrollbar-width:none}' +
       L + ' .block-blog-list__list::-webkit-scrollbar{display:none}' +
       I + '{flex:0 0 auto;height:calc(var(--p75H) * var(--p75k));width:calc(var(--p75H) * var(--p75k) * 5 / 3);min-width:0;margin:0!important;' +
         'grid-column:auto!important;grid-row:auto!important;display:flex!important;flex-direction:column;scroll-snap-align:start}' +
@@ -66,7 +66,13 @@
       I + ' .p75hook{padding:16px 18px;gap:8px}' +
       I + ' .p75hook i{-webkit-line-clamp:3;font-size:17px}' +
       I + ' .p75band{padding:14px 18px}' + I + ' .p75band .t{font-size:26px}' +
-      '.p75ex{margin-top:28px}.p75ex a{padding:16px 20px}' +
+      // Pulse strip and "New to bonds?" share one row
+      '.p75top{display:flex;align-items:stretch;gap:14px;max-width:1224px;width:calc(100% - 40px);margin:0 auto 6px}' +
+      '.p75top>.p75ps{flex:1.5 1 0;width:auto;margin:0;max-width:none}' +
+      '.p75top>.p75cta{flex:1 1 0;width:auto;margin:0!important;max-width:none}' +
+      // Explore, compact
+      L + ' .p75ex{margin-top:18px}' + L + ' .p75ex .eb{margin-bottom:10px}' +
+      L + ' .p75ex a{padding:14px 18px;gap:4px}' + L + ' .p75ex a b{font-size:20px}' + L + ' .p75ex a span{font-size:14px}' + L + ' .p75ex a em{padding-top:4px}' +
     '}' +
     // The site builder slides each card in as it scrolls into view. On a sideways carousel that fires on every
     // painting and fights the swipe, so the wall's cards simply stay put.
@@ -117,9 +123,9 @@
     '@media (prefers-reduced-motion:reduce){' + I + ' .block-blog-list-item__cover-image{transition:none}}';
 
   var EXPLORE = [
-    ['https://tools.point75.io/market-intelligence', 'Market Intelligence', 'Rates, credit, sectors and the flows that move markets, as clear dashboards.', 'Open the dashboards'],
-    ['https://tools.point75.io/', 'Tools', 'Build and stress-test a portfolio, and see what fees and taxes really cost over decades.', 'Try the tools'],
-    ['/education', 'Education', 'Bonds from first principles: the basics, the history, the players and a plain-English dictionary.', 'Start learning']
+    ['https://tools.point75.io/market-intelligence', 'Market Intelligence', 'Rates, credit, sectors and flows, as clear dashboards.', 'Open the dashboards'],
+    ['https://tools.point75.io/', 'Tools', 'Portfolio, tax and retirement, with honest numbers.', 'Try the tools'],
+    ['/education', 'Education', 'Bonds from first principles, in plain English.', 'Start learning']
   ];
 
   var esc = function (s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); };
@@ -170,11 +176,21 @@
     return '<svg width="44" height="26" viewBox="0 0 100 56" aria-hidden="true"><path d="M10 50 A40 40 0 0 1 90 50" fill="none" stroke="#2F3136" stroke-width="10" stroke-linecap="round"/>' +
       '<path d="M10 50 A40 40 0 0 1 90 50" fill="none" stroke="' + c + '" stroke-width="10" stroke-linecap="round" pathLength="100" stroke-dasharray="' + p.toFixed(0) + ' 100"/></svg>';
   }
+  // The Pulse strip and p75.js's "New to bonds?" line (.p75cta) live together in .p75top at the top of the list:
+  // side by side on desktop, stacked on phones
+  function topRow(list) {
+    var top = list.querySelector(':scope > .p75top');
+    if (!top) { top = document.createElement('div'); top.className = 'p75top'; list.insertBefore(top, list.firstElementChild); }
+    if (list.firstElementChild !== top) list.insertBefore(top, list.firstElementChild);
+    var cta = list.querySelector(':scope > .p75cta'); if (cta) top.appendChild(cta);
+    return top;
+  }
   function pulseStrip(list) {
-    var strip = list.querySelector(':scope > .p75ps');
+    var top = topRow(list), strip = top.querySelector(':scope > .p75ps');
     if (!strip) {
       loadPulse(function (j) {
-        if (!j || !document.body.contains(list) || list.querySelector(':scope > .p75ps')) return;
+        var top = topRow(list);
+        if (!j || !document.body.contains(list) || top.querySelector(':scope > .p75ps')) return;
         var b = j.gauges.bull || {}, s = j.gauges.stress || {};
         if (b.score == null && s.score == null) return;
         var when = j.generated_at ? new Date(j.generated_at).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' }) : '';
@@ -187,11 +203,11 @@
           (ss != null ? '<span class="rd">' + meterArc(ss) + '<span><span class="k">Stress</span><br><span class="v" style="color:' + stressColor(ss) + '">' + ss +
             '</span> <span class="w" style="color:' + stressColor(ss) + '">' + esc(s.label || '') + '</span></span></span>' : '') +
           '<span class="go">Open Pulse &rarr;</span></a>';
-        list.insertAdjacentHTML('afterbegin', h);
+        top.insertAdjacentHTML('afterbegin', h);
       });
       return;
     }
-    if (list.firstElementChild !== strip) list.insertBefore(strip, list.firstElementChild);   // keep it above "New to bonds?"
+    if (top.firstElementChild !== strip) top.insertBefore(strip, top.firstElementChild);   // Pulse first, then "New to bonds?"
   }
 
   // ---------- Paintings ----------
@@ -290,7 +306,9 @@
     if (ex && list.lastElementChild !== ex) list.appendChild(ex);
   }
   function clear() {
-    document.querySelectorAll('.p75ps, .p75ex, .p75dots').forEach(function (x) { x.remove(); });
+    var top = document.querySelector('.p75top'), cta = top && top.querySelector('.p75cta');
+    if (cta) top.parentNode.insertBefore(cta, top);
+    document.querySelectorAll('.p75top, .p75ps, .p75ex, .p75dots').forEach(function (x) { x.remove(); });
     var list = document.querySelector('.block-blog-list.p75wall'); if (list) list.classList.remove('p75wall');
   }
 
