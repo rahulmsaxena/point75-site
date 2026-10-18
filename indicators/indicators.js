@@ -69,6 +69,9 @@
     '.p75ind .cstat{display:flex;align-items:center;gap:12px;padding:14px 20px 12px}' +
     '.p75ind .cstat .n{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:20px;flex:1}' +
     '.p75ind .body .ind{padding-left:20px}' +
+    '@media (max-width:600px){.p75ind .fold summary{flex-wrap:wrap;gap:4px 10px;padding:13px 14px}.p75ind .fold .fn{font-size:19px;flex:1 1 calc(100% - 30px)}' +
+      '.p75ind .fold .chev{order:2}.p75ind .fold .fs{order:3;flex-basis:100%;white-space:normal}.p75ind .fold .in{padding:0 14px 14px}' +
+      '.p75ind .cstat{padding:12px 14px 10px}.p75ind .ctabs{margin:16px 0 10px;gap:6px}.p75ind .ctab{min-height:38px;padding:0 14px;font-size:14px}}' +
     '.p75ind .yc{margin-top:40px}' +
     '.p75ind .yc h2{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:26px;margin:0 0 4px}' +
     '.p75ind .yc .rsub{color:#DDD7CA;font-size:14.5px;line-height:1.55;margin:0 0 14px;max-width:680px}' +
@@ -199,7 +202,7 @@
   function page(d) {
     var by = {}; d.indicators.forEach(function (i) { by[i.id] = i; });
     var asof = new Date(d.generated_at).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' });
-    var h = '<div class="wrap"><div class="eyebrow">News</div><h1>Economic indicators</h1>' +
+    var h = '<div class="wrap"><div class="eyebrow">Kinetics</div><h1>Economic indicators</h1>' +
       '<p class="lede">The numbers that move bonds, in one place: inflation, growth, jobs, rates and housing starts. Tap a category for its indicators, then tap any indicator for its full history.</p>' +
       '<div class="asof">Updated <b>' + asof + '</b> · refreshed every weekday from FRED</div>';
     h += '<div class="tiles">' + d.indicators.filter(function (i) { return i.headline && i.id !== 'fedfunds' && i.id !== 't10'; }).map(function (i) {
@@ -412,7 +415,7 @@
     if (document.querySelector('.p75ind')) return;
     once();
     var host = document.createElement('div'); host.className = 'p75ind';
-    host.innerHTML = '<div class="wrap"><div class="eyebrow">News</div><h1>Economic indicators</h1><div class="load">Loading the latest readings…</div></div>';
+    host.innerHTML = '<div class="wrap"><div class="eyebrow">Kinetics</div><h1>Economic indicators</h1><div class="load">Loading the latest readings…</div></div>';
     var blocks = main.querySelector('.page__blocks');
     (blocks || main).appendChild(host);
     load(function (j) {
