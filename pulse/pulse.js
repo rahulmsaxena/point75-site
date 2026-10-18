@@ -318,7 +318,8 @@
       });
     }
     var len = o.big ? DR - 22 : DR - 26, nw = o.big ? 3.2 : 5;
-    svg += '<g class="p75n" data-a="' + a1.toFixed(1) + '" data-r="' + a0.toFixed(1) + '" style="transform-origin:' + DCX + 'px ' + DCY + 'px;transform:rotate(' + a0.toFixed(1) + 'deg)">' +
+    var as = o.from != null ? ang(o.from) : a0;   // needle start for the sweep (fill still grows from rest)
+    svg += '<g class="p75n" data-a="' + a1.toFixed(1) + '" data-r="' + as.toFixed(1) + '" style="transform-origin:' + DCX + 'px ' + DCY + 'px;transform:rotate(' + as.toFixed(1) + 'deg)">' +
       '<path d="M' + (DCX - nw) + ',' + DCY + ' L' + DCX + ',' + (DCY - len) + ' L' + (DCX + nw) + ',' + DCY + ' Z" fill="#F4F1EA"/>' +
       '<line x1="' + DCX + '" y1="' + DCY + '" x2="' + DCX + '" y2="' + (DCY + (o.big ? 12 : 14)) + '" stroke="#F4F1EA" stroke-width="' + (o.big ? 3 : 4.5) + '" stroke-linecap="round"/></g>' +
       '<circle cx="' + DCX + '" cy="' + DCY + '" r="' + (o.big ? 8 : 11) + '" fill="#17181B" stroke="' + o.color + '" stroke-width="' + (o.big ? 2 : 3) + '"/>' +
@@ -800,7 +801,7 @@
       // one mini gauge: gold notch = average of the last six auctions; needle left or right of it = this auction
       var gauge = function (v, avg, span, good, fmt, name) {
         var better = good > 0 ? v >= avg : v <= avg, c = Math.abs(v - avg) < span * .04 ? '#C2BCAF' : better ? BULL : BEAR;
-        return '<div class="am">' + dial({ v: v, min: avg - span, max: avg + span, rest: avg, notch: avg, color: c,
+        return '<div class="am">' + dial({ v: v, min: avg - span, max: avg + span, rest: avg, from: avg - span, notch: avg, color: c,
             aria: name + ' ' + fmt(v) + ', average ' + fmt(avg) }) +
           '<b class="mv" style="color:' + c + '">' + fmt(v) + '</b><span class="mn">' + name + '</span><span class="ma">avg ' + fmt(avg) + '</span></div>';
       };
@@ -813,7 +814,7 @@
         '<div class="ck auc"><div class="ck-main">' +
         ckSec('a_meter', 'Demand meter', '<b style="color:' + dcol + '">' + signedInt(dm) + '</b><span class="w" style="color:' + dcol + '">' + dword + '</span>') +
           '<div class="auc-meter"><svg viewBox="0 0 200 200" role="img" aria-label="Auction demand ' + signedInt(dm) + ': ' + dword + '">' + ckBezel() + ckBBDial(dm, 'WEAK', 'STRONG') +
-            '<g class="ck-n" data-a="' + ckBBAng(dm).toFixed(1) + '" data-r="0" style="transform-origin:100px 100px;transform:rotate(0deg)">' + CK_NEEDLE + '</g>' + CK_CAP + '</svg>' +
+            '<g class="ck-n" data-a="' + ckBBAng(dm).toFixed(1) + '" data-r="-135" style="transform-origin:100px 100px;transform:rotate(-135deg)">' + CK_NEEDLE + '</g>' + CK_CAP + '</svg>' +
             '<div class="auc-mt"><div class="auc-w" style="color:' + dcol + '">' + dword + '</div>' +
             '<div class="ck-pills">' + apill(gn.strong, '▲ Strong', BULL) + apill(gn.average, '• Average', '#C2BCAF') + apill(gn.weak, '▼ Weak', BEAR) + '</div>' +
             '<p class="ck-how1">Strong means more bids per bond and less left with the dealers. Foreign and fund buyers show up as “indirect” bidders.</p></div></div>' +
