@@ -1004,7 +1004,9 @@
       D + '>.p75start-li a{display:inline-flex;align-items:center;height:32px;padding:0 12px;border:1px dashed rgba(201,162,39,.6);border-radius:99px;color:#C9A227!important;font:700 13.5px Manrope,system-ui,sans-serif;text-decoration:none!important;white-space:nowrap}' +
       D + '>.p75start-li a:hover,' + D + '>.p75start-li a:focus-visible{border-style:solid;outline:none}' +
       // phone menu: Tools in gold so it stands out there too
-      '.block-header-layout-mobile .p75tools-li .item-content{color:#C9A227!important}';
+      '.block-header-layout-mobile .p75tools-li .item-content{color:#C9A227!important}' +
+      // phone header: 12px above and below the logo instead of 24px, since it stays pinned while reading
+      '.block-header-layout-mobile{padding-top:12px!important;padding-bottom:12px!important}';
     document.head.appendChild(st);
   })();
   // ---------- Journal cards: quieter type so the page invites reading instead of shouting.

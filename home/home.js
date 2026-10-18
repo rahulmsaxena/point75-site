@@ -27,16 +27,16 @@
     '.p75ps:hover,.p75ps:focus-visible{border-color:rgba(201,162,39,.7);outline:none}' +
     '.p75ps .lb{display:flex;flex-direction:column;gap:2px}' +
     '.p75ps .lb b{color:#C9A227;font-weight:800;font-size:12px;letter-spacing:.14em;text-transform:uppercase}' +
-    '.p75ps .lb span{color:#A9A396;font-size:12.5px}' +
+    '.p75ps .lb span{color:#A9A396;font-size:12.5px}.p75ps .lb .u{font-style:normal}' +
     '.p75ps .rd{display:flex;align-items:center;gap:10px}' +
     '.p75ps .rd svg{flex:none}' +
     '.p75ps .rd .k{color:#A9A396;font-size:12px;letter-spacing:.04em}' +
     '.p75ps .rd .v{font:400 22px/1 "Hedvig Letters Serif",Georgia,serif;font-variant-numeric:tabular-nums}' +
     '.p75ps .rd .w{font-size:13px;font-weight:700}' +
     '.p75ps .go{margin-left:auto;color:#C9A227;font-weight:800;white-space:nowrap}' +
-    '@media (max-width:640px){.p75ps{gap:10px 12px;padding:12px 14px}.p75ps .lb{flex-basis:100%;flex-direction:row;gap:8px;align-items:baseline}' +
-      '.p75ps .rd{flex:1 1 0;min-width:0;gap:8px}.p75ps .rd svg[width="80"]{width:52px}.p75ps .rd .v{font-size:20px}.p75ps .rd .w{font-size:12px}' +
-      '.p75ps .go{margin-left:0;flex-basis:100%}}' +
+    '@media (max-width:640px){.p75ps{gap:8px 12px;padding:10px 14px}.p75ps .lb{flex:1 1 auto;order:0;flex-direction:row;gap:8px;align-items:baseline}' +
+      '.p75ps .lb .u{display:none}.p75ps .go{order:1;margin-left:auto;font-size:13px}' +
+      '.p75ps .rd{order:2;flex:1 1 40%;min-width:0;gap:8px}.p75ps .rd svg[width="80"]{width:52px}.p75ps .rd .v{font-size:20px}.p75ps .rd .w{font-size:12px}}' +
     // "New to bonds?" (drawn by p75.js as .p75cta), restyled on the homepage as a light signpost rather than a box
     '.p75top>.p75cta{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none}' +
     '.p75top>.p75cta .go{transition:transform .2s}' +
@@ -50,7 +50,7 @@
       '.p75top>.p75cta:hover b{color:#fff}' +
     '}' +
     '@media (max-width:' + PHONE + 'px){' +
-      '.p75top>.p75cta{flex-wrap:nowrap;margin:0 auto 18px!important;padding:11px 18px!important;border:1px solid rgba(201,162,39,.4)!important;border-radius:99px!important;font-size:14.5px}' +
+      '.p75top>.p75cta{flex-wrap:nowrap;margin:0 auto 12px!important;padding:9px 18px!important;border:1px solid rgba(201,162,39,.4)!important;border-radius:99px!important;font-size:14.5px}' +
       '.p75top>.p75cta>span:first-child{font-size:0}' +   // keeps the line read aloud, shows only the question
       '.p75top>.p75cta b{font-size:15px}' +
       '.p75top>.p75cta:hover,.p75top>.p75cta:focus-visible{background:rgba(201,162,39,.08)!important}' +
@@ -97,7 +97,8 @@
     I + '{animation:none!important;transition:none!important;transform:none!important;opacity:1!important}' +
     // Phones and small tablets: one painting at a time, uncropped, with the next one peeking in from the right
     '@media (max-width:' + PHONE + 'px){' +
-      L + '{padding-top:16px!important}' +   // the builder's 60px gap under the site header wastes a phone's first screen
+      L + '{padding-top:10px!important}' +
+      '.p75top>.p75ps{margin-bottom:10px}' +   // the builder's 60px gap under the site header wastes a phone's first screen
       L + ' .block-blog-list__list{display:flex!important;flex-wrap:nowrap!important;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;gap:12px!important;' +
         'scrollbar-width:none;-webkit-overflow-scrolling:touch;grid-template-columns:none!important}' +
       L + ' .block-blog-list__list::-webkit-scrollbar{display:none}' +
@@ -137,7 +138,8 @@
     '.p75ex a b{font:400 23px/1.2 "Hedvig Letters Serif",Georgia,serif;color:#EDE8DC}' +
     '.p75ex a span{font:500 14.5px/1.55 Manrope,system-ui,sans-serif;color:#C4BEB1}' +
     '.p75ex a em{margin-top:auto;padding-top:6px;font:800 13.5px Manrope,system-ui,sans-serif;font-style:normal;color:#C9A227}' +
-    '@media (max-width:760px){.p75ex .g{grid-template-columns:1fr;gap:12px}.p75ex{margin-top:44px}}' +
+    '@media (max-width:760px){.p75ex .g{grid-template-columns:1fr;gap:10px}' + L + ' .p75ex{margin-top:24px}' + L + ' .p75ex .eb{margin-bottom:10px}' +
+      L + ' .p75ex a{padding:14px 18px;gap:4px}' + L + ' .p75ex a b{font-size:20px}' + L + ' .p75ex a span{font-size:14px}' + L + ' .p75ex a em{padding-top:4px}}' +
     '@media (prefers-reduced-motion:reduce){' + I + ' .block-blog-list-item__cover-image{transition:none}}';
 
   var EXPLORE = [
@@ -215,7 +217,7 @@
         var bs = b.score != null ? Math.round(b.score) : null, ss = s.score != null ? Math.round(s.score) : null;
         var h = '<a class="p75ps" href="/pulse" aria-label="Pulse: bull/bear ' + (bs != null ? bs : 'n/a') + ' ' + esc(b.label || '') +
           ', stress ' + (ss != null ? ss : 'n/a') + ' ' + esc(s.label || '') + '. Open Pulse.">' +
-          '<span class="lb"><b>Pulse</b><span>' + (when ? 'Updated ' + esc(when) : 'The bond market today') + '</span></span>' +
+          '<span class="lb"><b>Pulse</b><span>' + (when ? '<i class="u">Updated </i>' + esc(when) : 'The bond market today') + '</span></span>' +
           (bs != null ? '<span class="rd">' + meterBar(bs) + '<span><span class="k">Bull / bear</span><br><span class="v" style="color:' + bullColor(bs) + '">' + (bs > 0 ? '+' : '') + bs +
             '</span> <span class="w" style="color:' + bullColor(bs) + '">' + esc(b.label || '') + '</span></span></span>' : '') +
           (ss != null ? '<span class="rd">' + meterArc(ss) + '<span><span class="k">Stress</span><br><span class="v" style="color:' + stressColor(ss) + '">' + ss +
