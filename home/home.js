@@ -43,7 +43,9 @@
     '.p75ps .rd .v{font:400 22px/1 "Hedvig Letters Serif",Georgia,serif;font-variant-numeric:tabular-nums}' +
     '.p75ps .rd .w{font-size:13px;font-weight:700}' +
     '.p75ps .go{margin-left:auto;color:#C9A227;font-weight:800;white-space:nowrap}' +
-    '@media (max-width:640px){.p75ps{gap:12px 18px;padding:12px 16px}.p75ps .lb{flex-basis:100%;flex-direction:row;gap:8px;align-items:baseline}.p75ps .go{margin-left:0;flex-basis:100%}}' +
+    '@media (max-width:640px){.p75ps{gap:10px 12px;padding:12px 14px}.p75ps .lb{flex-basis:100%;flex-direction:row;gap:8px;align-items:baseline}' +
+      '.p75ps .rd{flex:1 1 0;min-width:0;gap:8px}.p75ps .rd svg[width="80"]{width:52px}.p75ps .rd .v{font-size:20px}.p75ps .rd .w{font-size:12px}' +
+      '.p75ps .go{margin-left:0;flex-basis:100%}}' +
     // Captions on the paintings (shared by desktop and phone)
     I + ' .p75ht{display:flex;flex-direction:column;gap:6px}' +
     I + ' .p75ht .m{display:flex;align-items:center;gap:8px;font:500 12px Manrope,system-ui,sans-serif;color:#C4BEB1}' +
