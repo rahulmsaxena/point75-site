@@ -130,6 +130,9 @@
     '.p75pulse .tab{flex:none;display:inline-flex;align-items:center;min-height:40px;padding:0 18px;border-radius:999px;border:1px solid #3A3C42;color:var(--soft);font-weight:700;font-size:14.5px;text-decoration:none;white-space:nowrap;transition:border-color .15s,background .15s,color .15s}' +
     '.p75pulse .tab:hover{border-color:var(--gold);color:#fff}' +
     '.p75pulse .tab.on{background:var(--gold);border-color:var(--gold);color:#111214}' +
+    // a separate page, not a view: outlined in gold with an arrow, set apart from the tabs
+    '.p75pulse .tab.tab-ext{margin-left:6px;border:1px dashed var(--gold);color:#FFD23F;gap:6px}' +
+    '.p75pulse .tab.tab-ext:hover,.p75pulse .tab.tab-ext:focus-visible{border-style:solid;background:rgba(201,162,39,.12);color:#FFD23F}' +
     '.p75pulse .tab:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
     '@media (max-width:560px){.p75pulse .tabs{margin:28px -16px 0;padding:10px 16px;gap:6px}.p75pulse .tab{min-height:38px;padding:0 15px;font-size:14px}}' +
     '@media (max-width:460px){.p75pulse .tabs{gap:5px}.p75pulse .tab{flex:1 1 auto;justify-content:center;padding:0 6px;font-size:13px}}' +
@@ -1057,7 +1060,8 @@
     h = '<div class="wrap">' + head + '<nav class="tabs" role="tablist" aria-label="Pulse views">' + live.map(function (x) {
       var on = x.key === cur.key;
       return '<a role="tab" class="tab' + (on ? ' on' : '') + '" href="#' + x.key + '" data-sec="' + x.key + '" aria-selected="' + on + '"' + (on ? ' aria-current="page"' : '') + '>' + x.tab + '</a>';
-    }).join('') + '</nav><div class="view" role="tabpanel" aria-label="' + esc(cur.tab) + '">' +
+    }).join('') + '<a class="tab tab-ext" href="/debt-trap" title="Opens the Debt Trap page">Debt Trap <span aria-hidden="true">↗</span></a>' +
+      '</nav><div class="view" role="tabpanel" aria-label="' + esc(cur.tab) + '">' +
       (FROM_TK && cur.key !== 'takeaway' ? '<a class="tk-back" href="#takeaway" data-sec="takeaway"><span aria-hidden="true">←</span> Back to the takeaway</a>' : '') +
       SEC[cur.key] + '</div>' + dt;
 
