@@ -760,6 +760,7 @@
         // Kinetics pages (Pulse, News, Bond Summary, Economic Indicators) stand on their own rather than as a
         // reading sequence, so each goes back to the Kinetics overview.
         var toHub = !j || HUB_BACK.indexOf(f.href) > -1;
+        if (HUB_BACK.indexOf(f.href) > -1) s.sibling = true;
         s.prev = toHub ? { href: f.href, text: f.text + (f.hub === false ? '' : ' overview') } : f.kids[j - 1];
         s.next = f.kids[j + 1] || null;
         s.mid = { href: f.href, text: f.text, title: HUB_LABEL[f.href] || (f.text + ' overview') };
@@ -767,7 +768,9 @@
     });
     // A page with pages under it goes forward into the first one. Landing pages (hub) already show their
     // pages as cards, so their arrows move on to the next section instead, when there is one.
-    fams.forEach(function (f) { if (f.href === path && f.kids.length && !(f.hub && s.next)) s.next = f.kids[0]; });
+    // (In a HUB_BACK section, next stays with the section's next page: Pulse -> News, not into Debt Trap.)
+    fams.forEach(function (f) { if (f.href === path && f.kids.length && !((f.hub || s.sibling) && s.next)) s.next = f.kids[0]; });
+    delete s.sibling;
     var fix = NAV_FIX[path]; if (fix) for (var k in fix) s[k] = fix[k];
     // Arrived from the homepage (its Pulse strip or Explore cards, see home/home.js): back leads home
     var fh = null; try { fh = sessionStorage.getItem('p75fromHome'); } catch (err) {}
