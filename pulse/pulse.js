@@ -143,7 +143,28 @@
     '.p75pulse .ck-n,.p75pulse .ck-hz{transition:transform 1.8s cubic-bezier(.25,1.4,.5,1)}' +
     '.p75pulse .ck-snap{transition:none!important}' +
     '@media (prefers-reduced-motion:reduce){.p75pulse .ck-n,.p75pulse .ck-hz{transition:none}}' +
-    '@media (max-width:880px){.p75pulse .ck-mfdw{position:static;max-height:none;overflow:visible}.p75pulse .ck-mfd{min-height:0}.p75pulse .ck-mfd .bk{display:inline-block}}' +
+    // Phones and small tablets: the info screen opens as a bottom sheet over the panel (built by ckSheet below),
+    // so the tapped gauge stays in view instead of the page scrolling away from it
+    '@media (max-width:880px){.p75pulse .ck-mfdw{display:none}}' +
+    '.p75ck-sheet{--cream:#EDE8DC;--muted:#C2BCAF;--line:#2A2B2F;--gold:#C9A227;position:fixed;inset:0;z-index:2147483000;pointer-events:none;visibility:hidden;' +
+      'transition:visibility 0s .3s;font-family:Manrope,system-ui,sans-serif;color:var(--cream)}' +
+    '.p75ck-sheet *{box-sizing:border-box}' +
+    '.p75ck-sheet.open{pointer-events:auto;visibility:visible;transition:none}' +
+    '.p75ck-sheet .sh-bd{position:absolute;inset:0;background:rgba(0,0,0,.4);opacity:0;transition:opacity .3s;touch-action:none}' +
+    '.p75ck-sheet.open .sh-bd{opacity:1}' +
+    '.p75ck-sheet .sh{position:absolute;left:0;right:0;bottom:0;max-height:62vh;display:flex;flex-direction:column;padding:0 10px calc(10px + env(safe-area-inset-bottom));' +
+      'background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold);border-bottom:0;border-radius:18px 18px 0 0;' +
+      'transform:translateY(105%);transition:transform .3s cubic-bezier(.2,.8,.2,1)}' +
+    '.p75ck-sheet.open .sh{transform:none}' +
+    '.p75ck-sheet .sh-hd{flex:0 0 auto;padding:8px 2px;touch-action:none}' +
+    '.p75ck-sheet .sh-grab{width:44px;height:5px;border-radius:3px;background:#5A5C62;margin:0 auto 8px}' +
+    '.p75ck-sheet .sh-bar{display:flex;align-items:center;gap:8px}' +
+    '.p75ck-sheet .sh-bar button{min-width:44px;min-height:44px;border-radius:10px;border:1px solid #3A3C42;background:#111214;color:var(--cream);font:inherit;font-size:18px;cursor:pointer}' +
+    '.p75ck-sheet .sh-bar button:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
+    '.p75ck-sheet .sh-pos{flex:1;text-align:center;color:var(--muted);font-size:13px;letter-spacing:.06em}' +
+    '.p75ck-sheet .sh-body{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}' +
+    '@media (min-width:600px){.p75ck-sheet .sh{left:50%;right:auto;width:560px;margin-left:-280px}}' +
+    '@media (prefers-reduced-motion:reduce){.p75ck-sheet .sh,.p75ck-sheet .sh-bd{transition:none}}' +
     '@media (max-width:560px){.p75pulse .ck-main{padding:14px}.p75pulse .ck-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}' +
       '.p75pulse .ck-v b{font-size:26px}.p75pulse .ck-nm{font-size:12.5px}.p75pulse .ck-att{flex-basis:100%}}' +
     '.p75pulse .foot{color:#77736a;font-size:12px;line-height:1.6;margin-top:48px;border-top:1px solid var(--line);padding-top:18px}' +
@@ -159,7 +180,11 @@
     var f = document.createElement('link'); f.rel = 'stylesheet';
     f.href = 'https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif:opsz@12..24&family=Manrope:wght@400;500;600;700;800&display=swap';
     document.head.appendChild(f);
-    var st = document.createElement('style'); st.id = 'p75pulse-css'; st.textContent = CSS; document.head.appendChild(st);
+    // The bottom sheet lives at the end of <body>, outside .p75pulse, so it reuses the info-screen rules under its own class
+    var sheetMfd = (CSS.match(/\.p75pulse \.ck-mfd[^{]*\{[^}]*\}/g) || []).map(function (r) { return r.replace(/\.p75pulse \.ck-mfd/g, '.p75ck-sheet .ck-mfd'); }).join('');
+    var st = document.createElement('style'); st.id = 'p75pulse-css';
+    st.textContent = CSS + sheetMfd + '.p75ck-sheet .ck-mfd{min-height:0}.p75ck-sheet .ck-mfd .bk{display:none}';
+    document.head.appendChild(st);
   }
 
   var esc = function (s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
@@ -475,6 +500,84 @@
       '<div><div class="k">WHY YOU MIGHT CARE</div><div class="x">' + esc(it.care) + '</div></div>' +
       '<div style="display:flex;flex-wrap:wrap;gap:10px"><button type="button" data-ck-replay="' + key + '">REPLAY NEEDLE</button><button type="button" class="bk" data-ck-back="' + key + '">↑ BACK TO THE PANEL</button></div>';
   }
+  // ---------- Phone bottom sheet for the info screen ----------
+  // Tap a gauge: the needle swings and the explanation slides up over the lower part of the screen.
+  // The tapped gauge is nudged into the clear space above, so the reader never loses their place.
+  // Close with ×, a tap above the sheet, a swipe down or Escape; ← → (or a sideways swipe) step through the gauges.
+  var SH = { el: null, host: null, key: null, play: null };
+  function ckPhone() { return window.innerWidth <= 880; }
+  function ckKeys(host) { return [].map.call(host.querySelectorAll('.ck-i[data-ck]'), function (b) { return b.getAttribute('data-ck'); }); }
+  function ckSheet() {
+    if (SH.el && document.body.contains(SH.el)) return SH.el;
+    var s = document.createElement('div');
+    s.className = 'p75ck-sheet'; s.setAttribute('aria-hidden', 'true');
+    s.innerHTML = '<div class="sh-bd" data-sh-close></div>' +
+      '<div class="sh" role="dialog" aria-modal="true" aria-label="What this gauge means">' +
+        '<div class="sh-hd"><div class="sh-grab" aria-hidden="true"></div><div class="sh-bar">' +
+          '<button type="button" data-sh-step="-1" aria-label="Previous gauge">&larr;</button><span class="sh-pos"></span>' +
+          '<button type="button" data-sh-step="1" aria-label="Next gauge">&rarr;</button>' +
+          '<button type="button" data-sh-close data-sh-x aria-label="Close">&times;</button></div></div>' +
+        '<div class="sh-body"><div class="ck-mfd" aria-live="polite"></div></div></div>';
+    document.body.appendChild(s);
+    SH.el = s;
+    s.addEventListener('click', function (e) {
+      if (e.target.closest('[data-sh-close]')) { ckSheetClose(); return; }
+      var st = e.target.closest('[data-sh-step]'); if (st) { ckSheetStep(+st.getAttribute('data-sh-step')); return; }
+      var r = e.target.closest('[data-ck-replay]'); if (r && SH.play) SH.play(r.getAttribute('data-ck-replay'), false);
+    });
+    // Swipe down on the handle bar to close
+    var hd = s.querySelector('.sh-hd'), sh = s.querySelector('.sh'), y0 = null, dy = 0;
+    hd.addEventListener('touchstart', function (e) { y0 = e.touches[0].clientY; dy = 0; sh.style.transition = 'none'; }, { passive: true });
+    hd.addEventListener('touchmove', function (e) { if (y0 == null) return; dy = Math.max(0, e.touches[0].clientY - y0); sh.style.transform = 'translateY(' + dy + 'px)'; }, { passive: true });
+    hd.addEventListener('touchend', function () { sh.style.transition = ''; sh.style.transform = ''; y0 = null; if (dy > 70) ckSheetClose(); });
+    // Swipe sideways on the text to move to the previous / next gauge
+    var body = s.querySelector('.sh-body'), sx = null, sy = null;
+    body.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+    body.addEventListener('touchend', function (e) {
+      if (sx == null) return;
+      var t = e.changedTouches[0], dx = t.clientX - sx, dv = t.clientY - sy; sx = null;
+      if (Math.abs(dx) > 60 && Math.abs(dx) > 2 * Math.abs(dv)) ckSheetStep(dx < 0 ? 1 : -1);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (!s.classList.contains('open')) return;
+      if (e.key === 'Escape') ckSheetClose();
+      else if (e.key === 'ArrowRight') ckSheetStep(1);
+      else if (e.key === 'ArrowLeft') ckSheetStep(-1);
+    });
+    window.addEventListener('resize', function () { if (s.classList.contains('open') && !ckPhone()) ckSheetClose(); });
+    window.addEventListener('hashchange', ckSheetClose);
+    return s;
+  }
+  function ckSheetOpen(host, key, it, bt, play) {
+    var s = ckSheet(), keys = ckKeys(host), was = s.classList.contains('open');
+    SH.host = host; SH.key = key; SH.play = play;
+    ckScreen(s.querySelector('.ck-mfd'), it, key);
+    s.querySelector('.sh-pos').textContent = (keys.indexOf(key) + 1) + ' of ' + keys.length;
+    s.querySelector('.sh-body').scrollTop = 0;
+    if (!was) {
+      s.classList.add('open'); s.setAttribute('aria-hidden', 'false');
+      var x = s.querySelector('[data-sh-x]'); if (x) x.focus({ preventScroll: true });
+    }
+    // Keep the gauge visible in the space above the sheet (sheet tops out at 62% of the screen)
+    var tb = document.querySelector('.top-blocks--sticky'), top = (tb ? tb.getBoundingClientRect().height : 0) + 8;
+    var r = bt.getBoundingClientRect(), room = window.innerHeight * 0.38;
+    if (r.top < top || r.bottom > room) {
+      var want = r.top + window.pageYOffset - top - Math.max(0, (room - top - r.height) / 2);
+      window.scrollTo({ top: Math.max(0, want), behavior: 'smooth' });
+    }
+  }
+  function ckSheetStep(d) {
+    if (!SH.host || !SH.play) return;
+    var keys = ckKeys(SH.host), i = keys.indexOf(SH.key); if (i < 0 || !keys.length) return;
+    SH.play(keys[(i + d + keys.length) % keys.length], false);
+  }
+  function ckSheetClose() {
+    var s = SH.el; if (!s || !s.classList.contains('open')) return;
+    s.classList.remove('open'); s.setAttribute('aria-hidden', 'true');
+    var bt = SH.host && SH.host.querySelector('.ck-i[data-ck="' + SH.key + '"]');
+    if (bt) bt.focus({ preventScroll: true });   // back on the gauge you were reading about, page not moved
+  }
+
   function wireCockpit(host) {
     var box = host.querySelector('[data-ck-mfd]'); if (!box) return;
     var btns = host.querySelectorAll('.ck-i[data-ck]');
@@ -499,10 +602,7 @@
       ckApply(bt, it, 0);
       if (mv) void mv.getBoundingClientRect();
       requestAnimationFrame(function () { if (mv) mv.classList.remove('ck-snap'); requestAnimationFrame(function () { ckApply(bt, it, it.target); }); });
-      if (scroll && window.innerWidth <= 880) {   // phones: jump to the explanation, landing just below the sticky header
-        var tb = document.querySelector('.top-blocks--sticky'), off = (tb ? tb.getBoundingClientRect().height : 0) + 12;
-        window.scrollTo({ top: box.getBoundingClientRect().top + window.pageYOffset - off, behavior: 'smooth' });
-      }
+      if (ckPhone()) ckSheetOpen(host, key, it, bt, play);   // phones: explanation slides up from the bottom, gauge stays in view
     }
     host.addEventListener('click', function (e) {
       var r = e.target.closest('[data-ck-replay]'); if (r) { play(r.getAttribute('data-ck-replay'), false); return; }
@@ -708,6 +808,7 @@
   });
   function clear() {
     var h = document.querySelector('.p75pulse'); if (h) h.remove();
+    if (SH.el) { SH.el.remove(); SH.el = null; SH.host = null; }
     document.querySelectorAll('[data-p75pulse-hid]').forEach(function (s) { s.style.display = ''; s.removeAttribute('data-p75pulse-hid'); });
   }
 
