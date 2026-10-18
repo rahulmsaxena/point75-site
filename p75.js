@@ -1020,8 +1020,8 @@
     var D = '.block-header-layout-desktop .block-header__nav-links', TOP = D + '>.block-header-item>.block-header-item__label>';
     var st = document.createElement('style'); st.id = 'p75-menu3';
     st.textContent =
-      D + '{align-items:center!important;gap:16px!important}' +   // 16px (was 28px) so Intelligence and Contact fit on one line with Search
-      '@media (max-width:1240px){' + D + '{gap:12px!important}}' +
+      D + '{align-items:center!important;gap:14px!important}' +   // 14px (was 28px) so Intelligence (with its dropdown) and Contact fit beside Search
+      '@media (max-width:1340px){' + D + '{gap:10px!important}}' +
       TOP + '.item-content-wrapper{display:inline-flex!important;align-items:center!important;height:40px!important}' +
       TOP + '.item-content-wrapper>.item-content{font-size:15px!important;font-weight:600!important;color:#fff!important;letter-spacing:.01em}' +
       TOP + '.item-content-wrapper--active>.item-content{text-decoration:underline!important;text-decoration-color:#C9A227!important;text-decoration-thickness:2px!important;text-underline-offset:9px!important}' +
@@ -1114,8 +1114,44 @@
       wrap.insertAdjacentHTML('beforeend', '<div class="p75hook" aria-hidden="true">' + (hook ? '<i>' + hook + '</i>' : '') + '<b>Read the essay &rarr;</b></div>');
     });
   }
+  // Intelligence (a link to tools.point75.io) gets a dropdown of its tools, like Kinetics and Education
+  // (hubMenus adds the "Intelligence overview" link at the top, as it does for the others).
+  // The site styles its dropdowns through scoped attributes, so the pieces are copied from an existing
+  // dropdown (its arrow, panel and one item) and added to the Intelligence item in place.
+  var INTEL_TOOLS = [
+    ['Treasury Finder', 'https://tools.point75.io/market-intelligence/treasury-finder'],
+    ['Congressional Trading', 'https://tools.point75.io/market-intelligence/congressional-trading'],
+    ['AI Investment', 'https://tools.point75.io/market-intelligence/ai-investment']
+  ];
+  function intelMenu(ul) {
+    var a = ul.querySelector(':scope>.block-header-item>.block-header-item__label a.item-content[href*="tools.point75.io/market-intelligence"]');
+    if (!a) return;
+    var li = a.closest('li'), label = li.querySelector(':scope>.block-header-item__label');
+    if (!label || label.querySelector(':scope>.block-header-item__dropdown-area')) return;
+    var tpl = null;
+    [].forEach.call(ul.children, function (x) { if (!tpl && x !== li && x.querySelector(':scope>.block-header-item__label>.block-header-item__dropdown-area')) tpl = x; });
+    if (!tpl) return;
+    var tl = tpl.querySelector(':scope>.block-header-item__label');
+    var cb = tl.querySelector(':scope>input'); if (cb && !label.querySelector(':scope>input')) label.insertBefore(cb.cloneNode(true), label.firstChild);
+    var wrap = label.querySelector(':scope>.item-content-wrapper'), icon = tl.querySelector('.item-content__icon-container-wrapper');
+    if (wrap) { wrap.setAttribute('aria-haspopup', 'true'); if (icon && !wrap.querySelector('.item-content__icon-container-wrapper')) wrap.appendChild(icon.cloneNode(true)); }
+    var area = tl.querySelector(':scope>.block-header-item__dropdown-area').cloneNode(true), list = area.querySelector('ul');
+    var item = null; [].forEach.call(list.children, function (x) { if (!item && !x.classList.contains('p75hub')) item = x; });
+    if (!item) return;
+    list.innerHTML = '';
+    INTEL_TOOLS.forEach(function (t) {
+      var c = item.cloneNode(true), link = c.querySelector('a.item-content'); if (!link) return;
+      link.setAttribute('href', t[1]); link.textContent = t[0]; link.removeAttribute('data-qa');
+      link.setAttribute('target', a.getAttribute('target') || ''); if (a.getAttribute('rel')) link.setAttribute('rel', a.getAttribute('rel'));
+      c.classList.remove('p75hub'); c.removeAttribute('data-p75hub');
+      list.appendChild(c);
+    });
+    label.appendChild(area);
+    li.classList.add('p75intel-li');
+  }
   function decorateMenu() {
     document.querySelectorAll('.block-header__nav-links').forEach(function (ul) {
+      intelMenu(ul);
       // The gold button is the link to the Tools home page only (tools.point75.io or tools.point75.io/), not to
       // pages inside it such as Intelligence (tools.point75.io/market-intelligence)
       var links = ul.querySelectorAll(':scope>.block-header-item>.block-header-item__label a.item-content[href*="tools.point75.io"]');
