@@ -734,6 +734,7 @@
   //   next in menu order; the first page goes back to the section overview and the overview goes on to the
   //   first page. NAV_FIX overrides specific pages. Bond Summary and Intelligent Summary articles live in an
   //   iframe sized to its content: they send {type:'nav'} with older/newer and we send {type:'go'} back.
+  var HUB_BACK = ['/kinetics'];   // sections whose pages all go back to the section overview
   var NAV_FIX = {
     // Start here sits outside the menu sections, so it had no way back; it is reached from the homepage
     '/start-here': { prev: { href: '/', text: 'Journal', title: 'Back to the Journal' } },
@@ -755,8 +756,11 @@
     fams.forEach(function (f) {
       f.kids.forEach(function (k, j) {
         if (k.href !== path) return;
-        // back from the first page: to a landing page "overview", or by name to a page that has its own content
-        s.prev = j ? f.kids[j - 1] : { href: f.href, text: f.text + (f.hub === false ? '' : ' overview') };
+        // back from the first page: to a landing page "overview", or by name to a page that has its own content.
+        // Kinetics pages (Pulse, News, Bond Summary, Economic Indicators) stand on their own rather than as a
+        // reading sequence, so each goes back to the Kinetics overview.
+        var toHub = !j || HUB_BACK.indexOf(f.href) > -1;
+        s.prev = toHub ? { href: f.href, text: f.text + (f.hub === false ? '' : ' overview') } : f.kids[j - 1];
         s.next = f.kids[j + 1] || null;
         s.mid = { href: f.href, text: f.text, title: HUB_LABEL[f.href] || (f.text + ' overview') };
       });
