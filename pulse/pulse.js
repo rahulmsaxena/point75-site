@@ -208,7 +208,7 @@
       ticks += '<line x1="' + (major ? 58 : mid ? 64 : 68) + '" x2="84" y1="' + ty + '" y2="' + ty + '" stroke="#2b2621" stroke-width="' + (major ? 1.6 : 1) + '"/>';
       if (mid) ticks += '<text x="55" y="' + (ty + 5) + '" text-anchor="end" font-size="14" font-weight="700" font-family="Georgia,serif" fill="#1f1a15">' + (v > 0 ? '+' : '') + v + '</text>';
     }
-    return '<svg viewBox="0 0 170 400" role="img" aria-label="Bull/bear meter reading ' + score + '">' +
+    return '<svg viewBox="0 0 170 400" role="img" aria-label="Bull / Bear meter reading ' + score + '">' +
       '<defs>' +
         '<linearGradient id="p75plate" x1="0" x2="1"><stop offset="0" stop-color="#E9E1CC"/><stop offset=".5" stop-color="#F4EEDF"/><stop offset="1" stop-color="#DCD3BC"/></linearGradient>' +
         '<linearGradient id="p75glass" x1="0" x2="1"><stop offset="0" stop-color="#cfc8b6"/><stop offset=".35" stop-color="#fbf9f3"/><stop offset="1" stop-color="#bfb7a3"/></linearGradient>' +
@@ -433,12 +433,12 @@
       'That adds up to a score of ' + signedInt(score) + (b.label ? ', ' + b.label.toLowerCase() : '') + '.' : '';
     var bc = bullColor(score);
 
-    CK_ITEMS.bull = { mover: 'horizon', target: score, name: 'Bull / bear score', sub: 'Now ' + signedInt(score) + (b.label ? ' · ' + b.label.toLowerCase() : ''),
+    CK_ITEMS.bull = { mover: 'horizon', target: score, name: 'Bull / Bear score', sub: 'Now ' + signedInt(score) + (b.label ? ' · ' + b.label.toLowerCase() : ''),
       what: CK_TEXT.bull.what, now: line, care: CK_TEXT.bull.care };
     var h = CK_DEFS + '<div class="ck"><div class="ck-main">' +
-      '<div class="ck-h">Bull / bear vote</div><div class="ck-bb">' +
-      ckButton('bull', 'Bull / bear score ' + signedInt(score) + ', ' + (b.label || '') + '. Show what it means.', ckAttitude(), 'horizon',
-        '<div class="ck-nm">Bull / bear score</div><div class="ck-v"><b style="color:' + bc + '">' + signedInt(score) + '</b><span class="ck-chip" style="background:' + bc + '">' + word + '</span></div>', 'ck-att') +
+      '<div class="ck-h">Bull / Bear vote</div><div class="ck-bb">' +
+      ckButton('bull', 'Bull / Bear score ' + signedInt(score) + ', ' + (b.label || '') + '. Show what it means.', ckAttitude(), 'horizon',
+        '<div class="ck-nm">Bull / Bear score</div><div class="ck-v"><b style="color:' + bc + '">' + signedInt(score) + '</b><span class="ck-chip" style="background:' + bc + '">' + word + '</span></div>', 'ck-att') +
       '<div class="ck-count"><div class="ck-nm" style="margin:0">Vote count</div><div class="ck-tally">' +
         '<div style="background:' + BULL + '1f;border-color:' + BULL + '"><b style="color:' + BULL + '">' + nb + '</b><span style="color:' + BULL + '">▲ BULL</span></div>' +
         '<div style="background:#9AA0A61a;border-color:' + NEUT + '"><b style="color:#E4DED1">' + nh + '</b><span style="color:#E4DED1">• HOLD</span></div>' +
