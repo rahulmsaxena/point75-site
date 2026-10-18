@@ -99,6 +99,8 @@
     '.p75pulse .view > h2:first-child{margin-top:26px}' +
     '.p75pulse .tabs{position:sticky;top:var(--tabs-top,0px);z-index:6;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:36px -20px 0;padding:12px 20px;background:var(--ink);border-bottom:1px solid var(--line)}' +
     '.p75pulse .tabs::-webkit-scrollbar{display:none}' +
+    // the tab bar is what follows the reader down this page, so the site's floating back/next bar stays hidden here
+    'html.p75tabs #p75tf{display:none!important}' +
     '.p75pulse .tab{flex:none;display:inline-flex;align-items:center;min-height:40px;padding:0 18px;border-radius:999px;border:1px solid #3A3C42;color:var(--soft);font-weight:700;font-size:14.5px;text-decoration:none;white-space:nowrap;transition:border-color .15s,background .15s,color .15s}' +
     '.p75pulse .tab:hover{border-color:var(--gold);color:#fff}' +
     '.p75pulse .tab.on{background:var(--gold);border-color:var(--gold);color:#111214}' +
@@ -802,6 +804,7 @@
   function tabsTop() { var tb = document.querySelector('.top-blocks--sticky'); return tb ? Math.round(tb.getBoundingClientRect().height) : 0; }
   function draw(host, j) {
     host.innerHTML = page(j); host.style.setProperty('--tabs-top', tabsTop() + 'px');
+    document.documentElement.classList.add('p75tabs');
     wireSparks(host); animate(host); wire(host); wireCockpit(host);
   }
   window.addEventListener('hashchange', function () {
@@ -809,6 +812,7 @@
   });
   function clear() {
     var h = document.querySelector('.p75pulse'); if (h) h.remove();
+    document.documentElement.classList.remove('p75tabs');
     if (SH.el) { SH.el.remove(); SH.el = null; SH.host = null; }
     document.querySelectorAll('[data-p75pulse-hid]').forEach(function (s) { s.style.display = ''; s.removeAttribute('data-p75pulse-hid'); });
   }
