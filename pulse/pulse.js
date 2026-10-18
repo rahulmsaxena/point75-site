@@ -180,7 +180,15 @@
     '.p75pulse .foot{color:#77736a;font-size:12px;line-height:1.6;margin-top:48px;border-top:1px solid var(--line);padding-top:18px}' +
     '.p75pulse .load{color:var(--muted);padding:40px 0}' +
     '@media (max-width:980px){.p75pulse .grid{grid-template-columns:repeat(2,minmax(0,1fr))}}' +
-    '@media (max-width:880px){.p75pulse .inst,.p75pulse .why{grid-template-columns:1fr}}' +
+    '@media (max-width:880px){.p75pulse .why{grid-template-columns:1fr}}' +
+    // Phones and small tablets: the two gauges sit side by side, smaller, so the tabs are close at hand.
+    // Their notes are left out here; the Signals tab right below explains every reading.
+    '@media (max-width:880px){.p75pulse .inst{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-top:20px}' +
+      '.p75pulse .inst .card{padding:12px 10px 14px;align-items:center;text-align:center}.p75pulse .inst .card h3{font-size:10.5px;letter-spacing:.1em}' +
+      '.p75pulse .inst .meter{flex-direction:column;gap:6px;align-items:center}.p75pulse .inst .meter svg{width:auto;height:190px}' +
+      '.p75pulse .inst .reading{text-align:center}.p75pulse .inst .big{font-size:34px;margin:2px 0 0}.p75pulse .inst .verdict{font-size:14px;margin:0}' +
+      '.p75pulse .inst .hint,.p75pulse .inst .card > div[style*="margin-top:auto"]{display:none}' +
+      '.p75pulse .inst .sg{max-width:190px;margin-top:4px}}' +
     '@media (max-width:560px){.p75pulse .wrap{padding:12px 16px 56px}.p75pulse h1{font-size:30px}.p75pulse .grid{grid-template-columns:1fr}' +
       '.p75pulse .meter svg{width:150px}.p75pulse .big{font-size:48px}.p75pulse .card{padding:18px}' +
       '.p75pulse .hide-s{display:none}.p75pulse table{font-size:13px}}';
