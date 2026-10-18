@@ -28,8 +28,8 @@
     '@media (max-width:880px){.p75pulse .hd-t{flex-direction:column;align-items:flex-start;gap:2px}.p75pulse .hd-t .asof{margin:4px 0 0}}' +
     '.p75pulse .asof{font-size:12.5px;color:var(--muted);margin-top:6px}' +
     '.p75pulse .asof b{color:var(--cream);font-weight:600}' +
-    '.p75pulse h2{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:25px;margin:54px 0 6px}' +
-    '.p75pulse h2 + .sub{color:var(--soft);font-size:14.5px;line-height:1.55;margin:0 0 18px;max-width:720px}' +
+    '.p75pulse h2{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:23px;margin:32px 0 4px}' +
+    '.p75pulse h2 + .sub{color:var(--soft);font-size:14.5px;line-height:1.55;margin:0 0 12px;text-align:justify;hyphens:auto;-webkit-hyphens:auto}' +
     // instruments
     '.p75pulse .inst{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;margin-top:18px}' +
     '.p75pulse .inst .card{display:flex;flex-direction:column;padding:16px 18px}' +
@@ -74,7 +74,7 @@
     '.p75pulse .spark{position:relative;margin-top:12px}' +
     '.p75pulse .spark svg{display:block;width:100%;height:46px}' +
     '.p75pulse .tip{position:absolute;top:-30px;transform:translateX(-50%);background:#0b0c0e;border:1px solid var(--line);color:var(--cream);font-size:11.5px;padding:3px 8px;border-radius:6px;white-space:nowrap;pointer-events:none;opacity:0}' +
-    '.p75pulse .dtlink{display:block;margin-top:40px;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:14px;padding:18px 20px;color:var(--soft);text-decoration:none;font-size:14.5px;line-height:1.5}' +
+    '.p75pulse .dtlink{display:block;margin-top:20px;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:14px;padding:18px 20px;color:var(--soft);text-decoration:none;font-size:14.5px;line-height:1.5}' +
     '.p75pulse .dtlink:hover{border-color:var(--gold)}' +
     '.p75pulse .dtlink span{color:var(--gold);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-right:10px}' +
     '.p75pulse .dtlink b{color:#fff;font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:19px;margin-right:8px}' +
@@ -101,7 +101,7 @@
     '.p75pulse .strip a{margin-left:auto;color:var(--gold);font-weight:700;text-decoration:none}' +
     '.p75pulse .pn{display:flex;justify-content:space-between;gap:12px;margin-top:40px;border-top:1px solid var(--line);padding-top:16px}' +
     '.p75pulse .pn a{color:var(--soft);font-weight:600;text-decoration:none;font-size:15px}.p75pulse .pn a.nx{color:var(--gold);font-weight:800}' +
-    '.p75pulse .view > h2:first-child{margin-top:26px}' +
+    '.p75pulse .view > h2:first-child{margin-top:16px}' +
     '.p75pulse .tabs{position:sticky;top:var(--tabs-top,0px);z-index:6;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:22px -20px 0;padding:10px 20px;background:var(--ink);border-bottom:1px solid var(--line)}' +
     '.p75pulse .tabs::-webkit-scrollbar{display:none}' +
     // the tab bar is what follows the reader down this page, so the site's floating back/next bar stays hidden here
@@ -715,7 +715,7 @@
 
     var head = h; h = '';
     // why: the cockpit, one instrument per signal (see Cockpit above)
-    h += '<h2>Why the needles are where they are</h2><p class="sub">Every signal behind the two gauges, as its own instrument. Tap one to see what it measures, what it says right now and why it matters. Nothing is hidden in a black box.</p>' +
+    h += '<h2>Why the needles are where they are</h2><p class="sub">Every signal behind the two gauges, as its own instrument, with the rule it follows. Nothing is hidden in a black box.</p>' +
       cockpit(b, s);
 
     var SEC = { why: h }; h = '';
