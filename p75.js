@@ -761,6 +761,9 @@
     // pages as cards, so their arrows move on to the next section instead, when there is one.
     fams.forEach(function (f) { if (f.href === path && f.kids.length && !(f.hub && s.next)) s.next = f.kids[0]; });
     var fix = NAV_FIX[path]; if (fix) for (var k in fix) s[k] = fix[k];
+    // Arrived from the homepage (its Pulse strip or Explore cards, see home/home.js): back leads home
+    var fh = null; try { fh = sessionStorage.getItem('p75fromHome'); } catch (err) {}
+    if (fh && fh === path) s.prev = { href: '/', text: 'Journal', title: 'Back to the Journal' };
     return (s.prev || s.next) ? s : null;
   }
   function navCss() {
@@ -1098,6 +1101,8 @@
       disc = comments = null;
       stopAll();
       lastPath = path;
+      // "Came from the homepage" lasts only for the page it was set for (see navSpecFor)
+      try { if (sessionStorage.getItem('p75fromHome') !== path) sessionStorage.removeItem('p75fromHome'); } catch (err) {}
     }
 
     var menuFams = families(); hubMenus(menuFams);

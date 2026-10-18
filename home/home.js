@@ -69,22 +69,29 @@
       I + ' .block-blog-list-item__cover-image-container:focus-visible .p75hook{opacity:1}' +
       I + ' .block-blog-list-item__cover-image-container:focus-visible{outline:3px solid #F2D27A;outline-offset:4px}' +
     '}' +
-    // Phones and small tablets: one painting at a time
+    // The site builder slides each card in as it scrolls into view. On a sideways carousel that fires on every
+    // painting and fights the swipe, so the wall's cards simply stay put.
+    I + '{animation:none!important;transition:none!important;transform:none!important;opacity:1!important}' +
+    // Phones and small tablets: one painting at a time, uncropped, with the next one peeking in from the right
     '@media (max-width:' + PHONE + 'px){' +
-      L + ' .block-blog-list__list{display:flex!important;flex-wrap:nowrap!important;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px!important;' +
+      L + ' .block-blog-list__list{display:flex!important;flex-wrap:nowrap!important;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;gap:12px!important;' +
         'scrollbar-width:none;-webkit-overflow-scrolling:touch;grid-template-columns:none!important}' +
       L + ' .block-blog-list__list::-webkit-scrollbar{display:none}' +
-      I + '{flex:0 0 100%;min-width:0;scroll-snap-align:center;scroll-snap-stop:always;margin:0!important}' +
-      I + ' .block-blog-list-item__cover-image-wrapper{position:relative;height:min(118vw,560px)!important;min-height:0!important;border-radius:8px}' +
+      I + '{flex:0 0 86%;min-width:0;scroll-snap-align:start;margin:0!important}' +
+      I + ' .block-blog-list-item__cover-image-container{height:auto!important}' +
+      I + ' .block-blog-list-item__cover-image-wrapper{position:relative;height:auto!important;min-height:0!important;aspect-ratio:5/3;border-radius:8px}' +
       I + ' .block-blog-list-item__cover-image{width:100%!important;height:100%!important;object-fit:cover!important}' +
       I + ' .block-blog-list-item__content{display:none!important}' +
       I + ' .p75band{display:none}' +
       I + '.p75show .p75hook{opacity:1}' +
-      I + ' .p75ht .t{font-size:26px}' +
-      I + ' .p75hook i{font-size:18px}' +
-      I + '.p75sm .p75hook i{display:-webkit-box}' +
-      I + ' .p75tap{display:inline-flex;align-items:center;gap:6px;position:absolute;top:12px;right:12px;z-index:2;padding:4px 10px;border-radius:99px;' +
-        'background:rgba(17,18,20,.72);color:#EDE8DC;font:700 12px Manrope,system-ui,sans-serif;transition:opacity .2s}' +
+      I + ' .p75hook{padding:12px 14px;gap:6px}' +
+      I + ' .p75ht{gap:4px}' + I + ' .p75ht .m{font-size:11px}' +
+      I + ' .p75ht .t,' + I + '.p75sm .p75ht .t{font-size:18px;line-height:1.2}' +
+      I + ' .p75hook i,' + I + '.p75sm .p75hook i{display:-webkit-box;-webkit-line-clamp:2;font-size:14px;line-height:1.35}' +
+      I + ' .p75hook b{font-size:12.5px}' +
+      I + ' .p75pick{top:8px;left:8px;font-size:10px;padding:3px 7px}' +
+      I + ' .p75tap{display:inline-flex;align-items:center;gap:6px;position:absolute;top:8px;right:8px;z-index:2;padding:3px 9px;border-radius:99px;' +
+        'background:rgba(17,18,20,.72);color:#EDE8DC;font:700 11px Manrope,system-ui,sans-serif;transition:opacity .2s}' +
       I + '.p75show .p75tap{opacity:0}' +
       '.p75dots{display:flex;align-items:center;justify-content:center;gap:14px;margin:14px auto 0}' +
       '.p75dots button{min-width:44px;min-height:44px;border-radius:22px;border:1px solid #3A3C42;background:#17181B;color:#EDE8DC;font:700 18px Manrope,system-ui,sans-serif;cursor:pointer}' +
@@ -129,6 +136,14 @@
       e.preventDefault(); e.stopPropagation();
       document.querySelectorAll(I + '.p75show').forEach(function (x) { x.classList.remove('p75show'); });
       it.classList.add('p75show');
+    }, true);
+    // Remember that the reader left the homepage for a page on this site (Pulse strip, Explore). p75.js reads
+    // this so that page's back pill says "Journal" and leads home, instead of into the page's menu section.
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('.p75ps, .p75ex a'); if (!a) return;
+      var href = a.getAttribute('href') || '';
+      if (href.charAt(0) !== '/') return;
+      try { sessionStorage.setItem('p75fromHome', href.replace(/[?#].*$/, '').replace(/\/+$/, '') || '/'); } catch (err) {}
     }, true);
   }
 
@@ -217,7 +232,7 @@
       d = list.querySelector(':scope > .p75dots');
       d.addEventListener('click', function (e) {
         var b = e.target.closest('[data-p75go]'); if (!b) return;
-        var w = track.clientWidth + 12, i = Math.round(track.scrollLeft / w), last = track.children.length - 1;
+        var w = step(track), i = Math.round(track.scrollLeft / w), last = track.children.length - 1;
         i = Math.max(0, Math.min(last, i + +b.getAttribute('data-p75go')));
         track.scrollTo({ left: i * w, behavior: 'smooth' });
       });
@@ -232,9 +247,13 @@
     }
     mark(list, track);
   }
+  function step(track) {   // one painting plus the gap between paintings
+    var c = track.firstElementChild; return ((c ? c.getBoundingClientRect().width : track.clientWidth) + 12) || 1;
+  }
   function mark(list, track) {
     var d = list.querySelector(':scope > .p75dots'); if (!d) return;
-    var n = track.children.length, i = Math.max(0, Math.min(n - 1, Math.round(track.scrollLeft / ((track.clientWidth + 12) || 1))));
+    var n = track.children.length, end = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
+    var i = end ? n - 1 : Math.max(0, Math.min(n - 1, Math.round(track.scrollLeft / step(track))));
     d.querySelectorAll('.ds i').forEach(function (x, k) { x.classList.toggle('on', k === i); });
     var lbl = (i + 1) + ' / ' + n; if (d.querySelector('.n').textContent !== lbl) d.querySelector('.n').textContent = lbl;
   }
