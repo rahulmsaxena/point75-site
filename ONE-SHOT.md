@@ -36,7 +36,7 @@ Reference implementation: the Pulse page (`pulse/pulse.js`). Header rules are al
 - Animate with `grid-template-rows: 1fr ↔ 0fr` (~0.5s); never scroll-jack.
 
 ## 6. Every change
-- Respect `prefers-reduced-motion` (no bobbing, pulsing, glow or slow sweeps).
+- Respect `prefers-reduced-motion` for decoration (no bobbing, pulsing, glow, hover lift, fold animation). **Needle sweeps stay on**: they are how the reading is shown.
 - Touch targets ≥ 44px; real `<button>`s with `aria-expanded` / `aria-pressed`.
 - **Check for clipped text** at 320, 360, 390, 768, 1024, 1280 and 1440px, open and folded. Nothing may overflow, clip or run off screen.
 - Preview before pushing anything that changes behaviour or more than one page; small visual tweaks can go straight to `main`.

@@ -62,9 +62,9 @@
     '.p75pulse .big small{font-family:Manrope,sans-serif;font-size:14px;color:var(--muted);margin-left:4px}' +
     '.p75pulse .verdict{font-size:12.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}' +
     '.p75pulse .hint{color:var(--soft);font-size:13.5px;line-height:1.5;text-align:justify;hyphens:auto;-webkit-hyphens:auto}' +
+    // Needle sweeps stay on even with Reduce motion: the sweep is how the reading is shown, and it is slow and even.
     '.p75pulse .p75n{transition:transform 4.5s cubic-bezier(.37,0,.3,1)}' +
     '.p75pulse .p75f{stroke-dashoffset:100;transition:stroke-dashoffset 4.5s cubic-bezier(.37,0,.3,1)}.p75pulse .inst.on .p75f{stroke-dashoffset:0}' +
-    '@media (prefers-reduced-motion:reduce){.p75pulse .p75n,.p75pulse .p75f{transition:none!important}}' +
     // why lists
     '.p75pulse .why{display:grid;grid-template-columns:1fr 1fr;gap:18px}' +
     '.p75pulse .row{display:grid;grid-template-columns:26px 1fr;gap:10px;padding:12px 0;border-top:1px solid var(--line)}' +
@@ -198,7 +198,6 @@
     '.p75pulse .ck-mfd .bk{display:none}' +
     '.p75pulse .ck-n,.p75pulse .ck-hz{transition:transform 4.5s cubic-bezier(.37,0,.3,1)}' +
     '.p75pulse .ck-snap{transition:none!important}' +
-    '@media (prefers-reduced-motion:reduce){.p75pulse .ck-n,.p75pulse .ck-hz{transition:none}}' +
     // Phones and small tablets: the info screen opens as a bottom sheet over the panel (built by ckSheet below),
     // so the tapped gauge stays in view instead of the page scrolling away from it
     '@media (max-width:880px){.p75pulse .ck-mfdw{display:none}}' +
