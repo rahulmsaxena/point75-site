@@ -22,8 +22,8 @@
   var L = '.block-blog-list.p75wall', I = L + ' .block-blog-list-item';
   var CSS =
     // Pulse strip
-    '.p75ps{max-width:1224px;width:calc(100% - 40px);margin:0 auto 14px;box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;gap:12px 28px;' +
-      'padding:14px 20px;border:1px solid rgba(201,162,39,.32);border-radius:12px;background:#1B1C20;color:#EDE8DC!important;text-decoration:none!important;font:500 14px/1.4 Manrope,system-ui,sans-serif}' +
+    '.p75ps{max-width:1224px;width:calc(100% - 40px);margin:0 auto 14px;box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;gap:8px 22px;' +
+      'padding:10px 16px;border:1px solid rgba(201,162,39,.32);border-radius:12px;background:#1B1C20;color:#EDE8DC!important;text-decoration:none!important;font:500 14px/1.4 Manrope,system-ui,sans-serif}' +
     '.p75ps:hover,.p75ps:focus-visible{border-color:rgba(201,162,39,.7);outline:none}' +
     '.p75ps .lb{display:flex;flex-direction:column;gap:2px}' +
     '.p75ps .lb b{color:#C9A227;font-weight:800;font-size:12px;letter-spacing:.14em;text-transform:uppercase}' +
@@ -33,7 +33,8 @@
     '.p75ps .rd .k{color:#E4DED1;font-size:12.5px;font-weight:700;letter-spacing:.03em}' +
     '.p75ps .rd .v{font:400 26px/1 "Hedvig Letters Serif",Georgia,serif;font-variant-numeric:tabular-nums;filter:brightness(1.15)}' +
     '.p75ps .rd .w{font-size:13.5px;font-weight:800;filter:brightness(1.15)}' +
-    '.p75ps .go{margin-left:auto;color:#C9A227;font-weight:800;white-space:nowrap}' +
+    '.p75ps .go{margin-left:auto;color:#C9A227;font-weight:800;white-space:nowrap;font-size:13.5px}' +
+    '@media (min-width:' + (PHONE + 1) + 'px){.p75ps{flex-wrap:nowrap}.p75ps .lb .u{display:none}.p75ps .rd{white-space:nowrap}.p75ps .go{font-size:0}.p75ps .go:after{content:"\\203A";font-size:26px;line-height:1}}' +
     '@media (max-width:640px){.p75ps{gap:8px 12px;padding:10px 14px}.p75ps .lb{flex:1 1 auto;order:0;flex-direction:row;gap:8px;align-items:baseline}' +
       '.p75ps .lb .u{display:none}.p75ps .go{order:1;margin-left:auto;font-size:13px}' +
       '.p75ps .rd{order:2;flex:1 1 40%;min-width:0;gap:8px}.p75ps .rd svg[width="80"]{width:52px}.p75ps .rd .v{font-size:24px}.p75ps .rd .w{font-size:13px}}' +
@@ -42,9 +43,9 @@
     '.p75top>.p75cta .go{transition:transform .2s}' +
     '.p75top>.p75cta:hover .go,.p75top>.p75cta:focus-visible .go{transform:translateX(4px)}' +
     '@media (min-width:' + (PHONE + 1) + 'px){' +
-      '.p75top>.p75cta{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:6px;flex-wrap:nowrap;' +
-        'border-left:2px solid #C9A227!important;padding:4px 0 4px 20px!important;font-size:14px;line-height:1.45;color:#A9A396!important}' +
-      '.p75top>.p75cta b{display:block;margin-bottom:2px;font:400 21px/1.15 "Hedvig Letters Serif",Georgia,serif;color:#EDE8DC}' +
+      '.p75top>.p75cta{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:3px;flex-wrap:nowrap;' +
+        'border-left:2px solid #C9A227!important;padding:2px 0 2px 18px!important;font-size:13.5px;line-height:1.4;color:#D2CCBF!important}' +
+      '.p75top>.p75cta b{display:block;margin-bottom:0;font:400 19px/1.15 "Hedvig Letters Serif",Georgia,serif;color:#EDE8DC}' +
       '.p75top>.p75cta .go{font-size:13.5px}' +
       '.p75top>.p75cta:hover,.p75top>.p75cta:focus-visible{background:transparent!important}' +
       '.p75top>.p75cta:hover b{color:#fff}' +
@@ -70,7 +71,7 @@
     I + ' .p75tap{display:none}' +
     // Desktop: one salon row along a centre line; arrows and dots below move along it
     '@media (min-width:' + (PHONE + 1) + 'px){' +
-      L + '{padding-top:20px!important;--p75H:clamp(220px,calc(100vh - 500px),440px)}' +
+      L + '{padding-top:6px!important;--p75H:clamp(170px,calc(100vh - 470px),440px)}' +
       L + ' .block-blog-list__list{display:flex!important;flex-wrap:nowrap!important;align-items:center;gap:24px!important;overflow-x:auto;overscroll-behavior-x:contain;' +
         'scroll-snap-type:x proximity;scroll-padding:0 20px;padding:10px 20px 10px!important;grid-template-columns:none!important;scrollbar-width:none}' +
       L + ' .block-blog-list__list::-webkit-scrollbar{display:none}' +
@@ -87,12 +88,12 @@
       I + ' .p75hook i{-webkit-line-clamp:3;font-size:17px}' +
       I + ' .p75band{padding:14px 18px}' + I + ' .p75band .t{font-size:26px}' +
       // Pulse strip and "New to bonds?" share one row
-      '.p75top{display:flex;align-items:stretch;gap:14px;max-width:1224px;width:calc(100% - 40px);margin:0 auto 6px}' +
+      '.p75top{display:flex;align-items:stretch;gap:14px;max-width:1224px;width:calc(100% - 40px);margin:0 auto 4px}' +
       '.p75top>.p75ps{flex:1.5 1 0;width:auto;margin:0;max-width:none}' +
       '.p75top>.p75cta{flex:1 1 0;width:auto;margin:0!important;max-width:none}' +
       // Explore, compact
-      L + ' .p75ex{margin-top:10px}' + L + ' .p75ex .eb{margin-bottom:10px}' +
-      L + ' .p75ex a{padding:14px 18px;gap:4px}' + L + ' .p75ex a b{font-size:20px}' + L + ' .p75ex a b svg{width:26px;height:26px}' + L + ' .p75ex a span{font-size:14px}' + L + ' .p75ex a em{padding-top:4px}' +
+      L + ' .p75ex{margin-top:10px}' + L + ' .p75ex .eb{margin-bottom:6px}' +
+      L + ' .p75ex a{padding:12px 34px 12px 16px;gap:4px}' + L + ' .p75ex a b{font-size:19px}' + L + ' .p75ex a b svg{width:26px;height:26px}' + L + ' .p75ex a span{font-size:14px}' + L + ' .p75ex a em{padding-top:4px}' +
     '}' +
     // The site builder slides each card in as it scrolls into view. On a sideways carousel that fires on every
     // painting and fights the swipe, so the wall's cards simply stay put.
@@ -123,6 +124,7 @@
     '}' +
     // Arrows and dots (desktop and phones)
     '.p75dots{display:flex;align-items:center;justify-content:center;gap:14px;margin:2px auto 0}' +
+    '@media (hover:hover) and (min-width:761px){.p75dots>button{min-width:38px;min-height:38px}}' +
     '.p75dots>button{min-width:44px;min-height:44px;border-radius:22px;border:1px solid #3A3C42;background:#17181B;color:#EDE8DC;font:700 18px Manrope,system-ui,sans-serif;cursor:pointer}' +
     '.p75dots>button:hover,.p75dots>button:focus-visible{border-color:#C9A227;outline:none}' +
     '.p75dots .ds{display:flex;gap:2px}' +
@@ -133,9 +135,9 @@
     '.p75dots .n{color:#A9A396;font:600 12.5px Manrope,system-ui,sans-serif;min-width:44px;text-align:center}' +
     // Explore
     '.p75ex{max-width:1224px;width:calc(100% - 40px);margin:64px auto 0;box-sizing:border-box}' +
-    '.p75ex .eb{color:#C9A227;font:800 12px Manrope,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}' +
+    '.p75ex .eb{color:#C9A227;font:800 12px Manrope,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}' +
     '.p75ex .g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}' +
-    '.p75ex a{position:relative}.p75ex a .ar{position:absolute;right:14px;bottom:10px;color:#C9A227;font:400 24px/1 Manrope,sans-serif;font-style:normal;transition:transform .15s}' +
+    '.p75ex a{position:relative}.p75ex a .ar{position:absolute;right:14px;top:14px;color:#C9A227;font:400 24px/1 Manrope,sans-serif;font-style:normal;transition:transform .15s}' +
     '.p75ex a:hover .ar,.p75ex a:focus-visible .ar{transform:translateX(4px)}' +
     // Pulse: gold edge, a live dot, and a heartbeat that draws itself across the icon like a monitor
     '.p75ex a.live{border-color:rgba(201,162,39,.75);background:linear-gradient(160deg,#211F18 0%,#1B1C20 70%);box-shadow:0 0 22px rgba(201,162,39,.12)}' +
@@ -145,11 +147,11 @@
     '.p75ex .lv{width:8px;height:8px;margin-left:2px;border-radius:50%;background:#2BFF88;box-shadow:0 0 0 0 rgba(43,255,136,.6);animation:p75lv 1.8s ease-out infinite;align-self:center}' +
     '@keyframes p75lv{0%{box-shadow:0 0 0 0 rgba(43,255,136,.6)}80%,100%{box-shadow:0 0 0 8px rgba(43,255,136,0)}}' +
     '@media (prefers-reduced-motion:reduce){.p75ex .ecg{animation:none;stroke-dashoffset:0}.p75ex .lv{animation:none}}' +
-    '.p75ex a{display:flex;flex-direction:column;gap:8px;padding:18px 20px 30px;border:1px solid #34363C;border-radius:12px;background:#1B1C20;text-decoration:none!important;transition:border-color .2s}' +
+    '.p75ex a{display:flex;flex-direction:column;gap:6px;padding:14px 34px 14px 18px;border:1px solid #34363C;border-radius:12px;background:#1B1C20;text-decoration:none!important;transition:border-color .2s}' +
     '.p75ex a:hover,.p75ex a:focus-visible{border-color:rgba(201,162,39,.7);outline:none}' +
     '.p75ex a b{display:flex;align-items:center;gap:10px;font:400 23px/1.2 "Hedvig Letters Serif",Georgia,serif;color:#fff}' +
     '.p75ex a b svg{flex:none;width:28px;height:28px;fill:none;stroke:#C9A227;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}' +
-    '.p75ex a span{font:600 14.5px/1.55 Manrope,system-ui,sans-serif;color:#F1ECE2}' +
+    '.p75ex a span{font:600 14px/1.5 Manrope,system-ui,sans-serif;color:#F1ECE2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}' +
     '.p75ex a em{margin-top:auto;padding-top:6px;font:800 13.5px Manrope,system-ui,sans-serif;font-style:normal;color:#C9A227}' +
     // Phones: three small tiles in one row, icon over a short name (the descriptions stay on desktop)
     '@media (max-width:760px){.p75ex .g{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.p75ex a .ar{display:none}.p75ex .lv{display:none}' + L + ' .p75ex{margin-top:22px}' + L + ' .p75ex .eb{margin-bottom:10px}' +
