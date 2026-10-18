@@ -74,6 +74,7 @@
     I + '{animation:none!important;transition:none!important;transform:none!important;opacity:1!important}' +
     // Phones and small tablets: one painting at a time, uncropped, with the next one peeking in from the right
     '@media (max-width:' + PHONE + 'px){' +
+      L + '{padding-top:16px!important}' +   // the builder's 60px gap under the site header wastes a phone's first screen
       L + ' .block-blog-list__list{display:flex!important;flex-wrap:nowrap!important;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;gap:12px!important;' +
         'scrollbar-width:none;-webkit-overflow-scrolling:touch;grid-template-columns:none!important}' +
       L + ' .block-blog-list__list::-webkit-scrollbar{display:none}' +
