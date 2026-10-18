@@ -140,8 +140,11 @@
     '.p75ex a b svg{flex:none;width:28px;height:28px;fill:none;stroke:#C9A227;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}' +
     '.p75ex a span{font:600 14.5px/1.55 Manrope,system-ui,sans-serif;color:#E4DED1}' +
     '.p75ex a em{margin-top:auto;padding-top:6px;font:800 13.5px Manrope,system-ui,sans-serif;font-style:normal;color:#C9A227}' +
-    '@media (max-width:760px){.p75ex .g{grid-template-columns:1fr;gap:10px}' + L + ' .p75ex{margin-top:24px}' + L + ' .p75ex .eb{margin-bottom:10px}' +
-      L + ' .p75ex a{padding:14px 18px;gap:4px}' + L + ' .p75ex a b{font-size:20px}' + L + ' .p75ex a b svg{width:26px;height:26px}' + L + ' .p75ex a span{font-size:14px}' + L + ' .p75ex a em{padding-top:4px}}' +
+    // Phones: three small tiles in one row, icon over a short name (the descriptions stay on desktop)
+    '@media (max-width:760px){.p75ex .g{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}' + L + ' .p75ex{margin-top:22px}' + L + ' .p75ex .eb{margin-bottom:10px}' +
+      L + ' .p75ex a{align-items:center;justify-content:center;gap:0;padding:14px 6px 12px;border-radius:10px;text-align:center}' +
+      L + ' .p75ex a b{flex-direction:column;gap:7px;font:700 13.5px/1.2 Manrope,system-ui,sans-serif;color:#EDE8DC}' +
+      L + ' .p75ex a b svg{width:28px;height:28px}' + L + ' .p75ex a span,' + L + ' .p75ex a em,' + L + ' .p75ex .lg{display:none}}' +
     '@media (prefers-reduced-motion:reduce){' + I + ' .block-blog-list-item__cover-image{transition:none}}';
 
   // Line icons (24px grid, gold stroke) beside each Explore title: a brain, a toolbox, a stack of books.
@@ -323,7 +326,7 @@
   function explore(list) {
     if (list.querySelector(':scope > .p75ex')) return;
     list.insertAdjacentHTML('beforeend', '<nav class="p75ex" aria-label="Explore Point75"><div class="eb">Explore</div><div class="g">' +
-      EXPLORE.map(function (x) { return '<a href="' + x[0] + '"><b><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + EXPLORE_ICON[x[4]] + '</svg>' + x[1] + '</b><span>' + x[2] + '</span><em>' + x[3] + ' &rarr;</em></a>'; }).join('') + '</div></nav>');
+      EXPLORE.map(function (x) { return '<a href="' + x[0] + '"><b><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + EXPLORE_ICON[x[4]] + '</svg>' + x[1].replace('Market ', '<i class="lg" style="font-style:normal">Market </i>') + '</b><span>' + x[2] + '</span><em>' + x[3] + ' &rarr;</em></a>'; }).join('') + '</div></nav>');
   }
 
   function render() {
