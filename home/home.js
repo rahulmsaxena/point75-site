@@ -91,7 +91,7 @@
       '.p75top>.p75cta{flex:1 1 0;width:auto;margin:0!important;max-width:none}' +
       // Explore, compact
       L + ' .p75ex{margin-top:18px}' + L + ' .p75ex .eb{margin-bottom:10px}' +
-      L + ' .p75ex a{padding:14px 18px;gap:4px}' + L + ' .p75ex a b{font-size:20px}' + L + ' .p75ex a span{font-size:14px}' + L + ' .p75ex a em{padding-top:4px}' +
+      L + ' .p75ex a{padding:14px 18px;gap:4px}' + L + ' .p75ex a b{font-size:20px}' + L + ' .p75ex a b svg{width:26px;height:26px}' + L + ' .p75ex a span{font-size:14px}' + L + ' .p75ex a em{padding-top:4px}' +
     '}' +
     // The site builder slides each card in as it scrolls into view. On a sideways carousel that fires on every
     // painting and fights the swipe, so the wall's cards simply stay put.
@@ -136,17 +136,28 @@
     '.p75ex .g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}' +
     '.p75ex a{display:flex;flex-direction:column;gap:8px;padding:20px 22px;border:1px solid #34363C;border-radius:12px;background:#1B1C20;text-decoration:none!important;transition:border-color .2s}' +
     '.p75ex a:hover,.p75ex a:focus-visible{border-color:rgba(201,162,39,.7);outline:none}' +
-    '.p75ex a b{font:400 23px/1.2 "Hedvig Letters Serif",Georgia,serif;color:#fff}' +
+    '.p75ex a b{display:flex;align-items:center;gap:10px;font:400 23px/1.2 "Hedvig Letters Serif",Georgia,serif;color:#fff}' +
+    '.p75ex a b svg{flex:none;width:28px;height:28px;fill:none;stroke:#C9A227;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}' +
     '.p75ex a span{font:600 14.5px/1.55 Manrope,system-ui,sans-serif;color:#E4DED1}' +
     '.p75ex a em{margin-top:auto;padding-top:6px;font:800 13.5px Manrope,system-ui,sans-serif;font-style:normal;color:#C9A227}' +
     '@media (max-width:760px){.p75ex .g{grid-template-columns:1fr;gap:10px}' + L + ' .p75ex{margin-top:24px}' + L + ' .p75ex .eb{margin-bottom:10px}' +
-      L + ' .p75ex a{padding:14px 18px;gap:4px}' + L + ' .p75ex a b{font-size:20px}' + L + ' .p75ex a span{font-size:14px}' + L + ' .p75ex a em{padding-top:4px}}' +
+      L + ' .p75ex a{padding:14px 18px;gap:4px}' + L + ' .p75ex a b{font-size:20px}' + L + ' .p75ex a b svg{width:26px;height:26px}' + L + ' .p75ex a span{font-size:14px}' + L + ' .p75ex a em{padding-top:4px}}' +
     '@media (prefers-reduced-motion:reduce){' + I + ' .block-blog-list-item__cover-image{transition:none}}';
 
+  // Line icons (24px grid, gold stroke) beside each Explore title: a brain, a toolbox, a stack of books.
+  var EXPLORE_ICON = {
+    brain: '<path d="M12 5.5A2.6 2.6 0 0 0 7.2 4.6 2.8 2.8 0 0 0 4.6 8a2.9 2.9 0 0 0-.9 4.6 3 3 0 0 0 1.8 4.6A2.8 2.8 0 0 0 10 19.3a2.2 2.2 0 0 0 2-1.2Z"/>' +
+      '<path d="M12 5.5a2.6 2.6 0 0 1 4.8-.9A2.8 2.8 0 0 1 19.4 8a2.9 2.9 0 0 1 .9 4.6 3 3 0 0 1-1.8 4.6 2.8 2.8 0 0 1-4.5 2.1 2.2 2.2 0 0 1-2-1.2Z"/>' +
+      '<path d="M12 5.5v12.6"/><path d="M8 9.2c1 .1 1.8.8 2 1.8M6.6 13.6c1-.4 2.2 0 2.8.9M16 9.2c-1 .1-1.8.8-2 1.8M17.4 13.6c-1-.4-2.2 0-2.8.9"/>',
+    toolbox: '<path d="M9 9V7a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 7v2"/><rect x="3" y="9" width="18" height="10.5" rx="1.6"/>' +
+      '<path d="M3 13.5h7.5M13.5 13.5H21"/><rect x="10.5" y="12" width="3" height="3" rx=".6"/>',
+    books: '<rect x="3.5" y="5" width="4.2" height="14.5" rx=".8"/><rect x="7.7" y="3.5" width="4.6" height="16" rx=".8"/>' +
+      '<path d="M14.4 6.6l3.7-1 3.6 13.2-3.7 1z"/><path d="M3.5 8h4.2M7.7 7h4.6M7.7 16h4.6M3.5 16.5h4.2M15.2 9.5l3.7-1"/>'
+  };
   var EXPLORE = [
-    ['https://tools.point75.io/market-intelligence', 'Market Intelligence', 'Rates, credit, sectors and flows, as clear dashboards.', 'Open the dashboards'],
-    ['https://tools.point75.io/', 'Tools', 'Portfolio, tax and retirement, with honest numbers.', 'Try the tools'],
-    ['/education', 'Education', 'Bonds from first principles, in plain English.', 'Start learning']
+    ['https://tools.point75.io/market-intelligence', 'Market Intelligence', 'Rates, credit, sectors and flows, as clear dashboards.', 'Open the dashboards', 'brain'],
+    ['https://tools.point75.io/', 'Tools', 'Portfolio, tax and retirement, with honest numbers.', 'Try the tools', 'toolbox'],
+    ['/education', 'Education', 'Bonds from first principles, in plain English.', 'Start learning', 'books']
   ];
 
   var esc = function (s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); };
@@ -312,7 +323,7 @@
   function explore(list) {
     if (list.querySelector(':scope > .p75ex')) return;
     list.insertAdjacentHTML('beforeend', '<nav class="p75ex" aria-label="Explore Point75"><div class="eb">Explore</div><div class="g">' +
-      EXPLORE.map(function (x) { return '<a href="' + x[0] + '"><b>' + x[1] + '</b><span>' + x[2] + '</span><em>' + x[3] + ' &rarr;</em></a>'; }).join('') + '</div></nav>');
+      EXPLORE.map(function (x) { return '<a href="' + x[0] + '"><b><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + EXPLORE_ICON[x[4]] + '</svg>' + x[1] + '</b><span>' + x[2] + '</span><em>' + x[3] + ' &rarr;</em></a>'; }).join('') + '</div></nav>');
   }
 
   function render() {
