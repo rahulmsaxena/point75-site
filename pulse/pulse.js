@@ -31,15 +31,27 @@
     '.p75pulse .inst .card{display:flex;flex-direction:column}' +
     '.p75pulse .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}' +
     '.p75pulse .card h3{margin:0 0 2px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}' +
-    '.p75pulse .meter{display:flex;gap:18px;align-items:center}' +
-    '.p75pulse .meter{flex:1}.p75pulse .meter svg{flex:0 0 auto;width:230px;height:auto}' +
+    '.p75pulse .meter{display:flex;gap:20px;align-items:center}' +
+    '.p75pulse .dial{flex:0 0 auto;width:196px}.p75pulse .dial svg{display:block;width:100%;height:auto;overflow:visible}' +
     '.p75pulse .reading{flex:1;min-width:0}' +
-    '.p75pulse .big{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:58px;line-height:1;margin:6px 0 4px}' +
-    '.p75pulse .verdict{font-size:19px;font-weight:700;margin-bottom:10px}' +
-    '.p75pulse .hint{color:var(--soft);font-size:13px;line-height:1.5}' +
-    '.p75pulse .sg{margin:6px auto 0;max-width:340px;width:100%}.p75pulse .sg svg{display:block;width:100%;height:auto}' +
-    '@media (prefers-reduced-motion:reduce){.p75pulse .hg{transition:none!important}}' +
-    '.p75pulse .hg{transition:y 1.6s cubic-bezier(.2,.8,.2,1),height 1.6s cubic-bezier(.2,.8,.2,1)}' +
+    '.p75pulse .big{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:52px;line-height:1;margin:2px 0 4px;font-variant-numeric:tabular-nums}' +
+    '.p75pulse .big small{font-family:Manrope,sans-serif;font-size:14px;color:var(--muted);margin-left:4px}' +
+    '.p75pulse .verdict{font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}' +
+    '.p75pulse .hint{color:var(--soft);font-size:13.5px;line-height:1.6;text-align:justify;hyphens:auto;-webkit-hyphens:auto}' +
+    '.p75pulse .more{margin-top:auto;padding-top:18px;border-top:1px solid var(--line)}' +
+    '.p75pulse .inst .card > .more{margin-top:18px}' +
+    '.p75pulse .more .k{color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}' +
+    '.p75pulse .minis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}' +
+    '.p75pulse .mini{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 6px 10px;border-radius:12px;background:#121316;border:1px solid var(--line);text-align:center}' +
+    '.p75pulse .mini svg{display:block;width:100%;max-width:112px;height:auto;overflow:visible}' +
+    '.p75pulse .mini .mn{font-size:12.5px;font-weight:700;color:var(--cream);line-height:1.3}' +
+    '.p75pulse .mini .mw{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}' +
+    '.p75pulse .tally b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:34px;line-height:1.05;font-variant-numeric:tabular-nums}' +
+    '.p75pulse .tally .mini{padding:12px 6px}' +
+    '.p75pulse .p75n{transition:transform 1.6s cubic-bezier(.3,1.3,.5,1)}' +
+    '.p75pulse .p75f{stroke-dashoffset:100;transition:stroke-dashoffset 1.6s cubic-bezier(.2,.8,.2,1)}' +
+    '.p75pulse .inst.on .p75f{stroke-dashoffset:0}' +
+    '@media (prefers-reduced-motion:reduce){.p75pulse .p75n,.p75pulse .p75f{transition:none!important}}' +
     // why lists
     '.p75pulse .why{display:grid;grid-template-columns:1fr 1fr;gap:18px}' +
     '.p75pulse .row{display:grid;grid-template-columns:26px 1fr;gap:10px;padding:12px 0;border-top:1px solid var(--line)}' +
@@ -185,12 +197,11 @@
     // Their notes are left out here; the Signals tab right below explains every reading.
     '@media (max-width:880px){.p75pulse .inst{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-top:20px}' +
       '.p75pulse .inst .card{padding:12px 10px 14px;align-items:center;text-align:center}.p75pulse .inst .card h3{font-size:10.5px;letter-spacing:.1em}' +
-      '.p75pulse .inst .meter{flex-direction:column;gap:6px;align-items:center}.p75pulse .inst .meter svg{width:auto;height:190px}' +
-      '.p75pulse .inst .reading{text-align:center}.p75pulse .inst .big{font-size:34px;margin:2px 0 0}.p75pulse .inst .verdict{font-size:14px;margin:0}' +
-      '.p75pulse .inst .hint,.p75pulse .inst .card > div[style*="margin-top:auto"]{display:none}' +
-      '.p75pulse .inst .sg{max-width:190px;margin-top:4px}}' +
+      '.p75pulse .inst .meter{flex-direction:column;gap:2px;align-items:center}.p75pulse .inst .dial{width:100%;max-width:170px}' +
+      '.p75pulse .inst .reading{text-align:center}.p75pulse .inst .big{font-size:34px;margin:0}.p75pulse .inst .verdict{font-size:11px;margin:0}' +
+      '.p75pulse .inst .hint,.p75pulse .inst .more{display:none}}' +
     '@media (max-width:560px){.p75pulse .wrap{padding:12px 16px 56px}.p75pulse h1{font-size:30px}.p75pulse .grid{grid-template-columns:1fr}' +
-      '.p75pulse .meter svg{width:150px}.p75pulse .big{font-size:48px}.p75pulse .card{padding:18px}' +
+      '.p75pulse .card{padding:18px}' +
       '.p75pulse .hide-s{display:none}.p75pulse table{font-size:13px}}';
 
   function once() {
@@ -215,75 +226,61 @@
   function bullColor(s) { return s >= 20 ? BULL : s <= -20 ? BEAR : NEUT; }
   function stressColor(s) { return s < 30 ? '#2BD17E' : s < 55 ? '#B8D43A' : s < 75 ? '#F2A33A' : '#FF4D4D'; }
 
-  // ---------- Mercury column (old blood-pressure meter) ----------
-  function mercury(score) {
-    var top = 52, bot = 322, h = bot - top;                 // +100 at top, -100 at bottom
-    var y = top + h * (1 - (score + 100) / 200);
-    var col = bullColor(score);
-    var ticks = '';
-    for (var v = -100; v <= 100; v += 10) {
-      var ty = top + h * (1 - (v + 100) / 200), major = v % 50 === 0, mid = v % 20 === 0;
-      ticks += '<line x1="' + (major ? 58 : mid ? 64 : 68) + '" x2="84" y1="' + ty + '" y2="' + ty + '" stroke="#2b2621" stroke-width="' + (major ? 1.6 : 1) + '"/>';
-      if (mid) ticks += '<text x="55" y="' + (ty + 5) + '" text-anchor="end" font-size="14" font-weight="700" font-family="Georgia,serif" fill="#1f1a15">' + (v > 0 ? '+' : '') + v + '</text>';
-    }
-    return '<svg viewBox="0 0 170 400" role="img" aria-label="Bull / Bear meter reading ' + score + '">' +
-      '<defs>' +
-        '<linearGradient id="p75plate" x1="0" x2="1"><stop offset="0" stop-color="#E9E1CC"/><stop offset=".5" stop-color="#F4EEDF"/><stop offset="1" stop-color="#DCD3BC"/></linearGradient>' +
-        '<linearGradient id="p75glass" x1="0" x2="1"><stop offset="0" stop-color="#cfc8b6"/><stop offset=".35" stop-color="#fbf9f3"/><stop offset="1" stop-color="#bfb7a3"/></linearGradient>' +
-        '<linearGradient id="p75merc" x1="0" x2="1"><stop offset="0" stop-color="' + col + '" stop-opacity=".75"/><stop offset=".4" stop-color="#ffffff" stop-opacity=".55"/><stop offset=".55" stop-color="' + col + '"/><stop offset="1" stop-color="' + col + '" stop-opacity=".8"/></linearGradient>' +
-        '<radialGradient id="p75bulb" cx=".35" cy=".35" r=".7"><stop offset="0" stop-color="#fff" stop-opacity=".8"/><stop offset=".35" stop-color="' + col + '"/><stop offset="1" stop-color="' + col + '" stop-opacity=".85"/></radialGradient>' +
-      '</defs>' +
-      '<rect x="6" y="6" width="158" height="388" rx="14" fill="#3a2a1d"/>' +                  // wooden case
-      '<rect x="12" y="12" width="146" height="376" rx="10" fill="url(#p75plate)"/>' +            // ivory scale plate
-      '<rect x="106" y="' + top + '" width="10" height="' + (h / 2) + '" rx="2" fill="' + BULL + '" opacity=".22"/>' +
-      '<rect x="106" y="' + (top + h / 2) + '" width="10" height="' + (h / 2) + '" rx="2" fill="' + BEAR + '" opacity=".22"/>' +
-      '<text x="134" y="' + (top + 30) + '" font-size="13" font-weight="800" letter-spacing="2" fill="' + BULL + '" transform="rotate(90 134 ' + (top + 30) + ')">BULL</text>' +
-      '<text x="134" y="' + (bot - 62) + '" font-size="13" font-weight="800" letter-spacing="2" fill="' + BEAR + '" transform="rotate(90 134 ' + (bot - 62) + ')">BEAR</text>' +
-      ticks +
-      '<line x1="84" x2="124" y1="' + (top + h / 2) + '" y2="' + (top + h / 2) + '" stroke="#2b2621" stroke-width="1.6" stroke-dasharray="3 2"/>' +
-      '<rect x="87" y="' + (top - 14) + '" width="14" height="' + (h + 28) + '" rx="7" fill="url(#p75glass)" stroke="#9c9480"/>' +   // glass tube
-      '<rect class="hg" x="90" y="' + bot + '" width="8" height="0" rx="3" fill="url(#p75merc)" data-y="' + y.toFixed(1) + '" data-h="' + (bot - y + 8).toFixed(1) + '"/>' +
-      '<circle cx="94" cy="' + (bot + 22) + '" r="15" fill="url(#p75bulb)" stroke="#9c9480"/>' +      // reservoir bulb
-      '<text x="85" y="378" text-anchor="middle" font-size="9.5" letter-spacing="0.8" font-family="Georgia,serif" fill="#5b5244">POINT75 · BOND PULSE</text>' +
-    '</svg>';
+  // ---------- Dials (same build as the speedometers in Point75 Tools) ----------
+  // A 220° sweep, slim track, coloured fill from a resting point to the reading, tapered needle and hub.
+  // Needle and fill start at rest and swing to the reading when the page appears (see animate()).
+  var DCX = 100, DCY = 96, DR = 80, DSWEEP = 220;
+  function dPt(deg, r) { var a = deg * Math.PI / 180; return [(DCX + r * Math.sin(a)).toFixed(2), (DCY - r * Math.cos(a)).toFixed(2)]; }
+  function dArc(d0, d1, r) {
+    var a = dPt(d0, r), b = dPt(d1, r);
+    return 'M' + a[0] + ',' + a[1] + ' A' + r + ',' + r + ' 0 ' + (Math.abs(d1 - d0) > 180 ? 1 : 0) + ' ' + (d1 > d0 ? 1 : 0) + ' ' + b[0] + ',' + b[1];
   }
-
-  // ---------- Stress gauge (arc dial, static) ----------
-  function mixHex(a, b, t) {
-    var pa = parseInt(a.slice(1), 16), pb = parseInt(b.slice(1), 16), o = '#';
-    [16, 8, 0].forEach(function (sh) {
-      var ca = (pa >> sh) & 255, cb = (pb >> sh) & 255, c = Math.round(ca + (cb - ca) * t);
-      o += (c < 16 ? '0' : '') + c.toString(16);
+  // o: { v, min, max, rest, color, ticks:[values], labels:[[value,text,color]], aria, big:true|false, center:text }
+  function dial(o) {
+    var ang = function (v) { return -DSWEEP / 2 + (Math.max(o.min, Math.min(o.max, v)) - o.min) / (o.max - o.min) * DSWEEP; };
+    var a0 = ang(o.rest), a1 = ang(o.v), sw = o.big ? 7 : 11, svg = '';
+    svg += '<path d="' + dArc(-DSWEEP / 2, DSWEEP / 2, DR) + '" fill="none" stroke="#2A2C31" stroke-width="' + sw + '" stroke-linecap="round"/>';
+    (o.zones || []).forEach(function (z) {
+      svg += '<path d="' + dArc(ang(z[0]), ang(z[1]), DR + sw / 2 + 4) + '" fill="none" stroke="' + z[2] + '" stroke-opacity=".55" stroke-width="2"/>';
     });
-    return o;
-  }
-  function arcColor(t) {
-    var st = [[0, '#2BD17E'], [.3, '#B8D43A'], [.55, '#F2A33A'], [.75, '#FF4D4D'], [1, '#FF4D4D']];
-    for (var i = 1; i < st.length; i++) if (t <= st[i][0]) return mixHex(st[i - 1][1], st[i][1], (t - st[i - 1][0]) / (st[i][0] - st[i - 1][0]));
-    return st[st.length - 1][1];
-  }
-  function stressGauge(stress, label) {
-    var cx = 160, cy = 150, r = 112, sw = 12, N = 72, v = Math.max(0, Math.min(100, stress)) / 100, col = stressColor(stress);
-    function pt(t) { var a = (135 + 270 * t) * Math.PI / 180; return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; }
-    var segs = '';
-    for (var i = 0; i < N; i++) {
-      if ((i + .5) / N > v) break;
-      var p0 = pt(i / N), p1 = pt(Math.min(v, (i + 1.15) / N));
-      segs += '<path d="M' + p0[0].toFixed(1) + ',' + p0[1].toFixed(1) + ' A' + r + ',' + r + ' 0 0 1 ' + p1[0].toFixed(1) + ',' + p1[1].toFixed(1) +
-        '" stroke="' + arcColor((i + .5) / N) + '" stroke-width="' + sw + '" fill="none"/>';
+    if (Math.abs(a1 - a0) > .5)
+      svg += '<path class="p75f" pathLength="100" stroke-dasharray="100 200" d="' + dArc(a0, a1, DR) + '" fill="none" stroke="' + o.color + '" stroke-width="' + sw + '" stroke-linecap="round" style="filter:drop-shadow(0 0 5px ' + o.color + '66)"/>';
+    if (o.big) {
+      for (var t = 0; t <= 40; t++) {
+        var d = -DSWEEP / 2 + DSWEEP * t / 40, maj = t % 10 === 0, p = dPt(d, DR - (maj ? 16 : 13)), q = dPt(d, DR - 9);
+        svg += '<line x1="' + p[0] + '" y1="' + p[1] + '" x2="' + q[0] + '" y2="' + q[1] + '" stroke="' + (maj ? '#8A8D93' : '#3A3C42') + '" stroke-width="' + (maj ? 1.6 : 1) + '"/>';
+      }
+      (o.labels || []).forEach(function (l) {
+        var d = ang(l[0]), p = dPt(d, DR + 20), anc = Math.abs(d) > 95 ? 'middle' : d < -20 ? 'end' : d > 20 ? 'start' : 'middle';
+        svg += '<text x="' + p[0] + '" y="' + p[1] + '" dy=".35em" text-anchor="' + anc + '" font-size="11" font-weight="700" letter-spacing=".04em" fill="' + (l[2] || '#8A8D93') + '" font-family="Manrope,sans-serif">' + l[1] + '</text>';
+      });
     }
-    var s0 = pt(0), s1 = pt(1), k = pt(v);
-    return '<div class="sg"><svg viewBox="0 0 320 270" role="img" aria-label="Stress reading ' + stress + ' out of 100, ' + esc(label || '') + '">' +
-      '<path d="M' + s0[0].toFixed(1) + ',' + s0[1].toFixed(1) + ' A' + r + ',' + r + ' 0 1 1 ' + s1[0].toFixed(1) + ',' + s1[1].toFixed(1) + '" stroke="#2a2c31" stroke-width="' + sw + '" stroke-linecap="round" fill="none"/>' +
-      '<circle cx="' + s0[0].toFixed(1) + '" cy="' + s0[1].toFixed(1) + '" r="' + sw / 2 + '" fill="' + arcColor(0) + '"/>' +
-      segs +
-      '<circle cx="' + k[0].toFixed(1) + '" cy="' + k[1].toFixed(1) + '" r="11" fill="#f4f1ea" stroke="' + col + '" stroke-width="4"/>' +
-      '<text x="' + cx + '" y="' + (cy + 12) + '" text-anchor="middle" font-size="76" fill="#f4f1ea" font-family="\'Hedvig Letters Serif\',Georgia,serif">' + stress + '</text>' +
-      '<text x="' + cx + '" y="' + (cy + 44) + '" text-anchor="middle" font-size="15" font-weight="700" letter-spacing="2.5" fill="' + col + '" font-family="Manrope,sans-serif">' + esc((label || '').toUpperCase()) + '</text>' +
-      '<text x="' + cx + '" y="' + (cy + 68) + '" text-anchor="middle" font-size="12" fill="#8a8d93" font-family="Manrope,sans-serif">out of 100</text>' +
-      '<text x="' + (s0[0] + 4).toFixed(1) + '" y="' + (s0[1] + 32).toFixed(1) + '" text-anchor="middle" font-size="12" fill="#8a8d93" font-family="Manrope,sans-serif">0 · calm</text>' +
-      '<text x="' + (s1[0] - 4).toFixed(1) + '" y="' + (s1[1] + 32).toFixed(1) + '" text-anchor="middle" font-size="12" fill="#8a8d93" font-family="Manrope,sans-serif">100 · panic</text>' +
-      '</svg></div>';
+    var len = o.big ? DR - 22 : DR - 26, nw = o.big ? 3.2 : 5;
+    svg += '<g class="p75n" data-a="' + a1.toFixed(1) + '" style="transform-origin:' + DCX + 'px ' + DCY + 'px;transform:rotate(' + a0.toFixed(1) + 'deg)">' +
+      '<path d="M' + (DCX - nw) + ',' + DCY + ' L' + DCX + ',' + (DCY - len) + ' L' + (DCX + nw) + ',' + DCY + ' Z" fill="#F4F1EA"/>' +
+      '<line x1="' + DCX + '" y1="' + DCY + '" x2="' + DCX + '" y2="' + (DCY + (o.big ? 12 : 14)) + '" stroke="#F4F1EA" stroke-width="' + (o.big ? 3 : 4.5) + '" stroke-linecap="round"/></g>' +
+      '<circle cx="' + DCX + '" cy="' + DCY + '" r="' + (o.big ? 8 : 11) + '" fill="#17181B" stroke="' + o.color + '" stroke-width="' + (o.big ? 2 : 3) + '"/>' +
+      '<circle cx="' + DCX + '" cy="' + DCY + '" r="' + (o.big ? 2.6 : 3.6) + '" fill="#F4F1EA"/>';
+    if (o.center != null)
+      svg += '<text x="' + DCX + '" y="' + (DCY + 50) + '" text-anchor="middle" font-size="34" font-weight="800" fill="' + o.color + '" font-family="Manrope,sans-serif" style="font-variant-numeric:tabular-nums">' + o.center + '</text>';
+    return '<svg viewBox="0 ' + (o.big ? -14 : 6) + ' 200 ' + (o.big ? 152 : 150) + '" role="img" aria-label="' + esc(o.aria || '').replace(/"/g, '&quot;') + '">' + svg + '</svg>';
+  }
+  // Bull / Bear: −100 (bear) on the left, 0 at the top, +100 (bull) on the right; the fill grows out of the middle
+  function bullDial(score) {
+    return dial({ v: score, min: -100, max: 100, rest: 0, color: bullColor(score), big: true,
+      zones: [[-100, -20, BEAR], [20, 100, BULL]],
+      labels: [[-100, '−100', BEAR], [0, '0'], [100, '+100', BULL]],
+      aria: 'Bull / Bear reading ' + score + ' on a scale from −100 (bearish) to +100 (bullish)' });
+  }
+  function stressDial(stress, label) {
+    return dial({ v: stress, min: 0, max: 100, rest: 0, color: stressColor(stress), big: true,
+      zones: [[0, 30, '#2BD17E'], [30, 55, '#B8D43A'], [55, 75, '#F2A33A'], [75, 100, '#FF4D4D']],
+      labels: [[0, '0'], [50, '50'], [100, '100']],
+      aria: 'Stress reading ' + stress + ' out of 100' + (label ? ', ' + label : '') });
+  }
+  function miniDial(v, name) {
+    var p = Math.round(v);
+    return dial({ v: p, min: 0, max: 100, rest: 0, color: stressColor(p), center: p, aria: name + ' ' + p + ' out of 100' });
   }
 
   // ---------- Sparkline with hover ----------
@@ -641,20 +638,34 @@
       '<div class="asof">Updated <b>' + new Date(j.generated_at).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' }) +
       '</b> · refreshed hourly on weekdays</div>';
 
-    // instruments
+    // instruments: two dials, each with its reading beside it and a row of three underneath
+    var votes = b.votes || [], nb = 0, nh = 0, nr = 0;
+    votes.forEach(function (v) { if (v.vote > 0) nb++; else if (v.vote < 0) nr++; else nh++; });
+    var bc = bullColor(b.score), sc = s.score != null ? Math.round(s.score) : null, scol = stressColor(sc);
+    var drivers = (s.components || []).slice().sort(function (x, y) { return y.pct * y.weight - x.pct * x.weight; }).slice(0, 3);
+    var tile = function (n, word, col) {
+      return '<div class="mini" style="border-color:' + col + '55;background:' + col + '14"><b style="color:' + col + '">' + n + '</b><span class="mw" style="color:' + col + '">' + word + '</span></div>';
+    };
     h += '<div class="inst">' +
-      '<div class="card"><h3>Bull / Bear</h3><div class="meter">' + (b.score != null ? mercury(b.score) : '') +
-        '<div class="reading"><div class="big num" style="color:' + bullColor(b.score) + '">' + (b.score > 0 ? '+' : '') + (b.score != null ? b.score : '–') + '</div>' +
-        '<div class="verdict" style="color:' + bullColor(b.score) + '">' + esc(b.label || 'No reading') + '</div>' +
-        '<div class="hint"><b style="color:' + BULL + '">Blue</b> = bullish for bonds (prices up, yields down). <b style="color:' + BEAR + '">Red</b> = bearish (prices down, yields up). Scale runs from −100 to +100.</div></div></div></div>' +
-      '<div class="card"><h3>Stress monitor</h3>' + (s.score != null ? stressGauge(s.score, s.label) : '') +
-        '<div style="margin-top:auto;padding-top:16px">' +
-        '<div class="hint" style="margin:4px 0 12px">Higher means more strain in volatility, funding, dealer balance sheets and auction demand. Biggest drivers right now:</div>' +
-        (s.components || []).slice().sort(function (x, y) { return y.pct * y.weight - x.pct * x.weight; }).slice(0, 3).map(function (c) {
-          return '<div style="display:grid;grid-template-columns:1fr 34px;gap:10px;align-items:center;font-size:13px;margin-top:7px"><div>' + esc(c.name) +
-            '<div class="bar" style="margin-top:5px"><i style="width:' + Math.max(3, c.pct) + '%;background:' + stressColor(c.pct) + '"></i></div></div>' +
-            '<b class="num" style="text-align:right;color:' + stressColor(c.pct) + '">' + Math.round(c.pct) + '</b></div>';
-        }).join('') + '</div></div>' +
+      '<div class="card"><h3>Bull / Bear</h3><div class="meter">' +
+        (b.score != null ? '<div class="dial">' + bullDial(b.score) + '</div>' : '') +
+        '<div class="reading"><div class="big num" style="color:' + bc + '">' + (b.score > 0 ? '+' : '') + (b.score != null ? b.score : '–') + '</div>' +
+        '<div class="verdict" style="color:' + bc + '">' + esc(b.label || 'No reading') + '</div>' +
+        '<div class="hint"><b style="color:' + BULL + '">Blue</b> is bullish for bonds: prices up, yields down. <b style="color:' + BEAR + '">Red</b> is bearish: prices down, yields up. The needle runs from −100 to +100.</div></div></div>' +
+        (votes.length ? '<div class="more"><div class="k">How the ' + votes.length + ' signals voted</div><div class="minis tally">' +
+          tile(nb, '▲ Bull', BULL) + tile(nh, '• Hold', '#C2BCAF') + tile(nr, '▼ Bear', BEAR) + '</div></div>' : '') +
+      '</div>' +
+      '<div class="card"><h3>Stress monitor</h3><div class="meter">' +
+        (sc != null ? '<div class="dial">' + stressDial(sc, s.label) + '</div>' : '') +
+        '<div class="reading"><div class="big num" style="color:' + scol + '">' + (sc != null ? sc : '–') + '<small>/100</small></div>' +
+        '<div class="verdict" style="color:' + scol + '">' + esc(s.label || (sc != null ? CK_STRESS_WORD(sc) : 'No reading')) + '</div>' +
+        '<div class="hint">How much strain the bond market is under, from rate swings, funding, dealer balance sheets and auction demand. 0 is calm, 100 is panic.</div></div></div>' +
+        (drivers.length ? '<div class="more"><div class="k">Biggest drivers right now</div><div class="minis">' +
+          drivers.map(function (c) {
+            var p = Math.round(c.pct);
+            return '<div class="mini">' + miniDial(p, c.name) + '<span class="mn">' + esc(c.name) + '</span><span class="mw" style="color:' + stressColor(p) + '">' + CK_STRESS_WORD(p) + '</span></div>';
+          }).join('') + '</div></div>' : '') +
+      '</div>' +
       '</div>';
 
     var head = h; h = '';
@@ -760,9 +771,10 @@
   }
 
   function animate(host) {
-    var m = host.querySelector('.hg'); if (!m) return;
+    var inst = host.querySelector('.inst'); if (!inst) return;
     requestAnimationFrame(function () { requestAnimationFrame(function () {
-      m.setAttribute('y', m.getAttribute('data-y')); m.setAttribute('height', m.getAttribute('data-h'));
+      inst.classList.add('on');
+      inst.querySelectorAll('.p75n').forEach(function (n) { n.style.transform = 'rotate(' + n.getAttribute('data-a') + 'deg)'; });
     }); });
   }
 
