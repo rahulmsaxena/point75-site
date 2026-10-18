@@ -11,7 +11,7 @@
   if (window.P75HOME) return;
   var API = 'https://news.point75.io/api/pulse';
   var PHONE = 920;   // matches the breakpoint the Journal cards already use
-  var BULL = '#3D8BFF', BEAR = '#E5484D', NEUT = '#9AA0A6';
+  var BULL = '#1FC8FF', BEAR = '#E5484D', NEUT = '#9AA0A6';
 
   // Desktop: one salon-style row. Each painting keeps its true 5:3 shape; its height is a share of the row
   // height (--p75H, set from the window height so the whole homepage fits on a typical laptop screen).

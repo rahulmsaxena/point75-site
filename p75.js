@@ -852,6 +852,15 @@
       '#p75tf span{min-width:0;overflow:hidden;text-overflow:ellipsis;max-width:230px;color:inherit!important}' +
       '@media (max-width:600px){#p75tn{padding:14px 16px 2px}#p75tn a.pill{font-size:13.5px;padding:8px 12px}#p75tn a.mid{width:34px;height:34px}' +
         '#p75tf a{padding:9px 12px;font-size:13px}#p75tf span{max-width:30vw}}' +
+      // Wide screens: the row takes no height; back / next become slim tabs in the side margins, halfway down the screen
+      '@media (min-width:1240px){#p75tn{padding:0!important;height:0;overflow:visible}#p75tn .r{display:block;min-height:0}' +
+        '#p75tn a.pill{position:fixed;top:50%;z-index:40;flex-direction:column;gap:6px;width:92px;padding:12px 8px;margin-top:-44px;border-radius:16px;text-align:center;font-size:12px;line-height:1.25;' +
+          'background:rgba(17,18,20,.88);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}' +
+        '#p75tn a.pill span{white-space:normal;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}' +
+        '#p75tn a.pill i{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;border:1.5px solid ' + G + ';font-style:normal;font-size:16px}' +
+        '#p75tn a.pv{left:max(12px,calc((100vw - 1100px)/2 - 108px))}#p75tn a.nx{right:max(12px,calc((100vw - 1100px)/2 - 108px))}' +
+        '#p75tn a.nx{flex-direction:column-reverse}#p75tn a.up{position:static;margin:0}}' +
+      '@media (max-width:1239px){#p75tn{padding-top:8px;padding-bottom:0}#p75tn .r{min-height:34px}#p75tn a.pill{padding:6px 13px}#p75tn a.pill i{font-style:normal}}' +
       '@media print{#p75tn,#p75tf{display:none!important}}';
     document.head.appendChild(st);
   }
@@ -868,12 +877,12 @@
       if (top) top.remove();
       top = document.createElement('div'); top.id = 'p75tn'; top.setAttribute('role', 'navigation'); top.setAttribute('aria-label', 'Page navigation'); top.setAttribute('data-k', key);
       top.innerHTML = '<div class="r">' +
-        (s.prev ? '<a class="pill pv"' + navAttrs(s, s.prev) + '>&larr; <span>' + escH(s.prev.text) + '</span></a>' : '<span></span>') +
+        (s.prev ? '<a class="pill pv"' + navAttrs(s, s.prev) + '><i aria-hidden="true">&larr;</i><span>' + escH(s.prev.text) + '</span></a>' : '<span></span>') +
         // Just two pills: back on the left, next on the right. (The gold-dot link to the section's home page
         // and the floating copy of this row that followed the reader down the page are gone.) An article
         // inside an iframe (Daily Summary) keeps its "up to the list" link as a plain pill in the middle.
         (s.frame && s.mid ? '<a class="pill up"' + navAttrs(s, s.mid) + '><span>' + escH(s.mid.text || 'All') + '</span></a>' : '<span></span>') +
-        (s.next ? '<a class="pill nx"' + navAttrs(s, s.next) + '><span>' + escH(s.next.text) + '</span> &rarr;</a>' : '<span></span>') + '</div>';
+        (s.next ? '<a class="pill nx"' + navAttrs(s, s.next) + '><span>' + escH(s.next.text) + '</span><i aria-hidden="true">&rarr;</i></a>' : '<span></span>') + '</div>';
     }
     if (bar) bar.remove();
     var host = document.querySelector(PAGE_HOSTS);
