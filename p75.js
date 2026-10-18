@@ -984,7 +984,8 @@
     var D = '.block-header-layout-desktop .block-header__nav-links', TOP = D + '>.block-header-item>.block-header-item__label>';
     var st = document.createElement('style'); st.id = 'p75-menu3';
     st.textContent =
-      D + '{align-items:center!important;gap:28px!important}' +
+      D + '{align-items:center!important;gap:20px!important}' +   // 20px (was 28px) so Intelligence fits on one line with Search
+      '@media (max-width:1240px){' + D + '{gap:14px!important}}' +
       TOP + '.item-content-wrapper{display:inline-flex!important;align-items:center!important;height:40px!important}' +
       TOP + '.item-content-wrapper>.item-content{font-size:16px!important;font-weight:600!important;color:#fff!important;letter-spacing:.01em}' +
       TOP + '.item-content-wrapper--active>.item-content{text-decoration:underline!important;text-decoration-color:#C9A227!important;text-decoration-thickness:2px!important;text-underline-offset:9px!important}' +
@@ -1080,8 +1081,13 @@
   }
   function decorateMenu() {
     document.querySelectorAll('.block-header__nav-links').forEach(function (ul) {
-      var tools = ul.querySelector(':scope>.block-header-item>.block-header-item__label a.item-content[href*="tools.point75.io"]');
-      if (tools) tools.closest('li').classList.add('p75tools-li');
+      // The gold button is the link to the Tools home page only (tools.point75.io or tools.point75.io/), not to
+      // pages inside it such as Intelligence (tools.point75.io/market-intelligence)
+      var links = ul.querySelectorAll(':scope>.block-header-item>.block-header-item__label a.item-content[href*="tools.point75.io"]');
+      [].forEach.call(links, function (a) {
+        var home = /^https?:\/\/tools\.point75\.io\/?([?#].*)?$/.test(a.getAttribute('href') || '');
+        a.closest('li').classList.toggle('p75tools-li', home);
+      });
       if (!ul.closest('.block-header-layout-mobile') && !ul.querySelector(':scope>.p75start-li'))
         ul.insertAdjacentHTML('afterbegin', '<li class="p75start-li"><a href="/start-here">Start here &rarr;</a></li>');
     });
