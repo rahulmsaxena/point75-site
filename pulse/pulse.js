@@ -165,6 +165,31 @@
     '.p75pulse .ck-pills{display:flex;flex-wrap:wrap;gap:8px}' +
     '.p75pulse .ck-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 12px 5px 10px;border-radius:99px;border:1px solid;font-size:13px;font-weight:700;white-space:nowrap}' +
     '.p75pulse .ck-pill b{font-size:17px;font-variant-numeric:tabular-nums}' +
+    // auctions
+        '.p75pulse .auc-meter{display:flex;flex-wrap:wrap;align-items:center;gap:18px}' +
+    '.p75pulse .auc-meter svg{flex:0 0 auto;width:170px;height:auto}' +
+    '.p75pulse .auc-mt{flex:1 1 220px;min-width:0;display:flex;flex-direction:column;gap:8px}' +
+    '.p75pulse .auc-w{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:28px;line-height:1.1}' +
+        '.p75pulse .auc-up{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));column-gap:28px}' +
+    '.p75pulse .auc-up li{display:grid;grid-template-columns:52px minmax(0,1fr) auto auto;gap:10px;align-items:baseline;padding:7px 0;border-top:1px solid var(--line);font-size:13.5px}' +
+        '.p75pulse .auc-up .ud{color:var(--muted);font-variant-numeric:tabular-nums}.p75pulse .auc-up b{color:#fff;font-weight:700}' +
+    '.p75pulse .auc-up .us{color:var(--soft);font-variant-numeric:tabular-nums}' +
+    '.p75pulse .auc-up .ui{color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.04em;white-space:nowrap}' +
+    '.p75pulse .ac-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}' +
+    '.p75pulse .ac{display:flex;flex-direction:column;gap:4px;padding:12px 14px 10px;border-radius:14px;background:#17181B;border:1px solid var(--line);border-top:3px solid}' +
+    '.p75pulse .ac-h{display:flex;align-items:center;gap:8px}' +
+    '.p75pulse .ac-t{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:24px;line-height:1;color:#fff}' +
+    '.p75pulse .ac-r{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}' +
+    '.p75pulse .ac-g{margin-left:auto;padding:3px 10px;border-radius:99px;border:1px solid;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}' +
+    '.p75pulse .ac-d{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}' +
+    '.p75pulse .ac-m{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:4px}' +
+    '.p75pulse .am{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1px}' +
+    '.p75pulse .am svg{display:block;width:100%;max-width:104px;height:auto;overflow:visible}' +
+    '.p75pulse .am .mv{font-size:17px;font-weight:800;line-height:1.1;margin-top:2px;font-variant-numeric:tabular-nums}' +
+    '.p75pulse .am .mn{font-size:11.5px;font-weight:700;color:var(--cream);line-height:1.25}' +
+    '.p75pulse .am .ma{font-size:11px;color:#F2D27A;font-variant-numeric:tabular-nums}' +
+    '.p75pulse .ck-body.go .p75f{stroke-dashoffset:0}' +
+    '@media (max-width:560px){.p75pulse .auc-meter svg{width:140px}.p75pulse .ac-grid{grid-template-columns:1fr}.p75pulse .auc-up li{grid-template-columns:46px minmax(0,1fr) auto;gap:8px}.p75pulse .auc-up .us{display:none}}' +
     '.p75pulse .ck-how1{margin:0;font-size:14px;line-height:1.55;color:var(--soft)}' +
     '@media (max-width:560px){.p75pulse .ck-main{padding:4px 14px}.p75pulse .ck-sum{font-size:12.5px}.p75pulse .ck-sum b{font-size:19px}.p75pulse .ck-sum .w{display:none}}' +
     '.p75pulse .ck-h2{color:var(--muted);font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-top:4px}' +
@@ -276,6 +301,10 @@
     (o.zones || []).forEach(function (z) {
       svg += '<path d="' + dArc(ang(z[0]), ang(z[1]), DR + sw / 2 + 4) + '" fill="none" stroke="' + z[2] + '" stroke-opacity=".55" stroke-width="2"/>';
     });
+    if (o.notch != null) {
+      var nq = ang(o.notch), n1 = dPt(nq, DR - sw / 2 - 5), n2 = dPt(nq, DR + sw / 2 + 6);
+      svg += '<line x1="' + n1[0] + '" y1="' + n1[1] + '" x2="' + n2[0] + '" y2="' + n2[1] + '" stroke="#F2D27A" stroke-width="4" stroke-linecap="round"/>';
+    }
     if (Math.abs(a1 - a0) > .5)
       svg += '<path class="p75f" pathLength="100" stroke-dasharray="100 200" d="' + dArc(a0, a1, DR) + '" fill="none" stroke="' + o.color + '" stroke-width="' + sw + '" stroke-linecap="round" style="filter:drop-shadow(0 0 5px ' + o.color + '66)"/>';
     if (o.big) {
@@ -289,14 +318,14 @@
       });
     }
     var len = o.big ? DR - 22 : DR - 26, nw = o.big ? 3.2 : 5;
-    svg += '<g class="p75n" data-a="' + a1.toFixed(1) + '" style="transform-origin:' + DCX + 'px ' + DCY + 'px;transform:rotate(' + a0.toFixed(1) + 'deg)">' +
+    svg += '<g class="p75n" data-a="' + a1.toFixed(1) + '" data-r="' + a0.toFixed(1) + '" style="transform-origin:' + DCX + 'px ' + DCY + 'px;transform:rotate(' + a0.toFixed(1) + 'deg)">' +
       '<path d="M' + (DCX - nw) + ',' + DCY + ' L' + DCX + ',' + (DCY - len) + ' L' + (DCX + nw) + ',' + DCY + ' Z" fill="#F4F1EA"/>' +
       '<line x1="' + DCX + '" y1="' + DCY + '" x2="' + DCX + '" y2="' + (DCY + (o.big ? 12 : 14)) + '" stroke="#F4F1EA" stroke-width="' + (o.big ? 3 : 4.5) + '" stroke-linecap="round"/></g>' +
       '<circle cx="' + DCX + '" cy="' + DCY + '" r="' + (o.big ? 8 : 11) + '" fill="#17181B" stroke="' + o.color + '" stroke-width="' + (o.big ? 2 : 3) + '"/>' +
       '<circle cx="' + DCX + '" cy="' + DCY + '" r="' + (o.big ? 2.6 : 3.6) + '" fill="#F4F1EA"/>';
     if (o.center != null)
-      svg += '<text x="' + DCX + '" y="' + (DCY + 50) + '" text-anchor="middle" font-size="34" font-weight="800" fill="' + o.color + '" font-family="Manrope,sans-serif" style="font-variant-numeric:tabular-nums">' + o.center + '</text>';
-    return '<svg viewBox="' + (o.big ? '-6 -12 212 146' : '0 8 200 142') + '" role="img" aria-label="' + esc(o.aria || '').replace(/"/g, '&quot;') + '">' + svg + '</svg>';
+      svg += '<text x="' + DCX + '" y="' + (DCY + 50) + '" text-anchor="middle" font-size="' + (o.centerSize || 34) + '" font-weight="800" fill="' + o.color + '" font-family="Manrope,sans-serif" style="font-variant-numeric:tabular-nums">' + o.center + '</text>';
+    return '<svg viewBox="' + (o.big ? '-6 -12 212 146' : o.center == null ? '2 6 196 124' : '0 8 200 142') + '" role="img" aria-label="' + esc(o.aria || '').replace(/"/g, '&quot;') + '">' + svg + '</svg>';
   }
   // Bull / Bear: −100 (bear) on the left, 0 at the top, +100 (bull) on the right; the fill grows out of the middle
   function bullDial(score) {
@@ -438,7 +467,7 @@
   }
   // Bull / Bear dial: −100 (bear) at lower-left, 0 at the top, +100 (bull) at lower-right, same build as the stress dials
   var ckBBAng = function (v) { return Math.max(-100, Math.min(100, v)) * 1.35; };
-  function ckBBDial(score) {
+  function ckBBDial(score, lo, hi) {
     var z = ckArc(84, ckBBAng(-100), ckBBAng(-20.5), BEAR, 5) + ckArc(84, ckBBAng(-19.5), ckBBAng(19.5), '#6B6F76', 5) + ckArc(84, ckBBAng(20.5), ckBBAng(100), BULL, 5);
     var nums = [[-50, '−50'], [0, '0'], [50, '+50']].map(function (n) {
       var p = ckPt(53, ckBBAng(n[0])); return ckLabel(p[0], (+p[1] + 5.5).toFixed(2), n[1], 15);
@@ -446,7 +475,7 @@
     var e1 = ckPt(52, ckBBAng(-83)), e2 = ckPt(52, ckBBAng(83));
     var col = bullColor(score);
     return '<circle cx="100" cy="100" r="84" fill="url(#p75ckDial)" stroke="#05060A" stroke-width="2"/>' + z + ckTicks(-135, 135, 13.5, 5) + nums +
-      ckLabel(e1[0], (+e1[1] + 4).toFixed(2), 'BEAR', 11, BEAR) + ckLabel(e2[0], (+e2[1] + 4).toFixed(2), 'BULL', 11, BULL) +
+      ckLabel(e1[0], (+e1[1] + 4).toFixed(2), lo || 'BEAR', 11, BEAR) + ckLabel(e2[0], (+e2[1] + 4).toFixed(2), hi || 'BULL', 11, BULL) +
       '<rect x="70" y="126" width="60" height="30" rx="4" fill="#05060A" stroke="#44474E"/>' +
       '<text x="100" y="148" text-anchor="middle" font-size="21" font-weight="700" font-family="ui-monospace,Menlo,Consolas,monospace" fill="' + col + '">' + signedInt(score) + '</text>';
   }
@@ -476,6 +505,18 @@
       '<svg viewBox="0 0 200 200" aria-hidden="true">' + ckBezel() + svgInner + (mover === 'needle' ? '<g class="ck-n">' + CK_NEEDLE + '</g>' + CK_CAP : '') + '</svg>' + label +
       '<span class="ck-tap" aria-hidden="true"><span class="a">What it means ›</span><span class="b">Showing ▸</span></span></button>';
   }
+  // A collapsible row: title on the left, its headline reading on the right, a round arrow; the body opens below it
+  function ckSec(k, title, sum) {
+    var on = CK_OPEN === k;
+    return '<section class="ck-sec"><button type="button" class="ck-tg" data-ck-sec="' + k + '" aria-expanded="' + on + '" aria-controls="cks-' + k + '">' +
+      '<span class="ck-h">' + title + '</span><span class="ck-sum">' + sum + '</span><span class="ck-car" aria-hidden="true"></span></button>' +
+      '<div class="ck-body" id="cks-' + k + '"' + (on ? '' : ' hidden') + '><p class="ck-hint"><i aria-hidden="true"></i>' + (CK_HINT[k] || 'Tap any dial to swing its needle and see what it means.') + '</p>';
+  }
+  var CK_HINT = {
+    a_meter: 'Each recent auction votes: strong +1, average 0, weak −1. The needle is the average × 100.',
+    a_recent: 'On each gauge the gold notch is the average of the last six auctions of that maturity. Blue beat it, Red fell short.',
+    a_up: 'The next auctions on the Treasury’s calendar.'
+  };
   function signedInt(n) { return (n > 0 ? '+' : n < 0 ? '−' : '') + Math.abs(n); }
 
   function cockpit(b, s) {
@@ -494,12 +535,7 @@
 
     CK_ITEMS.bull = { mover: 'bb', target: score, name: 'Bull / Bear score', sub: 'Now ' + signedInt(score) + (b.label ? ' · ' + b.label.toLowerCase() : ''),
       what: CK_TEXT.bull.what, now: line, care: CK_TEXT.bull.care };
-    var sec = function (k, title, sum) {
-      var on = CK_OPEN === k;
-      return '<section class="ck-sec"><button type="button" class="ck-tg" data-ck-sec="' + k + '" aria-expanded="' + on + '" aria-controls="cks-' + k + '">' +
-        '<span class="ck-h">' + title + '</span><span class="ck-sum">' + sum + '</span><span class="ck-car" aria-hidden="true"></span></button>' +
-        '<div class="ck-body" id="cks-' + k + '"' + (on ? '' : ' hidden') + '><p class="ck-hint"><i aria-hidden="true"></i>Tap any dial to swing its needle and see what it means.</p>';
-    };
+    var sec = ckSec;
     var pill = function (n, word, col) { return '<span class="ck-pill" style="color:' + col + ';border-color:' + col + '66;box-shadow:0 0 10px ' + col + '22"><b>' + n + '</b>' + word + '</span>'; };
     var h = CK_DEFS + '<div class="ck' + (CK_OPEN ? ' ck-on' : '') + '"><div class="ck-main">' +
       sec('bull', 'Bull / Bear vote', '<b style="color:' + bc + '">' + signedInt(score) + '</b><span class="w" style="color:' + bc + '">' + word + '</span>') +
@@ -647,9 +683,9 @@
   }
 
   function wireCockpit(host) {
-    var box = host.querySelector('[data-ck-mfd]'); if (!box) return;
+    var box = host.querySelector('[data-ck-mfd]');   // the info screen (Signals only; Auctions has sections but no screen)
     var btns = host.querySelectorAll('.ck-i[data-ck]');
-    ckScreen(box, null);
+    if (box) ckScreen(box, null);
     var ckTop = function () {   // keep the sticky info screen clear of the site's sticky header, whatever its height
       var tb = document.querySelector('.top-blocks--sticky');
       var bar = host.querySelector('.tabs');   // the sticky tab bar sits under the header too
@@ -690,6 +726,11 @@
         var it = CK_ITEMS[bt.getAttribute('data-ck')], mv = bt.querySelector('.ck-n, .ck-hz'); if (!it) return;
         if (mv) mv.classList.add('ck-snap'); ckApply(bt, it, 0); if (mv) void mv.getBoundingClientRect();
         requestAnimationFrame(function () { if (mv) mv.classList.remove('ck-snap'); setTimeout(function () { ckApply(bt, it, it.target); }, 450); });
+      });
+      if (body) { body.classList.remove('go'); void body.offsetWidth; setTimeout(function () { body.classList.add('go'); }, 450); }   // fill arcs grow with the needles
+      if (body) body.querySelectorAll('.p75n, .ck-n[data-a]').forEach(function (n) {   // plain dials: back to rest, then sweep
+        n.style.transition = 'none'; n.style.transform = 'rotate(' + (n.getAttribute('data-r') || 0) + 'deg)'; void n.getBoundingClientRect();
+        n.style.transition = ''; setTimeout(function () { n.style.transform = 'rotate(' + n.getAttribute('data-a') + 'deg)'; }, 450);
       });
       if (first && !ckPhone()) play(first.getAttribute('data-ck'), false);
       if (body && !body.getAttribute('data-nudged')) {   // first time a section opens, the dials glow twice to say "tap me"
@@ -748,21 +789,55 @@
     // auctions
     var a = j.auctions;
     if (a && a.recent && a.recent.length) {
-      var gc = { strong: BULL, weak: BEAR, average: NEUT };
-      h += '<h2>Who’s buying the debt?</h2><p class="sub">Each Treasury auction, graded against the last six auctions of the same maturity. Strong demand means more bids per bond and fewer bonds left with the dealers who must take the leftovers. Foreign and fund buyers show up as “indirect” bidders.</p>' +
-        '<div class="card" style="overflow-x:auto"><table><thead><tr><th>Auction</th><th>Yield</th><th>Bids per $1</th><th class="hide-s">Indirect</th><th>Dealers kept</th><th>Grade</th></tr></thead><tbody>' +
-        a.recent.map(function (r) {
-          return '<tr><td><b>' + esc(r.term.replace(' ', '-')) + '</b>' + (r.reopening ? ' <span style="color:var(--muted);font-size:12px">reopening</span>' : '') + '<small>' + fmtDate(r.date, true) + ' · $' + r.size_bn + 'bn</small></td>' +
-            '<td class="num">' + r.high_yield.toFixed(3) + '%</td>' +
-            '<td class="num">' + r.btc.toFixed(2) + '<small>avg ' + r.avg_btc.toFixed(2) + '</small></td>' +
-            '<td class="num hide-s">' + r.indirect.toFixed(1) + '%<small>avg ' + r.avg_indirect.toFixed(1) + '%</small></td>' +
-            '<td class="num">' + r.dealer.toFixed(1) + '%<small>avg ' + r.avg_dealer.toFixed(1) + '%</small></td>' +
-            '<td><span class="pill" style="background:' + gc[r.grade] + '22;color:' + gc[r.grade] + ';border:1px solid ' + gc[r.grade] + '66">' + r.grade.charAt(0).toUpperCase() + r.grade.slice(1) + '</span></td></tr>';
-        }).join('') + '</tbody></table>' +
-        (a.upcoming && a.upcoming.length ? '<div class="up"><span class="chip" style="border:0;padding-left:0">Coming up:</span>' + a.upcoming.map(function (u) {
-          return '<span class="chip"><b>' + esc(u.label) + '</b> · ' + fmtDate(u.date) + (u.size_bn ? ' · $' + u.size_bn + 'bn' : '') + '</span>';
-        }).join('') + '</div>' : '') +
-        '<div class="note">Source: U.S. Treasury, Fiscal Data. Nominal notes and bonds only (no TIPS or floating-rate notes).</div></div>';
+      // Demand meter: each auction votes Strong +1, Average 0, Weak −1; the meter is the average × 100
+      var GV = { strong: 1, average: 0, weak: -1 }, gn = { strong: 0, average: 0, weak: 0 }, gsum = 0;
+      a.recent.forEach(function (r) { gn[r.grade] = (gn[r.grade] || 0) + 1; gsum += GV[r.grade] || 0; });
+      var dm = Math.round(gsum / a.recent.length * 100);
+      var dword = dm >= 34 ? 'Buyers are hungry' : dm >= 10 ? 'Healthy appetite' : dm > -10 ? 'Steady demand' : dm > -34 ? 'Appetite is thinning' : 'Buyers are scarce';
+      var dcol = dm >= 10 ? BULL : dm <= -10 ? BEAR : '#C2BCAF';
+      var gcol = { strong: BULL, weak: BEAR, average: '#C2BCAF' };
+      var apill = function (n, w, c) { return '<span class="ck-pill" style="color:' + c + ';border-color:' + c + '66;box-shadow:0 0 10px ' + c + '22"><b>' + n + '</b>' + w + '</span>'; };
+      // one mini gauge: gold notch = average of the last six auctions; needle left or right of it = this auction
+      var gauge = function (v, avg, span, good, fmt, name) {
+        var better = good > 0 ? v >= avg : v <= avg, c = Math.abs(v - avg) < span * .04 ? '#C2BCAF' : better ? BULL : BEAR;
+        return '<div class="am">' + dial({ v: v, min: avg - span, max: avg + span, rest: avg, notch: avg, color: c,
+            aria: name + ' ' + fmt(v) + ', average ' + fmt(avg) }) +
+          '<b class="mv" style="color:' + c + '">' + fmt(v) + '</b><span class="mn">' + name + '</span><span class="ma">avg ' + fmt(avg) + '</span></div>';
+      };
+      var x2 = function (v) { return v.toFixed(2) + '×'; }, pc = function (v) { return v.toFixed(0) + '%'; };
+      var today = new Date(); today.setHours(12, 0, 0, 0);
+      var inDays = function (d) { var n = Math.round((new Date(String(d).slice(0, 10) + 'T12:00:00') - today) / 864e5); return n <= 0 ? 'today' : n === 1 ? 'tomorrow' : 'in ' + n + ' days'; };
+
+      var nx = a.upcoming && a.upcoming.length ? a.upcoming[0] : null;
+      h += '<h2>Who’s buying the debt?</h2><p class="sub">Every Treasury auction, graded against the last six of the same maturity: how many bids came in, who won the bonds, and how much the dealers were left holding.</p>' +
+        '<div class="ck auc"><div class="ck-main">' +
+        ckSec('a_meter', 'Demand meter', '<b style="color:' + dcol + '">' + signedInt(dm) + '</b><span class="w" style="color:' + dcol + '">' + dword + '</span>') +
+          '<div class="auc-meter"><svg viewBox="0 0 200 200" role="img" aria-label="Auction demand ' + signedInt(dm) + ': ' + dword + '">' + ckBezel() + ckBBDial(dm, 'WEAK', 'STRONG') +
+            '<g class="ck-n" data-a="' + ckBBAng(dm).toFixed(1) + '" data-r="0" style="transform-origin:100px 100px;transform:rotate(0deg)">' + CK_NEEDLE + '</g>' + CK_CAP + '</svg>' +
+            '<div class="auc-mt"><div class="auc-w" style="color:' + dcol + '">' + dword + '</div>' +
+            '<div class="ck-pills">' + apill(gn.strong, '▲ Strong', BULL) + apill(gn.average, '• Average', '#C2BCAF') + apill(gn.weak, '▼ Weak', BEAR) + '</div>' +
+            '<p class="ck-how1">Strong means more bids per bond and less left with the dealers. Foreign and fund buyers show up as “indirect” bidders.</p></div></div>' +
+        '</div></section>' +
+        ckSec('a_recent', 'Recent auctions', '<span style="color:' + BULL + '">' + gn.strong + ' strong</span> · ' + gn.average + ' average · <span style="color:' + BEAR + '">' + gn.weak + ' weak</span>') +
+        '<div class="ac-grid">' + a.recent.map(function (r) {
+          var gc = gcol[r.grade] || '#C2BCAF';
+          return '<article class="ac" style="border-top-color:' + gc + '">' +
+            '<div class="ac-h"><b class="ac-t">' + esc(r.term.replace(' ', '-')) + '</b>' + (r.reopening ? '<span class="ac-r">reopening</span>' : '') +
+              '<span class="ac-g" style="color:' + gc + ';border-color:' + gc + '88;background:' + gc + '14">' + esc(r.grade.charAt(0).toUpperCase() + r.grade.slice(1)) + '</span></div>' +
+            '<div class="ac-d">' + fmtDate(r.date, true) + ' · $' + r.size_bn + 'bn · sold at ' + r.high_yield.toFixed(3) + '%</div>' +
+            '<div class="ac-m">' +
+              gauge(r.btc, r.avg_btc, .6, 1, x2, 'Bids per $1') +
+              gauge(r.indirect, r.avg_indirect, 15, 1, pc, 'Foreign &amp; funds') +
+              gauge(r.dealer, r.avg_dealer, 12, -1, pc, 'Dealers kept') +
+            '</div></article>';
+        }).join('') + '</div>' +
+        '<div class="note">Bids per $1: dollars bid for each dollar sold. Foreign &amp; funds: the share won by “indirect” bidders. Dealers kept: what the big banks had to take because nobody else wanted it (lower is better). Source: U.S. Treasury, Fiscal Data. Nominal notes and bonds only.</div>' +
+        '</div></section>' +
+        (nx ? ckSec('a_up', 'Coming up', 'Next: <b style="font-family:Manrope,sans-serif;font-size:14px;color:#fff">' + esc(nx.label) + '</b> <span style="color:var(--gold)">' + inDays(nx.date) + '</span>') +
+          '<ol class="auc-up">' + a.upcoming.map(function (u) {
+            return '<li><span class="ud">' + fmtDate(u.date) + '</span><b>' + esc(u.label) + '</b><span class="us">' + (u.size_bn ? '$' + u.size_bn + 'bn' : '') + '</span><span class="ui">' + inDays(u.date) + '</span></li>';
+          }).join('') + '</ol></div></section>' : '') +
+        '</div></div>';
     }
 
     SEC.auctions = h; h = '';
