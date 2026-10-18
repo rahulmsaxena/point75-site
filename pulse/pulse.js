@@ -42,8 +42,8 @@
     '.p75pulse .big small{font-family:Manrope,sans-serif;font-size:14px;color:var(--muted);margin-left:4px}' +
     '.p75pulse .verdict{font-size:12.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}' +
     '.p75pulse .hint{color:var(--soft);font-size:13.5px;line-height:1.5;text-align:justify;hyphens:auto;-webkit-hyphens:auto}' +
-    '.p75pulse .p75n{transition:transform 1.6s cubic-bezier(.3,1.3,.5,1)}' +
-    '.p75pulse .p75f{stroke-dashoffset:100;transition:stroke-dashoffset 1.6s cubic-bezier(.2,.8,.2,1)}.p75pulse .inst.on .p75f{stroke-dashoffset:0}' +
+    '.p75pulse .p75n{transition:transform 3s cubic-bezier(.4,0,.15,1.04)}' +
+    '.p75pulse .p75f{stroke-dashoffset:100;transition:stroke-dashoffset 3s cubic-bezier(.4,0,.15,1)}.p75pulse .inst.on .p75f{stroke-dashoffset:0}' +
     '@media (prefers-reduced-motion:reduce){.p75pulse .p75n,.p75pulse .p75f{transition:none!important}}' +
     // why lists
     '.p75pulse .why{display:grid;grid-template-columns:1fr 1fr;gap:18px}' +
@@ -176,7 +176,7 @@
     '.p75pulse .ck-mfd button{align-self:flex-start;min-height:44px;padding:0 16px;border-radius:6px;border:1px solid var(--gold);background:#0B1410;color:#E8C766;' +
       'font:inherit;font-size:13px;letter-spacing:.1em;cursor:pointer}' +
     '.p75pulse .ck-mfd .bk{display:none}' +
-    '.p75pulse .ck-n,.p75pulse .ck-hz{transition:transform 1.8s cubic-bezier(.25,1.4,.5,1)}' +
+    '.p75pulse .ck-n,.p75pulse .ck-hz{transition:transform 3s cubic-bezier(.4,0,.15,1.04)}' +
     '.p75pulse .ck-snap{transition:none!important}' +
     '@media (prefers-reduced-motion:reduce){.p75pulse .ck-n,.p75pulse .ck-hz{transition:none}}' +
     // Phones and small tablets: the info screen opens as a bottom sheet over the panel (built by ckSheet below),
