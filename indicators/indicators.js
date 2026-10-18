@@ -10,10 +10,11 @@
     '.p75ind{--ink:#111214;--panel:#17181B;--panel2:#1C1D21;--line:#2A2B2F;--cream:#EDE8DC;--muted:#A9A396;--gold:' + GOLD + ';' +
       'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box}' +
     '.p75ind *{box-sizing:border-box}' +
-    '.p75ind .wrap{max-width:900px;margin:0 auto;padding:44px 20px 72px}' +
+    '.p75ind .wrap{max-width:1040px;margin:0 auto;padding:16px 20px 72px}' +
     '.p75ind .eyebrow{color:var(--gold);letter-spacing:.14em;font-size:12px;font-weight:700;text-transform:uppercase}' +
-    '.p75ind h1{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:38px;line-height:1.12;margin:8px 0 10px;letter-spacing:-.01em}' +
-    '.p75ind .lede{color:var(--muted);font-size:16px;line-height:1.6;max-width:640px;margin:0}' +
+    '.p75ind h1{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:28px;line-height:1.15;margin:4px 0 8px;letter-spacing:-.01em;display:inline-block;vertical-align:baseline;max-width:100%}' +
+    '.p75ind .eyebrow:has(+ h1){display:inline-block;margin-right:14px;vertical-align:baseline}' +
+    '.p75ind .lede{color:var(--muted);font-size:16px;line-height:1.6;margin:0;text-align:justify;hyphens:auto;-webkit-hyphens:auto}' +
     '.p75ind .asof{font-size:12.5px;color:var(--muted);margin-top:10px}.p75ind .asof b{color:var(--cream);font-weight:600}' +
     '.p75ind .num{font-variant-numeric:tabular-nums}' +
     '.p75ind .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:30px 0 34px}' +
@@ -110,7 +111,7 @@
     '@media (max-width:720px){.p75ind .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.p75ind .rmini{grid-template-columns:1fr}.p75ind .r10 .big{font-size:40px}}' +
     '@media (prefers-reduced-motion:reduce){.p75ind .chev,.p75ind .tip{transition:none}}' +
     '@media (max-width:720px){.p75ind .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}' +
-    '@media (max-width:560px){.p75ind .wrap{padding:30px 16px 56px}.p75ind h1{font-size:30px}.p75ind .tile .v{font-size:27px}' +
+    '@media (max-width:560px){.p75ind .wrap{padding:12px 16px 56px}.p75ind h1{font-size:24px}.p75ind .tile .v{font-size:27px}' +
       '.p75ind .ind{grid-template-columns:minmax(0,1fr) 64px 58px;padding-left:22px;padding-right:14px}.p75ind .ind .spk{display:none}' +
       '.p75ind .cat{padding:15px 14px}.p75ind .detail{padding:6px 14px 20px 22px}}';
 

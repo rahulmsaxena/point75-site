@@ -241,10 +241,11 @@
     '.p75edu{--ink:#111214;--panel:#17181B;--line:#2A2B2F;--cream:#EDE8DC;--muted:#B8B2A5;--gold:#C9A227;' +
       'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box}' +
     '.p75edu *{box-sizing:border-box}' +
-    '.p75edu .wrap{max-width:760px;margin:0 auto;padding:44px 20px 72px}' +
+    '.p75edu .wrap{max-width:760px;margin:0 auto;padding:16px 20px 72px}' +
     '.p75edu .eyebrow{color:var(--gold);letter-spacing:.14em;font-size:12px;font-weight:700;text-transform:uppercase}' +
-    '.p75edu h1{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:36px;line-height:1.15;margin:8px 0 10px;color:var(--cream);letter-spacing:-.01em}' +
-    '.p75edu .lead{color:var(--muted);font-size:15.5px;line-height:1.65;margin:0 0 26px;max-width:600px}' +
+    '.p75edu h1{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:28px;line-height:1.15;margin:4px 0 8px;color:var(--cream);letter-spacing:-.01em;display:inline-block;vertical-align:baseline;max-width:100%}' +
+    '.p75edu .eyebrow:has(+ h1){display:inline-block;margin-right:14px;vertical-align:baseline}' +
+    '.p75edu .lead{color:var(--muted);font-size:15.5px;line-height:1.65;margin:0 0 26px;text-align:justify;hyphens:auto;-webkit-hyphens:auto}' +
     '.p75edu .search{position:sticky;z-index:5;background:var(--ink);padding:12px 0 10px;border-bottom:1px solid var(--line)}' +
     '.p75edu input{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:10px;color:var(--cream);' +
       'font:500 15px Manrope,system-ui,sans-serif;padding:11px 14px;outline:none}' +
@@ -435,7 +436,7 @@
     '@media (max-width:600px){.p75edu .cl-wide{display:none!important}.p75edu .cl-tall{display:block!important}.p75edu .cl-fig{padding:14px 8px 8px}' +
       '.p75edu .cl-steps{grid-template-columns:repeat(3,1fr)}.p75edu .cl-panel{padding:18px 16px}.p75edu .cl-panel h3{font-size:22px}}' +
     '@media (prefers-reduced-motion:reduce){.p75edu .cl-flow{animation:none}}' +
-    '@media (max-width:600px){.p75edu h1{font-size:30px}.p75edu .term h3{font-size:18px}}';
+    '@media (max-width:600px){.p75edu h1{font-size:24px}.p75edu .term h3{font-size:18px}}';
 
   function once() {
     if (document.getElementById('p75edu-css')) return;
