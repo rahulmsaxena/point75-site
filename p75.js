@@ -625,15 +625,14 @@
   var HUB_LABEL = { '/education': 'All Education guides', '/kinetics': 'All of Kinetics', '/bond-summary': 'Bond Summary overview', '/economic-indicators': 'Economic Indicators' };
 
   // ---------- Sections that go deeper than the menu ----------
-  // The menu shows one level (Kinetics > Pulse, News, Bond Summary, Economic Indicators). The pages under
-  // Bond Summary and Pulse (Debt Trap) are reached from their landing pages, so the tree lives here.
+  // The menu shows one level (Kinetics > Pulse, Debt Trap, News, Bond Summary, Economic Indicators). The pages under
+  // Bond Summary are reached from its landing page, so the tree lives here. (Debt Trap's menu entry is added in hubMenus.)
   // It drives the hub pages (hubs/hubs.js), the back / forward arrows and the Previous / Next cards.
   // Order matters: arrows step through each group in this order.
   var SECTIONS = [
     { href: '/kinetics', text: 'Kinetics', hub: true, kids: [
-      { href: '/pulse', text: 'Pulse', hub: false, kids: [
-        { href: '/debt-trap', text: 'Debt Trap' }
-      ] },
+      { href: '/pulse', text: 'Pulse' },
+      { href: '/debt-trap', text: 'Debt Trap' },
       { href: '/news', text: 'News' },
       { href: '/bond-summary', text: 'Bond Summary', hub: true, kids: [
         { href: '/intelligent-summary', text: 'Daily Summary' },
@@ -693,6 +692,21 @@
         if (li.classList.contains('p75hub')) li.classList.remove('p75hub');
         if (a && a.hasAttribute('data-p75hub')) a.removeAttribute('data-p75hub');
       });
+      // Debt Trap has no entry in the site builder's menu, so it is added under Kinetics, right after Pulse,
+      // by copying Pulse's own item so it looks and behaves like its neighbours (desktop and phone menus)
+      if (f.href === '/kinetics' && !f.ul.querySelector(':scope > li a.item-content[href$="/debt-trap"]')) {
+        var pl = [].slice.call(f.ul.querySelectorAll(':scope > li')).filter(function (x) {
+          var xa = x.querySelector('a.item-content'); return xa && /\/pulse\/?$/.test(xa.getAttribute('href') || '');
+        })[0];
+        if (pl) {
+          var dl = pl.cloneNode(true); dl.classList.remove('p75hub');
+          var da = dl.querySelector('a.item-content');
+          da.setAttribute('href', '/debt-trap'); da.removeAttribute('data-qa'); da.removeAttribute('data-p75hub'); da.removeAttribute('aria-current');
+          var leaf = da; while (leaf.children.length === 1) leaf = leaf.children[0];
+          leaf.textContent = 'Debt Trap';
+          pl.parentNode.insertBefore(dl, pl.nextSibling);
+        }
+      }
       if (!hubReady() || !f.kids.length) return;
       var has = [].slice.call(f.ul.querySelectorAll(':scope > li a.item-content')).some(function (a) { return isHub(a, f.href); });
       if (has) return;

@@ -10,6 +10,7 @@
   // What each card says. Keys are page paths; anything missing falls back to the page's name only.
   var CARD = {
     '/pulse': { blurb: 'The bond market’s vital signs: positioning, rates volatility, funding pressure, term premium and inflation expectations.', cta: 'Check the pulse' },
+    '/debt-trap': { blurb: 'How much U.S. debt must be refinanced, what it costs taxpayers in interest, and who is still lending.', cta: 'Open the debt trap' },
     '/news': { blurb: 'Today’s bond, rates and central bank headlines, in one place.', cta: 'Read the news' },
     '/bond-summary': { blurb: 'How credit and the Treasury market are holding up: the daily summary, credit stress, sectors, lenders and what big investors are saying.', cta: 'Open Bond Summary' },
     '/economic-indicators': { blurb: 'The latest U.S. economic data: inflation, jobs, growth and more.', cta: 'See the indicators' },
@@ -22,7 +23,7 @@
 
   // Page heading and introduction per hub
   var HEAD = {
-    '/kinetics': { eyebrow: 'Kinetics', title: 'The Forces Moving the Bond Market', lede: 'Four ways in: the market’s pulse, the state of credit, the day’s news and the economic numbers underneath. Pick where you’d like to start.' },
+    '/kinetics': { eyebrow: 'Kinetics', title: 'The Forces Moving the Bond Market', lede: 'Five ways in: the market’s pulse, the government’s debt bill, the state of credit, the day’s news and the economic numbers underneath. Pick where you’d like to start.' },
     '/bond-summary': { eyebrow: 'Kinetics', title: 'Bond Summary', lede: 'How credit markets are holding up. Start with the daily summary, or go straight to the part you care about.' }
   };
 
