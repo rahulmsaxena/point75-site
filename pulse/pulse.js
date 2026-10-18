@@ -187,6 +187,10 @@
     '.p75pulse .tk-t em{font-style:normal;font-size:13.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}' +
     '.p75pulse .tk-l{font-size:16.5px;line-height:1.5;color:#F1ECE2}.p75pulse .tk-news{display:block;font-size:17.5px;color:#fff;font-weight:600;line-height:1.45}' +
     '.p75pulse .tk.go .p75f{stroke-dashoffset:0}' +
+    '.p75pulse a.tk-wide{grid-column:1/-1}' +
+    '.p75pulse .tk-dt{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}' +
+    '.p75pulse .tk-f{display:flex;flex-direction:column;gap:4px}.p75pulse .tk-f > b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:34px;line-height:1;text-shadow:0 0 14px currentColor}' +
+    '@media (max-width:760px){.p75pulse .tk-dt{grid-template-columns:1fr;gap:12px}}' +
     '.p75pulse a.tk-back{display:inline-flex;align-items:center;gap:8px;min-height:40px;margin:12px 0 -4px;padding:0 16px;border-radius:99px;border:1px solid var(--gold);background:rgba(201,162,39,.1);color:#FFD23F;font-weight:800;font-size:14.5px;text-decoration:none}' +
     '.p75pulse a.tk-back:hover,.p75pulse a.tk-back:focus-visible{background:rgba(201,162,39,.22);outline:none}' +
     '@media (max-width:760px){.p75pulse .tk-grid{grid-template-columns:1fr}.p75pulse .tk-head{font-size:20px;padding:14px 16px}.p75pulse .tk-l{font-size:15.5px}.p75pulse .tk-d{width:80px}}' +
@@ -1037,6 +1041,9 @@
         hot.length + '<small>/' + rows.length + '</small>', hot.length ? '#FF3D5E' : '#2BFF88', hot.length ? 'flashing' : 'all quiet',
         hot.length ? list(hot.slice(0, 3).map(function (x) { return C(x.nm, x.dc) + ' (' + (x.pc >= 99 ? 'year high' : x.pc + 'th pct') + ')'; })) + '.' : 'No reading is in the top quarter of its past year.');
       cards += card('wire', 'Live wire', '', '', '#fff', '', '<span class="tk-news" data-wire-top>Loading the latest headline…</span>');
+      // Debt Trap is its own page, so its card links there and fills itself in from that page's data
+      cards += '<a class="tk-c tk-wide" href="/debt-trap" data-debt-card><span class="tk-h"><span class="ck-h">Debt Trap</span><span class="tk-go">Open the page ›</span></span>' +
+        '<span class="tk-dt"><span class="tk-l">Adding up the debt…</span></span></a>';
       SEC.takeaway = '<h2>The takeaway</h2><p class="sub">Everything on this page in one screen, written from today’s readings. Tap a card for the detail behind it.</p>' +
         '<div class="tk"><p class="tk-head">' + head + '</p>' +
         (watch ? '<p class="tk-watch"><i aria-hidden="true"></i><span><b>Watch:</b> ' + watch + '</span></p>' : '') +
@@ -1067,6 +1074,20 @@
     if (m < 60) return m + ' min ago';
     if (m < 60 * 24) return Math.round(m / 60) + ' h ago';
     return Math.round(m / 1440) + ' d ago';
+  }
+  var DEBT = 'https://news.point75.io/api/debttrap';
+  function debtCard(host) {
+    var box = host.querySelector('[data-debt-card] .tk-dt'); if (!box) return;
+    var money = function (bn) { return bn >= 1000 ? '$' + (bn / 1000).toFixed(1) + 'T' : '$' + Math.round(bn) + 'bn'; };
+    var fact = function (big, col, line) { return '<span class="tk-f"><b style="color:' + col + '">' + big + '</b><span class="tk-l">' + line + '</span></span>'; };
+    fetch(DEBT).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+      if (!j || !(j.wall || j.interest || j.owners)) throw 0;
+      var w = j.wall, it = j.interest, ow = j.owners;
+      box.innerHTML =
+        (w ? fact(money(w.next12_bn), '#FFB224', 'comes due in the next 12 months: <span class="hl" style="color:#FFB224">' + Math.round(w.next12_share) + '%</span> of all marketable debt') : '') +
+        (it ? fact(Math.round(it.cents_per_tax_dollar) + '¢', '#FF3D5E', 'of every federal tax dollar goes to interest') : '') +
+        (ow ? fact(Math.round(ow.foreign_share) + '%', '#1FD8FF', 'of the debt is held by foreigners' + (ow.share_peak ? ', down from <span class="hl" style="color:#1FD8FF">' + Math.round(ow.share_peak.value) + '%</span> at the peak' : '')) : '');
+    }).catch(function () { box.innerHTML = '<span class="tk-l">The Debt Trap figures are unavailable right now.</span>'; });
   }
   function wire(host) {
     var box = host.querySelector('[data-wire]'), top = host.querySelector('[data-wire-top]');
@@ -1164,7 +1185,7 @@
     host.innerHTML = page(j);
     if (!FOLD) host.classList.remove('folded'); else if (!FOLD_ANIM) host.classList.add('folded'); host.style.setProperty('--tabs-top', tabsTop() + 'px');
     document.documentElement.classList.add('p75tabs');
-    wireSparks(host); animate(host); wire(host); wireCockpit(host);
+    wireSparks(host); animate(host); wire(host); debtCard(host); wireCockpit(host);
   }
   window.addEventListener('hashchange', function () {
     var host = document.querySelector('.p75pulse'); if (host && cache) draw(host, cache);
