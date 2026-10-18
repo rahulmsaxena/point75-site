@@ -21,8 +21,10 @@
     '.p75pulse .wrap{max-width:1040px;margin:0 auto;padding:16px 20px 72px}' +
     '.p75pulse .eyebrow{color:var(--gold);letter-spacing:.14em;font-size:12px;font-weight:700;text-transform:uppercase}' +
     '.p75pulse h1{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:38px;line-height:1.12;margin:8px 0 10px;letter-spacing:-.01em}' +
-    '.p75pulse .lede{color:var(--soft);font-size:16px;line-height:1.6;max-width:680px;margin:0}' +
-    '.p75pulse .asof{font-size:12.5px;color:var(--muted);margin-top:10px}' +
+    '.p75pulse .lede{color:var(--soft);font-size:15px;line-height:1.55;margin:0;text-align:justify;hyphens:auto;-webkit-hyphens:auto}' +
+    '.p75pulse .hd{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 32px;align-items:end}.p75pulse .hd h1{margin-bottom:0;white-space:nowrap}' +
+    '@media (max-width:880px){.p75pulse .hd{grid-template-columns:1fr}.p75pulse .hd h1{white-space:normal;margin-bottom:4px}}' +
+    '.p75pulse .asof{font-size:12.5px;color:var(--muted);margin-top:6px}' +
     '.p75pulse .asof b{color:var(--cream);font-weight:600}' +
     '.p75pulse h2{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:25px;margin:54px 0 6px}' +
     '.p75pulse h2 + .sub{color:var(--soft);font-size:14.5px;line-height:1.55;margin:0 0 18px;max-width:720px}' +
@@ -618,10 +620,10 @@
   // ---------- Page ----------
   function page(j) {
     var g = j.gauges || {}, b = g.bull || {}, s = g.stress || {};
-    var h = '<div class="wrap"><div class="eyebrow">Pulse</div><h1>The bond market’s vital signs</h1>' +
+    var h = '<div class="wrap"><div class="hd"><div><div class="eyebrow">Pulse</div><h1>The bond market’s vital signs</h1></div><div>' +
       '<p class="lede">Two readings, taken from where real money moves: Treasury auctions, futures positioning, dealer balance sheets, overnight funding, the term premium and rate swings. No opinions, no chatter.</p>' +
       '<div class="asof">Updated <b>' + new Date(j.generated_at).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' }) +
-      '</b> · refreshed hourly on weekdays</div>';
+      '</b> · refreshed hourly on weekdays</div></div></div>';
 
     // instruments: two dials, each with its reading and a short note beside it; the Signals tab has the detail
     var bc = bullColor(b.score), sc = s.score != null ? Math.round(s.score) : null, scol = stressColor(sc);
