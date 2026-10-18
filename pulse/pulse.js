@@ -797,7 +797,14 @@
         draw(host, j);
         var bar2 = host.querySelector('.tabs');
         if (stuck && bar2) window.scrollTo({ top: bar2.getBoundingClientRect().top + window.pageYOffset - tabsTop() });
-        var on = host.querySelector('.tab.on'); if (on) { on.focus({ preventScroll: true }); if (on.scrollIntoView) on.scrollIntoView({ block: 'nearest', inline: 'nearest' }); }
+        var on = host.querySelector('.tab.on');
+        if (on && bar2) {
+          on.focus({ preventScroll: true });
+          // On phones the bar scrolls sideways: bring the chosen tab into view within the bar only
+          // (scrollIntoView would also move the page, because the bar is sticky)
+          var l = on.offsetLeft - 16, r = on.offsetLeft + on.offsetWidth + 16;
+          if (l < bar2.scrollLeft) bar2.scrollLeft = l; else if (r > bar2.scrollLeft + bar2.clientWidth) bar2.scrollLeft = r - bar2.clientWidth;
+        }
       });
     });
   }
