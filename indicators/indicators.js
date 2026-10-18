@@ -382,7 +382,11 @@
       var ib = e.target.closest('.ind');
       if (ib) {
         var id = ib.getAttribute('data-i'), dt = host.querySelector('#p75d-' + id), open = dt.hidden;
-        if (open) { closeFolds(null); closeCharts(ib); dt.innerHTML = detail(by[id], 60); wireChart(dt); }
+        if (open) {
+          var y0 = ib.getBoundingClientRect().top;   // keep the tapped row where it was when charts above it close
+          closeFolds(null); closeCharts(ib); dt.innerHTML = detail(by[id], 60); wireChart(dt);
+          var dy = ib.getBoundingClientRect().top - y0; if (Math.abs(dy) > 1) window.scrollBy(0, dy);
+        }
         dt.hidden = !open; ib.setAttribute('aria-expanded', open); return;
       }
       var tb = e.target.closest('.ctab');
