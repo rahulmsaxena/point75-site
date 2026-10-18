@@ -23,6 +23,26 @@
     '.p75pulse h1{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:28px;line-height:1.15;margin:6px 0 6px;letter-spacing:-.01em}' +
     '.p75pulse .lede{color:var(--soft);font-size:15px;line-height:1.55;margin:0;text-align:justify;hyphens:auto;-webkit-hyphens:auto}' +
     '.p75pulse .hd{display:flex;flex-direction:column;gap:8px}' +
+    // fold: the top block and the strip swap places with a smooth height change
+    '.p75pulse .top,.p75pulse .fstrip{display:grid;transition:grid-template-rows .5s cubic-bezier(.4,0,.2,1),opacity .4s}' +
+    '.p75pulse .top > div,.p75pulse .fstrip > div{min-height:0;overflow:hidden}' +
+    '.p75pulse .top{grid-template-rows:1fr}.p75pulse .fstrip{grid-template-rows:0fr;opacity:0}' +
+    '.p75pulse.folded .top{grid-template-rows:0fr;opacity:0}.p75pulse.folded .fstrip{grid-template-rows:1fr;opacity:1}' +
+    '.p75pulse:not(.folded) .fstrip{visibility:hidden}.p75pulse.folded .top > div{visibility:hidden;transition:visibility 0s .5s}' +
+    '.p75pulse .fold{display:flex;align-items:center;gap:8px 22px;flex-wrap:wrap;width:100%;min-height:48px;margin:2px 0 0;padding:8px 10px 8px 16px;border-radius:12px;' +
+      'background:var(--panel);border:1px solid var(--line);color:inherit;font:inherit;text-align:left;cursor:pointer;transition:border-color .15s}' +
+    '.p75pulse .fold:hover{border-color:var(--gold)}.p75pulse .fold:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
+    '.p75pulse .fi{display:inline-flex;align-items:baseline;gap:8px;white-space:nowrap}' +
+    '.p75pulse .fi small{color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}' +
+    '.p75pulse .fi b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:22px;line-height:1;font-variant-numeric:tabular-nums}' +
+    '.p75pulse .fi em{font-style:normal;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}' +
+    '.p75pulse .fo{margin-left:auto;display:inline-flex;align-items:center;gap:10px;color:var(--gold);font-size:13px;font-weight:700}' +
+    '.p75pulse .fo-c{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--gold);display:grid;place-items:center;animation:p75bob 2.4s ease-in-out infinite}' +
+    '.p75pulse .fo-c:after{content:"";width:7px;height:7px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:translateY(-2px) rotate(45deg)}' +
+    '@keyframes p75bob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}' +
+    '@media (max-width:560px){.p75pulse .fold{gap:6px 14px}.p75pulse .fo-t{display:none}.p75pulse .fi em{display:none}}' +
+    '@media (prefers-reduced-motion:reduce){.p75pulse .top,.p75pulse .fstrip{transition:none}.p75pulse .fo-c{animation:none}}' +
+    '.p75pulse.folded .tabs{margin-top:10px}' +
     '.p75pulse .hd-t{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px}.p75pulse .hd-t h1{margin:0}' +
     '.p75pulse .hd-t .asof{margin:0 0 0 auto}' +
     '@media (max-width:880px){.p75pulse .hd-t{flex-direction:column;align-items:flex-start;gap:2px}.p75pulse .hd-t .asof{margin:4px 0 0}}' +
@@ -713,7 +733,14 @@
       '</div>' +
       '</div>';
 
-    var head = h; h = '';
+    // Folded strip: once a tab is picked, the header and dials fold into this one line; the arrow brings them back
+    var strip = '<button type="button" class="fold" data-unfold aria-label="Show the full readings and dials">' +
+      '<span class="eyebrow">Pulse</span>' +
+      '<span class="fi"><small>Bull / Bear</small><b style="color:' + bc + '">' + (b.score > 0 ? '+' : '') + (b.score != null ? b.score : '–') + '</b><em style="color:' + bc + '">' + esc(b.label || '') + '</em></span>' +
+      '<span class="fi"><small>Stress</small><b style="color:' + scol + '">' + (sc != null ? sc : '–') + '</b><em style="color:' + scol + '">' + esc(s.label || (sc != null ? CK_STRESS_WORD(sc) : '')) + '</em></span>' +
+      '<span class="fo"><span class="fo-t">Show dials</span><span class="fo-c" aria-hidden="true"></span></span></button>';
+    var head = '<div class="top"><div>' + h.replace('<div class="wrap">', '') + '</div></div><div class="fstrip"><div>' + strip + '</div></div>';
+    h = '';
     // why: the cockpit, one instrument per signal (see Cockpit above)
     h += '<h2>Why the needles are where they are</h2><p class="sub">Every signal behind the two gauges, as its own instrument, with the rule it follows. Nothing is hidden in a black box.</p>' +
       cockpit(b, s);
@@ -779,7 +806,7 @@
 
     var view = location.hash.slice(1), live = SECTIONS.filter(function (x) { return SEC[x.key]; });
     var cur = live.filter(function (x) { return x.key === view; })[0] || live[0];
-    h = head + '<nav class="tabs" role="tablist" aria-label="Pulse views">' + live.map(function (x) {
+    h = '<div class="wrap">' + head + '<nav class="tabs" role="tablist" aria-label="Pulse views">' + live.map(function (x) {
       var on = x.key === cur.key;
       return '<a role="tab" class="tab' + (on ? ' on' : '') + '" href="#' + x.key + '" data-sec="' + x.key + '" aria-selected="' + on + '"' + (on ? ' aria-current="page"' : '') + '>' + x.tab + '</a>';
     }).join('') + '</nav><div class="view" role="tabpanel" aria-label="' + esc(cur.tab) + '">' + SEC[cur.key] + '</div>' + dt;
@@ -823,6 +850,7 @@
     }); });
   }
 
+  var FOLD = !!location.hash.slice(1), FOLD_ANIM = false;   // header and dials folded into the strip?
   var cache = null, loading = false, waiting = [];
   function load(cb) {
     // Queue every caller: the site can rebuild the page while data is loading, and the redrawn page must hear back too
@@ -851,7 +879,16 @@
       if (!j || !j.gauges) { host.querySelector('.load').textContent = 'Pulse data is unavailable right now. Please try again shortly.'; return; }
       draw(host, j);
       host.addEventListener('click', function (e) {
+        if (e.target.closest('[data-unfold]')) {   // the down arrow: bring the full readings back
+          FOLD = false; host.classList.remove('folded');
+          window.scrollTo({ top: Math.max(0, host.getBoundingClientRect().top + window.pageYOffset - tabsTop() - 8), behavior: 'smooth' });
+          return;
+        }
         var a = e.target.closest('a[data-sec]'); if (!a) return;
+        if (!FOLD) {   // first tab pick: fold the top away smoothly (draw below leaves it open for one frame so the change animates)
+          FOLD = true; FOLD_ANIM = true;
+          requestAnimationFrame(function () { requestAnimationFrame(function () { host.classList.add('folded'); FOLD_ANIM = false; }); });
+        }
         e.preventDefault();
         var k = a.getAttribute('data-sec');
         // Switch the view in place. If the reader had scrolled past the tab bar, bring the bar back to the
@@ -875,7 +912,8 @@
   }
   function tabsTop() { var tb = document.querySelector('.top-blocks--sticky'); return tb ? Math.round(tb.getBoundingClientRect().height) : 0; }
   function draw(host, j) {
-    host.innerHTML = page(j); host.style.setProperty('--tabs-top', tabsTop() + 'px');
+    host.innerHTML = page(j);
+    if (!FOLD) host.classList.remove('folded'); else if (!FOLD_ANIM) host.classList.add('folded'); host.style.setProperty('--tabs-top', tabsTop() + 'px');
     document.documentElement.classList.add('p75tabs');
     wireSparks(host); animate(host); wire(host); wireCockpit(host);
   }
