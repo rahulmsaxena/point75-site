@@ -131,6 +131,7 @@
     '.p75pulse .tab.on{background:var(--gold);border-color:var(--gold);color:#111214}' +
     '.p75pulse .tab:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
     '@media (max-width:560px){.p75pulse .tabs{margin:28px -16px 0;padding:10px 16px;gap:6px}.p75pulse .tab{min-height:38px;padding:0 15px;font-size:14px}}' +
+    '@media (max-width:460px){.p75pulse .tabs{gap:5px}.p75pulse .tab{flex:1 1 auto;justify-content:center;padding:0 6px;font-size:13px}}' +
     '@media (max-width:700px){.p75pulse .secs{grid-template-columns:1fr;gap:14px}.p75pulse a.sec{min-height:0;padding:22px 20px}.p75pulse a.sec .nm{font-size:23px}.p75pulse .strip a{margin-left:0}}' +
     // cockpit (the #why view): one instrument per signal, plus an info screen that explains the one you tap
     '.p75pulse .ck{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start;margin-top:8px}' +
@@ -165,6 +166,19 @@
     '.p75pulse .ck-pills{display:flex;flex-wrap:wrap;gap:8px}' +
     '.p75pulse .ck-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 12px 5px 10px;border-radius:99px;border:1px solid;font-size:13px;font-weight:700;white-space:nowrap}' +
     '.p75pulse .ck-pill b{font-size:17px;font-variant-numeric:tabular-nums}' +
+    // plumbing gauge board
+    '.p75pulse .pl-board{padding:10px 16px 14px;gap:6px}' +
+    '.p75pulse .pl-g{color:var(--gold);font-size:11.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin:8px 2px 0}' +
+    '.p75pulse .ck-i.pl{display:grid;grid-template-columns:64px minmax(0,1.3fr) minmax(0,.9fr) minmax(0,1.4fr) 14px;align-items:center;gap:14px;padding:6px 12px 6px 8px;border-width:1px;border-radius:12px;box-shadow:none}' +
+    '.p75pulse .pl-board.go .p75f{stroke-dashoffset:0}' +
+    '.p75pulse .pl-d{display:flex;flex-direction:column;align-items:center}.p75pulse .ck-i .pl-d svg{width:62px;max-width:none;height:auto;margin:0;overflow:visible}' +
+    '.p75pulse .pl-d small{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:.04em;margin-top:-2px}' +
+    '.p75pulse .pl-n b{display:block;font-size:14.5px;color:#fff;font-weight:800;line-height:1.2}.p75pulse .pl-n small{display:block;font-size:12px;color:var(--muted);line-height:1.3;margin-top:2px}' +
+    '.p75pulse .pl-v b{display:block;font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:22px;line-height:1;color:#fff;white-space:nowrap}' +
+    '.p75pulse .pl-v small{display:block;font-size:12px;font-weight:700;margin-top:4px}' +
+    '.p75pulse .pl-s .spark{margin:0}.p75pulse .ck-i .pl-s svg{height:38px;max-width:none;margin:0}' +
+    '.p75pulse .pl-go{color:var(--gold);font-size:22px;line-height:1}' +
+    '@media (max-width:700px){.p75pulse .ck-i.pl{grid-template-columns:56px minmax(0,1fr) minmax(0,auto);gap:10px}.p75pulse .pl-s,.p75pulse .pl-go{display:none}.p75pulse .pl-v{text-align:right;max-width:120px}.p75pulse .pl-v small{line-height:1.25}}' +
     // auctions
         '.p75pulse .auc-meter{display:flex;flex-wrap:wrap;align-items:center;gap:18px}' +
     '.p75pulse .auc-meter svg{flex:0 0 auto;width:170px;height:auto}' +
@@ -602,6 +616,7 @@
       '<div><div class="k">WHAT IT MEANS</div><div class="x">' + esc(it.what) + '</div></div>' +
       '<div><div class="k">RIGHT NOW</div><div class="x">' + esc(it.now) + '</div>' + gl + '</div>' +
       '<div><div class="k">WHY YOU MIGHT CARE</div><div class="x">' + esc(it.care) + '</div></div>' +
+      (it.src ? '<div class="gl">Source: ' + esc(it.src) + '</div>' : '') +
       '<div style="display:flex;flex-wrap:wrap;gap:10px"><button type="button" data-ck-replay="' + key + '">REPLAY NEEDLE</button><button type="button" class="bk" data-ck-back="' + key + '">↑ BACK TO THE PANEL</button></div>';
   }
   // ---------- Phone bottom sheet for the info screen ----------
@@ -709,6 +724,10 @@
       ckApply(bt, it, 0);
       if (mv) void mv.getBoundingClientRect();
       requestAnimationFrame(function () { if (mv) mv.classList.remove('ck-snap'); requestAnimationFrame(function () { ckApply(bt, it, it.target); }); });
+      bt.querySelectorAll('.p75n').forEach(function (n) {
+        n.style.transition = 'none'; n.style.transform = 'rotate(' + (n.getAttribute('data-r') || 0) + 'deg)'; void n.getBoundingClientRect();
+        n.style.transition = ''; setTimeout(function () { n.style.transform = 'rotate(' + n.getAttribute('data-a') + 'deg)'; }, 120);
+      });
       if (ckPhone()) ckSheetOpen(host, key, it, bt, play);   // phones: explanation slides up from the bottom, gauge stays in view
     }
     // Open one section at a time. Opening one shows the info screen beside it, swings that section's needles
@@ -873,7 +892,68 @@
     if (be) cards.push(statCard('Inflation expectations', be.value.toFixed(2) + '%', signed(be.change * 100, 0, 'bp') + ' in 4 weeks', tone(be.change),
       'Inflation the bond market expects over the next 10 years (the breakeven between regular and inflation-protected Treasuries).', be.history, '#D88BFF', function (v) { return v.toFixed(2) + '%'; },
       'FRED · ' + fmtDate(be.date)));
-    if (cards.length) h += '<h2>The pros and the plumbing</h2><p class="sub">What big money is doing, and the stress points underneath. Hover or tap a chart for past values.</p><div class="grid">' + cards.join('') + '</div>';
+    // Gauge board: one slim row per reading. Mini dial = where today sits against its past year;
+    // tap a row and the info screen explains it (the long notes and sources live there now).
+    var rows = [];
+    var pctOf = function (hist, v) { if (!hist || !hist.length) return null; var n = 0; hist.forEach(function (x) { if (x.value <= v) n++; }); return Math.round(n / hist.length * 100); };
+    var yr = function (pc, word) { pc = Math.round(pc); return pc >= 99 ? 'highest in a year' : pc <= 1 ? 'lowest in a year' : word + ' than ' + pc + '% of year'; };
+    var ord = function (n) { var k = n % 100; return n + (k > 10 && k < 14 ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' })[n % 10] || 'th'); };
+    var addRow = function (grp, key, o) {   // o: name, short, value, change, changeColor, pct, bad (+1 high is bad, −1 high is good, 0 neutral), hist, color, fmt, what, care, src
+      var pc = o.pct == null ? null : Math.max(0, Math.min(100, Math.round(o.pct)));
+      var dc = pc == null ? NEUT : o.bad > 0 ? stressColor(pc) : o.bad < 0 ? stressColor(100 - pc) : '#B7A8FF';
+      CK_ITEMS[key] = { mover: 'none', target: 0, name: o.name, sub: o.value + ' · ' + o.change,
+        what: o.what, now: o.value + ', ' + o.change + '.' + (pc != null && !/year/.test(o.change) ? ' That is ' + (pc >= 99 ? 'the highest reading of the past year.' : pc <= 1 ? 'the lowest reading of the past year.' : 'higher than ' + pc + '% of readings over the past year.') : ''), care: o.care, src: o.src };
+      rows.push({ grp: grp, html: '<button type="button" class="ck-i pl" data-ck="' + key + '" aria-pressed="false" aria-label="' + esc(o.name + ': ' + o.value + ', ' + o.change + '. Show what it means.').replace(/"/g, '&quot;') + '">' +
+        '<span class="pl-d">' + (pc != null ? dial({ v: pc, min: 0, max: 100, rest: 0, from: 0, color: dc, aria: o.name + ' at the ' + ord(pc) + ' percentile of its past year' }) : '') +
+          '<small>' + (pc != null ? ord(pc) + ' pct' : '') + '</small></span>' +
+        '<span class="pl-n"><b>' + esc(o.name) + '</b><small>' + esc(o.short) + '</small></span>' +
+        '<span class="pl-v"><b class="num">' + o.value + '</b><small style="color:' + o.changeColor + '">' + o.change + '</small></span>' +
+        '<span class="pl-s">' + spark(o.hist, o.color, o.fmt) + '</span>' +
+        '<span class="pl-go" aria-hidden="true">›</span></button>' });
+    };
+    if (p) {
+      var am = p.asset_managers, hf = p.hedge_funds;
+      addRow('Big money', 'p_am', { name: 'Asset managers', short: 'Pension & fund bets on Treasuries', value: bn(am.value), change: signed(am.change_4w, 0, 'bn') + ' in 4 wks', changeColor: am.change_4w >= 0 ? BULL : BEAR,
+        pct: pctOf(am.history, am.value), bad: -1, hist: am.history, color: BULL, fmt: bn,
+        what: 'Pension and mutual-fund money, net long Treasury futures. These are real, patient buyers.', care: 'When this rises, real buyers are adding to bonds, which tends to support prices and keep rates lower.',
+        src: 'CFTC, week of ' + fmtDate(am.date) + ', 10-year-note equivalent' });
+      addRow('Big money', 'p_hf', { name: 'Hedge funds', short: 'Mostly the “basis trade”', value: bn(hf.value), change: signed(hf.change_4w, 0, 'bn') + ' in 4 wks', changeColor: NEUT,
+        pct: pctOf(hf.history, hf.value), bad: 0, hist: hf.history, color: '#B7A8FF', fmt: bn,
+        what: 'Mostly the “basis trade”: hedge funds short futures against bonds they own, so a big short position is normal.', care: 'The risk is a sudden unwind: if funds rush out together, they dump bonds and rates can jump.',
+        src: 'CFTC, week of ' + fmtDate(hf.date) + ', 10-year-note equivalent' });
+    }
+    if (dl) addRow('Plumbing', 'p_dl', { name: 'Dealer inventory', short: 'Treasuries the big banks hold', value: '$' + Math.round(dl.value) + 'bn', change: signed(dl.change_4w_pct, 1, '%') + ' in 4 wks', changeColor: dl.change_4w_pct > 0 ? BEAR : BULL,
+      pct: pctOf(dl.history, dl.value), bad: 1, hist: dl.history, color: '#E0B84A', fmt: function (v) { return '$' + Math.round(v) + 'bn'; },
+      what: 'Treasuries the big bank dealers are holding on their own books.', care: 'Piling up means end buyers aren’t absorbing new supply, and full dealers have less room to calm a selloff.',
+      src: 'NY Fed, week of ' + fmtDate(dl.date) });
+    var fu = j.funding;
+    if (fu) addRow('Plumbing', 'p_fu', { name: 'Funding pressure', short: 'Overnight cash vs the Fed’s rate', value: signed(fu.spread_avg20_bp, 0, 'bp'), change: yr(fu.pct_1y, 'tighter'), changeColor: stressColor(fu.pct_1y),
+      pct: fu.pct_1y, bad: 1, hist: fu.history, color: stressColor(fu.pct_1y), fmt: function (v) { return signed(v, 1, 'bp'); },
+      what: 'The overnight repo rate (SOFR) minus what the Fed pays banks on reserves (IORB), 20-day average. Above zero means cash is scarce.',
+      care: 'Smooth funding keeps banks lending. Bank reserves stand at $' + (fu.reserves.value / 1000).toFixed(2) + 'T' + (fu.srf && fu.srf.days_used_20d ? ', and banks tapped the Fed’s standing repo facility on ' + fu.srf.days_used_20d + ' of the last 20 days.' : '.'),
+      src: 'FRED, NY Fed SOFR and Fed Board IORB, ' + fmtDate(fu.date) });
+    if (r) addRow('Plumbing', 'p_rv', { name: 'Rates volatility', short: 'Daily swing in the 10-year yield', value: r.vol.value.toFixed(1) + 'bp/day', change: yr(r.vol.pct_1y, 'higher'), changeColor: stressColor(r.vol.pct_1y),
+      pct: r.vol.pct_1y, bad: 1, hist: r.vol.history, color: stressColor(r.vol.pct_1y), fmt: function (v) { return v.toFixed(1) + 'bp/day'; },
+      what: 'How much the 10-year yield swings on a typical day (20-day average). The free cousin of the MOVE index.',
+      care: 'Bumpy rates make lenders cautious, so mortgage quotes jump around and bond funds swing more.',
+      src: 'FRED, 10-year at ' + r.yield.value.toFixed(2) + '% on ' + fmtDate(r.yield.date) });
+    if (tp) addRow('The long end', 'p_tp', { name: 'Term premium', short: 'Extra pay for lending 10 years', value: tp.value.toFixed(2) + '%', change: signed(tp.change * 100, 0, 'bp') + ' in 4 wks', changeColor: tone(tp.change),
+      pct: pctOf(tp.history, tp.value), bad: 1, hist: tp.history, color: '#5FD0C5', fmt: function (v) { return v.toFixed(2) + '%'; },
+      what: 'The extra yield investors demand to lock money up for 10 years instead of rolling short-term bills.',
+      care: 'A rising term premium means less trust in the long end, and it pushes up mortgage rates even if the Fed does nothing.',
+      src: 'FRED, Fed Board (Kim-Wright), ' + fmtDate(tp.date) });
+    if (be) addRow('The long end', 'p_be', { name: 'Inflation expectations', short: 'What the market expects for 10 years', value: be.value.toFixed(2) + '%', change: signed(be.change * 100, 0, 'bp') + ' in 4 wks', changeColor: tone(be.change),
+      pct: pctOf(be.history, be.value), bad: 1, hist: be.history, color: '#D88BFF', fmt: function (v) { return v.toFixed(2) + '%'; },
+      what: 'The inflation the bond market expects over the next 10 years: the breakeven between regular and inflation-protected Treasuries.',
+      care: 'Higher expected inflation makes lenders demand more interest, which pushes long-term rates up.',
+      src: 'FRED, ' + fmtDate(be.date) });
+    if (rows.length) {
+      var gl = '', board = '';
+      rows.forEach(function (x) { if (x.grp !== gl) { board += '<div class="pl-g">' + x.grp + '</div>'; gl = x.grp; } board += x.html; });
+      h += '<h2>The pros and the plumbing</h2><p class="sub">What big money is doing, and the stress points underneath. Each dial shows where today sits against its past year; tap a row to see what it means.</p>' +
+        '<div class="ck ck-on"><div class="ck-main pl-board">' + board + '</div>' +
+        '<aside class="ck-mfdw" aria-live="polite"><div class="ck-mfd" data-ck-mfd></div></aside></div>';
+    }
 
     SEC.plumbing = h;
     SEC.wire = '<h2>Live wire</h2><p class="sub wire-sub">The latest bond, central-bank and macro headlines. Updated daily.</p><div class="wire" data-wire>Loading headlines…</div>';
@@ -918,6 +998,11 @@
   }
 
   function animate(host) {
+    var pb = host.querySelector('.pl-board');   // plumbing board: sweep its mini dials once the page settles
+    if (pb) setTimeout(function () { requestAnimationFrame(function () {
+      pb.classList.add('go');
+      pb.querySelectorAll('.p75n').forEach(function (n) { n.style.transform = 'rotate(' + n.getAttribute('data-a') + 'deg)'; });
+    }); }, 650);
     var inst = host.querySelector('.inst'); if (!inst) return;
     setTimeout(function () { requestAnimationFrame(function () {   // a short pause so the eye lands first
       inst.classList.add('on');
@@ -991,6 +1076,8 @@
     if (!FOLD) host.classList.remove('folded'); else if (!FOLD_ANIM) host.classList.add('folded'); host.style.setProperty('--tabs-top', tabsTop() + 'px');
     document.documentElement.classList.add('p75tabs');
     wireSparks(host); animate(host); wire(host); wireCockpit(host);
+    var pf = host.querySelector('.pl-board .ck-i');   // Plumbing: the info screen opens on the first reading (wider screens)
+    if (pf && !ckPhone()) setTimeout(function () { pf.click(); }, 0);
   }
   window.addEventListener('hashchange', function () {
     var host = document.querySelector('.p75pulse'); if (host && cache) draw(host, cache);
