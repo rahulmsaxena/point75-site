@@ -3,7 +3,7 @@
 (function () {
   if (window.P75PULSE) return;
   var API = 'https://news.point75.io/api/pulse';
-  var BULL = '#1FC8FF', BEAR = '#FF0000', NEUT = '#9AA0A6';   // BEAR: the site's one red, bright enough to read on the dark page
+  var BULL = '#1FC8FF', BEAR = '#FF8577', NEUT = '#9AA0A6';   // BEAR: the site's one red, bright enough to read on the dark page
 
   // The page shows the two gauges, then a tab bar: each tab swaps the view below it in place (/pulse#auctions).
   // Signals is open by default.
@@ -16,13 +16,8 @@
   ];
 
   var CSS =
-    // the site's one red is pure red (#FF0000); short red words go bold so they read at a glance
-    '.p75pulse [style*="color:#FF0000"][style]:not(b):not(.tk-head *):not(.fi *){font-weight:800}' +
-    // red glows like lava (red text only; everything else stays crisp): small words burn molten orange with a red halo,
-    // big numbers and headline words also get a molten core, yellow-orange at the top fading to red
-    '.p75pulse [style*="color:#FF0000"][style]{-webkit-text-fill-color:#FF5A1F;text-shadow:0 0 1px #FF0000,0 0 7px rgba(255,0,0,.55)}' +
-    '.p75pulse b[style*="color:#FF0000"][style],.p75pulse .tk-head [style*="color:#FF0000"][style]{background:linear-gradient(180deg,#FFD23A 0%,#FF7A00 40%,#FF1A00 75%,#E00000 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;filter:drop-shadow(0 0 3px rgba(255,90,0,.75)) drop-shadow(0 0 9px rgba(255,20,0,.5))}' +
-    '.p75pulse b[style*="color:#FF0000"][style] *{-webkit-text-fill-color:#FF3A12}' +
+    // the site's one red is a bright warm red (#FF8577); short red words go bold so they read at a glance
+    '.p75pulse [style*="color:#FF8577"][style]:not(b):not(.tk-head *):not(.fi *){font-weight:800}' +
     '.p75pulse{--ink:#111214;--panel:#17181B;--panel2:#1C1D21;--line:#2A2B2F;--cream:#EDE8DC;--muted:#C2BCAF;--soft:#E4DED1;--gold:#C9A227;' +
       '--bull:' + BULL + ';--bear:' + BEAR + ';background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box}' +
     '.p75pulse *{box-sizing:border-box}' +
@@ -181,7 +176,7 @@
     '.p75pulse .tk-head{margin:0;padding:11px 18px;border-radius:14px;background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold);' +
       'font-family:"Hedvig Letters Serif",Georgia,serif;font-size:21px;line-height:1.45;color:#fff}' +
     '.p75pulse .tk-watch{display:flex;align-items:center;gap:10px;margin:0;font-size:15px;color:#F1ECE2}.p75pulse .tk-watch b{color:#FFD23F}' +
-    '.p75pulse .tk-watch i{flex:0 0 auto;width:9px;height:9px;border-radius:50%;background:#FF0000;animation:p75ping 1.8s ease-out infinite}' +
+    '.p75pulse .tk-watch i{flex:0 0 auto;width:9px;height:9px;border-radius:50%;background:#FF8577;animation:p75ping 1.8s ease-out infinite}' +
     '.p75pulse .tk-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}' +
     '.p75pulse a.tk-c{display:flex;flex-direction:column;gap:8px;padding:12px 14px;border-radius:14px;background:var(--panel);border:1px solid var(--line);border-top:2px solid var(--gold);color:inherit;text-decoration:none;transition:border-color .15s,transform .15s}' +
     '.p75pulse a.tk-c:hover,.p75pulse a.tk-c:focus-visible{border-color:var(--gold);outline:none}' +
@@ -357,7 +352,7 @@
   }
   function signed(v, dp, unit) { if (v == null) return ''; var s = v > 0 ? '+' : v < 0 ? '−' : '±'; return s + Math.abs(v).toFixed(dp) + (unit || ''); }
   function bullColor(s) { return s >= 20 ? BULL : s <= -20 ? BEAR : NEUT; }
-  function stressColor(s) { return s < 30 ? '#2BD17E' : s < 55 ? '#B8D43A' : s < 75 ? '#F2A33A' : '#FF0000'; }
+  function stressColor(s) { return s < 30 ? '#2BD17E' : s < 55 ? '#B8D43A' : s < 75 ? '#F2A33A' : '#FF8577'; }
 
   // ---------- Dials (same build as the speedometers in Point75 Tools) ----------
   // A 220° sweep, slim track, coloured fill from a resting point to the reading, tapered needle and hub.
@@ -412,7 +407,7 @@
   }
   function stressDial(stress, label) {
     return dial({ v: stress, min: 0, max: 100, rest: 0, color: stressColor(stress), big: true,
-      zones: [[0, 30, '#2BD17E'], [30, 55, '#B8D43A'], [55, 75, '#F2A33A'], [75, 100, '#FF0000']],
+      zones: [[0, 30, '#2BD17E'], [30, 55, '#B8D43A'], [55, 75, '#F2A33A'], [75, 100, '#FF8577']],
       labels: [[0, '0'], [50, '50'], [100, '100']],
       aria: 'Stress reading ' + stress + ' out of 100' + (label ? ', ' + label : '') });
   }
@@ -524,7 +519,7 @@
   // Stress dial: 0 at lower-left, 100 at lower-right (270° sweep), banded like the overview gauge
   var ckStressAng = function (v) { return -135 + Math.max(0, Math.min(100, v)) * 2.7; };
   function ckStressDial(code, value) {
-    var bands = [[0, 30, '#2BD17E'], [30, 55, '#B8D43A'], [55, 75, '#F2A33A'], [75, 100, '#FF0000']], z = '';
+    var bands = [[0, 30, '#2BD17E'], [30, 55, '#B8D43A'], [55, 75, '#F2A33A'], [75, 100, '#FF8577']], z = '';
     bands.forEach(function (b, i) { z += ckArc(84, ckStressAng(b[0] + (i ? .5 : 0)), ckStressAng(b[1] - (i < 3 ? .5 : 0)), b[2], 5); });
     var nums = [0, 20, 40, 60, 80, 100].map(function (n) { var p = ckPt(53, ckStressAng(n)); return ckLabel(p[0], (+p[1] + 5.5).toFixed(2), n, 15); }).join('');
     var col = stressColor(value);
@@ -986,7 +981,7 @@
     var pctOf = function (hist, v) { if (!hist || !hist.length) return null; var n = 0; hist.forEach(function (x) { if (x.value <= v) n++; }); return Math.round(n / hist.length * 100); };
     var yr = function (pc, word) { pc = Math.round(pc); return pc >= 99 ? 'highest in a year' : pc <= 1 ? 'lowest in a year' : word + ' than ' + pc + '% of year'; };
     var ord = function (n) { var k = n % 100; return n + (k > 10 && k < 14 ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' })[n % 10] || 'th'); };
-    var NEON = function (pc) { return pc < 30 ? '#2BFF88' : pc < 55 ? '#D8FF3D' : pc < 75 ? '#FFB224' : '#FF0000'; };
+    var NEON = function (pc) { return pc < 30 ? '#2BFF88' : pc < 55 ? '#D8FF3D' : pc < 75 ? '#FFB224' : '#FF8577'; };
     var addRow = function (grp, key, o) {   // o: name, short, value, change, changeColor, pct, bad (+1 high is bad, −1 high is good, 0 neutral), hist, color, fmt, what, care, src
       var pc = o.pct == null ? null : Math.max(0, Math.min(100, Math.round(o.pct)));
       var dc = pc == null ? NEUT : o.bad > 0 ? NEON(pc) : o.bad < 0 ? NEON(100 - pc) : '#C8A8FF';
@@ -996,7 +991,7 @@
         '<span class="pl-d">' + (pc != null ? dial({ v: pc, min: 0, max: 100, rest: 0, from: 0, color: dc, aria: o.name + ' at the ' + ord(pc) + ' percentile of its past year' }) : '') +
           '<small>' + (pc != null ? ord(pc) + ' pct' : '') + '</small></span>' +
         '<span class="pl-n"><b>' + esc(o.name) + '</b><small>' + esc(o.short) + '</small></span>' +
-        '<span class="pl-v"><b class="num" style="color:' + dc + '">' + o.value + '</b><small style="color:' + (o.changeColor === NEUT ? '#D6DAE0' : o.changeColor === BEAR ? '#FF0000' : o.changeColor === BULL ? '#1FE0FF' : o.changeColor) + '">' + o.change + '</small></span>' +
+        '<span class="pl-v"><b class="num" style="color:' + dc + '">' + o.value + '</b><small style="color:' + (o.changeColor === NEUT ? '#D6DAE0' : o.changeColor === BEAR ? '#FF8577' : o.changeColor === BULL ? '#1FE0FF' : o.changeColor) + '">' + o.change + '</small></span>' +
         '<span class="pl-s">' + spark(o.hist, o.color, o.fmt) + '</span>' +
         '<span class="pl-go" aria-hidden="true">›</span></button>' });
     };
@@ -1086,7 +1081,7 @@
         (a.recent[0] ? ' Latest: ' + esc(a.recent[0].term.replace(' ', '-')) + ', ' + C(a.recent[0].grade, gcol[a.recent[0].grade] || '#E6E2D8') + '.' : '') +
         (nx ? ' Next: ' + esc(nx.label) + ' ' + inDays(nx.date) + '.' : ''));
       if (rows.length) cards += card('plumbing', 'Plumbing', '<span class="tk-lamps">' + rows.map(function (x) { return '<i title="' + esc(x.nm) + '" style="background:' + x.dc + ';box-shadow:0 0 8px ' + x.dc + '"></i>'; }).join('') + '</span>',
-        hot.length + '<small>/' + rows.length + '</small>', hot.length ? '#FF0000' : '#2BFF88', hot.length ? 'flashing' : 'all quiet',
+        hot.length + '<small>/' + rows.length + '</small>', hot.length ? '#FF8577' : '#2BFF88', hot.length ? 'flashing' : 'all quiet',
         hot.length ? list(hot.slice(0, 3).map(function (x) { return C(x.nm, x.dc) + ' (' + (x.pc >= 99 ? 'year high' : x.pc + 'th pct') + ')'; })) + '.' : 'No reading is in the top quarter of its past year.');
       cards += card('wire', 'Live wire', '', '', '#fff', '', '<span class="tk-news" data-wire-top>Loading the latest headlines…</span>');
       SEC.takeaway = '<div class="tk"><p class="tk-head">' + head + '</p>' +

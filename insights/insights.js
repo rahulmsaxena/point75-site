@@ -7,16 +7,11 @@
   if (window.P75INS) return;
   var DATA = 'https://rahulmsaxena.github.io/point75-site/insights/insights.json?v=' + Math.floor(Date.now() / 36e5);
   var FW_API = 'https://news.point75.io/api/fedspeak';
-  var GOLD = '#FFE03A', BLU = '#00E8FF', RED = '#FF0000', NEU = '#C4CAD1';   // bright and crisp on the dark page
+  var GOLD = '#FFE03A', BLU = '#00E8FF', RED = '#FF8577', NEU = '#C4CAD1';   // bright and crisp on the dark page
 
   var CSS =
-    // the site's one red is pure red (#FF0000); short red words go bold so they read at a glance
-    '.p75ins [style*="color:#FF0000"][style]:not(b):not(.tk-head *):not(.fi *){font-weight:800}' +
-    // red glows like lava (red text only; everything else stays crisp): small words burn molten orange with a red halo,
-    // big numbers and headline words also get a molten core, yellow-orange at the top fading to red
-    '.p75ins [style*="color:#FF0000"][style]{-webkit-text-fill-color:#FF5A1F;text-shadow:0 0 1px #FF0000,0 0 7px rgba(255,0,0,.55)}' +
-    '.p75ins b[style*="color:#FF0000"][style],.p75ins .tk-head [style*="color:#FF0000"][style]{background:linear-gradient(180deg,#FFD23A 0%,#FF7A00 40%,#FF1A00 75%,#E00000 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;filter:drop-shadow(0 0 3px rgba(255,90,0,.75)) drop-shadow(0 0 9px rgba(255,20,0,.5))}' +
-    '.p75ins b[style*="color:#FF0000"][style] *{-webkit-text-fill-color:#FF3A12}' +
+    // the site's one red is a bright warm red (#FF8577); short red words go bold so they read at a glance
+    '.p75ins [style*="color:#FF8577"][style]:not(b):not(.tk-head *):not(.fi *){font-weight:800}' +
     '.p75ins{--ink:#111214;--panel:#17181B;--panel2:#1C1D21;--line:#2A2B2F;--cream:#EDE8DC;--soft:#E9E3D6;--muted:#C2BCAF;--gold:#C9A227;' +
       'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box;min-height:calc(100vh - 90px)}' +
     '.p75ins *{box-sizing:border-box}' +
