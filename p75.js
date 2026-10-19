@@ -81,7 +81,8 @@
   (function typography() {
     var st = document.createElement('style');
     st.id = 'p75-type';
-    st.textContent = '@media (min-width: 920px) {' +
+    st.textContent = '.p75-essay .block-blog-header{padding-top:8px!important}' +
+      '@media (min-width: 920px) {' +
       '.p75-essay .page__blocks .text-box p, .p75-essay .page__blocks .text-box li {' +
         'font-size:17.5px !important; line-height:1.78 !important; letter-spacing:.005em !important }' +
       '.p75-essay .page__blocks .text-box p { margin-bottom:14px !important }' +
@@ -399,7 +400,7 @@
       '--paper:#EDE8DC!important;--paper-dim:#CFC9BC!important;--dim:#A9A396!important;' +
       '--serif:"Hedvig Letters Serif",Georgia,serif!important;--mono:Manrope,system-ui,sans-serif!important;font-family:Manrope,system-ui,sans-serif!important}' +
     '.coupon-embed .ce-masthead-title,.coupon-embed .ce-article h2{font-family:"Hedvig Letters Serif",Georgia,serif!important;font-weight:400!important}' +
-    '.coupon-embed .ce-masthead-title{font-size:2rem!important}' +
+    '.coupon-embed .ce-inner{padding-top:4px!important}.coupon-embed .ce-masthead-title{font-size:2rem!important}' +
     '.coupon-embed .ce-article h2{font-size:1.2rem!important;line-height:1.35!important}' +
     '.coupon-embed .ce-hero-narrative,.coupon-embed .ce-article p.ce-summary,.coupon-embed .ce-rate-desc{font-family:Manrope,system-ui,sans-serif!important;color:var(--paper-dim)!important}' +
     '.coupon-embed .ce-hero-narrative{font-size:1rem!important;line-height:1.65!important}' +
@@ -881,7 +882,7 @@
         '#p75tn a.pill i{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;border:1.5px solid ' + G + ';font-style:normal;font-size:16px}' +
         '#p75tn a.pv{left:max(12px,calc((100vw - 1100px)/2 - 108px))}#p75tn a.nx{right:max(12px,calc((100vw - 1100px)/2 - 108px))}' +
         '#p75tn a.nx{flex-direction:column-reverse}#p75tn a.up{position:static;margin:0}}' +
-      '@media (max-width:1239px){#p75tn{padding-top:8px;padding-bottom:0}#p75tn .r{min-height:34px}#p75tn a.pill{padding:6px 13px}#p75tn a.pill i{font-style:normal}}' +
+      '@media (max-width:1239px){#p75tn{padding-top:4px;padding-bottom:0}#p75tn .r{min-height:30px}#p75tn a.pill{padding:5px 12px}#p75tn a.pill i{font-style:normal}}' +
       '@media print{#p75tn,#p75tf{display:none!important}}';
     document.head.appendChild(st);
   }
@@ -998,11 +999,8 @@
     '/debt-trap': 'Advanced', '/credit-stress': 'Advanced', '/sector-credit': 'Advanced', '/lenders': 'Advanced', '/insights': 'Advanced'
   };
   // Terms each Advanced page leans on; each links to its Bond Dictionary entry
-  var PAGE_TERMS = {
-    // (Debt Trap, a One Shot page, has no help box: it sat between the title and the update note)
-    '/credit-stress': ['PIK', 'delinquency'], '/sector-credit': ['Debt to EBITDA', 'interest coverage'],
-    '/lenders': ['commercial paper', 'money market fund'], '/insights': ['duration', 'credit spread']
-  };
+  // No dictionary help box on any page: it pushed the content down (approved Oct 2026)
+  var PAGE_TERMS = {};
   (function levelCss() {
     if (document.getElementById('p75-lvl')) return;
     var st = document.createElement('style'); st.id = 'p75-lvl';

@@ -241,7 +241,7 @@
     '.p75edu{--ink:#111214;--panel:#17181B;--line:#2A2B2F;--cream:#EDE8DC;--muted:#B8B2A5;--gold:#C9A227;' +
       'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box}' +
     '.p75edu *{box-sizing:border-box}' +
-    '.p75edu .wrap{max-width:760px;margin:0 auto;padding:16px 20px 72px}' +
+    '.p75edu .wrap{max-width:760px;margin:0 auto;padding:4px 20px 72px}' +
     '.p75edu .eyebrow{color:var(--gold);letter-spacing:.14em;font-size:12px;font-weight:700;text-transform:uppercase}' +
     '.p75edu h1{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:28px;line-height:1.15;margin:4px 0 8px;color:var(--cream);letter-spacing:-.01em;display:inline-block;vertical-align:baseline;max-width:100%}' +
     '.p75edu .eyebrow:has(+ h1){display:inline-block;margin-right:14px;vertical-align:baseline}' +
