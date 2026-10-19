@@ -933,8 +933,10 @@
   function navAttrs(s, it) {
     return ' href="' + escH(navHref(s, it)) + '" title="' + escH(it.title || it.text) + '" aria-label="' + escH(it.title || it.text) + '"' + (s.frame ? ' data-hash="' + escH(it.hash) + '"' : '');
   }
+  var NO_PAGE_NAV = ['/insights'];   // Insights: the lone "Daily Summary" back pill added nothing
   function pageNav(path, s) {
     var top = document.getElementById('p75tn'), bar = document.getElementById('p75tf');
+    if (NO_PAGE_NAV.indexOf(path) !== -1) s = null;   // pages that do without the back / next pills
     if (!s) { if (top) top.remove(); if (bar) bar.remove(); return; }
     navCss();
     var key = path + '|' + JSON.stringify([s.prev, s.mid, s.next]);
