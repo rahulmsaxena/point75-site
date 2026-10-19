@@ -113,8 +113,8 @@
     // takeaway
     '.p75debt .dt-tk{display:flex;flex-direction:column;gap:10px}' +
     // desktop: the Takeaway fits one screen with room to spare, so the dials, numbers and headline take it
-    '@media (min-width:881px){.p75debt .dt-tk{gap:14px}.p75debt .dt-head{font-size:26px;padding:18px 24px}.p75debt .dt-tk .dt-ov{gap:14px}.p75debt .dt-ovc{padding:16px 20px;gap:8px}.p75debt .dt-ovh{font-size:13px}' +
-      '.p75debt .dt-d{width:150px}.p75debt .dt-r b{font-size:46px}.p75debt .dt-r em{font-size:13px}.p75debt .dt-r > span{font-size:16px}}' +
+    '@media (min-width:881px){.p75debt .dt-tk{gap:14px}.p75debt .dt-tk .dt-head{font-size:27px;padding:18px 24px}.p75debt .dt-tk .dt-ov{gap:14px}.p75debt .dt-ovc{padding:16px 20px;gap:8px}.p75debt .dt-ovh{font-size:13px}' +
+      '.p75debt .dt-tk .dt-d{width:160px}.p75debt .dt-tk .dt-r b{font-size:48px}.p75debt .dt-r em{font-size:13px}.p75debt .dt-r > span{font-size:16px}}' +
     '.p75debt .dt-head{margin:0;padding:16px 20px;border-radius:16px;background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold);font-family:"Hedvig Letters Serif",Georgia,serif;font-size:22px;line-height:1.45;color:#fff}' +
     '.p75debt .hl{text-shadow:0 0 12px currentColor}' +
     '.p75debt .dt-tk .dt-ov{grid-template-columns:repeat(2,minmax(0,1fr));margin:0}' +
