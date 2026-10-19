@@ -622,13 +622,16 @@
 
   // ---------- Section hubs: never let a sub-menu hide its main page ----------
   // Reads the live Hostinger menu, so titles and order follow whatever is set in the builder.
-  var HUB_LABEL = { '/education': 'All Education guides', '/kinetics': 'All of Kinetics', '/bond-summary': 'Bond Summary overview', '/economic-indicators': 'Economic Indicators' };
+  var HUB_LABEL = { '/education': 'All Education guides', '/kinetics': 'All of Kinetics', '/bond-summary': 'Bond Summary overview', '/economic-indicators': 'Economic Indicators', 'https://tools.point75.io/market-intelligence': 'All dashboards' };
 
   // ---------- Sections that go deeper than the menu ----------
-  // The menu shows one level (Kinetics > Pulse, Debt Trap, News, Bond Summary, Economic Indicators). The pages under
-  // Bond Summary are reached from its landing page, so the tree lives here. (Debt Trap's menu entry is added in hubMenus.)
+  // The menu shows one level (Kinetics > Pulse, Debt Trap, News, Bond Summary, Economic Indicators). Bond Summary's two
+  // pages (Daily Summary, Insights) are cards on its landing page, so the tree lives here. Intelligence (on
+  // tools.point75.io) holds the three credit dashboards that live on this site; intelMenu adds them to its menu.
+  // (Debt Trap's menu entry is added in hubMenus.)
   // It drives the hub pages (hubs/hubs.js), the back / forward arrows and the Previous / Next cards.
   // Order matters: arrows step through each group in this order.
+  var INTEL_HREF = 'https://tools.point75.io/market-intelligence';
   var SECTIONS = [
     { href: '/kinetics', text: 'Kinetics', hub: true, kids: [
       { href: '/pulse', text: 'Pulse' },
@@ -636,12 +639,15 @@
       { href: '/news', text: 'News' },
       { href: '/bond-summary', text: 'Bond Summary', hub: true, kids: [
         { href: '/intelligent-summary', text: 'Daily Summary' },
-        { href: '/credit-stress', text: 'Credit Stress' },
-        { href: '/sector-credit', text: 'Sector Credit' },
-        { href: '/lenders', text: 'Lenders' },
         { href: '/insights', text: 'Insights' }
       ] },
       { href: '/economic-indicators', text: 'Economic Indicators' }
+    ] },
+    // Intelligence has no hub page here (its overview is the dashboards site); these are its pages on point75.io
+    { href: INTEL_HREF, text: 'Intelligence', kids: [
+      { href: '/credit-stress', text: 'Credit Stress' },
+      { href: '/sector-credit', text: 'Sector Credit' },
+      { href: '/lenders', text: 'Lenders' }
     ] }
   ];
   // Every node with pages under it, flattened: { href, text, hub, kids: [{ href, text, kids }] }
@@ -749,7 +755,7 @@
   //   first page. NAV_FIX overrides specific pages. Bond Summary and Intelligent Summary articles live in an
   //   iframe sized to its content: they send {type:'nav'} with older/newer and we send {type:'go'} back.
   var HUB_BACK = ['/kinetics'];   // sections whose pages all go back to the section overview
-  var TABBED = ['/bond-summary'];  // sections whose pages are tabs of one another (see tabsRow)
+  var TABBED = [INTEL_HREF];  // sections whose pages are tabs of one another (see tabsRow); Bond Summary uses cards
   function tabFamily(path) {
     var out = null;
     SECTION_FAMS.forEach(function (f) {
@@ -761,7 +767,7 @@
   function tabsRow(path) {
     var row = document.getElementById('p75tabsrow'), f = tabFamily(path);
     if (!f) { if (row) row.remove(); return; }
-    var tabs = [{ href: f.href, text: 'Overview' }].concat(f.kids.map(function (k) { return { href: k.href, text: k.text }; }));
+    var tabs = [{ href: f.href, text: HUB_LABEL[f.href] || 'Overview' }].concat(f.kids.map(function (k) { return { href: k.href, text: k.text }; }));
     var key = path + '|' + tabs.length;
     if (!row || row.getAttribute('data-k') !== key) {
       if (row) row.remove();
@@ -799,6 +805,13 @@
   window.addEventListener('message', function (e) {
     var m = e.data;
     if (!m || m.p75 !== true || m.type !== 'nav') return;
+    // /intelligent-summary#archive (the Archives card on Bond Summary): once the summary frame is up, ask it to
+    // open its archive of earlier days
+    if (m.view === 'list' && /^#archive$/.test(location.hash) && e.source && !e.source.p75arc) {
+      try { e.source.p75arc = 1; } catch (err) {}
+      e.source.postMessage({ p75: true, type: 'go', hash: '#/archive' }, '*');
+      try { history.replaceState(null, '', location.pathname + location.search); } catch (err) {}
+    }
     navFrame = m.view === 'article' ? { src: e.source, path: norm(location.pathname), prev: m.older || null, mid: m.up || null, next: m.newer || null } : null;
     var path = norm(location.pathname);
     pageNav(path, navSpecFor(path, navFamilies(families())));
@@ -807,7 +820,8 @@
     if (navFrame && navFrame.path === path) return { prev: navFrame.prev, mid: navFrame.mid, next: navFrame.next, frame: true };
     // Pages inside a tabbed section (Bond Summary) move between each other with the tab strip, so their top
     // row is the section's own: back to Kinetics overview, on to the next Kinetics page.
-    var tf = tabFamily(path); if (tf && tf.href !== path) path = tf.href;
+    // (Intelligence is a top-level section on another site, so its pages keep their own previous / next.)
+    var tf = tabFamily(path); if (tf && tf.href !== path && tf.href.charAt(0) === '/') path = tf.href;
     if (path === '/') return null;
     var s = {};
     if (EXCLUDED.indexOf(path) === -1 && document.querySelector('.block-blog-header')) s.prev = { href: '/', text: 'All essays' };
@@ -1151,7 +1165,11 @@
   var INTEL_TOOLS = [
     ['Treasury Finder', 'https://tools.point75.io/market-intelligence/treasury-finder'],
     ['Congressional Trading', 'https://tools.point75.io/market-intelligence/congressional-trading'],
-    ['AI Investment', 'https://tools.point75.io/market-intelligence/ai-investment']
+    ['AI Investment', 'https://tools.point75.io/market-intelligence/ai-investment'],
+    // the credit dashboards that live on point75.io (they used to sit under Bond Summary)
+    ['Credit Stress', '/credit-stress'],
+    ['Sector Credit', '/sector-credit'],
+    ['Lenders', '/lenders']
   ];
   function intelMenu(ul) {
     var a = ul.querySelector(':scope>.block-header-item>.block-header-item__label a.item-content[href*="tools.point75.io/market-intelligence"]');
@@ -1172,7 +1190,8 @@
     INTEL_TOOLS.forEach(function (t) {
       var c = item.cloneNode(true), link = c.querySelector('a.item-content'); if (!link) return;
       link.setAttribute('href', t[1]); link.textContent = t[0]; link.removeAttribute('data-qa');
-      link.setAttribute('target', a.getAttribute('target') || ''); if (a.getAttribute('rel')) link.setAttribute('rel', a.getAttribute('rel'));
+      if (t[1].charAt(0) === '/') { link.removeAttribute('target'); link.removeAttribute('rel'); if (norm(location.pathname) === t[1]) link.setAttribute('aria-current', 'page'); }
+      else { link.setAttribute('target', a.getAttribute('target') || ''); if (a.getAttribute('rel')) link.setAttribute('rel', a.getAttribute('rel')); }
       c.classList.remove('p75hub'); c.removeAttribute('data-p75hub');
       list.appendChild(c);
     });
@@ -1342,7 +1361,7 @@
       return;
     } else if (window.P75DEBT) window.P75DEBT.clear();
 
-    // Sector Credit, Lenders and Credit Stress (under Bond Summary) are drawn by credit/credit.js; data comes from news.point75.io/api/credit
+    // Sector Credit, Lenders and Credit Stress (under Intelligence) are drawn by credit/credit.js; data comes from news.point75.io/api/credit
     if (path === '/sector-credit' || path === '/lenders' || path === '/credit-stress') {
       if (window.P75CREDIT) window.P75CREDIT.render(path);
       else if (!document.getElementById('p75cr-js')) {

@@ -1,4 +1,4 @@
-/* Point75 - Sector Credit (/sector-credit), Lenders (/lenders) and Credit Stress (/credit-stress), under Bond Summary.
+/* Point75 - Sector Credit (/sector-credit), Lenders (/lenders) and Credit Stress (/credit-stress), under Intelligence.
    Loaded by p75.js; data from news.point75.io/api/credit, written weekly by fetch_credit.py.
    Sources: company 10-K/10-Q filings and money market fund filings (SEC EDGAR), and the Federal Reserve's
    Financial Accounts (Z.1) via FRED. No licensed data. (c) Rahul Saxena. All rights reserved. */
@@ -343,7 +343,7 @@
     if (host) host.remove();
     once();
     host = document.createElement('div'); host.className = 'p75cr'; host.setAttribute('data-path', path);
-    host.innerHTML = '<div class="wrap"><div class="eyebrow"><a href="/intelligent-summary">Bond Summary</a> · ' + esc(p.eyebrow) + '</div><h1>' + esc(p.title) + '</h1>' +
+    host.innerHTML = '<div class="wrap"><div class="eyebrow"><a href="https://tools.point75.io/market-intelligence">Intelligence</a> · ' + esc(p.eyebrow) + '</div><h1>' + esc(p.title) + '</h1>' +
       '<p class="lede">' + esc(p.lede) + '</p><div class="asof"></div><div class="body"><div class="load">Loading the latest filings…</div></div></div>';
     var blocks = main.querySelector('.page__blocks');
     (blocks || main).appendChild(host);

@@ -12,19 +12,23 @@
     '/pulse': { blurb: 'The bond market’s vital signs: positioning, rates volatility, funding pressure, term premium and inflation expectations.', cta: 'Check the pulse' },
     '/debt-trap': { blurb: 'How much U.S. debt must be refinanced, what it costs taxpayers in interest, and who is still lending.', cta: 'Open the debt trap' },
     '/news': { blurb: 'Today’s bond, rates and central bank headlines, in one place.', cta: 'Read the news' },
-    '/bond-summary': { blurb: 'How credit and the Treasury market are holding up: the daily summary, credit stress, sectors, lenders and what big investors are saying.', cta: 'Open Bond Summary' },
+    '/bond-summary': { blurb: 'The Treasury market day by day: why yields moved, and what the big bond investors are saying about it.', cta: 'Open Bond Summary' },
     '/economic-indicators': { blurb: 'The latest U.S. economic data: inflation, jobs, growth and more.', cta: 'See the indicators' },
-    '/intelligent-summary': { blurb: 'Daily close summary of the Treasury market: why yields moved, the curve, Fed pricing and what to watch next.', cta: 'Read the summary' },
+    '/intelligent-summary': { blurb: 'Every trading day: why Treasury yields moved, the drivers, the news and what to watch next.', cta: 'Read the summary' },
     '/credit-stress': { blurb: 'Where corporate credit is showing cracks: delinquencies, write-offs, commercial real estate and companies that can’t cover interest.', cta: 'Open' },
     '/sector-credit': { blurb: 'Corporate debt sector by sector: the biggest borrowers, leverage, interest coverage and how they are financed.', cta: 'Open' },
     '/lenders': { blurb: 'Who lends corporate America its short-term money: money market funds, insurers, pension funds, banks and private credit.', cta: 'Open' },
+    '/intelligent-summary#archive': { blurb: 'Every earlier daily summary, newest first, one line each, with a search.', cta: 'Open the archive' },
     '/insights': { blurb: 'What the big bond investors are saying: where they agree, where they differ and what they are doing.', cta: 'Open' }
   };
 
+  // Cards on a hub that are not pages of their own (so they stay out of the back / forward arrows)
+  var EXTRA = { '/bond-summary': [{ href: '/intelligent-summary#archive', text: 'Archives' }] };
+
   // Page heading and introduction per hub
   var HEAD = {
-    '/kinetics': { eyebrow: 'Kinetics', title: 'The Forces Moving the Bond Market', lede: 'Five ways in: the market’s pulse, the government’s debt bill, the state of credit, the day’s news and the economic numbers underneath. Pick where you’d like to start.' },
-    '/bond-summary': { eyebrow: 'Kinetics', title: 'Bond Summary', lede: 'How credit markets are holding up. Start with the daily summary, or go straight to the part you care about.' }
+    '/kinetics': { eyebrow: 'Kinetics', title: 'The Forces Moving the Bond Market', lede: 'Five ways in: the market’s pulse, the government’s debt bill, the day’s news, the daily bond summary and the economic numbers underneath. Pick where you’d like to start.' },
+    '/bond-summary': { eyebrow: 'Kinetics', title: 'Bond Summary', lede: 'The Treasury market day by day: the daily summary of why yields moved, and what the big bond investors are saying.' }
   };
 
   var CSS =
@@ -55,6 +59,11 @@
     '.p75hubpg .grid.fill .ic{width:40px;height:40px}' +
     '.p75hubpg .grid.n5 a.card:first-child{grid-column:span 2}.p75hubpg .grid.n5 a.card:first-child .nm{font-size:34px}.p75hubpg .grid.n5 a.card:first-child .bl{font-size:17px;max-width:60ch}' +
     '.p75hubpg .grid.n4,.p75hubpg .grid.n2{grid-template-columns:repeat(2,minmax(0,1fr))}' +
+    '.p75hubpg .grid.fill.n3{height:auto;grid-auto-rows:auto}.p75hubpg .grid.n3 a.card{min-height:250px}.p75hubpg .grid.n3 .nm{font-size:30px}.p75hubpg .grid.n3 .ic{width:44px;height:44px}' +
+    '@media (max-width:900px){.p75hubpg .grid.n3{grid-template-columns:1fr}.p75hubpg .grid.n3 a.card{min-height:0}.p75hubpg .grid.n3 .nm{font-size:24px}}' +
+    '.p75hubpg .lt{display:block;margin-top:auto;padding:12px 14px;border-radius:10px;background:rgba(201,162,39,.08);border:1px solid rgba(201,162,39,.35);' +
+      'font-family:"Hedvig Letters Serif",Georgia,serif;font-size:18px;line-height:1.35;color:#fff}' +
+    '.p75hubpg .lt small{display:block;font-family:Manrope,sans-serif;font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#F2D27A;margin-bottom:4px}' +
     '.p75hubpg a.card:hover,.p75hubpg a.card:focus-visible{border-color:var(--gold);background:#1C1D21;outline:none}' +
     '.p75hubpg .num{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:15px;color:var(--gold)}' +
     '.p75hubpg .nm{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:22px;line-height:1.15;color:#fff}' +
@@ -103,15 +112,20 @@
     '/debt-trap': '<rect x="4" y="15" width="4" height="5" rx=".6"/><rect x="10" y="10" width="4" height="10" rx=".6"/><rect x="16" y="5" width="4" height="15" rx=".6"/><path d="M3 20.5h18"/>',
     '/news': '<rect x="4" y="5" width="13" height="14" rx="1.5"/><path d="M17 9h2.5a.5.5 0 0 1 .5.5V17a2 2 0 0 1-2 2H7"/><path d="M7 9h7M7 12h7M7 15h4"/>',
     '/bond-summary': '<path d="M7 4h7l4 4v12H7z"/><path d="M14 4v4h4"/><path d="M9.5 16l2-2.5 2 1.5 2.5-3.5"/>',
+    '/intelligent-summary': '<path d="M8 3.5v3M16 3.5v3"/><rect x="4" y="5.5" width="16" height="14.5" rx="1.8"/><path d="M4 10h16"/><path d="M8 16l2.5-3 2 1.5 3-3.5"/>',
+    '/intelligent-summary#archive': '<rect x="3.5" y="4.5" width="17" height="4" rx="1"/><path d="M5 8.5v10a1.5 1.5 0 0 0 1.5 1.5h11a1.5 1.5 0 0 0 1.5-1.5v-10"/><path d="M10 12.5h4"/>',
+    '/insights': '<path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v7a2.5 2.5 0 0 1-2.5 2.5H11l-4.5 4v-4A2.5 2.5 0 0 1 4 13.5z"/><path d="M8 8.5h8M8 11.5h5"/>',
     '/economic-indicators': '<path d="M4 20h16"/><path d="M6 20v-6M10 20V9M14 20v-4M18 20V6"/><path d="M5 11l5-4 4 3 5-5"/>'
   };
-  function card(k, i, numbered) {
+  function card(k, i, numbered, latest) {
     var c = CARD[k.href] || {};
+    var lt = k.href === '/intelligent-summary' && latest ? '<span class="lt"><small>Latest · ' + esc(latest.when) + '</small>' + esc(latest.title) + '</span>' :
+      k.href === '/intelligent-summary#archive' && latest && latest.count > 1 ? '<span class="lt"><small>' + (latest.count - 1) + ' earlier days</small>' + esc(latest.first) + ' to ' + esc(latest.prev) + '</span>' : '';
     var inside = k.kids && k.kids.length ? k.kids.map(function (x) { return esc(x.text); }).join(' · ') : '';
     return '<a class="card" href="' + esc(k.href) + '" aria-label="' + esc(k.text + (c.blurb ? ': ' + c.blurb : '')) + '">' +
       '<span class="ch">' + (numbered ? '<span class="num">' + (i < 9 ? '0' : '') + (i + 1) + '</span>' : '') +
       '<span class="nm">' + esc(k.text) + '</span>' + (ICON[k.href] ? '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">' + ICON[k.href] + '</svg>' : '') + '</span>' +
-      (c.blurb ? '<span class="bl">' + esc(c.blurb) + '</span>' : '') +
+      (c.blurb ? '<span class="bl">' + esc(c.blurb) + '</span>' : '') + lt +
       (inside ? '<span class="inside">' + inside + '</span>' : '') + '<span class="arr" aria-hidden="true">›</span></a>';
   }
 
@@ -120,20 +134,10 @@
     var html = '<div class="wrap">';
     if (parent && path !== '/bond-summary') html += '<nav class="crumb" aria-label="Breadcrumb"><a href="' + esc(parent.href) + '">' + esc(parent.text) + '</a><span aria-hidden="true">/</span>' + esc(node.text) + '</nav>';
     html += '<div class="eyebrow">' + esc(h.eyebrow) + '</div><h1>' + esc(h.title) + '</h1>' + (h.lede ? '<p class="lede">' + esc(h.lede) + '</p>' : '');
-    var kids = node.kids || [];
-    if (path === '/bond-summary') {
-      // Bond Summary's pages are tabs (the strip above, drawn by p75.js), so the overview has no cards:
-      // the latest daily summary's headline on one line, then what each tab holds, as a plain list.
-      var first = kids[0];
-      html += '<a class="latest" href="' + esc(first.href) + '"><span class="ey">' + (latest ? 'Latest summary · ' + esc(latest.when) : 'The daily summary') + '</span>' +
-        '<span class="hd">' + esc(latest ? latest.title : (CARD[first.href] || {}).blurb || first.text) + '</span><span class="go">Read it →</span></a>';
-      html += '<dl class="what">' + kids.map(function (k) {
-        return '<div><dt><a href="' + esc(k.href) + '">' + esc(k.text) + '</a></dt><dd>' + esc((CARD[k.href] || {}).blurb || '') + '</dd></div>';
-      }).join('') + '</dl>';
-    } else {
-      // The cards fill the rest of the screen: a bento grid whose rows stretch to the window's height
-      html += '<div class="grid fill n' + kids.length + '">' + kids.map(function (k, i) { return card(k, i, true); }).join('') + '</div>';
-    }
+    var kids = (node.kids || []).concat(EXTRA[path] || []);
+    // The cards fill the rest of the screen: a bento grid whose rows stretch to the window's height
+    // (Bond Summary: two big cards, the Daily Summary one carrying the latest headline)
+    html += '<div class="grid fill n' + kids.length + '">' + kids.map(function (k, i) { return card(k, i, true, latest); }).join('') + '</div>';
     return html + '</div>';
   }
 
@@ -144,12 +148,14 @@
     waiting.push(cb);
     if (loading) return; loading = true;
     fetch(EDITIONS).then(function (r) { return r.json(); }).then(function (j) {
-      var s = (j && j.summaries || []).filter(function (e) { return e && e.title; })
-        .sort(function (a, b) { return String(b.generated_at || b.key).localeCompare(String(a.generated_at || a.key)); })[0];
+      var all = (j && j.summaries || []).filter(function (e) { return e && e.title; })
+        .sort(function (a, b) { return String(b.generated_at || b.key).localeCompare(String(a.generated_at || a.key)); });
+      var day = function (e) { var d = new Date((e.market_date || e.key) + 'T12:00:00Z'); return isNaN(d) ? '' : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }); };
+      var s = all[0];
       if (s) {
-        var d = new Date((s.market_date || s.key) + 'T12:00:00Z');
-        latest = { title: s.title, regime: s.regime || '', note: s.regime_note || '',
-          when: isNaN(d) ? '' : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }) };
+        // count, oldest and second-newest day feed the Archives card
+        latest = { title: s.title, regime: s.regime || '', note: s.regime_note || '', when: day(s),
+          count: all.length, first: day(all[all.length - 1]), prev: all[1] ? day(all[1]) : '' };
       }
       loading = false; var w = waiting; waiting = []; w.forEach(function (f) { f(latest); });
     }).catch(function () { loading = false; var w = waiting; waiting = []; w.forEach(function (f) { f(null); }); });
