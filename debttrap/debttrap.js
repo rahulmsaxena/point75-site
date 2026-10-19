@@ -536,9 +536,11 @@
     requestAnimationFrame(function () {
       SCROLL_TICK = false;
       var y = window.pageYOffset, dy = y - LAST_Y; LAST_Y = y;
-      if (!dy || location.hash.slice(1)) return;
+      if (!dy) return;
       var host = document.querySelector('.p75debt'), strip = host && host.querySelector('.fstrip');
       if (!strip) return;
+      var on = host.querySelector('.tab.on');   // only on the Takeaway (the first tab), however it was reached (#takeaway or no hash)
+      if (on && on !== host.querySelector('.tab')) return;
       var tb = document.querySelector('.top-blocks--sticky'), hdr = tb ? tb.getBoundingClientRect().height : 0;
       if (Date.now() < SCROLL_HOLD) return;   // let a fold finish before reading the scroll again
       var top = host.querySelector('.top');
