@@ -30,7 +30,7 @@ Reference implementation: the Pulse page (`pulse/pulse.js`). Header rules are al
 - Overview dials: tools-style speedometer (220° sweep, slim track, coloured fill from rest, tapered needle, hub) — `dial()` in `pulse/pulse.js`. Number and label sit **beside** the dial with a short justified note.
 - Detail dials: cockpit style (bezel, ticks, digital readout) — `ckStressDial`, `ckBBDial`, `ckVoteDial`.
 - No thermometers, no attitude balls, no big boxed tallies. Counts are small rounded pills.
-- Needles: start at the **left end of the scale**, short pause (~0.35s), then an even **2.2s** glide (`cubic-bezier(.37,0,.3,1)`), no spring. Fill arcs move with the needle. Replay the sweep whenever a section opens.
+- Needles: start at the **left end of the scale**, short pause (~0.35s), then an even **1.25s** glide (`cubic-bezier(.37,0,.3,1)`), no spring. Fill arcs move with the needle. Replay the sweep whenever a section opens.
 - Colours: bull = fluorescent blue **#1FC8FF**, bear = **#E5484D**, neutral **#9AA0A6**. Stress bands green → lime → amber → red.
 
 ## 4. Detail panels (tabs)
