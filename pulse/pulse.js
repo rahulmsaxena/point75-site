@@ -3,7 +3,7 @@
 (function () {
   if (window.P75PULSE) return;
   var API = 'https://news.point75.io/api/pulse';
-  var BULL = '#1FC8FF', BEAR = '#FF8080', NEUT = '#9AA0A6';   // BEAR: the site's one red, bright enough to read on the dark page
+  var BULL = '#1FC8FF', BEAR = '#FFA8C0', NEUT = '#9AA0A6';   // BEAR: the site's one red, bright enough to read on the dark page
 
   // The page shows the two gauges, then a tab bar: each tab swaps the view below it in place (/pulse#auctions).
   // Signals is open by default.
@@ -17,7 +17,7 @@
 
   var CSS =
     // red: one brighter shade site-wide; red words go bold and lose the glow that blurred them
-    '.p75pulse [style*="color:#FF8080"][style]{text-shadow:0 0 5px rgba(255,40,40,.65),0 0 14px rgba(255,30,30,.45)}.p75pulse b[style*="color:#FF8080"][style]{text-shadow:0 0 6px rgba(255,40,40,.8),0 0 18px rgba(255,30,30,.6)}.p75pulse [style*="color:#FF8080"][style]:not(b):not(.tk-head *):not(.fi *){font-weight:800}' +
+    '.p75pulse [style*="color:#FFA8C0"][style]{text-shadow:0 0 5px rgba(255,40,120,.65),0 0 14px rgba(255,20,110,.45)}.p75pulse b[style*="color:#FFA8C0"][style]{text-shadow:0 0 6px rgba(255,40,120,.8),0 0 18px rgba(255,20,110,.6)}.p75pulse [style*="color:#FFA8C0"][style]:not(b):not(.tk-head *):not(.fi *){font-weight:800}' +
     '.p75pulse{--ink:#111214;--panel:#17181B;--panel2:#1C1D21;--line:#2A2B2F;--cream:#EDE8DC;--muted:#C2BCAF;--soft:#E4DED1;--gold:#C9A227;' +
       '--bull:' + BULL + ';--bear:' + BEAR + ';background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box}' +
     '.p75pulse *{box-sizing:border-box}' +
@@ -177,7 +177,7 @@
       'font-family:"Hedvig Letters Serif",Georgia,serif;font-size:21px;line-height:1.45;color:#fff}' +
     '.p75pulse .tk .hl{text-shadow:0 0 12px currentColor}' +
     '.p75pulse .tk-watch{display:flex;align-items:center;gap:10px;margin:0;font-size:15px;color:#F1ECE2}.p75pulse .tk-watch b{color:#FFD23F}' +
-    '.p75pulse .tk-watch i{flex:0 0 auto;width:9px;height:9px;border-radius:50%;background:#FF8080;animation:p75ping 1.8s ease-out infinite}' +
+    '.p75pulse .tk-watch i{flex:0 0 auto;width:9px;height:9px;border-radius:50%;background:#FFA8C0;animation:p75ping 1.8s ease-out infinite}' +
     '.p75pulse .tk-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}' +
     '.p75pulse a.tk-c{display:flex;flex-direction:column;gap:8px;padding:12px 14px;border-radius:14px;background:var(--panel);border:1px solid var(--line);border-top:2px solid var(--gold);color:inherit;text-decoration:none;transition:border-color .15s,transform .15s}' +
     '.p75pulse a.tk-c:hover,.p75pulse a.tk-c:focus-visible{border-color:var(--gold);outline:none}' +
@@ -355,7 +355,7 @@
   }
   function signed(v, dp, unit) { if (v == null) return ''; var s = v > 0 ? '+' : v < 0 ? '−' : '±'; return s + Math.abs(v).toFixed(dp) + (unit || ''); }
   function bullColor(s) { return s >= 20 ? BULL : s <= -20 ? BEAR : NEUT; }
-  function stressColor(s) { return s < 30 ? '#2BD17E' : s < 55 ? '#B8D43A' : s < 75 ? '#F2A33A' : '#FF8080'; }
+  function stressColor(s) { return s < 30 ? '#2BD17E' : s < 55 ? '#B8D43A' : s < 75 ? '#F2A33A' : '#FFA8C0'; }
 
   // ---------- Dials (same build as the speedometers in Point75 Tools) ----------
   // A 220° sweep, slim track, coloured fill from a resting point to the reading, tapered needle and hub.
@@ -984,7 +984,7 @@
     var pctOf = function (hist, v) { if (!hist || !hist.length) return null; var n = 0; hist.forEach(function (x) { if (x.value <= v) n++; }); return Math.round(n / hist.length * 100); };
     var yr = function (pc, word) { pc = Math.round(pc); return pc >= 99 ? 'highest in a year' : pc <= 1 ? 'lowest in a year' : word + ' than ' + pc + '% of year'; };
     var ord = function (n) { var k = n % 100; return n + (k > 10 && k < 14 ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' })[n % 10] || 'th'); };
-    var NEON = function (pc) { return pc < 30 ? '#2BFF88' : pc < 55 ? '#D8FF3D' : pc < 75 ? '#FFB224' : '#FF8080'; };
+    var NEON = function (pc) { return pc < 30 ? '#2BFF88' : pc < 55 ? '#D8FF3D' : pc < 75 ? '#FFB224' : '#FFA8C0'; };
     var addRow = function (grp, key, o) {   // o: name, short, value, change, changeColor, pct, bad (+1 high is bad, −1 high is good, 0 neutral), hist, color, fmt, what, care, src
       var pc = o.pct == null ? null : Math.max(0, Math.min(100, Math.round(o.pct)));
       var dc = pc == null ? NEUT : o.bad > 0 ? NEON(pc) : o.bad < 0 ? NEON(100 - pc) : '#C8A8FF';
@@ -994,7 +994,7 @@
         '<span class="pl-d">' + (pc != null ? dial({ v: pc, min: 0, max: 100, rest: 0, from: 0, color: dc, aria: o.name + ' at the ' + ord(pc) + ' percentile of its past year' }) : '') +
           '<small>' + (pc != null ? ord(pc) + ' pct' : '') + '</small></span>' +
         '<span class="pl-n"><b>' + esc(o.name) + '</b><small>' + esc(o.short) + '</small></span>' +
-        '<span class="pl-v"><b class="num" style="color:' + dc + '">' + o.value + '</b><small style="color:' + (o.changeColor === NEUT ? '#D6DAE0' : o.changeColor === BEAR ? '#FF8080' : o.changeColor === BULL ? '#1FE0FF' : o.changeColor) + '">' + o.change + '</small></span>' +
+        '<span class="pl-v"><b class="num" style="color:' + dc + '">' + o.value + '</b><small style="color:' + (o.changeColor === NEUT ? '#D6DAE0' : o.changeColor === BEAR ? '#FFA8C0' : o.changeColor === BULL ? '#1FE0FF' : o.changeColor) + '">' + o.change + '</small></span>' +
         '<span class="pl-s">' + spark(o.hist, o.color, o.fmt) + '</span>' +
         '<span class="pl-go" aria-hidden="true">›</span></button>' });
     };
@@ -1084,7 +1084,7 @@
         (a.recent[0] ? ' Latest: ' + esc(a.recent[0].term.replace(' ', '-')) + ', ' + C(a.recent[0].grade, gcol[a.recent[0].grade] || '#E6E2D8') + '.' : '') +
         (nx ? ' Next: ' + esc(nx.label) + ' ' + inDays(nx.date) + '.' : ''));
       if (rows.length) cards += card('plumbing', 'Plumbing', '<span class="tk-lamps">' + rows.map(function (x) { return '<i title="' + esc(x.nm) + '" style="background:' + x.dc + ';box-shadow:0 0 8px ' + x.dc + '"></i>'; }).join('') + '</span>',
-        hot.length + '<small>/' + rows.length + '</small>', hot.length ? '#FF8080' : '#2BFF88', hot.length ? 'flashing' : 'all quiet',
+        hot.length + '<small>/' + rows.length + '</small>', hot.length ? '#FFA8C0' : '#2BFF88', hot.length ? 'flashing' : 'all quiet',
         hot.length ? list(hot.slice(0, 3).map(function (x) { return C(x.nm, x.dc) + ' (' + (x.pc >= 99 ? 'year high' : x.pc + 'th pct') + ')'; })) + '.' : 'No reading is in the top quarter of its past year.');
       cards += card('wire', 'Live wire', '', '', '#fff', '', '<span class="tk-news" data-wire-top>Loading the latest headlines…</span>');
       SEC.takeaway = '<div class="tk"><p class="tk-head">' + head + '</p>' +
