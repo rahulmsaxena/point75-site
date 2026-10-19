@@ -134,7 +134,7 @@
     '.p75pulse .tab:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
     '@media (max-width:560px){.p75pulse .tabs{margin:28px -16px 0;padding:10px 16px;gap:6px}.p75pulse .tab{min-height:38px;padding:0 15px;font-size:14px}}' +
     '@media (max-width:460px){.p75pulse .tabs{gap:5px}.p75pulse .tab{flex:1 1 auto;justify-content:center;padding:0 6px;font-size:13px}}' +
-    '@media (max-width:400px){.p75pulse .tabs{flex-wrap:wrap;overflow:visible;row-gap:6px}.p75pulse .tab{min-height:36px}}' +
+    '@media (max-width:400px){.p75pulse .tab{flex:none;min-height:36px;padding:0 12px}}' +   // one row that slides sideways: a second row cost ~40px
     '@media (max-width:700px){.p75pulse .secs{grid-template-columns:1fr;gap:14px}.p75pulse a.sec{min-height:0;padding:22px 20px}.p75pulse a.sec .nm{font-size:23px}.p75pulse .strip a{margin-left:0}}' +
     // cockpit (the #why view): one instrument per signal, plus an info screen that explains the one you tap
     '.p75pulse .ck{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start;margin-top:8px}' +
