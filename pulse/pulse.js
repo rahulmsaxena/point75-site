@@ -1137,7 +1137,7 @@
     }); }, 650);
   }
 
-  var FOLD = !!location.hash.slice(1), FOLD_ANIM = false, FROM_TK = false;   // header and dials folded into the strip?
+  var FOLD = !!location.hash.slice(1) && location.hash !== '#takeaway', FOLD_ANIM = false, FROM_TK = false;   // header and dials folded into the strip?
   var cache = null, loading = false, waiting = [];
   function load(cb) {
     // Queue every caller: the site can rebuild the page while data is loading, and the redrawn page must hear back too
@@ -1172,7 +1172,8 @@
           return;
         }
         var a = e.target.closest('a[data-sec]'); if (!a) return;
-        if (!FOLD) {   // first tab pick: fold the top away smoothly (draw below leaves it open for one frame so the change animates)
+        if (a.getAttribute('data-sec') === 'takeaway') { FOLD = false; host.classList.remove('folded'); }   // the Takeaway opens with its dials; scrolling folds them
+        else if (!FOLD) {   // first tab pick: fold the top away smoothly (draw below leaves it open for one frame so the change animates)
           FOLD = true; FOLD_ANIM = true;
           requestAnimationFrame(function () { requestAnimationFrame(function () { host.classList.add('folded'); FOLD_ANIM = false; }); });
         }

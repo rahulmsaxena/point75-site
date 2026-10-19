@@ -339,7 +339,7 @@
     { key: 'cost', tab: 'The cost', short: 'Cost' },
     { key: 'buyers', tab: 'The buyers', short: 'Buyers' }
   ];
-  var FOLD = !!location.hash.slice(1), FOLD_ANIM = false;   // title and intro folded into the strip?
+  var FOLD = !!location.hash.slice(1) && location.hash !== '#takeaway', FOLD_ANIM = false;   // title and intro folded into the strip?
   function page(j) {
     CHARTS = [];
     var w = j.wall, rt = j.rates, it = j.interest, ow = j.owners, R = {};
@@ -565,7 +565,8 @@
       e.preventDefault();
       var k = a.getAttribute('data-tab');
       FROM_TK = !!a.closest('.dt-ovc');   // a Takeaway card leaves a "Back to the takeaway" link on the tab it opens
-      if (!FOLD) {   // first tab pick: fold the title away smoothly
+      if (k === 'takeaway') { FOLD = false; host.classList.remove('folded'); }   // the Takeaway opens with its title; scrolling folds it
+      else if (!FOLD) {   // first tab pick: fold the title away smoothly
         FOLD = true; FOLD_ANIM = true;
         requestAnimationFrame(function () { requestAnimationFrame(function () { host.classList.add('folded'); FOLD_ANIM = false; }); });
       }
