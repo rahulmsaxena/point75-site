@@ -1208,7 +1208,7 @@
 
   // On the Takeaway, the header and dials fold away as soon as the reader scrolls down, so the content below
   // slides up into the space; scrolling back up to the top brings them back. Other tabs keep the strip until it is tapped.
-  var SCROLL_TICK = false, LAST_Y = window.pageYOffset;
+  var SCROLL_TICK = false, LAST_Y = window.pageYOffset, SCROLL_HOLD = 0;
   window.addEventListener('scroll', function () {
     if (SCROLL_TICK) return; SCROLL_TICK = true;
     requestAnimationFrame(function () {
@@ -1218,8 +1218,15 @@
       var host = document.querySelector('.p75pulse'), strip = host && host.querySelector('.fstrip');
       if (!strip) return;
       var tb = document.querySelector('.top-blocks--sticky'), hdr = tb ? tb.getBoundingClientRect().height : 0;
-      if (dy > 0 && !FOLD && y > 6) { FOLD = true; host.classList.add('folded'); }
-      else if (dy < 0 && FOLD && strip.getBoundingClientRect().top >= hdr - 1) { FOLD = false; host.classList.remove('folded'); }
+      if (Date.now() < SCROLL_HOLD) return;   // let a fold finish before reading the scroll again
+      var top = host.querySelector('.top');
+      if (dy > 0 && !FOLD && y > 6) {
+        // only when the page stays scrollable once folded; otherwise it would bounce open and shut on a short page
+        if (document.documentElement.scrollHeight - top.offsetHeight < window.innerHeight + 80) return;
+        FOLD = true; host.classList.add('folded'); SCROLL_HOLD = Date.now() + 600;
+      } else if (dy < 0 && FOLD && strip.getBoundingClientRect().top >= hdr - 1) {
+        FOLD = false; host.classList.remove('folded'); SCROLL_HOLD = Date.now() + 600;
+      }
     });
   }, { passive: true });
   window.addEventListener('hashchange', function () {
