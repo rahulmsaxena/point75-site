@@ -11,7 +11,7 @@
     '.p75debt{--ink:#111214;--panel:#17181B;--line:#2A2B2F;--grid:#232428;--cream:#EDE8DC;--muted:#C2BCAF;--soft:#E4DED1;--faint:#8a8d93;--gold:#C9A227;' +
       'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box}' +
     '.p75debt *{box-sizing:border-box}' +
-    '.p75debt .wrap{max-width:1040px;margin:0 auto;padding:6px 20px 48px}' +
+    '.p75debt .wrap{max-width:1040px;margin:0 auto;padding:4px 20px 48px}' +
     '.p75debt .eyebrow{color:var(--gold);letter-spacing:.14em;font-size:12px;font-weight:700;text-transform:uppercase}' +
     '.p75debt .eyebrow a{color:inherit;text-decoration:none}' +
     '.p75debt h1{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:28px;line-height:1.15;margin:4px 0 8px;letter-spacing:-.01em;display:inline-block;vertical-align:baseline;max-width:100%}' +

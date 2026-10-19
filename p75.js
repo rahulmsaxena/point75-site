@@ -1044,8 +1044,14 @@
     var D = '.block-header-layout-desktop .block-header__nav-links', TOP = D + '>.block-header-item>.block-header-item__label>';
     var st = document.createElement('style'); st.id = 'p75-menu3';
     st.textContent =
-      D + '{align-items:center!important;gap:14px!important}' +   // 14px (was 28px) so Intelligence (with its dropdown) and Contact fit beside Search
-      '@media (max-width:1340px){' + D + '{gap:10px!important}}' +
+      // The header is capped at 1224px and the logo takes 356px of it, so the menu has 836px at most: 11px gaps
+      // keep every item and Search on one line (at 14px Search wrapped to a second row, a 36px band under the logo)
+      D + '{align-items:center!important;gap:11px!important}' +
+      // Narrower windows (the header narrows below ~1270px): keep the menu on one line by dropping the
+      // "Start here" pill (it is also on the homepage), then a smaller logo and an icon-only Search
+      '@media (max-width:1240px){' + D + '{gap:8px!important}' + D + '>.p75start-li{display:none!important}}' +
+      '@media (max-width:1100px){.block-header-layout-desktop .block-header-logo__image{height:46px!important}' +
+        D + ' .p75s-btn{font-size:0!important;gap:0!important;width:40px!important;padding:0!important;justify-content:center!important}' + D + ' .p75s-btn kbd{display:none!important}}' +
       TOP + '.item-content-wrapper{display:inline-flex!important;align-items:center!important;height:40px!important}' +
       TOP + '.item-content-wrapper>.item-content{font-size:15px!important;font-weight:600!important;color:#fff!important;letter-spacing:.01em}' +
       TOP + '.item-content-wrapper--active>.item-content{text-decoration:underline!important;text-decoration-color:#C9A227!important;text-decoration-thickness:2px!important;text-underline-offset:9px!important}' +
@@ -1068,7 +1074,7 @@
       // phone header: 12px above and below the logo instead of 24px, since it stays pinned while reading
       '.block-header-layout-mobile{padding-top:12px!important;padding-bottom:12px!important}' +
       // desktop header: 14px above and below instead of 30px, logo 58px tall instead of 73px (133px -> 101px)
-      '.block-header-layout-desktop{padding-top:14px!important;padding-bottom:14px!important}' +
+      '.block-header-layout-desktop{padding-top:10px!important;padding-bottom:8px!important}' +
       '.block-header-layout-desktop .block-header-logo__image{height:58px!important;width:auto!important;max-width:none!important}';
     document.head.appendChild(st);
   })();
