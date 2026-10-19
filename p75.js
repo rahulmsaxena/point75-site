@@ -1330,7 +1330,12 @@
             if (d.type === 'scrollto') {
               done(); last = {};
               var hdr = document.querySelector('.top-blocks--sticky, header'), off = hdr ? hdr.getBoundingClientRect().height : 0;
-              setTimeout(function () { window.scrollTo({ top: Math.max(0, inner.getBoundingClientRect().top + window.scrollY + d.y - off - 12), behavior: 'smooth' }); }, 150);
+              // (arriving from another page, the site scrolls itself back to the top once its route settles, so check
+              // again a little later and put the reader back on the archive if that happened)
+              var target = function () { return Math.max(0, f.getBoundingClientRect().top + inner.getBoundingClientRect().top + window.scrollY + d.y - off - 12); };
+              [150, 900, 1800].forEach(function (t, k) {
+                setTimeout(function () { var y = target(); if (!k || Math.abs(window.scrollY - y) > 80) window.scrollTo({ top: y, behavior: k ? 'instant' : 'smooth' }); }, t);
+              });
             }
           });
           go();
