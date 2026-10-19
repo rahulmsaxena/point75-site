@@ -1,6 +1,274 @@
 {
   "summaries": [
     {
+      "market_date": "2026-10-19",
+      "key": "2026-10-19",
+      "edition": "close",
+      "generated_at": "2026-10-19T22:54:13Z",
+      "as_of": "3:00 PM ET settlement (market close quotes; Treasury's official curve for today not yet posted)",
+      "title": "Treasuries give back part of last week's rally as AI stocks rebound and oil stays above $109",
+      "regime": "Bear shift",
+      "regime_note": "Risk-on rebound lifts yields across the curve",
+      "conviction": "Medium",
+      "takeaway": "Yields rose about 5 bp across the curve, with the 10-year back at 5.14% and the 2-year near 4.76%, undoing roughly a third of last week's drop. The main push came from a rebound in AI and chip stocks, which reduced the demand for safe-haven bonds, while Houthi attack claims on Saudi oil sites kept inflation worries alive. The weakest homebuilder confidence reading since 2012 did little to hold yields down.",
+      "tape": [
+        {
+          "k": "2Y",
+          "level": 4.76,
+          "d": 5,
+          "w": -4
+        },
+        {
+          "k": "10Y",
+          "level": 5.14,
+          "d": 6,
+          "w": -10
+        },
+        {
+          "k": "30Y",
+          "level": 5.47,
+          "d": 4,
+          "w": -13
+        },
+        {
+          "k": "2s10s",
+          "level": 38,
+          "d": 1,
+          "w": -6,
+          "unit": "bp",
+          "group": "Curve"
+        }
+      ],
+      "fed": {
+        "meeting": "Oct 28"
+      },
+      "cross": [
+        {
+          "k": "S&P 500",
+          "v": "+0.4%",
+          "dir": "up",
+          "read": "Stocks rose to 7,690.73 alongside higher yields: money moved back into stocks and out of bonds, a risk-on move rather than a rates scare."
+        },
+        {
+          "k": "Nasdaq",
+          "v": "+1.1%",
+          "dir": "up",
+          "read": "Chipmakers bounced after an eight-day losing streak, easing last week's AI-spending worries that had driven investors into Treasuries."
+        },
+        {
+          "k": "Dow",
+          "v": "−0.1%",
+          "dir": "flat",
+          "read": "The blue-chip index swung between gains and losses and ended almost unchanged at 51,966.03."
+        },
+        {
+          "k": "Dollar index",
+          "v": "≈102.0 (+0.2%)",
+          "dir": "up",
+          "read": "A slightly firmer dollar matched the rise in US yields."
+        },
+        {
+          "k": "Brent",
+          "v": "$109.55 (−0.3%)",
+          "dir": "flat",
+          "read": "Oil swung between about $107 and $110 on Houthi attack claims and a US waiver on some Russian energy sanctions, ending little changed but still near its highest since May."
+        }
+      ],
+      "drivers": [
+        {
+          "title": "AI stocks rebound, bonds lose their safe-haven bid",
+          "tags": [
+            "Risk",
+            "Equities"
+          ],
+          "bp": 6,
+          "of": "10Y",
+          "total": 6,
+          "what": "Chip and AI stocks recovered after last week's selloff over how costly AI data centers will be to fund. Nvidia rose 1.4% and the Nasdaq gained 1.1%; a chip-stock gauge rose about 1.6%.",
+          "why": "Last week nervous investors moved money from stocks into Treasuries, which pushed bond prices up and yields down. When stocks steady, some of that money flows back out of bonds, so yields rise.",
+          "response": "The 10-year yield rose about 6 bp to 5.14% and the 2-year about 5 bp to 4.76%, according to Newsquawk's settlement wrap. That reverses part of last week's 14.6 bp fall in the 10-year.",
+          "signal": "Last week's bond rally depended heavily on stock-market fear. If tech keeps recovering, yields may drift back toward this month's highs above 5.3%."
+        },
+        {
+          "title": "Houthi claims on Saudi oil sites keep inflation risk in focus",
+          "tags": [
+            "Energy",
+            "Geopolitics",
+            "Inflation"
+          ],
+          "impact": "Added to upward pressure on yields into the afternoon",
+          "what": "Yemen's Houthis claimed new attacks on Saudi energy, airport and military targets, including an Aramco facility in Yanbu and the Shaybah oilfield. Saudi authorities did not immediately confirm the claims.",
+          "why": "Higher oil prices feed into inflation, and with inflation already running hot, they make it more likely the Fed keeps rates high or raises them again. That pushes yields up.",
+          "response": "Oil peaked around 1:45 PM ET and the 10-year hit its day high near 5.15% at about 1:10 PM ET. Treasury futures bounced off their lows as oil eased into the settlement; Brent ended down 0.3% at $109.55.",
+          "signal": "Oil headlines are moving bonds through the inflation channel. As long as Brent stays near $110, it is hard for yields to fall far."
+        },
+        {
+          "title": "Homebuilder confidence falls to a 14-year low",
+          "tags": [
+            "Housing",
+            "Growth"
+          ],
+          "impact": "Little market reaction",
+          "what": "The NAHB housing market index fell to 29 in October from 32, below the 31 expected and the lowest since June 2012. Builders' view of sales over the next six months dropped to 32 from 37.",
+          "why": "Mortgage rates track long-term Treasury yields, so 10-year yields above 5% are squeezing home buyers. Weak housing would normally argue for lower yields because it points to a slowing economy.",
+          "response": "Yields rose anyway: the stock rebound and oil outweighed the soft data.",
+          "signal": "High rates are clearly hurting housing. That damage could matter more for the Fed if it starts to spread to the wider economy."
+        }
+      ],
+      "macro": [
+        {
+          "tag": "Housing",
+          "title": "NAHB housing market index (October)",
+          "actual": "29",
+          "consensus": "31",
+          "prior": "32",
+          "note": "Lowest since June 2012. Current sales 33 (from 35), next-six-month sales 32 (from 37), buyer traffic 18 (from 23)."
+        },
+        {
+          "tag": "Fed",
+          "title": "Fed pricing",
+          "note": "CME FedWatch pricing showed about 4 bp of hikes for the October 27–28 meeting and about 26 bp by December, according to Newsquawk, meaning traders see a quarter-point hike by December as the likely path. The Fed is in its quiet period before the meeting, so no officials spoke."
+        },
+        {
+          "tag": "Supply",
+          "title": "Treasury supply",
+          "note": "Only bill auctions today: the 3-month bill sold at 4.095% (2.77 times covered) and the 6-month at 4.220% (2.84 times covered). A $13 billion 20-year bond auction follows Wednesday."
+        },
+        {
+          "tag": "Global",
+          "title": "China and Canada data",
+          "note": "China's third-quarter GDP grew 4.5% from a year earlier, against 4.6% expected. Canada's September CPI rose 3.1% from a year earlier, slightly below the 3.2% expected."
+        }
+      ],
+      "geo": [
+        {
+          "title": "Houthi attacks and Strait of Hormuz shipping",
+          "impact": "Moderate",
+          "text": "Unconfirmed Houthi claims of strikes on Saudi oil sites, plus a tanker that Iran's Revolutionary Guards said hit a mine in the Strait of Hormuz, lifted oil during the session and helped push yields higher. Kpler estimated crude flows through the region fell to about 8.5 million barrels a day last week."
+        },
+        {
+          "title": "Unrest in France",
+          "impact": "Low",
+          "text": "Cost-of-living protests turned violent over the weekend, and French government bond yields rose more than German ones on worries about higher state spending. The spillover to Treasuries was small."
+        },
+        {
+          "title": "US waiver on Russian energy sanctions",
+          "impact": "Low",
+          "text": "A waiver of some sanctions and tariffs on Russian energy exports raised the prospect of more fuel supply, which helped cap oil, though analysts said it was unclear how it would work or how long it would last."
+        }
+      ],
+      "events": [
+        {
+          "t": "Overnight",
+          "cat": "Data",
+          "title": "China Q3 GDP +4.5% y/y vs 4.6% expected",
+          "react": "10Y dipped to about 5.05% during Asian trading"
+        },
+        {
+          "t": "8:30 AM",
+          "cat": "Data",
+          "title": "Canada September CPI 3.1% y/y vs 3.2% expected",
+          "react": "Little effect on Treasuries"
+        },
+        {
+          "t": "Morning",
+          "cat": "Data",
+          "title": "NAHB homebuilder index 29 vs 31 expected, lowest since 2012",
+          "react": "Yields kept rising as stocks rallied"
+        },
+        {
+          "t": "1:10 PM",
+          "cat": "Rates",
+          "title": "10-year hits its day high near 5.15%",
+          "react": "Houthi attack claims lifting oil"
+        },
+        {
+          "t": "1:45 PM",
+          "cat": "Energy",
+          "title": "Oil peaks on Houthi claims",
+          "react": "Treasury futures bounced as oil eased into the settlement"
+        },
+        {
+          "t": "4:00 PM",
+          "cat": "Equities",
+          "title": "S&P 500 +0.4% at 7,690.73; Nasdaq +1.1%",
+          "react": "10Y at 5.14%, up about 5 bp on the day"
+        }
+      ],
+      "interpretation": {
+        "text": "Today was mostly a reversal of last week's flight to safety. Yields rose by similar amounts at both ends of the curve, which points to money leaving bonds as stocks recovered rather than a big change in Fed expectations, which still lean toward a hike by December. Oil near $110 and hot inflation data keep a floor under yields, while very weak housing shows how much the 5% 10-year is biting.",
+        "change": "A renewed tech selloff after this week's big earnings (Tesla, Meta, IBM on Wednesday) would likely pull yields back down. A weak 20-year auction or another oil spike could push the 10-year back toward 5.3%."
+      },
+      "watch": [
+        {
+          "when": "Tue 8:30 AM",
+          "what": "Housing starts and building permits (September)"
+        },
+        {
+          "when": "Tue 10:00 AM",
+          "what": "Pending home sales (September)"
+        },
+        {
+          "when": "Wed 1:00 PM",
+          "what": "20-year bond auction ($13 billion)"
+        },
+        {
+          "when": "Wed after close",
+          "what": "Earnings from Meta, Tesla, IBM, Lam Research and Texas Instruments, a test for the AI trade"
+        },
+        {
+          "when": "Thu 8:30 AM",
+          "what": "Weekly jobless claims"
+        },
+        {
+          "when": "Fri 9:45 AM",
+          "what": "S&P Global flash PMIs (October)"
+        },
+        {
+          "when": "Fri 10:00 AM",
+          "what": "University of Michigan sentiment and inflation expectations (October final)"
+        },
+        {
+          "when": "Oct 27–28",
+          "what": "FOMC meeting; decision and press conference Wednesday Oct 28"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Newsquawk: Daily Asia-Pac Opening News, 20 October 2026",
+          "url": "https://www.newsquawk.com/headlines/newsquawk-daily-asia-pac-opening-news---20th-october-2026"
+        },
+        {
+          "name": "BNN Bloomberg (AP): AI stocks lead a rebound on Wall Street",
+          "url": "https://www.bnnbloomberg.ca/markets/dow-jones/2026/10/19/european-stocks-slip-led-by-france-and-oil-falls-on-trumps-russian-sanctions-waiver/"
+        },
+        {
+          "name": "BabyPips: Financial & Forex Market Recap, October 19, 2026",
+          "url": "https://www.babypips.com/news/financial-forex-market-recap-2026-10-19"
+        },
+        {
+          "name": "Investrade: Market Review, October 19, 2026",
+          "url": "https://investrade.com/market-review-october-19-2026/"
+        },
+        {
+          "name": "Trading Economics: US 30-year bond yield",
+          "url": "https://tradingeconomics.com/united-states/30-year-bond-yield"
+        },
+        {
+          "name": "Rallies.ai: Oil edges higher as investors weigh renewed Houthi attacks",
+          "url": "https://rallies.ai/news/oil-edges-higher-as-investors-weigh-renewed-houthi-attacks-on-saudi-infrastructure-4d26059c675f4c34"
+        },
+        {
+          "name": "Investrade: Weekly Event Calendar, Oct 19–23, 2026",
+          "url": "https://investrade.com/weekly-event-calendar-10-19-2026-10-23-2026/"
+        },
+        {
+          "name": "U.S. Treasury: daily par yield curve rates (October 2026)",
+          "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=202610"
+        }
+      ]
+    },
+    {
       "market_date": "2026-10-16",
       "key": "2026-10-16",
       "edition": "close",
