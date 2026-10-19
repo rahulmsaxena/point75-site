@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-16",
+  "updated": "2026-10-19",
   "window": "Sep 4 – Oct 16, 2026",
   "hero": {
     "src": "https://rahulmsaxena.github.io/point75-site/insights/hero.jpg",
@@ -11,8 +11,8 @@
   "mood": "Cautious vigilance",
   "bigPicture": [
     "The shared view among the market’s leading voices is that the era of cheap money is over. The Federal Reserve raised rates in September because inflation has been above its 2% goal for more than five years, and minutes released Oct 7 show most officials expect another hike by year end. Consumer prices rose 3.7% in the year to September, a hotter reading than expected. The 10-year Treasury yield touched about 5.35% on Oct 7, its highest level since 2002, then eased to about 5.1% by Oct 16 as a stock selloff sent investors into Treasuries.",
-    "The pressure comes from supply as much as inflation. Federal debt has passed $40 trillion, the government keeps borrowing heavily, and traditional foreign buyers such as Japan and China are buying fewer Treasuries. Ray Dalio says the U.S. is nearing the limit of how much debt it can carry, and several of these investors say that makes buy-and-hold in long-term bonds riskier than it used to be.",
-    "They are not all bearish on bonds. BlackRock’s Rick Rieder sees today’s yields as an opportunity, especially in shorter-term bonds, though PIMCO’s Dan Ivascyn warns the 10-year yield could still reach 6% as leveraged investors are forced to sell. Treasury Secretary Scott Bessent says the rise is a global trend rather than a U.S. problem, promising that growth and spending restraint will soon slow government borrowing. Gundlach warns that long-term Treasuries may not protect investors the way they used to, Dalio is betting against bonds and holding gold instead, and Bill Gross now says not to own bonds at all, apart from one-year Treasury bills."
+    "The pressure comes from supply as much as inflation. Federal debt has passed $40 trillion, the government keeps borrowing heavily, and traditional foreign buyers such as Japan and China are buying fewer Treasuries. Ray Dalio says the U.S. is nearing the limit of how much debt it can carry and that the bond bear market probably has a long way to go, and several of these investors say that makes buy-and-hold in long-term bonds riskier than it used to be.",
+    "They are not all bearish on bonds. BlackRock’s Rick Rieder sees today’s yields as an opportunity, especially in shorter-term bonds, though PIMCO’s Dan Ivascyn warns the 10-year yield could still reach 6% and expects the Fed to hold this month, then probably raise rates once more this year. Treasury Secretary Scott Bessent says the rise is a global trend rather than a U.S. problem, promising that growth and spending restraint will soon slow government borrowing. Gundlach warns that long-term Treasuries may not protect investors the way they used to, Dalio is betting against bonds and holding gold instead, and Bill Gross now says not to own bonds at all, apart from one-year Treasury bills."
   ],
   "agree": ["Rates will stay higher for longer", "Government debt is the core pressure on yields", "Quality matters more than chasing extra yield"],
   "differ": [
@@ -77,14 +77,14 @@
     },
     {
       "name": "Ray Dalio", "role": "Founder, Bridgewater Associates", "initials": "RD", "theme": "Nearing the limit",
-      "when": "Oct 6–8, 2026", "where": "Bloomberg TV interview; Greenwich Economic Forum fireside chat",
+      "when": "Oct 6–13, 2026", "where": "Bloomberg TV interview; Greenwich Economic Forum; LinkedIn essay",
       "points": [
-        "He expects a U.S. debt crisis within roughly the next two years, as the government must sell about $2 trillion of new debt a year while big buyers such as China and Japan pull back.",
-        "He says rising interest costs are taking a growing share of federal spending, and that rising rates will squeeze borrowers, especially homeowners with mortgages.",
-        "He is betting against bonds, suggests 5% to 15% of a diversified portfolio in gold, likes inflation-protected bonds, and thinks U.S. stocks are in a bubble."
+        "In an Oct 13 essay he said the selloff in Treasuries is far from over: the U.S. must refinance about $10 trillion of maturing debt this year and borrow about $2.1 trillion more, while China and Japan have shifted from buying Treasuries to trimming them.",
+        "He describes a self-feeding loop in which more borrowing pushes yields up, which raises interest costs and adds still more debt, and says the debt burden relative to tax revenue is the highest since World War II. He expects it to last until higher rates slow the economy.",
+        "He favors gold over government bonds and says conditions favor betting against Treasuries, warns that other markets may weaken too, and has likened the AI investment boom to a bubble."
       ],
-      "quote": "We're approaching our limits.",
-      "sources": [["TheStreet (Bloomberg TV interview), Oct 6", "https://www.thestreet.com/crypto/markets/billionaire-ray-dalio-reveals-deadline-for-u-s-debt-crisis"], ["Yahoo Finance, Greenwich Economic Forum", "https://finance.yahoo.com/economy/policy/articles/ray-dalio-believes-going-experience-143411294.html"], ["Scuttlebutt summary, Oct 9", "https://getscuttlebutt.substack.com/p/2-years-to-a-debt-squeeze-and-stocks"]]
+      "quote": "The bond bear market probably has a long way to go.",
+      "sources": [["Yahoo Finance (Stocktwits), Oct 13", "https://finance.yahoo.com/economy/policy/articles/ray-dalio-cautions-us-treasury-185817789.html"], ["The Standard, Oct 14", "https://www.thestandard.com.hk/finance/article/345493/Ray-Dalio-warns-US-bond-selloff-has-long-way-to-go"], ["TheStreet (Bloomberg TV interview), Oct 6", "https://www.thestreet.com/crypto/markets/billionaire-ray-dalio-reveals-deadline-for-u-s-debt-crisis"]]
     },
     {
       "name": "Rick Rieder", "role": "CIO of Global Fixed Income, BlackRock", "initials": "RR", "theme": "Bonds are back",
@@ -99,14 +99,14 @@
     },
     {
       "name": "Dan Ivascyn", "role": "Group CIO, PIMCO", "initials": "DI", "theme": "6% is possible",
-      "when": "Oct 9, 2026", "where": "Financial Times interview",
+      "when": "Oct 9–13, 2026", "where": "Financial Times interview; Grant’s Fall Conference, speaking to Reuters",
       "points": [
-        "He said the 10-year Treasury yield could rise to 6%, a level not seen since 2000, calling it possible rather than a forecast, as energy prices, inflation fears, heavy government debt and AI borrowing weigh on bonds.",
-        "He blamed part of the recent jump on forced selling, as hedge funds and other investors using borrowed money were pushed out of losing bets, and warned higher yields could hurt stocks, company bonds and commercial real estate.",
-        "He also noted that higher yields may draw more buyers into Treasuries, which could limit how high yields go from here."
+        "He said the 10-year Treasury yield could rise to 6%, a level not seen since 2000, calling it possible rather than a forecast, and blamed part of the recent jump on forced selling by investors using borrowed money.",
+        "On Oct 13 he said yields have probably not yet peaked: he expects the Fed to hold rates at its Oct 27–28 meeting and then probably raise them once more this year, with one or two more hikes in all.",
+        "He said housing is already weak and commercial real estate is where higher rates will bite next, and he expects Chair Warsh to keep an open mind on inflation while saying less about future moves."
       ],
-      "quote": "You can certainly get there.",
-      "sources": [["Investing.com (FT interview), Oct 9", "https://www.investing.com/news/economy-news/us-10year-treasury-yields-at-risk-of-hitting-6-pimco-tells-ft-4940410"], ["CRE Daily, Oct 12", "https://www.credaily.com/briefs/pimco-warns-10-year-treasury-yield-could-climb-to-6/"]]
+      "quote": "We'll probably see a Fed on hold now.",
+      "sources": [["Yahoo Finance (Reuters), Oct 13", "https://finance.yahoo.com/economy/policy/articles/us-treasury-yields-yet-peak-155219861.html"], ["Investing.com (FT interview), Oct 9", "https://www.investing.com/news/economy-news/us-10year-treasury-yields-at-risk-of-hitting-6-pimco-tells-ft-4940410"]]
     }
   ],
   "actions": [
