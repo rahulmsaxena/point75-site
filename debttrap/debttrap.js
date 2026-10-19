@@ -8,8 +8,8 @@
   var C1 = '#3987e5', C2 = '#d95926', C3 = '#199e70', C4 = '#c98500';
 
   var CSS =
-    // the site's one red is a bright baby pink; short pink words go bold so they read at a glance
-    '.p75debt [style*="color:#FFA8C0"][style]:not(b):not(.tk-head *):not(.fi *){font-weight:800}' +
+    // the site's one red is a bright warm red (#FF8577); short red words go bold so they read at a glance
+    '.p75debt [style*="color:#FF8577"][style]:not(b):not(.tk-head *):not(.fi *){font-weight:800}' +
     '.p75debt{--ink:#111214;--panel:#17181B;--line:#2A2B2F;--grid:#232428;--cream:#EDE8DC;--muted:#C2BCAF;--soft:#E4DED1;--faint:#8a8d93;--gold:#C9A227;' +
       'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box;min-height:calc(100vh - 90px)}' +
     '.p75debt *{box-sizing:border-box}' +
@@ -348,7 +348,7 @@
     CHARTS = [];
     var w = j.wall, rt = j.rates, it = j.interest, ow = j.owners, R = {};
     (j.readings || []).forEach(function (r) { R[r.key] = r; });
-    var AMB = '#FFB224', RED = '#FFA8C0', BLU = '#1FD8FF', GRN = '#2BFF88';
+    var AMB = '#FFB224', RED = '#FF8577', BLU = '#1FD8FF', GRN = '#2BFF88';
     var C = function (t, col) { return '<span class="hl" style="color:' + col + '">' + esc(t) + '</span>'; };
     var mean = function (r) { return r ? '<p class="dt-means"><i aria-hidden="true"></i><span><b>What it means:</b> ' + esc(r.text) + '</span></p>' : ''; };
     var SEC = {};
