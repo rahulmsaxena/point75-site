@@ -680,7 +680,7 @@
   var HUB_LABEL = { '/education': 'All Education guides', '/kinetics': 'All of Kinetics', '/bond-summary': 'Bond Summary overview', '/economic-indicators': 'Economic Indicators', 'https://tools.point75.io/market-intelligence': 'All dashboards' };
 
   // ---------- Sections that go deeper than the menu ----------
-  // The menu shows one level (Kinetics > Pulse, Debt Trap, News, Bond Summary, Economic Indicators). Bond Summary's two
+  // The menu shows one level (Kinetics > Bond Summary, Debt Trap, Economic Indicators, News, Pulse). Bond Summary's two
   // pages (Daily Summary, Insights) are cards on its landing page, so the tree lives here. Intelligence lives
   // entirely on tools.point75.io (Sector Credit, Lenders and Credit Stress moved there in Oct 2026); intelMenu
   // adds its tools to the menu.
@@ -689,15 +689,15 @@
   // Order matters: arrows step through each group in this order.
   var INTEL_HREF = 'https://tools.point75.io/market-intelligence';
   var SECTIONS = [
-    { href: '/kinetics', text: 'Kinetics', hub: true, kids: [
-      { href: '/pulse', text: 'Pulse' },
-      { href: '/debt-trap', text: 'Debt Trap' },
-      { href: '/news', text: 'News' },
+    { href: '/kinetics', text: 'Kinetics', hub: true, kids: [   // A–Z, like the menu (sortMenu)
       { href: '/bond-summary', text: 'Bond Summary', hub: true, kids: [
         { href: '/intelligent-summary', text: 'Daily Summary' },
         { href: '/insights', text: 'Insights' }
       ] },
-      { href: '/economic-indicators', text: 'Economic Indicators' }
+      { href: '/debt-trap', text: 'Debt Trap' },
+      { href: '/economic-indicators', text: 'Economic Indicators' },
+      { href: '/news', text: 'News' },
+      { href: '/pulse', text: 'Pulse' }
     ] }
   ];
   // Every node with pages under it, flattened: { href, text, hub, kids: [{ href, text, kids }] }
@@ -740,6 +740,15 @@
   // mounted (hydration done), so add the overview as soon as that appears; otherwise fall back to a 2.5 s wait.
   var HUB_READY = Date.now() + 2500;
   function hubReady() { return Date.now() >= HUB_READY || !!document.querySelector('[data-v-app]'); }
+  // A section's dropdown in A–Z order, whatever order the site builder keeps; its overview link stays on top.
+  // Moves nodes only when the order is wrong, so it is safe to run on every menu repaint.
+  function sortMenu(ul) {
+    var items = [].slice.call(ul.querySelectorAll(':scope > li')).filter(function (li) { return !li.classList.contains('p75hub'); });
+    var name = function (li) { var a = li.querySelector('a.item-content'); return ((a && a.textContent) || '').trim().toLowerCase(); };
+    var sorted = items.slice().sort(function (x, y) { return name(x).localeCompare(name(y)); });
+    if (sorted.every(function (li, i) { return li === items[i]; })) return;
+    sorted.forEach(function (li) { ul.appendChild(li); });
+  }
   function hubMenus(fams) {
     fams.forEach(function (f) {
       [].slice.call(f.ul.querySelectorAll(':scope > li')).forEach(function (li) {   // repair recycled nodes
@@ -748,8 +757,8 @@
         if (li.classList.contains('p75hub')) li.classList.remove('p75hub');
         if (a && a.hasAttribute('data-p75hub')) a.removeAttribute('data-p75hub');
       });
-      // Debt Trap has no entry in the site builder's menu, so it is added under Kinetics, right after Pulse,
-      // by copying Pulse's own item so it looks and behaves like its neighbours (desktop and phone menus)
+      // Debt Trap has no entry in the site builder's menu, so it is added under Kinetics (sortMenu then puts it
+      // in A–Z order) by copying Pulse's own item so it looks and behaves like its neighbours (desktop and phone menus)
       if (f.href === '/kinetics' && !f.ul.querySelector(':scope > li a.item-content[href$="/debt-trap"]')) {
         var pl = [].slice.call(f.ul.querySelectorAll(':scope > li')).filter(function (x) {
           var xa = x.querySelector('a.item-content'); return xa && /\/pulse\/?$/.test(xa.getAttribute('href') || '');
@@ -763,6 +772,7 @@
           pl.parentNode.insertBefore(dl, pl.nextSibling);
         }
       }
+      if (f.href === '/kinetics') sortMenu(f.ul);
       if (!hubReady() || !f.kids.length) return;
       var has = [].slice.call(f.ul.querySelectorAll(':scope > li a.item-content')).some(function (a) { return isHub(a, f.href); });
       if (has) return;
@@ -872,7 +882,7 @@
       f.kids.forEach(function (k, j) {
         if (k.href !== path) return;
         // back from the first page: to a landing page "overview", or by name to a page that has its own content.
-        // Kinetics pages (Pulse, News, Bond Summary, Economic Indicators) stand on their own rather than as a
+        // Kinetics pages (Bond Summary, Debt Trap, Economic Indicators, News, Pulse) stand on their own rather than as a
         // reading sequence, so each goes back to the Kinetics overview.
         var toHub = !j || HUB_BACK.indexOf(f.href) > -1;
         if (HUB_BACK.indexOf(f.href) > -1) s.sibling = true;
@@ -1204,12 +1214,12 @@
   // (hubMenus adds the "Intelligence overview" link at the top, as it does for the others).
   // The site styles its dropdowns through scoped attributes, so the pieces are copied from an existing
   // dropdown (its arrow, panel and one item) and added to the Intelligence item in place.
-  var INTEL_TOOLS = [
-    ['Congressional Trading', 'https://tools.point75.io/market-intelligence/congressional-trading'],
+  var INTEL_TOOLS = [   // A–Z, the same order as the tools site
     ['AI Investment', 'https://tools.point75.io/market-intelligence/ai-investment'],
-    ['Sector Credit', 'https://tools.point75.io/market-intelligence/sector-credit'],
+    ['Congressional Trading', 'https://tools.point75.io/market-intelligence/congressional-trading'],
+    ['Credit Stress', 'https://tools.point75.io/market-intelligence/credit-stress'],
     ['Lenders', 'https://tools.point75.io/market-intelligence/lenders'],
-    ['Credit Stress', 'https://tools.point75.io/market-intelligence/credit-stress']
+    ['Sector Credit', 'https://tools.point75.io/market-intelligence/sector-credit']
   ];
   function intelMenu(ul) {
     var a = ul.querySelector(':scope>.block-header-item>.block-header-item__label a.item-content[href*="tools.point75.io/market-intelligence"]');
