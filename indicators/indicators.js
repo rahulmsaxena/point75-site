@@ -17,18 +17,18 @@
     '.p75ind h1{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:28px;line-height:1.15;margin:0;letter-spacing:-.01em}' +
     '.p75ind .hd-t{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px}' +
     '.p75ind .asof{margin-left:auto;font-size:12.5px;color:var(--muted)}.p75ind .asof b{color:var(--cream);font-weight:600}' +
-    '.p75ind .lede{color:var(--soft);font-size:15.5px;line-height:1.55;margin:6px 0 0;text-align:justify;hyphens:auto;-webkit-hyphens:auto}' +
+    '.p75ind .lede{color:var(--soft);font-size:16px;line-height:1.55;margin:6px 0 0;text-align:justify;hyphens:auto;-webkit-hyphens:auto}' +
     '.p75ind .num{font-variant-numeric:tabular-nums}' +
     '.p75ind button{font:inherit;color:inherit}' +
     // overview dials
     '.p75ind .ov{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0 0}' +
     '.p75ind .og{display:flex;flex-direction:column;gap:2px;padding:9px 12px 10px;border-radius:14px;background:var(--panel);border:1px solid var(--line);color:inherit;text-decoration:none;cursor:pointer;transition:border-color .15s}' +
     '.p75ind .og:hover,.p75ind .og:focus-visible{border-color:var(--gold);outline:none}' +
-    '.p75ind .og .k{font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#DCD6C9}' +
+    '.p75ind .og .k{font-size:12.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#DCD6C9}' +
     '.p75ind .ogb{display:flex;align-items:center;gap:10px}.p75ind .ogv{display:flex;flex-direction:column;gap:4px;min-width:0}' +
-    '.p75ind .og .gd{flex:0 0 auto;width:118px}.p75ind .og svg{display:block;width:100%;height:auto;overflow:visible}' +
-    '.p75ind .og .v{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:30px;line-height:1;text-shadow:0 0 14px currentColor}.p75ind .og .v small{font-family:Manrope,sans-serif;font-size:13px;margin-left:3px;opacity:.8;text-shadow:none}' +
-    '.p75ind .og .c{font-size:12.5px;font-weight:700;white-space:nowrap}.p75ind .og .c span{display:block;color:var(--muted);font-weight:500;margin-top:2px}' +
+    '.p75ind .og .gd{flex:0 0 auto;width:140px}.p75ind .og svg{display:block;width:100%;height:auto;overflow:visible}' +
+    '.p75ind .og .v{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:36px;line-height:1;text-shadow:0 0 14px currentColor}.p75ind .og .v small{font-family:Manrope,sans-serif;font-size:13px;margin-left:3px;opacity:.8;text-shadow:none}' +
+    '.p75ind .og .c{font-size:13.5px;font-weight:700;white-space:nowrap}.p75ind .og .c span{display:block;color:var(--muted);font-weight:500;margin-top:2px}' +
     // dials
     '.p75ind .p75n{transition:transform 4.5s cubic-bezier(.37,0,.3,1)}' +
     '.p75ind .p75f{stroke-dashoffset:100;transition:stroke-dashoffset 4.5s cubic-bezier(.37,0,.3,1)}.p75ind .go .p75f{stroke-dashoffset:0}' +
@@ -59,7 +59,7 @@
     '.p75ind a.tk-back{display:inline-flex;align-items:center;gap:8px;min-height:36px;margin:0 0 10px;padding:0 14px;border-radius:99px;border:1px solid var(--gold);background:rgba(201,162,39,.1);color:#FFD23F;font-weight:800;font-size:14px;text-decoration:none}' +
     // takeaway
     '.p75ind .tk{display:flex;flex-direction:column;gap:12px}' +
-    '.p75ind .tk-head{margin:0;padding:16px 20px;border-radius:16px;background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold);font-family:"Hedvig Letters Serif",Georgia,serif;font-size:22px;line-height:1.45;color:#fff}' +
+    '.p75ind .tk-head{margin:0;padding:16px 20px;border-radius:16px;background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold);font-family:"Hedvig Letters Serif",Georgia,serif;font-size:24px;line-height:1.45;color:#fff}' +
     '.p75ind .hl{text-shadow:0 0 12px currentColor}' +
     '.p75ind .tk-watch{display:flex;align-items:center;gap:10px;margin:0;font-size:16.5px;color:#F1ECE2}.p75ind .tk-watch b{color:#FFD23F}' +
     '.p75ind .tk-watch i{flex:0 0 auto;width:9px;height:9px;border-radius:50%;background:#FF3D5E;animation:p75iping 1.8s ease-out infinite}' +
@@ -70,11 +70,11 @@
     '@media (hover:hover){.p75ind a.tk-c:hover{transform:translateY(-2px)}}' +
     '.p75ind .tk-h{display:flex;align-items:center;justify-content:space-between;gap:8px}.p75ind .tk-h b{font-size:12.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#DCD6C9}.p75ind .tk-go{color:var(--gold);font-size:13.5px;font-weight:800;white-space:nowrap}' +
     '.p75ind .tk-b{display:flex;align-items:center;gap:12px}' +
-    '.p75ind .tk-d{flex:0 0 auto;width:84px}.p75ind .tk-d svg{display:block;width:100%;height:auto;overflow:visible}' +
+    '.p75ind .tk-d{flex:0 0 auto;width:104px}.p75ind .tk-d svg{display:block;width:100%;height:auto;overflow:visible}' +
     '.p75ind .tk-t{display:flex;flex-direction:column;gap:2px;min-width:0}' +
-    '.p75ind .tk-t > b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:28px;line-height:1;text-shadow:0 0 14px currentColor}.p75ind .tk-t > b small{font-family:Manrope,sans-serif;font-size:13px;margin-left:3px;opacity:.8;text-shadow:none}' +
+    '.p75ind .tk-t > b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:33px;line-height:1;text-shadow:0 0 14px currentColor}.p75ind .tk-t > b small{font-family:Manrope,sans-serif;font-size:13px;margin-left:3px;opacity:.8;text-shadow:none}' +
     '.p75ind .tk-t em{font-style:normal;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}' +
-    '.p75ind .tk-l{font-size:14px;line-height:1.45;color:#E4DED1}' +
+    '.p75ind .tk-l{font-size:15px;line-height:1.45;color:#E4DED1}' +
     // category tab: indicator dial cards, chart below
     '.p75ind .ch{display:flex;align-items:center;gap:10px;margin:0 0 10px;flex-wrap:wrap}.p75ind .ch h2{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:23px;margin:0}' +
     '.p75ind .pill{font-size:12.5px;font-weight:800;padding:3px 11px;border-radius:99px;border:1px solid currentColor}' +
@@ -86,9 +86,9 @@
     '.p75ind .ic[aria-expanded="true"]{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold) inset}' +
     '.p75ind .ic-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.p75ind .ic-h b{font-size:14.5px;font-weight:800}.p75ind .ic-h small{font-size:12px;color:var(--muted);white-space:nowrap}' +
     '.p75ind .ic-b{display:flex;align-items:center;gap:12px}' +
-    '.p75ind .ic-d{flex:0 0 auto;width:96px}.p75ind .ic-d svg{display:block;width:100%;height:auto;overflow:visible}' +
+    '.p75ind .ic-d{flex:0 0 auto;width:112px}.p75ind .ic-d svg{display:block;width:100%;height:auto;overflow:visible}' +
     '.p75ind .ic-v{display:flex;flex-direction:column;gap:3px;min-width:0}' +
-    '.p75ind .ic-v > b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:28px;line-height:1;text-shadow:0 0 14px currentColor}.p75ind .ic-v > b small{font-family:Manrope,sans-serif;font-size:12.5px;margin-left:3px;opacity:.8;text-shadow:none}' +
+    '.p75ind .ic-v > b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:32px;line-height:1;text-shadow:0 0 14px currentColor}.p75ind .ic-v > b small{font-family:Manrope,sans-serif;font-size:12.5px;margin-left:3px;opacity:.8;text-shadow:none}' +
     '.p75ind .ic-v em{font-style:normal;font-size:12.5px;font-weight:700}' +
     '.p75ind .ic-v span{font-size:11.5px;color:var(--muted)}' +
     '.p75ind .ic-s{font-size:12px;color:var(--gold);font-weight:700}' +
