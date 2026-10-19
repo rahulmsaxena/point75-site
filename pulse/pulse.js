@@ -30,7 +30,7 @@
     '.p75pulse .top{grid-template-rows:1fr}.p75pulse .fstrip{grid-template-rows:0fr;opacity:0}' +
     '.p75pulse.folded .top{grid-template-rows:0fr;opacity:0}.p75pulse.folded .fstrip{grid-template-rows:1fr;opacity:1}' +
     '.p75pulse:not(.folded) .fstrip{visibility:hidden}.p75pulse.folded .top > div{visibility:hidden;transition:visibility 0s .5s}' +
-    '.p75pulse.nofx .top,.p75pulse.nofx .fstrip,.p75pulse.nofx .top > div,.p75pulse.nofx .tabs{transition:none!important}' +
+    '.p75pulse,.p75pulse *{overflow-anchor:none}' +   // the fold must slide the content up, not be hidden by scroll anchoring
     '.p75pulse .fold{display:flex;align-items:center;gap:8px 22px;flex-wrap:wrap;width:100%;min-height:48px;margin:2px 0 0;padding:8px 10px 8px 16px;border-radius:12px;' +
       'background:var(--panel);border:1px solid var(--line);color:inherit;font:inherit;text-align:left;cursor:pointer;transition:border-color .15s}' +
     '.p75pulse .fold:hover{border-color:var(--gold)}.p75pulse .fold:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
@@ -1206,28 +1206,20 @@
     wireSparks(host); animate(host); wire(host); wireCockpit(host);
   }
 
-  // On the Takeaway, the header and dials step aside as the reader scrolls down and come back as they scroll up.
-  // Each swap happens off screen with no animation and the scroll is corrected, so nothing moves under the reader's eye.
+  // On the Takeaway, the header and dials fold away as soon as the reader scrolls down, so the content below
+  // slides up into the space; scrolling back up to the top brings them back. Other tabs keep the strip until it is tapped.
   var SCROLL_TICK = false, LAST_Y = window.pageYOffset;
   window.addEventListener('scroll', function () {
     if (SCROLL_TICK) return; SCROLL_TICK = true;
     requestAnimationFrame(function () {
       SCROLL_TICK = false;
       var y = window.pageYOffset, dy = y - LAST_Y; LAST_Y = y;
-      if (!dy || location.hash.slice(1)) return;   // tabs other than the Takeaway keep the strip until it is tapped
-      var host = document.querySelector('.p75pulse'), top = host && host.querySelector('.top'), strip = host && host.querySelector('.fstrip');
-      var bar = host && host.querySelector('.tabs'), anchor = bar && bar.nextElementSibling;
-      if (!top || !strip || !anchor) return;
+      if (!dy || location.hash.slice(1)) return;
+      var host = document.querySelector('.p75pulse'), strip = host && host.querySelector('.fstrip');
+      if (!strip) return;
       var tb = document.querySelector('.top-blocks--sticky'), hdr = tb ? tb.getBoundingClientRect().height : 0;
-      var fold;
-      if (dy > 0 && !FOLD && top.getBoundingClientRect().bottom <= hdr) fold = true;          // scrolled past: step aside
-      else if (dy < 0 && FOLD && strip.getBoundingClientRect().top >= hdr - 1) fold = false;  // back at the top: return
-      else return;
-      var before = anchor.getBoundingClientRect().top;
-      FOLD = fold; host.classList.add('nofx'); host.classList.toggle('folded', fold);
-      window.scrollTo({ top: window.pageYOffset + anchor.getBoundingClientRect().top - before, behavior: 'instant' });   // the site scrolls smoothly; this must not
-      LAST_Y = window.pageYOffset;
-      requestAnimationFrame(function () { requestAnimationFrame(function () { host.classList.remove('nofx'); }); });
+      if (dy > 0 && !FOLD && y > 6) { FOLD = true; host.classList.add('folded'); }
+      else if (dy < 0 && FOLD && strip.getBoundingClientRect().top >= hdr - 1) { FOLD = false; host.classList.remove('folded'); }
     });
   }, { passive: true });
   window.addEventListener('hashchange', function () {
