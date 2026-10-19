@@ -125,6 +125,8 @@
     '@media (max-width:880px){.p75debt .dt-ov,.p75debt .dt-tk .dt-ov{grid-template-columns:1fr;gap:10px}.p75debt .hd-t{gap:2px 12px}.p75debt .hd-t .eyebrow{flex-basis:100%}' +
       '.p75debt .hd-t .asof{margin:0 0 0 auto}.p75debt .asx{display:none}.p75debt .lede{text-align:left}}' +
     '@media (max-width:560px){.p75debt .dt-d{width:96px}.p75debt .dt-r b{font-size:30px}.p75debt .tabs{margin:12px -16px 0;padding:10px 16px;gap:5px;flex-wrap:wrap;overflow:visible}.p75debt .tab{flex:1 1 auto;justify-content:center;padding:0 8px;font-size:13px;min-height:40px}.p75debt .tab .tl{display:none}.p75debt .tab .ts{display:inline}.p75debt .fold{gap:6px 14px}.p75debt .fo-t{display:none}.p75debt .fi small{font-size:10px}.p75debt .dt-head{font-size:18px;padding:14px 16px}}' +
+    // narrow phones (to 320px): title and date still share a line, and the five tabs still fit one row
+    '@media (max-width:370px){.p75debt .hd-t{column-gap:8px}.p75debt .hd-t .asof{font-size:11.5px}.p75debt .tabs{gap:4px}.p75debt .tab{padding:0 6px;font-size:12.5px}}' +
     '@media (prefers-reduced-motion:reduce){.p75debt .dt-means i,.p75debt .fo-c{animation:none}.p75debt .dt-ovc:hover{transform:none}.p75debt .top,.p75debt .fstrip{transition:none}}' +
 
     '@media (max-width:880px){.p75debt .two{grid-template-columns:1fr}.p75debt .tiles{grid-template-columns:1fr}.p75debt .ownk{grid-template-columns:repeat(2,minmax(0,1fr))}}' +
