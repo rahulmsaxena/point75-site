@@ -46,6 +46,8 @@ Reference implementation: the Pulse page (`pulse/pulse.js`). Header rules are al
 - Picking a tab folds the header and overview dials into a **one-line strip** (eyebrow + key readings + "Show dials" with a gently bobbing down arrow). The tab content slides up into the freed space.
 - Stays folded across tabs until the reader taps the strip. Deep links to a tab (`/page#tab`) arrive folded.
 - Animate with `grid-template-rows: 1fr ↔ 0fr` (~0.5s); never scroll-jack.
+- On the Takeaway, the top also folds as soon as the reader scrolls down (the content slides up into the space) and unfolds when they scroll back to the top. Skip this when the folded page would no longer scroll (it would bounce). Other tabs keep the strip until it is tapped.
+- Phones: tabs stay on one row that slides sideways; never wrap them onto a second row.
 
 ## 7. Every change
 - Respect `prefers-reduced-motion` for decoration (no bobbing, pulsing, glow, hover lift, fold animation). **Needle sweeps stay on**: they are how the reading is shown.

@@ -30,6 +30,7 @@
     '.p75pulse .top{grid-template-rows:1fr}.p75pulse .fstrip{grid-template-rows:0fr;opacity:0}' +
     '.p75pulse.folded .top{grid-template-rows:0fr;opacity:0}.p75pulse.folded .fstrip{grid-template-rows:1fr;opacity:1}' +
     '.p75pulse:not(.folded) .fstrip{visibility:hidden}.p75pulse.folded .top > div{visibility:hidden;transition:visibility 0s .5s}' +
+    '.p75pulse,.p75pulse *{overflow-anchor:none}' +   // the fold must slide the content up, not be hidden by scroll anchoring
     '.p75pulse .fold{display:flex;align-items:center;gap:8px 22px;flex-wrap:wrap;width:100%;min-height:48px;margin:2px 0 0;padding:8px 10px 8px 16px;border-radius:12px;' +
       'background:var(--panel);border:1px solid var(--line);color:inherit;font:inherit;text-align:left;cursor:pointer;transition:border-color .15s}' +
     '.p75pulse .fold:hover{border-color:var(--gold)}.p75pulse .fold:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
@@ -133,7 +134,7 @@
     '.p75pulse .tab:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
     '@media (max-width:560px){.p75pulse .tabs{margin:28px -16px 0;padding:10px 16px;gap:6px}.p75pulse .tab{min-height:38px;padding:0 15px;font-size:14px}}' +
     '@media (max-width:460px){.p75pulse .tabs{gap:5px}.p75pulse .tab{flex:1 1 auto;justify-content:center;padding:0 6px;font-size:13px}}' +
-    '@media (max-width:400px){.p75pulse .tabs{flex-wrap:wrap;overflow:visible;row-gap:6px}.p75pulse .tab{min-height:36px}}' +
+    '@media (max-width:400px){.p75pulse .tab{flex:none;min-height:36px;padding:0 12px}}' +   // one row that slides sideways: a second row cost ~40px
     '@media (max-width:700px){.p75pulse .secs{grid-template-columns:1fr;gap:14px}.p75pulse a.sec{min-height:0;padding:22px 20px}.p75pulse a.sec .nm{font-size:23px}.p75pulse .strip a{margin-left:0}}' +
     // cockpit (the #why view): one instrument per signal, plus an info screen that explains the one you tap
     '.p75pulse .ck{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start;margin-top:8px}' +
@@ -1204,6 +1205,30 @@
     document.documentElement.classList.add('p75tabs');
     wireSparks(host); animate(host); wire(host); wireCockpit(host);
   }
+
+  // On the Takeaway, the header and dials fold away as soon as the reader scrolls down, so the content below
+  // slides up into the space; scrolling back up to the top brings them back. Other tabs keep the strip until it is tapped.
+  var SCROLL_TICK = false, LAST_Y = window.pageYOffset, SCROLL_HOLD = 0;
+  window.addEventListener('scroll', function () {
+    if (SCROLL_TICK) return; SCROLL_TICK = true;
+    requestAnimationFrame(function () {
+      SCROLL_TICK = false;
+      var y = window.pageYOffset, dy = y - LAST_Y; LAST_Y = y;
+      if (!dy || location.hash.slice(1)) return;
+      var host = document.querySelector('.p75pulse'), strip = host && host.querySelector('.fstrip');
+      if (!strip) return;
+      var tb = document.querySelector('.top-blocks--sticky'), hdr = tb ? tb.getBoundingClientRect().height : 0;
+      if (Date.now() < SCROLL_HOLD) return;   // let a fold finish before reading the scroll again
+      var top = host.querySelector('.top');
+      if (dy > 0 && !FOLD && y > 6) {
+        // only when the page stays scrollable once folded; otherwise it would bounce open and shut on a short page
+        if (document.documentElement.scrollHeight - top.offsetHeight < window.innerHeight + 80) return;
+        FOLD = true; host.classList.add('folded'); SCROLL_HOLD = Date.now() + 600;
+      } else if (dy < 0 && FOLD && strip.getBoundingClientRect().top >= hdr - 1) {
+        FOLD = false; host.classList.remove('folded'); SCROLL_HOLD = Date.now() + 600;
+      }
+    });
+  }, { passive: true });
   window.addEventListener('hashchange', function () {
     var host = document.querySelector('.p75pulse'); if (host && cache) draw(host, cache);
   });

@@ -88,6 +88,7 @@
     '.p75debt .top{grid-template-rows:1fr}.p75debt .fstrip{grid-template-rows:0fr;opacity:0}' +
     '.p75debt.folded .top{grid-template-rows:0fr;opacity:0}.p75debt.folded .fstrip{grid-template-rows:1fr;opacity:1}' +
     '.p75debt:not(.folded) .fstrip{visibility:hidden}.p75debt.folded .top > div{visibility:hidden;transition:visibility 0s .5s}' +
+    '.p75debt,.p75debt *{overflow-anchor:none}' +   // the fold must slide the content up, not be hidden by scroll anchoring
     '.p75debt .fold{display:flex;align-items:center;gap:8px 22px;flex-wrap:wrap;width:100%;min-height:44px;margin:0;padding:5px 8px 5px 16px;border-radius:12px;background:var(--panel);border:1px solid var(--line);color:inherit;font:inherit;text-align:left;cursor:pointer}' +
     '.p75debt .fold:hover{border-color:var(--gold)}.p75debt .fold:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
     '.p75debt .fi{display:inline-flex;align-items:baseline;gap:8px;white-space:nowrap}.p75debt .fi small{color:#D2CCBF;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}' +
@@ -526,6 +527,30 @@
     if (!FOLD) host.classList.remove('folded'); else if (!FOLD_ANIM) host.classList.add('folded');
     drawAll(host); sweep(host);
   }
+
+  // On the Takeaway, the header and dials fold away as soon as the reader scrolls down, so the content below
+  // slides up into the space; scrolling back up to the top brings them back. Other tabs keep the strip until it is tapped.
+  var SCROLL_TICK = false, LAST_Y = window.pageYOffset, SCROLL_HOLD = 0;
+  window.addEventListener('scroll', function () {
+    if (SCROLL_TICK) return; SCROLL_TICK = true;
+    requestAnimationFrame(function () {
+      SCROLL_TICK = false;
+      var y = window.pageYOffset, dy = y - LAST_Y; LAST_Y = y;
+      if (!dy || location.hash.slice(1)) return;
+      var host = document.querySelector('.p75debt'), strip = host && host.querySelector('.fstrip');
+      if (!strip) return;
+      var tb = document.querySelector('.top-blocks--sticky'), hdr = tb ? tb.getBoundingClientRect().height : 0;
+      if (Date.now() < SCROLL_HOLD) return;   // let a fold finish before reading the scroll again
+      var top = host.querySelector('.top');
+      if (dy > 0 && !FOLD && y > 6) {
+        // only when the page stays scrollable once folded; otherwise it would bounce open and shut on a short page
+        if (document.documentElement.scrollHeight - top.offsetHeight < window.innerHeight + 80) return;
+        FOLD = true; host.classList.add('folded'); SCROLL_HOLD = Date.now() + 600;
+      } else if (dy < 0 && FOLD && strip.getBoundingClientRect().top >= hdr - 1) {
+        FOLD = false; host.classList.remove('folded'); SCROLL_HOLD = Date.now() + 600;
+      }
+    });
+  }, { passive: true });
   function wireTabs(host, j) {
     if (host.getAttribute('data-dt-wired')) return; host.setAttribute('data-dt-wired', '1');
     host.addEventListener('click', function (e) {
