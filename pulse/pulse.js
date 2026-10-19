@@ -1206,21 +1206,27 @@
     wireSparks(host); animate(host); wire(host); wireCockpit(host);
   }
 
-  // Reading down the Takeaway: once the header and dials have scrolled out of sight, fold them into the strip.
-  // The fold happens off screen with no animation and the scroll is corrected, so nothing moves under the reader's eye.
-  var SCROLL_TICK = false;
+  // On the Takeaway, the header and dials step aside as the reader scrolls down and come back as they scroll up.
+  // Each swap happens off screen with no animation and the scroll is corrected, so nothing moves under the reader's eye.
+  var SCROLL_TICK = false, LAST_Y = window.pageYOffset;
   window.addEventListener('scroll', function () {
-    if (FOLD || SCROLL_TICK) return; SCROLL_TICK = true;
+    if (SCROLL_TICK) return; SCROLL_TICK = true;
     requestAnimationFrame(function () {
       SCROLL_TICK = false;
-      var host = document.querySelector('.p75pulse'), top = host && host.querySelector('.top'), bar = host && host.querySelector('.tabs');
-      var anchor = bar && bar.nextElementSibling;
-      if (FOLD || !top || !anchor) return;
+      var y = window.pageYOffset, dy = y - LAST_Y; LAST_Y = y;
+      if (!dy || location.hash.slice(1)) return;   // tabs other than the Takeaway keep the strip until it is tapped
+      var host = document.querySelector('.p75pulse'), top = host && host.querySelector('.top'), strip = host && host.querySelector('.fstrip');
+      var bar = host && host.querySelector('.tabs'), anchor = bar && bar.nextElementSibling;
+      if (!top || !strip || !anchor) return;
       var tb = document.querySelector('.top-blocks--sticky'), hdr = tb ? tb.getBoundingClientRect().height : 0;
-      if (top.getBoundingClientRect().bottom > hdr) return;   // still partly in view
+      var fold;
+      if (dy > 0 && !FOLD && top.getBoundingClientRect().bottom <= hdr) fold = true;          // scrolled past: step aside
+      else if (dy < 0 && FOLD && strip.getBoundingClientRect().top >= hdr - 1) fold = false;  // back at the top: return
+      else return;
       var before = anchor.getBoundingClientRect().top;
-      FOLD = true; host.classList.add('nofx', 'folded');
+      FOLD = fold; host.classList.add('nofx'); host.classList.toggle('folded', fold);
       window.scrollTo({ top: window.pageYOffset + anchor.getBoundingClientRect().top - before, behavior: 'instant' });   // the site scrolls smoothly; this must not
+      LAST_Y = window.pageYOffset;
       requestAnimationFrame(function () { requestAnimationFrame(function () { host.classList.remove('nofx'); }); });
     });
   }, { passive: true });
