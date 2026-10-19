@@ -29,13 +29,13 @@ BODY_CHARS = 1500
 PAGES = [
     ("/start-here", "Start here", "Section", "New to bonds? Three short reading paths, from the basics to the live market, and what the Easy, Medium and Advanced labels mean."),
     ("/kinetics", "Kinetics", "Section", "The forces moving the bond market: Pulse, News, Bond Summary and Economic Indicators."),
-    ("/bond-summary", "Bond Summary", "Section", "How credit markets are holding up: the daily summary, credit stress, sector credit, lenders and investor insights."),
+    ("/bond-summary", "Bond Summary", "Section", "The Treasury market day by day: the daily summary and what the big bond investors are saying."),
     ("/pulse", "Pulse", "Data", "The bond market’s vital signs: positioning, rates volatility, funding pressure, term premium, inflation expectations and live headlines."),
     ("/debt-trap", "The Debt Trap", "Data", "How much U.S. debt has to be refinanced, what it costs in interest and who is still buying Treasuries."),
     ("/intelligent-summary", "Daily Summary", "Data", "Daily close summary of the Treasury market: why yields moved, the yield curve, Fed pricing, the day’s data and what to watch next."),
-    ("/sector-credit", "Sector Credit", "Data", "Corporate debt sector by sector: the biggest borrowers, debt, Debt/EBITDA, interest coverage, how they are financed and who holds their commercial paper."),
-    ("/lenders", "Lenders", "Data", "Who lends corporate America its short-term money: commercial paper holders, money market funds, insurers, pension funds, banks and private credit."),
-    ("/credit-stress", "Credit Stress", "Data", "Where corporate credit is showing cracks: loan delinquencies, write-offs, commercial real estate, companies that can’t cover interest, private credit PIK and corporate debt to GDP."),
+    ("https://tools.point75.io/market-intelligence/sector-credit", "Sector Credit", "Data", "Corporate debt sector by sector: the biggest borrowers, debt, Debt/EBITDA, interest coverage, how they are financed and who holds their commercial paper."),
+    ("https://tools.point75.io/market-intelligence/lenders", "Lenders", "Data", "Who lends corporate America its short-term money: commercial paper holders, money market funds, insurers, pension funds, banks and private credit."),
+    ("https://tools.point75.io/market-intelligence/credit-stress", "Credit Stress", "Data", "Where corporate credit is showing cracks: loan delinquencies, write-offs, commercial real estate, companies that can’t cover interest, private credit PIK and corporate debt to GDP."),
     ("/economic-indicators", "Economic Indicators", "Data", "The latest U.S. economic data: inflation, jobs, growth and more."),
     ("/insights", "Insights", "Data", "What the big bond investors are saying: where they agree, where they differ and what they are doing."),
     ("/news", "News", "Data", "Today’s bond, rates and central bank headlines."),
@@ -127,7 +127,7 @@ def companies():
     except (requests.RequestException, ValueError) as e:
         print(f"  [warn] credit api: {e}")
         return []
-    return [{"url": "/sector-credit?tk=" + c["tk"], "title": c["name"], "type": "Company", "keys": c["tk"] + " " + c["sector"],
+    return [{"url": "https://tools.point75.io/market-intelligence/sector-credit?tk=" + c["tk"], "title": c["name"], "type": "Company", "keys": c["tk"] + " " + c["sector"],
              "desc": f"{c['sector']}: debt, Debt/EBITDA, interest coverage and who holds its paper, on Sector Credit."}
             for c in j.get("companies", [])]
 
