@@ -992,7 +992,8 @@
   };
   // Terms each Advanced page leans on; each links to its Bond Dictionary entry
   var PAGE_TERMS = {
-    '/debt-trap': ['refinancing', 'term premium'], '/credit-stress': ['PIK', 'delinquency'], '/sector-credit': ['Debt to EBITDA', 'interest coverage'],
+    // (Debt Trap, a One Shot page, has no help box: it sat between the title and the update note)
+    '/credit-stress': ['PIK', 'delinquency'], '/sector-credit': ['Debt to EBITDA', 'interest coverage'],
     '/lenders': ['commercial paper', 'money market fund'], '/insights': ['duration', 'credit spread']
   };
   (function levelCss() {

@@ -121,8 +121,10 @@
     '.p75debt .dt-means i{flex:0 0 auto;width:9px;height:9px;margin-top:7px;border-radius:50%;background:var(--gold);animation:p75dping 1.8s ease-out infinite}' +
     '@keyframes p75dping{0%{box-shadow:0 0 0 0 rgba(242,210,122,.6)}80%,100%{box-shadow:0 0 0 9px rgba(242,210,122,0)}}' +
     '.p75debt .dt-body .card{background:#17181B}' +
-    '@media (max-width:880px){.p75debt .dt-ov,.p75debt .dt-tk .dt-ov{grid-template-columns:1fr;gap:10px}.p75debt .hd-t{flex-direction:column;align-items:flex-start;gap:2px}.p75debt .hd-t .asof{margin:4px 0 0}.p75debt .lede{text-align:left}}' +
-    '@media (max-width:560px){.p75debt .dt-d{width:96px}.p75debt .dt-r b{font-size:30px}.p75debt .tabs{margin:12px -16px 0;padding:10px 16px;gap:5px;flex-wrap:wrap;overflow:visible}.p75debt .tab{flex:1 1 auto;justify-content:center;padding:0 8px;font-size:13px;min-height:36px}.p75debt .fold{gap:6px 14px}.p75debt .fo-t{display:none}.p75debt .fi small{font-size:10px}.p75debt .dt-head{font-size:18px;padding:14px 16px}}' +
+    '.p75debt .tab .ts{display:none}' +
+    '@media (max-width:880px){.p75debt .dt-ov,.p75debt .dt-tk .dt-ov{grid-template-columns:1fr;gap:10px}.p75debt .hd-t{gap:2px 12px}.p75debt .hd-t .eyebrow{flex-basis:100%}' +
+      '.p75debt .hd-t .asof{margin:0 0 0 auto}.p75debt .asx{display:none}.p75debt .lede{text-align:left}}' +
+    '@media (max-width:560px){.p75debt .dt-d{width:96px}.p75debt .dt-r b{font-size:30px}.p75debt .tabs{margin:12px -16px 0;padding:10px 16px;gap:5px;flex-wrap:wrap;overflow:visible}.p75debt .tab{flex:1 1 auto;justify-content:center;padding:0 8px;font-size:13px;min-height:40px}.p75debt .tab .tl{display:none}.p75debt .tab .ts{display:inline}.p75debt .fold{gap:6px 14px}.p75debt .fo-t{display:none}.p75debt .fi small{font-size:10px}.p75debt .dt-head{font-size:18px;padding:14px 16px}}' +
     '@media (prefers-reduced-motion:reduce){.p75debt .dt-means i,.p75debt .fo-c{animation:none}.p75debt .dt-ovc:hover{transform:none}.p75debt .top,.p75debt .fstrip{transition:none}}' +
 
     '@media (max-width:880px){.p75debt .two{grid-template-columns:1fr}.p75debt .tiles{grid-template-columns:1fr}.p75debt .ownk{grid-template-columns:repeat(2,minmax(0,1fr))}}' +
@@ -329,10 +331,10 @@
   // ---------- Page: a Takeaway tab first, then one tab per question; picking a tab folds the title away ----------
   var TABS = [
     { key: 'takeaway', tab: 'Takeaway' },
-    { key: 'wall', tab: 'The wall' },
+    { key: 'wall', tab: 'The wall', short: 'Wall' },
     { key: 'rates', tab: 'Rates' },
-    { key: 'cost', tab: 'The cost' },
-    { key: 'buyers', tab: 'The buyers' }
+    { key: 'cost', tab: 'The cost', short: 'Cost' },
+    { key: 'buyers', tab: 'The buyers', short: 'Buyers' }
   ];
   var FOLD = !!location.hash.slice(1), FOLD_ANIM = false;   // title and intro folded into the strip?
   function page(j) {
@@ -347,7 +349,7 @@
     // Title, update note and intro: folded into a one-line strip once a tab is picked
     var top = '<div class="hd-t"><span class="eyebrow"><a href="/kinetics">Kinetics</a> · Debt Trap</span><h1>The Debt Trap</h1>' +
       '<div class="asof">Updated <b>' + new Date(j.generated_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) +
-      '</b> · official data, most of it published monthly</div></div>' +
+      '</b><span class="asx"> · official data, most of it published monthly</span></div></div>' +
       '<p class="lede">America borrows short, rolls its debt constantly, and pays whatever the market charges each time. ' +
       'Three questions decide whether that becomes a trap: how much has to be refinanced, what it costs, and who is still willing to lend.</p>';
     var strip = '<button type="button" class="fold" data-unfold aria-label="Show the title and introduction"><span class="eyebrow">Debt Trap</span>' +
@@ -505,7 +507,7 @@
     var h = '<div class="wrap"><div class="top"><div>' + top + '</div></div><div class="fstrip"><div>' + strip + '</div></div>' +
       '<nav class="tabs" role="tablist" aria-label="Debt Trap views">' + live.map(function (x) {
         var on = x.key === cur.key;
-        return '<a role="tab" class="tab' + (on ? ' on' : '') + '" href="#' + x.key + '" data-tab="' + x.key + '" aria-selected="' + on + '"' + (on ? ' aria-current="page"' : '') + '>' + x.tab + '</a>';
+        return '<a role="tab" class="tab' + (on ? ' on' : '') + '" href="#' + x.key + '" data-tab="' + x.key + '" aria-selected="' + on + '"' + (on ? ' aria-current="page"' : '') + '>' + (x.short ? '<span class="tl">' + x.tab + '</span><span class="ts" aria-hidden="true">' + x.short + '</span>' : x.tab) + '</a>';
       }).join('') + '</nav><div class="view" role="tabpanel" aria-label="' + esc(cur.tab) + '">' +
       (FROM_TK && cur.key !== 'takeaway' ? '<a class="tk-back" href="#takeaway" data-tab="takeaway"><span aria-hidden="true">←</span> Back to the takeaway</a>' : '') +
       SEC[cur.key] + '</div>';
