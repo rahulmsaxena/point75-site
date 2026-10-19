@@ -1261,7 +1261,7 @@
       '.p75disc:focus-visible{outline:2px solid #C9A227;outline-offset:2px}';
     document.head.appendChild(st);
     document.addEventListener('click', function (e) {
-      var d = e.target.closest && e.target.closest(DISC_SEL + ',.p75disc'); if (!d || d.classList.contains('open')) return;
+      var d = e.target.closest && e.target.closest(DISC_SEL + ',.p75disc'); if (!d || d.classList.contains('open') || e.target.closest('a')) return;
       e.preventDefault(); e.stopPropagation(); d.classList.add('open'); d.setAttribute('aria-expanded', 'true');
     }, true);
     document.addEventListener('keydown', function (e) {
@@ -1524,8 +1524,8 @@
         (isPost ? '<a href="/" style="color:' + GOLD + ';text-decoration:none;font-weight:600">&larr; All essays</a><div style="height:14px"></div>' +
           '<div style="margin-bottom:18px;font-size:16px;color:#EDE8DC">Disagree, or have a question? <a href="/contact" style="color:' + GOLD + ';text-decoration:none;font-weight:700">Write to me &rarr;</a></div>' : '') +
         '<div class="p75disc" style="border-left:3px solid ' + GOLD + ';padding-left:14px">' + DISCLAIMER + '</div>' +
-        '<div class="p75disc" style="margin-top:8px;color:#9a9a9a;font-size:13px">' + COPYRIGHT +
-          ' <a href="/contact" style="color:' + GOLD + ';text-decoration:none;font-weight:700;white-space:nowrap;margin-left:6px">Write to Point75 &rarr;</a></div>'));
+        // the contact link leads, so it stays in view when the line is folded to one row
+        '<div class="p75disc" style="margin-top:8px;color:#9a9a9a;font-size:13px"><a href="/contact" style="color:' + GOLD + ';text-decoration:none;font-weight:700;white-space:nowrap;margin-right:8px">Write to Point75 &rarr;</a>' + COPYRIGHT + '</div>'));
     }
 
     if (isPost && !comments) {
