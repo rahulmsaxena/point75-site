@@ -1319,7 +1319,14 @@
           // the summary says 'nav' each time it draws a view: ask on its first one (it is ready then), and once now
           // in case it has already drawn
           var once = function (ev) { if (ev.data && ev.data.p75 && ev.data.type === 'nav') { w.removeEventListener('message', once); go(); } };
-          w.addEventListener('message', once); go();
+          // then it says where the archive starts; scroll the page there, under the sticky header
+          var to = function (ev) {
+            if (!ev.data || !ev.data.p75 || ev.data.type !== 'scrollto') return;
+            w.removeEventListener('message', to);
+            var hdr = document.querySelector('.top-blocks--sticky, header'), off = hdr ? hdr.getBoundingClientRect().height : 0;
+            window.scrollTo({ top: Math.max(0, inner.getBoundingClientRect().top + window.scrollY + ev.data.y - off - 12), behavior: 'smooth' });
+          };
+          w.addEventListener('message', once); w.addEventListener('message', to); go();
         });
       }, 500);
     }
