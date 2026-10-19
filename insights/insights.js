@@ -20,13 +20,9 @@
     '.p75ins .hd-t{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin:10px 0 6px}' +
     '.p75ins .hd-t .asof{margin:0 0 0 auto}' +
     '.p75ins .asof{font-size:12.5px;color:var(--muted)}.p75ins .asof b{color:var(--cream);font-weight:600}' +
-    '.p75ins .intro{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:18px;align-items:center}' +
+    '.p75ins .intro{display:block}' +
     '.p75ins .lede{color:var(--soft);font-size:14.5px;line-height:1.55;margin:0;text-align:justify;hyphens:auto;-webkit-hyphens:auto}' +
     '.p75ins .lede b{color:#fff}' +
-    '.p75ins figure{position:relative;margin:0;min-width:0;border-radius:12px;overflow:hidden;border:1px solid var(--line)}' +
-    '.p75ins figure img{display:block;width:100%;height:auto}' +
-    '.p75ins figcaption{position:absolute;left:0;right:0;bottom:0;padding:12px 8px 3px;background:linear-gradient(180deg,rgba(17,18,20,0),rgba(17,18,20,.88) 55%);font-size:10px;color:#E9E3D6;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
-    '.p75ins figure:hover figcaption{white-space:normal}' +
     '.p75ins h2{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:23px;margin:32px 0 4px}' +
     '.p75ins .view > h2:first-child,.p75ins .view > .tk-back + h2{margin-top:16px}' +
     '.p75ins .hl{text-shadow:0 0 12px currentColor}' +
@@ -146,13 +142,13 @@
     '.p75ins .wrap > .note{margin-top:28px;color:#A8A398;font-size:12px;line-height:1.6;border-top:1px solid var(--line);padding-top:14px}' +
     '.p75ins .load{color:var(--muted);margin-top:24px}' +
     // desktop: the Takeaway fits one screen with room to spare, so the numbers take it
-    '@media (min-width:881px){.p75ins .tk-head{font-size:21px}}' +
+    '@media (min-width:881px){.p75ins .tk-head{font-size:22px;padding:13px 20px}.p75ins .ovr b{font-size:30px}.p75ins a.ovc{padding:14px 16px}}' +
     // wide screens: the four cards sit in one row, visual above the reading, so the Takeaway fits one screen
     '@media (min-width:1100px){.p75ins .ov{grid-template-columns:repeat(4,minmax(0,1fr))}.p75ins .ovm{flex-direction:column;align-items:flex-start;gap:8px}.p75ins .ovv{height:78px}.p75ins .ovd{width:108px}.p75ins .pills{flex-direction:row}}' +
     '@media (max-width:880px){.p75ins .ov,.p75ins .bp,.p75ins .vw.has{grid-template-columns:minmax(0,1fr)}.p75ins .acts{grid-template-columns:repeat(2,minmax(0,1fr))}' +
       '.p75ins .vw > .info{display:none}.p75ins .vd .info{display:flex;position:static;margin-top:12px}.p75ins .vd .info .who{display:none}' +
-      '.p75ins .intro{grid-template-columns:minmax(0,1fr) 200px;gap:16px}.p75ins .lede{text-align:left}.p75ins .hd-t .eyebrow{flex-basis:100%}}' +
-    '@media (max-width:560px){.p75ins .wrap{padding:4px 16px 40px}.p75ins h1{font-size:22px}.p75ins .intro{grid-template-columns:minmax(0,1fr) 110px;gap:12px}.p75ins figcaption{display:none}' +
+      '.p75ins .hd-t .eyebrow{flex-basis:100%}}' +
+    '@media (max-width:560px){.p75ins .wrap{padding:4px 16px 40px}.p75ins h1{font-size:22px}' +
       '.p75ins .tabs{margin:10px -16px 0;padding:6px 16px;gap:4px}.p75ins .tab{flex:1 0 auto;justify-content:center;padding:0 8px;font-size:13px}.p75ins .tab .tl{display:none}.p75ins .tab .ts{display:inline}' +
       '.p75ins .fold{gap:6px 12px;flex-wrap:nowrap}.p75ins .fold > .eyebrow,.p75ins .fo-t{display:none}.p75ins .fi{gap:5px}.p75ins .fi small{font-size:10px}.p75ins .fi b{font-size:16px}.p75ins .bp p,.p75ins .vd li,.p75ins .fwv p{text-align:left}.p75ins .tk-head{font-size:17px;padding:11px 14px}' +
       '.p75ins .ovd{width:90px}.p75ins .ovr b{font-size:24px}' +
@@ -249,8 +245,7 @@
       '<div class="asof">Updated <b>' + fmt(d.updated) + '</b></div></div>' +
       '<div class="intro"><p class="lede">The Fed chair, the Treasury Secretary and the biggest names in bond investing, in plain English: <b>' + V.length +
       ' voices</b>, comments from <b>' + esc(d.window) + '</b>, every one dated and linked to its source. Then what it means for your household.</p>' +
-      (d.hero && d.hero.src ? '<figure><img src="' + esc(d.hero.src) + '" srcset="' + esc(d.hero.small) + ' 704w, ' + esc(d.hero.src) + ' 1408w" sizes="(max-width: 560px) 110px, 150px" alt="' + esc(d.hero.alt) + '" loading="eager">' +
-        (d.hero.caption ? '<figcaption title="' + esc(d.hero.caption) + '">' + esc(d.hero.caption) + '</figcaption>' : '') + '</figure>' : '') + '</div>';
+      '</div>';   // the illustration (d.hero) stays in the JSON but is no longer shown
     var strip = '<button type="button" class="fold" data-unfold aria-label="Show the title and introduction"><span class="eyebrow">Insights</span>' +
       '<span class="fi"><small>Mood</small><b style="color:' + GOLD + '">' + esc(d.mood) + '</b></span>' +
       (hasFw ? '<span class="fi fi2"><small>Fed</small><b style="color:' + tiltCol(f.tilt) + '">' + esc(f.tilt_label) + '</b></span>' : '') +
