@@ -542,7 +542,7 @@
       if (top.getBoundingClientRect().bottom > hdr) return;   // still partly in view
       var before = anchor.getBoundingClientRect().top;
       FOLD = true; host.classList.add('nofx', 'folded');
-      window.scrollBy(0, anchor.getBoundingClientRect().top - before);
+      window.scrollTo({ top: window.pageYOffset + anchor.getBoundingClientRect().top - before, behavior: 'instant' });   // the site scrolls smoothly; this must not
       requestAnimationFrame(function () { requestAnimationFrame(function () { host.classList.remove('nofx'); }); });
     });
   }, { passive: true });
