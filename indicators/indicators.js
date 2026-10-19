@@ -6,11 +6,11 @@
 (function () {
   if (window.P75IND) return;
   var DATA = 'https://news.point75.io/api/indicators';
-  var GOOD = '#1FC8FF', BAD = '#FF8577', MID = '#F2A33A', FLAT = '#B4BAC1', GOLD = '#C9A227';
+  var GOOD = '#1FC8FF', BAD = '#FF6640', MID = '#F2A33A', FLAT = '#B4BAC1', GOLD = '#C9A227';
 
   var CSS =
-    // the site's one red is a bright warm red (#FF8577); short red words go bold so they read at a glance
-    '.p75ind [style*="color:#FF8577"][style]:not(b):not(.tk-head *):not(.fi *){font-weight:800}' +
+    // the site's one red is a bright warm red (#FF6640); short red words go bold so they read at a glance
+    '.p75ind [style*="color:#FF6640"][style]:not(b):not(.tk-head *):not(.fi *){font-weight:800}' +
     '.p75ind{--ink:#111214;--panel:#17181B;--panel2:#1C1D21;--line:#2A2B2F;--cream:#EDE8DC;--soft:#D9D3C6;--muted:#A9A396;--gold:' + GOLD + ';' +
       'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box;min-height:calc(100vh - 90px)}' +
     '.p75ind *{box-sizing:border-box}.p75ind,.p75ind *{overflow-anchor:none}' +
@@ -63,7 +63,7 @@
     '.p75ind .tk{display:flex;flex-direction:column;gap:12px}' +
     '.p75ind .tk-head{margin:0;padding:16px 20px;border-radius:16px;background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold);font-family:"Hedvig Letters Serif",Georgia,serif;font-size:24px;line-height:1.45;color:#fff}' +
     '.p75ind .tk-watch{display:flex;align-items:center;gap:10px;margin:0;font-size:16.5px;color:#F1ECE2}.p75ind .tk-watch b{color:#FFD23F}' +
-    '.p75ind .tk-watch i{flex:0 0 auto;width:9px;height:9px;border-radius:50%;background:#FF8577;animation:p75iping 1.8s ease-out infinite}' +
+    '.p75ind .tk-watch i{flex:0 0 auto;width:9px;height:9px;border-radius:50%;background:#FF6640;animation:p75iping 1.8s ease-out infinite}' +
     '@keyframes p75iping{0%{box-shadow:0 0 0 0 rgba(255,61,94,.6)}100%{box-shadow:0 0 0 10px rgba(255,61,94,0)}}' +
     '.p75ind .tk-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}' +
     '.p75ind a.tk-c{display:flex;flex-direction:column;gap:6px;padding:12px 14px;border-radius:14px;background:var(--panel);border:1px solid var(--line);border-top:2px solid var(--gold);color:inherit;text-decoration:none;transition:border-color .15s,transform .15s}' +
