@@ -1308,27 +1308,31 @@
     // site's embed (a same-origin srcdoc frame), so reach in and ask it to open its archive of earlier days.
     // The embed mounts lazily, so keep trying for a while; repeating the request is harmless.
     if (path === '/intelligent-summary' && location.hash === '#archive' && !window.p75arcT) {
-      var tries = 0, done = function () { clearInterval(window.p75arcT); try { history.replaceState(null, '', location.pathname + location.search); } catch (err) {} };
+      // Hostinger can re-create the embed while the page settles, so each tick looks for the current one and
+      // starts over on a new one. Done once the summary has said where its archive is (or after 30 s).
+      var tries = 0, last = null;
+      var done = function () { clearInterval(window.p75arcT); try { history.replaceState(null, '', location.pathname + location.search); } catch (err) {} };
       window.p75arcT = setInterval(function () {
         if (++tries > 60) return done();
         document.querySelectorAll('iframe').forEach(function (f) {
           var w = null, inner = null; try { w = f.contentWindow; inner = f.contentDocument && f.contentDocument.getElementById('p75bond'); } catch (err) {}
-          if (!inner || inner.p75arc) return;
-          inner.p75arc = 1; done();
+          if (!inner || !w || inner === last) return;
+          last = inner;
           var go = function () { try { inner.contentWindow.postMessage({ p75: true, type: 'go', hash: '#/archive' }, '*'); } catch (err) {} };
-          // the summary says 'nav' each time it draws a view: ask on its first one (it is ready then), and once now
-          // in case it has already drawn
-          var once = function (ev) { if (ev.data && ev.data.p75 && ev.data.type === 'nav') { w.removeEventListener('message', once); go(); } };
-          // then it says where the archive starts; scroll the page there, under the sticky header
-          var to = function (ev) {
-            if (!ev.data || !ev.data.p75 || ev.data.type !== 'scrollto') return;
-            w.removeEventListener('message', to);
-            var hdr = document.querySelector('.top-blocks--sticky, header'), off = hdr ? hdr.getBoundingClientRect().height : 0;
-            window.scrollTo({ top: Math.max(0, inner.getBoundingClientRect().top + window.scrollY + ev.data.y - off - 12), behavior: 'smooth' });
-          };
-          w.addEventListener('message', once); w.addEventListener('message', to); go();
+          // the summary says 'nav' each time it draws a view: ask on its first one (it is ready then), and once now in
+          // case it already has. It then says where the archive starts: scroll there, under the sticky header.
+          w.addEventListener('message', function (ev) {
+            var d = ev.data; if (!d || !d.p75 || last !== inner) return;
+            if (d.type === 'nav' && !inner.p75asked) { inner.p75asked = 1; go(); }
+            if (d.type === 'scrollto') {
+              done(); last = {};
+              var hdr = document.querySelector('.top-blocks--sticky, header'), off = hdr ? hdr.getBoundingClientRect().height : 0;
+              setTimeout(function () { window.scrollTo({ top: Math.max(0, inner.getBoundingClientRect().top + window.scrollY + d.y - off - 12), behavior: 'smooth' }); }, 150);
+            }
+          });
+          go();
         });
-      }, 500);
+      }, 400);
     }
     // Hub pages (/kinetics, /bond-summary) are drawn by hubs/hubs.js from SECTIONS above
     var hub = sectionNode(path);
