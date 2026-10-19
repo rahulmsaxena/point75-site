@@ -1312,7 +1312,7 @@
       // Hostinger can re-create the embed while the page settles, so each tick looks for the current one and
       // starts over on a new one. Done once the summary has said where its archive is (or after 30 s).
       var tries = 0, last = null;
-      var done = function () { window.p75arcDone = 1; clearInterval(window.p75arcT); try { history.replaceState(null, '', location.pathname + location.search); } catch (err) {} };
+      var done = function () { window.p75arcDone = 1; clearInterval(window.p75arcT); window.p75arcT = 0; try { history.replaceState(null, '', location.pathname + location.search); } catch (err) {} };
       window.p75arcT = setInterval(function () {
         if (++tries > 60) return done();
         document.querySelectorAll('iframe').forEach(function (f) {
