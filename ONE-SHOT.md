@@ -5,7 +5,7 @@
 **First principle: crisp, attractive, effortless.** Before building anything, ask how to make the page more crisp, eye-catching and less scrollable, so the reader never spends effort working out what they are looking at and their attention never drifts. In practice:
 - The number and the picture speak first; words only where they add meaning. Cut any sentence that repeats what a heading, tab name, label or colour already says.
 - One idea per screen. If a section scrolls, split it (tabs, folds) rather than shrinking the text.
-- Colour carries meaning (Blue good, Red bad, gold for "look here") and key words glow in their colour.
+- Colour carries meaning (Blue good, Red bad, gold for "look here"). Key words take their colour, **without glow** (see §8).
 - Every card and dial is itself the link; no "Check the ..." or "Read more" lines.
 - Bright, readable text (no faint grey body copy); generous type for numbers.
 - Propose these improvements unprompted, not only when asked.
@@ -31,7 +31,7 @@ Reference implementation: the Pulse page (`pulse/pulse.js`). Header rules are al
 - Detail dials: cockpit style (bezel, ticks, digital readout) — `ckStressDial`, `ckBBDial`, `ckVoteDial`.
 - No thermometers, no attitude balls, no big boxed tallies. Counts are small rounded pills.
 - Needles: start at the **left end of the scale**, short pause (~0.35s), then an even **1.25s** glide (`cubic-bezier(.37,0,.3,1)`), no spring. Fill arcs move with the needle. Replay the sweep whenever a section opens.
-- Colours: bull = fluorescent blue **#1FC8FF**, bear = **#E5484D**, neutral **#9AA0A6**. Stress bands green → lime → amber → red.
+- Colours: bull = fluorescent blue **#1FC8FF**, bear = the site red **#FF6640** (§8), neutral **#9AA0A6**. Stress bands green → lime → amber → red.
 
 ## 4. Detail panels (tabs)
 - Group detail into **collapsible sections**; each closed row shows its headline reading on the right and a round chevron. **One open at a time.**
@@ -49,6 +49,16 @@ Reference implementation: the Pulse page (`pulse/pulse.js`). Header rules are al
 - Animate with `grid-template-rows: 1fr ↔ 0fr` (~0.5s); never scroll-jack.
 - On the Takeaway, the top also folds as soon as the reader scrolls down (the content slides up into the space) and unfolds when they scroll back to the top. Skip this when the folded page would no longer scroll (it would bounce). Other tabs keep the strip until it is tapped.
 - Phones: tabs stay on one row that slides sideways; never wrap them onto a second row.
+- Don't open a tab with a heading or line that repeats the tab name (no "The takeaway" under the Takeaway tab).
+- On screens ≥1100px the Takeaway cards sit in **one row** (four across), dial beside its number, so the Takeaway fits one screen.
+- Fit check: Rahul's laptop leaves about **1300 × 546px** below the site menu. The Takeaway (title, intro, tabs, headline, cards) should fit that without scrolling.
+
+## 8. Colour and type (settled Oct 2026)
+- **One red, everywhere: #FF6640.** A light red with a touch of orange, never blue: it reads as red, not pink or salmon, and has 6.4 : 1 contrast on the page background. Use it for every bad / bearish / hawkish / weak reading. No other reds (#E5484D, #FF3D5E, #FF0000 and so on are retired).
+- **No glow.** No `text-shadow` or `drop-shadow` on text or numbers: they stay crisp. (Tap-cue animations and dial arcs are the only exceptions.)
+- **Short red words go bold** (800) so they read at a glance. Serif headline and number text stays regular weight; faux-bold serif looks smudged.
+- Gold for "look here", fluorescent blue for good. Body text cream, never faint grey.
+- Before picking any new text colour, check its contrast on #111214 and on the #17181B cards: aim for 6 : 1 or better, never below 4.5 : 1.
 
 ## 7. Every change
 - Respect `prefers-reduced-motion` for decoration (no bobbing, pulsing, glow, hover lift, fold animation). **Needle sweeps stay on**: they are how the reading is shown.
