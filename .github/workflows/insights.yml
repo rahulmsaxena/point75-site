@@ -1,0 +1,102 @@
+name: Insights refresh
+
+# Weekdays at 7:52 AM Central. GitHub cron runs on UTC and ignores daylight saving,
+# so both UTC slots are listed and the "gate" step lets only the one that matches
+# Chicago's current offset through. Scheduled runs stay off until the repository
+# variable P75_SCHEDULE_ON is set to "true"; manual runs always work. Instructions for Claude: .github/claude/insights.md
+on:
+  schedule:
+    - cron: "52 12 * * 1-5"   # 7:52 AM CDT (summer)
+    - cron: "52 13 * * 1-5"   # 7:52 AM CST (winter)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: insights
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Gate on Chicago time
+        id: gate
+        env:
+          SLOT: ${{ github.event.schedule }}
+          SCHEDULE_ON: ${{ vars.P75_SCHEDULE_ON }}
+        run: |
+          off=$(TZ=America/Chicago date +%z)
+          if [ -z "$SLOT" ]; then run=true                     # manual run
+          elif [ "$SCHEDULE_ON" != "true" ]; then run=false    # schedule off until the repo variable P75_SCHEDULE_ON is "true"
+          elif [ "$off" = "-0500" ] && [ "$SLOT" = "52 12 * * 1-5" ]; then run=true
+          elif [ "$off" = "-0600" ] && [ "$SLOT" = "52 13 * * 1-5" ]; then run=true
+          else run=false; fi
+          echo "Chicago offset $off, slot '${SLOT:-manual}' -> run=$run"
+          echo "run=$run" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v4
+        if: steps.gate.outputs.run == 'true'
+
+      - name: Prepare instructions
+        id: prompt
+        if: steps.gate.outputs.run == 'true'
+        run: |
+          mkdir -p .p75-run
+          sed "s/{{TODAY_CT}}/$(TZ=America/Chicago date +%F)/g" .github/claude/insights.md > "$RUNNER_TEMP/prompt.md"
+          { echo "text<<P75_PROMPT_EOF"; cat "$RUNNER_TEMP/prompt.md"; echo "P75_PROMPT_EOF"; } >> "$GITHUB_OUTPUT"
+
+      - name: Refresh with Claude
+        id: claude
+        if: steps.gate.outputs.run == 'true'
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prompt: ${{ steps.prompt.outputs.text }}
+          claude_args: >-
+            --model ${{ vars.CLAUDE_MODEL || 'claude-sonnet-5-5' }}
+            --max-turns 100
+            --allowedTools "WebSearch,WebFetch,Read,Write,Edit,Glob,Grep,Bash(python3 -m json.tool insights/insights.json:*)"
+
+      - name: Report cost
+        if: always() && steps.claude.outputs.execution_file != ''
+        run: python3 tools/claude_run_report.py "${{ steps.claude.outputs.execution_file }}" "Insights" | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Check and publish
+        if: steps.gate.outputs.run == 'true'
+        run: |
+          if git diff --quiet -- insights/insights.json; then echo "No update needed"; exit 0; fi
+          others=$(git status --porcelain --untracked-files=no | grep -v -e ' insights/insights.json$' -e ' \.p75-run/' || true)
+          if [ -n "$others" ]; then echo "Unexpected changes, not publishing:"; echo "$others"; exit 1; fi
+          python3 -m json.tool insights/insights.json > /dev/null
+          msg=$(head -n1 .p75-run/commit-message.txt 2>/dev/null || true)
+          [ -n "$msg" ] || msg="Insights: refresh for $(TZ=America/Chicago date +%F)"
+          git config user.name "point75-bot"
+          git config user.email "point75-bot@users.noreply.github.com"
+          git add insights/insights.json
+          git commit -m "$msg" -m "Co-Authored-By: Claude <noreply@anthropic.com>"
+          for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && exit 0; sleep 10; done
+          exit 1
+
+      - name: Notify (issue)
+        if: always() && steps.gate.outputs.run == 'true' && (failure() || hashFiles('.p75-run/notify.md') != '')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          FAILED: ${{ job.status == 'failure' }}
+        run: |
+          if [ -f .p75-run/notify.md ]; then
+            title=$(head -n1 .p75-run/notify.md | sed 's/^# *//')
+            body="$(tail -n +2 .p75-run/notify.md)"
+          fi
+          if [ "$FAILED" = "true" ]; then
+            title="Insights run failed $(TZ=America/Chicago date +%F)${title:+: $title}"
+          fi
+          [ -n "$title" ] || title="Insights $(TZ=America/Chicago date +%F)"
+          gh issue create --title "$title" --body "${body:-See the run log.}
+
+          Run: $RUN_URL"
