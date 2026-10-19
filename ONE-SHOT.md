@@ -53,15 +53,15 @@ Reference implementation: the Pulse page (`pulse/pulse.js`). Header rules are al
 - On screens ≥1100px the Takeaway cards sit in **one row** (four across), dial beside its number, so the Takeaway fits one screen.
 - Fit check: Rahul's laptop leaves about **1300 × 546px** below the site menu. The Takeaway (title, intro, tabs, headline, cards) should fit that without scrolling.
 
+## 7. Every change
+- Respect `prefers-reduced-motion` for decoration (no bobbing, pulsing, glow, hover lift, fold animation). **Needle sweeps stay on**: they are how the reading is shown.
+- Touch targets ≥ 44px; real `<button>`s with `aria-expanded` / `aria-pressed`.
+- **Check for clipped text** at 320, 360, 390, 768, 1024, 1280 and 1440px, open and folded. Nothing may overflow, clip or run off screen.
+- Preview before pushing anything that changes behaviour or more than one page; small visual tweaks can go straight to `main`.
+
 ## 8. Colour and type (settled Oct 2026)
 - **One red, everywhere: #FF6640.** A light red with a touch of orange, never blue: it reads as red, not pink or salmon, and has 6.4 : 1 contrast on the page background. Use it for every bad / bearish / hawkish / weak reading. No other reds (#E5484D, #FF3D5E, #FF0000 and so on are retired).
 - **No glow.** No `text-shadow` or `drop-shadow` on text or numbers: they stay crisp. (Tap-cue animations and dial arcs are the only exceptions.)
 - **Short red words go bold** (800) so they read at a glance. Serif headline and number text stays regular weight; faux-bold serif looks smudged.
 - Gold for "look here", fluorescent blue for good. Body text cream, never faint grey.
 - Before picking any new text colour, check its contrast on #111214 and on the #17181B cards: aim for 6 : 1 or better, never below 4.5 : 1.
-
-## 7. Every change
-- Respect `prefers-reduced-motion` for decoration (no bobbing, pulsing, glow, hover lift, fold animation). **Needle sweeps stay on**: they are how the reading is shown.
-- Touch targets ≥ 44px; real `<button>`s with `aria-expanded` / `aria-pressed`.
-- **Check for clipped text** at 320, 360, 390, 768, 1024, 1280 and 1440px, open and folded. Nothing may overflow, clip or run off screen.
-- Preview before pushing anything that changes behaviour or more than one page; small visual tweaks can go straight to `main`.
