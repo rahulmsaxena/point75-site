@@ -30,8 +30,8 @@
     '.p75ind .og .v{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:36px;line-height:1;text-shadow:0 0 14px currentColor}.p75ind .og .v small{font-family:Manrope,sans-serif;font-size:13px;margin-left:3px;opacity:.8;text-shadow:none}' +
     '.p75ind .og .c{font-size:13.5px;font-weight:700;white-space:nowrap}.p75ind .og .c span{display:block;color:var(--muted);font-weight:500;margin-top:2px}' +
     // dials
-    '.p75ind .p75n{transition:transform 4.5s cubic-bezier(.37,0,.3,1)}' +
-    '.p75ind .p75f{stroke-dashoffset:100;transition:stroke-dashoffset 4.5s cubic-bezier(.37,0,.3,1)}.p75ind .go .p75f{stroke-dashoffset:0}' +
+    '.p75ind .p75n{transition:transform 2.2s cubic-bezier(.37,0,.3,1)}' +
+    '.p75ind .p75f{stroke-dashoffset:100;transition:stroke-dashoffset 2.2s cubic-bezier(.37,0,.3,1)}.p75ind .go .p75f{stroke-dashoffset:0}' +
     // fold-away top
     '.p75ind .top,.p75ind .fstrip{display:grid;transition:grid-template-rows .5s cubic-bezier(.4,0,.2,1),opacity .4s}' +
     '.p75ind .top > div,.p75ind .fstrip > div{min-height:0;overflow:hidden}' +
@@ -547,7 +547,7 @@
     setTimeout(function () { requestAnimationFrame(function () {
       root.classList.add('go');
       root.querySelectorAll('.p75n').forEach(function (n) { n.style.transform = 'rotate(' + n.getAttribute('data-a') + 'deg)'; });
-    }); }, 650);
+    }); }, 350);
   }
   function hdrH() { var tb = document.querySelector('.top-blocks--sticky'); return tb ? Math.round(tb.getBoundingClientRect().height) : 0; }
 

@@ -65,8 +65,8 @@
     '.p75pulse .verdict{font-size:12.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}' +
     '.p75pulse .hint{color:var(--soft);font-size:13.5px;line-height:1.5;text-align:justify;hyphens:auto;-webkit-hyphens:auto}' +
     // Needle sweeps stay on even with Reduce motion: the sweep is how the reading is shown, and it is slow and even.
-    '.p75pulse .p75n{transition:transform 4.5s cubic-bezier(.37,0,.3,1)}' +
-    '.p75pulse .p75f{stroke-dashoffset:100;transition:stroke-dashoffset 4.5s cubic-bezier(.37,0,.3,1)}.p75pulse .inst.on .p75f{stroke-dashoffset:0}' +
+    '.p75pulse .p75n{transition:transform 2.2s cubic-bezier(.37,0,.3,1)}' +
+    '.p75pulse .p75f{stroke-dashoffset:100;transition:stroke-dashoffset 2.2s cubic-bezier(.37,0,.3,1)}.p75pulse .inst.on .p75f{stroke-dashoffset:0}' +
     // why lists
     '.p75pulse .why{display:grid;grid-template-columns:1fr 1fr;gap:18px}' +
     '.p75pulse .row{display:grid;grid-template-columns:26px 1fr;gap:10px;padding:12px 0;border-top:1px solid var(--line)}' +
@@ -275,7 +275,7 @@
     '.p75pulse .ck-mfd button{align-self:flex-start;min-height:44px;padding:0 16px;border-radius:6px;border:1px solid var(--gold);background:#0B1410;color:#E8C766;' +
       'font:inherit;font-size:13px;letter-spacing:.1em;cursor:pointer}' +
     '.p75pulse .ck-mfd .bk{display:none}' +
-    '.p75pulse .ck-n,.p75pulse .ck-hz{transition:transform 4.5s cubic-bezier(.37,0,.3,1)}' +
+    '.p75pulse .ck-n,.p75pulse .ck-hz{transition:transform 2.2s cubic-bezier(.37,0,.3,1)}' +
     '.p75pulse .ck-snap{transition:none!important}' +
     // Phones and small tablets: the info screen opens as a bottom sheet over the panel (built by ckSheet below),
     // so the tapped gauge stays in view instead of the page scrolling away from it
@@ -303,7 +303,7 @@
     '.p75ck-sheet .sh-dial .am .mv{font:800 16px/1.1 Manrope,sans-serif}.p75ck-sheet .sh-dial .am .mn{font:700 11.5px/1.25 Manrope,sans-serif;color:#EDE8DC}.p75ck-sheet .sh-dial .am .ma{font:600 11px Manrope,sans-serif;color:#F2D27A}' +
     '.p75ck-sheet .sh-dial .p75f{stroke-dashoffset:0}' +
     '.p75ck-sheet .ck-mfd .tp{flex-wrap:nowrap;white-space:nowrap}.p75ck-sheet .ck-mfd .tp span:last-child{overflow:hidden;text-overflow:ellipsis;min-width:0}' +
-    '.p75ck-sheet .sh-dial .ck-n,.p75ck-sheet .sh-dial .ck-hz,.p75ck-sheet .sh-dial .p75n{transition:transform 4.5s cubic-bezier(.37,0,.3,1)}.p75ck-sheet .sh-dial .ck-snap{transition:none!important}' +
+    '.p75ck-sheet .sh-dial .ck-n,.p75ck-sheet .sh-dial .ck-hz,.p75ck-sheet .sh-dial .p75n{transition:transform 2.2s cubic-bezier(.37,0,.3,1)}.p75ck-sheet .sh-dial .ck-snap{transition:none!important}' +
     '.p75ck-sheet .sh-body{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}' +
     '@media (min-width:600px){.p75ck-sheet .sh{left:50%;right:auto;width:560px;margin-left:-280px}}' +
     '@media (prefers-reduced-motion:reduce){.p75ck-sheet .sh,.p75ck-sheet .sh-bd{transition:none}}' +
@@ -1129,12 +1129,12 @@
     if (tk) setTimeout(function () { requestAnimationFrame(function () {
       tk.classList.add('go');
       tk.querySelectorAll('.p75n').forEach(function (n) { n.style.transform = 'rotate(' + n.getAttribute('data-a') + 'deg)'; });
-    }); }, 650);
+    }); }, 350);
     var inst = host.querySelector('.inst'); if (!inst) return;
     setTimeout(function () { requestAnimationFrame(function () {   // a short pause so the eye lands first
       inst.classList.add('on');
       inst.querySelectorAll('.p75n').forEach(function (n) { n.style.transform = 'rotate(' + n.getAttribute('data-a') + 'deg)'; });
-    }); }, 650);
+    }); }, 350);
   }
 
   var FOLD = !!location.hash.slice(1) && location.hash !== '#takeaway', FOLD_ANIM = false, FROM_TK = false;   // header and dials folded into the strip?

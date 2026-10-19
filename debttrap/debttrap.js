@@ -73,8 +73,8 @@
     '.p75debt .dt-r b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:36px;line-height:1;text-shadow:0 0 14px currentColor}' +
     '.p75debt .dt-r em{font-style:normal;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}' +
     '.p75debt .dt-r > span{font-size:14px;line-height:1.45;color:#F1ECE2}' +
-    '.p75debt .p75n{transition:transform 4.5s cubic-bezier(.37,0,.3,1);filter:drop-shadow(0 0 3px rgba(255,255,255,.6))}' +
-    '.p75debt .p75f{stroke-dashoffset:100;transition:stroke-dashoffset 4.5s cubic-bezier(.37,0,.3,1)}.p75debt .dt-ov.go .p75f{stroke-dashoffset:0}' +
+    '.p75debt .p75n{transition:transform 2.2s cubic-bezier(.37,0,.3,1);filter:drop-shadow(0 0 3px rgba(255,255,255,.6))}' +
+    '.p75debt .p75f{stroke-dashoffset:100;transition:stroke-dashoffset 2.2s cubic-bezier(.37,0,.3,1)}.p75debt .dt-ov.go .p75f{stroke-dashoffset:0}' +
     // tabs (same look as Pulse)
     '.p75debt .tabs{position:sticky;top:var(--tabs-top,0px);z-index:6;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:8px -20px 0;padding:6px 20px;background:var(--ink);border-bottom:1px solid var(--line)}' +
     '.p75debt .tabs::-webkit-scrollbar{display:none}' +
@@ -594,7 +594,7 @@
     setTimeout(function () { requestAnimationFrame(function () {
       var o = host.querySelector('.dt-ov'); if (!o) return; o.classList.add('go');
       o.querySelectorAll('.p75n').forEach(function (n) { n.style.transform = 'rotate(' + n.getAttribute('data-a') + 'deg)'; });
-    }); }, 650);
+    }); }, 350);
   }
   var cache = null, loading = false, waiting = [];
   function load(cb) {
