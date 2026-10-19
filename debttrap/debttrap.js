@@ -88,6 +88,7 @@
     '.p75debt .top{grid-template-rows:1fr}.p75debt .fstrip{grid-template-rows:0fr;opacity:0}' +
     '.p75debt.folded .top{grid-template-rows:0fr;opacity:0}.p75debt.folded .fstrip{grid-template-rows:1fr;opacity:1}' +
     '.p75debt:not(.folded) .fstrip{visibility:hidden}.p75debt.folded .top > div{visibility:hidden;transition:visibility 0s .5s}' +
+    '.p75debt.nofx .top,.p75debt.nofx .fstrip,.p75debt.nofx .top > div,.p75debt.nofx .tabs{transition:none!important}' +
     '.p75debt .fold{display:flex;align-items:center;gap:8px 22px;flex-wrap:wrap;width:100%;min-height:44px;margin:0;padding:5px 8px 5px 16px;border-radius:12px;background:var(--panel);border:1px solid var(--line);color:inherit;font:inherit;text-align:left;cursor:pointer}' +
     '.p75debt .fold:hover{border-color:var(--gold)}.p75debt .fold:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
     '.p75debt .fi{display:inline-flex;align-items:baseline;gap:8px;white-space:nowrap}.p75debt .fi small{color:#D2CCBF;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}' +
@@ -526,6 +527,25 @@
     if (!FOLD) host.classList.remove('folded'); else if (!FOLD_ANIM) host.classList.add('folded');
     drawAll(host); sweep(host);
   }
+
+  // Reading down the Takeaway: once the header and dials have scrolled out of sight, fold them into the strip.
+  // The fold happens off screen with no animation and the scroll is corrected, so nothing moves under the reader's eye.
+  var SCROLL_TICK = false;
+  window.addEventListener('scroll', function () {
+    if (FOLD || SCROLL_TICK) return; SCROLL_TICK = true;
+    requestAnimationFrame(function () {
+      SCROLL_TICK = false;
+      var host = document.querySelector('.p75debt'), top = host && host.querySelector('.top'), bar = host && host.querySelector('.tabs');
+      var anchor = bar && bar.nextElementSibling;
+      if (FOLD || !top || !anchor) return;
+      var tb = document.querySelector('.top-blocks--sticky'), hdr = tb ? tb.getBoundingClientRect().height : 0;
+      if (top.getBoundingClientRect().bottom > hdr) return;   // still partly in view
+      var before = anchor.getBoundingClientRect().top;
+      FOLD = true; host.classList.add('nofx', 'folded');
+      window.scrollBy(0, anchor.getBoundingClientRect().top - before);
+      requestAnimationFrame(function () { requestAnimationFrame(function () { host.classList.remove('nofx'); }); });
+    });
+  }, { passive: true });
   function wireTabs(host, j) {
     if (host.getAttribute('data-dt-wired')) return; host.setAttribute('data-dt-wired', '1');
     host.addEventListener('click', function (e) {

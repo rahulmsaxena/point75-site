@@ -30,6 +30,7 @@
     '.p75pulse .top{grid-template-rows:1fr}.p75pulse .fstrip{grid-template-rows:0fr;opacity:0}' +
     '.p75pulse.folded .top{grid-template-rows:0fr;opacity:0}.p75pulse.folded .fstrip{grid-template-rows:1fr;opacity:1}' +
     '.p75pulse:not(.folded) .fstrip{visibility:hidden}.p75pulse.folded .top > div{visibility:hidden;transition:visibility 0s .5s}' +
+    '.p75pulse.nofx .top,.p75pulse.nofx .fstrip,.p75pulse.nofx .top > div,.p75pulse.nofx .tabs{transition:none!important}' +
     '.p75pulse .fold{display:flex;align-items:center;gap:8px 22px;flex-wrap:wrap;width:100%;min-height:48px;margin:2px 0 0;padding:8px 10px 8px 16px;border-radius:12px;' +
       'background:var(--panel);border:1px solid var(--line);color:inherit;font:inherit;text-align:left;cursor:pointer;transition:border-color .15s}' +
     '.p75pulse .fold:hover{border-color:var(--gold)}.p75pulse .fold:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
@@ -1204,6 +1205,25 @@
     document.documentElement.classList.add('p75tabs');
     wireSparks(host); animate(host); wire(host); wireCockpit(host);
   }
+
+  // Reading down the Takeaway: once the header and dials have scrolled out of sight, fold them into the strip.
+  // The fold happens off screen with no animation and the scroll is corrected, so nothing moves under the reader's eye.
+  var SCROLL_TICK = false;
+  window.addEventListener('scroll', function () {
+    if (FOLD || SCROLL_TICK) return; SCROLL_TICK = true;
+    requestAnimationFrame(function () {
+      SCROLL_TICK = false;
+      var host = document.querySelector('.p75pulse'), top = host && host.querySelector('.top'), bar = host && host.querySelector('.tabs');
+      var anchor = bar && bar.nextElementSibling;
+      if (FOLD || !top || !anchor) return;
+      var tb = document.querySelector('.top-blocks--sticky'), hdr = tb ? tb.getBoundingClientRect().height : 0;
+      if (top.getBoundingClientRect().bottom > hdr) return;   // still partly in view
+      var before = anchor.getBoundingClientRect().top;
+      FOLD = true; host.classList.add('nofx', 'folded');
+      window.scrollBy(0, anchor.getBoundingClientRect().top - before);
+      requestAnimationFrame(function () { requestAnimationFrame(function () { host.classList.remove('nofx'); }); });
+    });
+  }, { passive: true });
   window.addEventListener('hashchange', function () {
     var host = document.querySelector('.p75pulse'); if (host && cache) draw(host, cache);
   });
