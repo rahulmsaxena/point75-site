@@ -53,17 +53,17 @@
     '.p75pulse h2{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:23px;margin:32px 0 4px}' +
     '.p75pulse h2 + .sub{color:var(--soft);font-size:14.5px;line-height:1.55;margin:0 0 12px;text-align:justify;hyphens:auto;-webkit-hyphens:auto}' +
     // instruments
-    '.p75pulse .inst{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;margin-top:18px}' +
-    '.p75pulse .inst .card{display:flex;flex-direction:column;padding:16px 18px}' +
+    '.p75pulse .inst{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;margin-top:12px}' +
+    '.p75pulse .inst .card{display:flex;flex-direction:column;padding:10px 16px 12px}' +
     '.p75pulse .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}' +
     '.p75pulse .card h3{margin:0 0 6px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}' +
     '.p75pulse .meter{display:flex;gap:16px;align-items:center}' +
-    '.p75pulse .dial{flex:0 0 auto;width:176px}.p75pulse .dial svg{display:block;width:100%;height:auto;overflow:visible}' +
+    '.p75pulse .dial{flex:0 0 auto;width:140px}.p75pulse .dial svg{display:block;width:100%;height:auto;overflow:visible}' +
     '.p75pulse .reading{flex:1;min-width:0}' +
-    '.p75pulse .big{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:48px;line-height:1;margin:0 0 2px;font-variant-numeric:tabular-nums}' +
+    '.p75pulse .big{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:40px;line-height:1;margin:0 0 2px;font-variant-numeric:tabular-nums}' +
     '.p75pulse .big small{font-family:Manrope,sans-serif;font-size:14px;color:var(--muted);margin-left:4px}' +
     '.p75pulse .verdict{font-size:12.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}' +
-    '.p75pulse .hint{color:var(--soft);font-size:13.5px;line-height:1.5;text-align:justify;hyphens:auto;-webkit-hyphens:auto}' +
+    '.p75pulse .hint{color:var(--soft);font-size:13px;line-height:1.45;text-align:justify;hyphens:auto;-webkit-hyphens:auto}' +
     // Needle sweeps stay on even with Reduce motion: the sweep is how the reading is shown, and it is slow and even.
     '.p75pulse .p75n{transition:transform 1.25s cubic-bezier(.37,0,.3,1)}' +
     '.p75pulse .p75f{stroke-dashoffset:100;transition:stroke-dashoffset 1.25s cubic-bezier(.37,0,.3,1)}.p75pulse .inst.on .p75f{stroke-dashoffset:0}' +
@@ -96,10 +96,10 @@
     '.p75pulse .spark{position:relative;margin-top:12px}' +
     '.p75pulse .spark svg{display:block;width:100%;height:46px}' +
     '.p75pulse .tip{position:absolute;top:-30px;transform:translateX(-50%);background:#0b0c0e;border:1px solid var(--line);color:var(--cream);font-size:11.5px;padding:3px 8px;border-radius:6px;white-space:nowrap;pointer-events:none;opacity:0}' +
-    '.p75pulse .dtlink{display:block;margin-top:20px;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:14px;padding:18px 20px;color:var(--soft);text-decoration:none;font-size:14.5px;line-height:1.5}' +
+    '.p75pulse .dtlink{display:block;margin-top:14px;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:12px;padding:9px 16px;color:var(--soft);text-decoration:none;font-size:13.5px;line-height:1.5}' +
     '.p75pulse .dtlink:hover{border-color:var(--gold)}' +
     '.p75pulse .dtlink span{color:var(--gold);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-right:10px}' +
-    '.p75pulse .dtlink b{color:#fff;font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:19px;margin-right:8px}' +
+    '.p75pulse .dtlink b{color:#fff;font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:17px;margin-right:8px}' +
     '.p75pulse .wire{border:1px dashed var(--line);border-radius:14px;padding:20px;color:var(--soft);font-size:14px}' +
     '.p75pulse .wire.on{border:1px solid var(--line);padding:6px 20px;background:var(--panel)}' +
     '.p75pulse .wire a.h{display:block;padding:13px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--cream)}' +
@@ -124,7 +124,7 @@
     '.p75pulse .pn{display:flex;justify-content:space-between;gap:12px;margin-top:40px;border-top:1px solid var(--line);padding-top:16px}' +
     '.p75pulse .pn a{color:var(--soft);font-weight:600;text-decoration:none;font-size:15px}.p75pulse .pn a.nx{color:var(--gold);font-weight:800}' +
     '.p75pulse .view > h2:first-child{margin-top:16px}' +
-    '.p75pulse .tabs{position:sticky;top:var(--tabs-top,0px);z-index:6;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:22px -20px 0;padding:10px 20px;background:var(--ink);border-bottom:1px solid var(--line)}' +
+    '.p75pulse .tabs{position:sticky;top:var(--tabs-top,0px);z-index:6;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:12px -20px 0;padding:6px 20px;background:var(--ink);border-bottom:1px solid var(--line)}' +
     '.p75pulse .tabs::-webkit-scrollbar{display:none}' +
     // the tab bar is what follows the reader down this page, so the site's floating back/next bar stays hidden here
     'html.p75tabs #p75tf{display:none!important}' +
@@ -132,7 +132,7 @@
     '.p75pulse .tab:hover{border-color:var(--gold);color:#fff}' +
     '.p75pulse .tab.on{background:var(--gold);border-color:var(--gold);color:#111214}' +
     '.p75pulse .tab:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
-    '@media (max-width:560px){.p75pulse .tabs{margin:28px -16px 0;padding:10px 16px;gap:6px}.p75pulse .tab{min-height:38px;padding:0 15px;font-size:14px}}' +
+    '@media (max-width:560px){.p75pulse .tabs{margin:12px -16px 0;padding:6px 16px;gap:6px}.p75pulse .tab{min-height:38px;padding:0 15px;font-size:14px}}' +
     '@media (max-width:460px){.p75pulse .tabs{gap:5px}.p75pulse .tab{flex:1 1 auto;justify-content:center;padding:0 6px;font-size:13px}}' +
     '@media (max-width:400px){.p75pulse .tab{flex:none;min-height:36px;padding:0 12px}}' +   // one row that slides sideways: a second row cost ~40px
     '@media (max-width:700px){.p75pulse .secs{grid-template-columns:1fr;gap:14px}.p75pulse a.sec{min-height:0;padding:22px 20px}.p75pulse a.sec .nm{font-size:23px}.p75pulse .strip a{margin-left:0}}' +
@@ -170,23 +170,27 @@
     '.p75pulse .ck-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 12px 5px 10px;border-radius:99px;border:1px solid;font-size:13px;font-weight:700;white-space:nowrap}' +
     '.p75pulse .ck-pill b{font-size:17px;font-variant-numeric:tabular-nums}' +
     // takeaway
-    '.p75pulse .tk{display:flex;flex-direction:column;gap:12px}' +
-    '.p75pulse .tk-head{margin:0;padding:18px 22px;border-radius:16px;background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold);' +
-      'font-family:"Hedvig Letters Serif",Georgia,serif;font-size:24px;line-height:1.45;color:#fff}' +
+    '.p75pulse .tk{display:flex;flex-direction:column;gap:10px;margin-top:12px}' +
+    '.p75pulse .tk-head{margin:0;padding:11px 18px;border-radius:14px;background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold);' +
+      'font-family:"Hedvig Letters Serif",Georgia,serif;font-size:21px;line-height:1.45;color:#fff}' +
     '.p75pulse .tk .hl{text-shadow:0 0 12px currentColor}' +
-    '.p75pulse .tk-watch{display:flex;align-items:center;gap:10px;margin:0;font-size:17px;color:#F1ECE2}.p75pulse .tk-watch b{color:#FFD23F}' +
+    '.p75pulse .tk-watch{display:flex;align-items:center;gap:10px;margin:0;font-size:15px;color:#F1ECE2}.p75pulse .tk-watch b{color:#FFD23F}' +
     '.p75pulse .tk-watch i{flex:0 0 auto;width:9px;height:9px;border-radius:50%;background:#FF3D5E;animation:p75ping 1.8s ease-out infinite}' +
     '.p75pulse .tk-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}' +
-    '.p75pulse a.tk-c{display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:14px;background:var(--panel);border:1px solid var(--line);border-top:2px solid var(--gold);color:inherit;text-decoration:none;transition:border-color .15s,transform .15s}' +
+    '.p75pulse a.tk-c{display:flex;flex-direction:column;gap:8px;padding:12px 14px;border-radius:14px;background:var(--panel);border:1px solid var(--line);border-top:2px solid var(--gold);color:inherit;text-decoration:none;transition:border-color .15s,transform .15s}' +
     '.p75pulse a.tk-c:hover,.p75pulse a.tk-c:focus-visible{border-color:var(--gold);outline:none}' +
     '@media (hover:hover){.p75pulse a.tk-c:hover{transform:translateY(-2px)}}' +
-    '.p75pulse .tk-h{display:flex;align-items:center;justify-content:space-between}.p75pulse .tk-go{color:var(--gold);font-size:14.5px;font-weight:800}' +
+    '.p75pulse .tk-h{display:flex;align-items:center;justify-content:space-between}.p75pulse .tk-go{color:var(--gold);font-size:13px;font-weight:800;white-space:nowrap}' +
     '.p75pulse .tk-b{display:flex;align-items:center;gap:16px}' +
-    '.p75pulse .tk-d{flex:0 0 auto;width:108px}.p75pulse .tk-d svg{display:block;width:100%;height:auto;overflow:visible}' +
+    '.p75pulse .tk-d{flex:0 0 auto;width:96px}.p75pulse .tk-d svg{display:block;width:100%;height:auto;overflow:visible}' +
     '.p75pulse .tk-t{display:flex;flex-direction:column;gap:3px;min-width:0}' +
-    '.p75pulse .tk-t > b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:34px;line-height:1;text-shadow:0 0 14px currentColor}.p75pulse .tk-t > b small{font-size:16px;opacity:.75}' +
-    '.p75pulse .tk-t em{font-style:normal;font-size:13.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}' +
-    '.p75pulse .tk-l{font-size:16.5px;line-height:1.5;color:#F1ECE2}.p75pulse .tk-news{display:block;font-size:17.5px;color:#fff;font-weight:600;line-height:1.45}' +
+    '.p75pulse .tk-t > b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:28px;line-height:1;text-shadow:0 0 14px currentColor}.p75pulse .tk-t > b small{font-size:15px;opacity:.75}' +
+    '.p75pulse .tk-t em{font-style:normal;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}' +
+    '.p75pulse .tk-l{font-size:14px;line-height:1.5;color:#F1ECE2}.p75pulse .tk-news{display:flex;flex-direction:column;gap:9px;font-size:14px;color:#fff;font-weight:600;line-height:1.4}' +
+    '.p75pulse .tk-nh small{display:block;margin-top:2px;font-size:11.5px;font-weight:600;color:var(--muted)}' +
+    '.p75pulse .tk-lamps{display:grid;grid-template-columns:repeat(4,14px);gap:9px;padding:4px 0}.p75pulse .tk-lamps i{width:14px;height:14px;border-radius:50%}' +
+    // wide screens: the four cards in one row, dial above the reading, so the Takeaway fits one screen
+    '@media (min-width:1100px){.p75pulse .tk-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.p75pulse .tk-b{flex-direction:column;align-items:flex-start;gap:8px}.p75pulse .tk-d{width:104px}}' +
     '.p75pulse .tk.go .p75f{stroke-dashoffset:0}' +
     '.p75pulse a.tk-back{display:inline-flex;align-items:center;gap:8px;min-height:40px;margin:12px 0 -4px;padding:0 16px;border-radius:99px;border:1px solid var(--gold);background:rgba(201,162,39,.1);color:#FFD23F;font-weight:800;font-size:14.5px;text-decoration:none}' +
     '.p75pulse a.tk-back:hover,.p75pulse a.tk-back:focus-visible{background:rgba(201,162,39,.22);outline:none}' +
@@ -245,6 +249,7 @@
     '.p75pulse .ck-body.go .p75f{stroke-dashoffset:0}' +
     '@media (max-width:560px){.p75pulse .auc-meter svg{width:140px}.p75pulse .ac-grid{grid-template-columns:1fr}.p75pulse .auc-up li{grid-template-columns:46px minmax(0,1fr) auto;gap:8px}.p75pulse .auc-up .us{display:none}}' +
     '.p75pulse .ck-how1{margin:0;font-size:14px;line-height:1.55;color:var(--soft)}' +
+    '@media (max-width:400px){.p75pulse .ck-tg{gap:10px}.p75pulse .ck-sum{min-width:0;flex-wrap:wrap;justify-content:flex-end;white-space:normal;text-align:right}}' +
     '@media (max-width:560px){.p75pulse .ck-main{padding:4px 14px}.p75pulse .ck-sum{font-size:12.5px}.p75pulse .ck-sum b{font-size:19px}.p75pulse .ck-sum .w{display:none}}' +
     '.p75pulse .ck-h2{color:var(--muted);font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-top:4px}' +
     '.p75pulse .ck-bb{display:flex;flex-wrap:wrap;gap:16px}' +
@@ -1072,12 +1077,11 @@
         C(gn.strong + ' strong', BULL) + ', ' + gn.average + ' average, ' + C(gn.weak + ' weak', BEAR) + ' of the last ' + a.recent.length + '.' +
         (a.recent[0] ? ' Latest: ' + esc(a.recent[0].term.replace(' ', '-')) + ', ' + C(a.recent[0].grade, gcol[a.recent[0].grade] || '#E6E2D8') + '.' : '') +
         (nx ? ' Next: ' + esc(nx.label) + ' ' + inDays(nx.date) + '.' : ''));
-      if (rows.length) cards += card('plumbing', 'Plumbing', '',
+      if (rows.length) cards += card('plumbing', 'Plumbing', '<span class="tk-lamps">' + rows.map(function (x) { return '<i title="' + esc(x.nm) + '" style="background:' + x.dc + ';box-shadow:0 0 8px ' + x.dc + '"></i>'; }).join('') + '</span>',
         hot.length + '<small>/' + rows.length + '</small>', hot.length ? '#FF3D5E' : '#2BFF88', hot.length ? 'flashing' : 'all quiet',
         hot.length ? list(hot.slice(0, 3).map(function (x) { return C(x.nm, x.dc) + ' (' + (x.pc >= 99 ? 'year high' : x.pc + 'th pct') + ')'; })) + '.' : 'No reading is in the top quarter of its past year.');
-      cards += card('wire', 'Live wire', '', '', '#fff', '', '<span class="tk-news" data-wire-top>Loading the latest headline…</span>');
-      SEC.takeaway = '<h2>The takeaway</h2><p class="sub">Everything on this page in one screen, written from today’s readings. Tap a card for the detail behind it.</p>' +
-        '<div class="tk"><p class="tk-head">' + head + '</p>' +
+      cards += card('wire', 'Live wire', '', '', '#fff', '', '<span class="tk-news" data-wire-top>Loading the latest headlines…</span>');
+      SEC.takeaway = '<div class="tk"><p class="tk-head">' + head + '</p>' +
         (watch ? '<p class="tk-watch"><i aria-hidden="true"></i><span><b>Watch:</b> ' + watch + '</span></p>' : '') +
         '<div class="tk-grid">' + cards + '</div></div>';
     })();
@@ -1114,7 +1118,10 @@
     fetch(NEWS).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
       var a = ((j && j.articles) || []).filter(function (x) { return x.title && /^https?:/.test(x.url || '') && (x.tags || []).indexOf('newsdata') === -1; })  // skip general-news wire items, keep central banks and markets
         .sort(function (x, y) { return String(y.published_at).localeCompare(String(x.published_at)); }).slice(0, 8);
-      if (top) { top.textContent = a.length ? a[0].title : 'Headlines are unavailable right now.'; if (!box) return; }
+      if (top) {   // the Takeaway card: the two newest headlines
+        top.innerHTML = a.length ? a.slice(0, 2).map(function (x) { var t = x.published_at ? ago(x.published_at) : ''; return '<span class="tk-nh">' + e(x.title) + '<small>' + e(x.source) + (t ? ' · ' + t : '') + '</small></span>'; }).join('') : 'Headlines are unavailable right now.';
+        if (!box) return;
+      }
       if (!a.length) { box.textContent = 'Headlines are unavailable right now.'; return; }
       box.className = 'wire on';
       box.innerHTML = a.map(function (x) {
