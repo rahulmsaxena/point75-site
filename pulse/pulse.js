@@ -190,7 +190,11 @@
     '.p75pulse .tk-nh small{display:block;margin-top:2px;font-size:11.5px;font-weight:600;color:var(--muted)}' +
     '.p75pulse .tk-lamps{display:grid;grid-template-columns:repeat(4,14px);gap:9px;padding:4px 0}.p75pulse .tk-lamps i{width:14px;height:14px;border-radius:50%}' +
     // wide screens: the four cards in one row, dial above the reading, so the Takeaway fits one screen
-    '@media (min-width:1100px){.p75pulse .tk-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.p75pulse .tk-b{flex-direction:column;align-items:flex-start;gap:8px}.p75pulse .tk-d{width:104px}}' +
+    '@media (min-width:1100px){.p75pulse .tk-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.p75pulse .tk-b{flex-direction:column;align-items:flex-start;gap:8px}' +
+      // a dial or lamps sit beside the number and its word; the line runs full width underneath
+      '.p75pulse .tk-b:has(.tk-d){display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;align-items:center}.p75pulse .tk-b:has(.tk-d) .tk-t{display:contents}' +
+      '.p75pulse .tk-b:has(.tk-d) .tk-d{grid-row:1 / span 2;width:84px}.p75pulse .tk-b:has(.tk-d) .tk-t > b{grid-column:2;align-self:end}.p75pulse .tk-b:has(.tk-d) .tk-t em{grid-column:2;align-self:start}' +
+      '.p75pulse .tk-b:has(.tk-d) .tk-l{grid-column:1 / -1;margin-top:4px}}' +
     '.p75pulse .tk.go .p75f{stroke-dashoffset:0}' +
     '.p75pulse a.tk-back{display:inline-flex;align-items:center;gap:8px;min-height:40px;margin:12px 0 -4px;padding:0 16px;border-radius:99px;border:1px solid var(--gold);background:rgba(201,162,39,.1);color:#FFD23F;font-weight:800;font-size:14.5px;text-decoration:none}' +
     '.p75pulse a.tk-back:hover,.p75pulse a.tk-back:focus-visible{background:rgba(201,162,39,.22);outline:none}' +
@@ -1068,10 +1072,10 @@
             '<span class="tk-l">' + line + '</span></span></span></a>';
       };
       var cards = '';
-      if (bsc != null) cards += card('why', 'Signals', dial({ v: bsc, min: -100, max: 100, rest: 0, from: -100, color: bullColor(bsc), aria: 'Bull / Bear ' + signedInt(bsc) }),
+      if (bsc != null) cards += card('why', 'Signals', '',   // no dial: the Bull / Bear dial above already shows this score
         signedInt(bsc), bullColor(bsc), esc(b.label || ''),
         (vr.length ? C('Bear', BEAR) + ': ' + vr.map(function (v) { return C(v, BEAR); }).join(', ') + '. ' : '') + (vb.length ? C('Bull', BULL) + ': ' + vb.map(function (v) { return C(v, BULL); }).join(', ') + '. ' : '') +
-        (votes.length - vr.length - vb.length) + ' of ' + votes.length + ' signals hold.' + (ssc != null && drv.length ? ' Stress ' + C(String(ssc), stressColor(ssc)) + ', led by ' + drv.map(function (d) { return C(d, '#FFB224'); }).join(' and ') + '.' : ''));
+        (votes.length - vr.length - vb.length) + ' of ' + votes.length + ' signals hold.');   // stress and its drivers are in the headline
       if (typeof dm !== 'undefined') cards += card('auctions', 'Auctions', dial({ v: dm, min: -100, max: 100, rest: 0, from: -100, color: dcol, aria: 'Auction demand ' + signedInt(dm) }),
         signedInt(dm), dcol, esc(dword),
         C(gn.strong + ' strong', BULL) + ', ' + gn.average + ' average, ' + C(gn.weak + ' weak', BEAR) + ' of the last ' + a.recent.length + '.' +
