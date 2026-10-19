@@ -11,7 +11,7 @@
       ['Introduction', 'What a bond is, and how futures and options fit around it.', '/bond-introduction'],
       ['Classification', 'Treasuries, munis, company bonds: the main kinds.', '/bond-types'],
       ['Bond Dictionary', 'Keep it open: every term, in plain words.', '/bond-dictionary'],
-      ['T-bill, CD or savings?', 'Put it to use: what your cash would actually earn, after tax.', TOOLS + '/market-intelligence/treasury-finder']]],
+      ['T-bill, CD or savings?', 'Put it to use: what your cash would actually earn, after tax.', TOOLS + '/portfolio/treasury-finder']]],
     ['Path 2 · Medium', 'I want to understand the market', 'You invest already and want to know what’s moving rates, and why.', 'Read the first essay', [
       ['Let The Fed be Fed', 'An essay on who’s really setting rates.', '/let-the-fed-be-fed'],
       ['Pulse', 'The bond market’s vital signs, today.', '/pulse'],
@@ -21,7 +21,7 @@
       ['The Ledger', 'Your mix against the market, five years back.', TOOLS + '/portfolio/ledger'],
       ['Stress tests', 'What rising yields or a tech reset would cost it.', TOOLS + '/portfolio/ledger#stress'],
       ['Stocks or a bond?', 'What a plain bond would pay instead.', TOOLS + '/portfolio/ledger#bond'],
-      ['Treasury Finder', 'Find a real Treasury and see how it would behave.', TOOLS + '/market-intelligence/treasury-finder']]]
+      ['Treasury Finder', 'Find a real Treasury and see how it would behave.', TOOLS + '/portfolio/treasury-finder']]]
   ];
 
   var LEVELS = [

@@ -1205,7 +1205,6 @@
   // The site styles its dropdowns through scoped attributes, so the pieces are copied from an existing
   // dropdown (its arrow, panel and one item) and added to the Intelligence item in place.
   var INTEL_TOOLS = [
-    ['Treasury Finder', 'https://tools.point75.io/market-intelligence/treasury-finder'],
     ['Congressional Trading', 'https://tools.point75.io/market-intelligence/congressional-trading'],
     ['AI Investment', 'https://tools.point75.io/market-intelligence/ai-investment'],
     ['Sector Credit', 'https://tools.point75.io/market-intelligence/sector-credit'],
@@ -1485,9 +1484,9 @@
       return;
     } else if (window.P75INS) window.P75INS.clear();
 
-    // Bonds moved to the tools site as Treasury Finder; old links and bookmarks go straight there
+    // Bonds moved to the tools site as Treasury Finder (Portfolio); old links and bookmarks go straight there
     if (path === '/bonds') {
-      location.replace('https://tools.point75.io/market-intelligence/treasury-finder');
+      location.replace('https://tools.point75.io/portfolio/treasury-finder');
       return;
     } else if (window.P75BONDS) window.P75BONDS.clear();
 
