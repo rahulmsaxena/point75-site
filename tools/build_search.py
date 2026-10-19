@@ -140,7 +140,9 @@ def main():
     for path, title, typ, desc in PAGES:
         d = crawled.get(path, {})
         docs.append({"url": path, "title": title, "type": typ, "desc": desc, "body": d.get("body", "")})
-    skip = fixed | {"/bond-dictionary", "/bond-types"} | {d["url"] for d in structured if d["type"] == "Guide"}
+    # pages that moved to tools.point75.io still appear in the sitemap; they redirect, so leave them out
+    moved = {"/sector-credit", "/lenders", "/credit-stress"}
+    skip = fixed | moved | {"/bond-dictionary", "/bond-types"} | {d["url"] for d in structured if d["type"] == "Guide"}
     for path, d in crawled.items():
         if path in skip or path == "/":
             continue
