@@ -1250,7 +1250,7 @@
   // ---------- Disclosures, sources and footnotes: one line each, tap to read in full ----------
   // They used to take several lines at the end of every page; folded to a single line they leave the space to the content.
   var DISC_SEL = '.p75pulse .foot,.p75debt .foot,.p75cr .foot,.p75bonds .foot,.p75edu .foot,.p75edu .src,.p75ins .wrap > .note,.p75ins .src,' +
-    '.p75ind .wrap > .note,.p75ind .view > .foot,.p75ind .rsrc,.p75debt .note,.p75pulse .ck-body .note,.p75ins figcaption';
+    '.p75ind .wrap > .note,.p75ind .view > .foot,.p75ind .rsrc,.p75debt .note,.p75pulse .ck-body .note';
   (function discOnce() {
     var st = document.createElement('style'); st.id = 'p75disc-css';
     // styled by selector too, so a freshly drawn page is one line from its first frame (tagDisc only adds keyboard access)

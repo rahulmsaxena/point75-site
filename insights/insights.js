@@ -17,15 +17,17 @@
     '.p75ins .wrap{max-width:1040px;margin:0 auto;padding:4px 20px 48px}' +
     '.p75ins .eyebrow{color:var(--gold);letter-spacing:.14em;font-size:12px;font-weight:700;text-transform:uppercase}' +
     '.p75ins h1{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:28px;line-height:1.15;margin:0;letter-spacing:-.01em;max-width:100%}' +
-    '.p75ins .hd-t{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin:12px 0 10px}' +
+    '.p75ins .hd-t{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin:0 0 8px}' +
     '.p75ins .hd-t .asof{margin:0 0 0 auto}' +
     '.p75ins .asof{font-size:12.5px;color:var(--muted)}.p75ins .asof b{color:var(--cream);font-weight:600}' +
-    '.p75ins .intro{display:grid;grid-template-columns:minmax(0,1fr) 210px;gap:18px;align-items:start}' +
+    '.p75ins .intro{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:22px;align-items:center;margin-top:12px}' +
+    '.p75ins .intx{min-width:0}' +
     '.p75ins .lede{color:var(--soft);font-size:16px;line-height:1.6;margin:0;text-align:justify;hyphens:auto;-webkit-hyphens:auto}' +
     '.p75ins .lede b{color:#fff}' +
-    '.p75ins figure{margin:0;min-width:0}' +
-    '.p75ins figure img{display:block;width:100%;height:auto;border-radius:12px;border:1px solid var(--line)}' +
-    '.p75ins figcaption{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5}' +
+    '.p75ins figure{position:relative;margin:0;min-width:0;border-radius:12px;overflow:hidden;border:1px solid var(--line)}' +
+    '.p75ins figure img{display:block;width:100%;height:auto}' +
+    '.p75ins figcaption{position:absolute;left:0;right:0;bottom:0;padding:16px 10px 5px;background:linear-gradient(180deg,rgba(17,18,20,0),rgba(17,18,20,.88) 55%);font-size:11px;color:#E9E3D6;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
+    '.p75ins figure:hover figcaption{white-space:normal}' +
     '.p75ins h2{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:23px;margin:32px 0 4px}' +
     '.p75ins .view > h2:first-child,.p75ins .view > .tk-back + h2{margin-top:16px}' +
     '.p75ins .hl{text-shadow:0 0 12px currentColor}' +
@@ -146,8 +148,8 @@
     '@media (min-width:881px){.p75ins .tk-head{font-size:26px;padding:18px 24px}.p75ins .ovd{width:140px}.p75ins .ovr b{font-size:40px}}' +
     '@media (max-width:880px){.p75ins .ov,.p75ins .bp,.p75ins .vw.has{grid-template-columns:minmax(0,1fr)}.p75ins .acts{grid-template-columns:repeat(2,minmax(0,1fr))}' +
       '.p75ins .vw > .info{display:none}.p75ins .vd .info{display:flex;position:static;margin-top:12px}.p75ins .vd .info .who{display:none}' +
-      '.p75ins .intro{grid-template-columns:minmax(0,1fr) 220px}.p75ins .lede{text-align:left}.p75ins .hd-t .eyebrow{flex-basis:100%}}' +
-    '@media (max-width:560px){.p75ins .wrap{padding:4px 16px 40px}.p75ins h1{font-size:24px}.p75ins .intro{grid-template-columns:minmax(0,1fr)}.p75ins figcaption{display:none}' +
+      '.p75ins .intro{grid-template-columns:minmax(0,1fr) 200px;gap:16px}.p75ins .lede{text-align:left}.p75ins .hd-t .eyebrow{flex-basis:100%}}' +
+    '@media (max-width:560px){.p75ins .wrap{padding:4px 16px 40px}.p75ins h1{font-size:24px}.p75ins .intro{grid-template-columns:minmax(0,1fr);gap:12px}.p75ins figcaption{display:none}' +
       '.p75ins .tabs{margin:10px -16px 0;padding:6px 16px;gap:4px}.p75ins .tab{flex:1 0 auto;justify-content:center;padding:0 8px;font-size:13px}.p75ins .tab .tl{display:none}.p75ins .tab .ts{display:inline}' +
       '.p75ins .fold{gap:6px 12px;flex-wrap:nowrap}.p75ins .fold > .eyebrow,.p75ins .fo-t{display:none}.p75ins .fi{gap:5px}.p75ins .fi small{font-size:10px}.p75ins .fi b{font-size:16px}.p75ins .bp p,.p75ins .vd li,.p75ins .fwv p{text-align:left}.p75ins .tk-head{font-size:19px;padding:14px 16px}' +
       '.p75ins .ovd{width:100px}.p75ins .ovr b{font-size:28px}.p75ins .big6{width:76px;height:76px;font-size:36px}.p75ins .avs{grid-template-columns:repeat(4,26px);gap:4px}.p75ins .avs i{width:26px;height:26px;font-size:10px}' +
@@ -240,12 +242,12 @@
     var hasFw = !!(f && f.tilt != null);
 
     // Title, update note, intro and illustration: fold into a one-line strip once a tab is picked
-    var top = '<div class="hd-t"><span class="eyebrow">Insights</span><h1>' + esc(title(d.headline)) + '</h1>' +
+    var top = '<div class="intro"><div class="intx"><div class="hd-t"><span class="eyebrow">Insights</span><h1>' + esc(title(d.headline)) + '</h1>' +
       '<div class="asof">Updated <b>' + fmt(d.updated) + '</b></div></div>' +
-      '<div class="intro"><p class="lede">The Fed chair, the Treasury Secretary and the biggest names in bond investing, in plain English: <b>' + V.length +
-      ' voices</b>, comments from <b>' + esc(d.window) + '</b>, every one dated and linked to its source. Then what it means for your household.</p>' +
-      (d.hero && d.hero.src ? '<figure><img src="' + esc(d.hero.src) + '" srcset="' + esc(d.hero.small) + ' 704w, ' + esc(d.hero.src) + ' 1408w" sizes="(max-width: 560px) 100vw, 210px" alt="' + esc(d.hero.alt) + '" loading="eager">' +
-        (d.hero.caption ? '<figcaption>' + esc(d.hero.caption) + '</figcaption>' : '') + '</figure>' : '') + '</div>';
+      '<p class="lede">The Fed chair, the Treasury Secretary and the biggest names in bond investing, in plain English: <b>' + V.length +
+      ' voices</b>, comments from <b>' + esc(d.window) + '</b>, every one dated and linked to its source. Then what it means for your household.</p></div>' +
+      (d.hero && d.hero.src ? '<figure><img src="' + esc(d.hero.src) + '" srcset="' + esc(d.hero.small) + ' 704w, ' + esc(d.hero.src) + ' 1408w" sizes="(max-width: 560px) 100vw, 300px" alt="' + esc(d.hero.alt) + '" loading="eager">' +
+        (d.hero.caption ? '<figcaption title="' + esc(d.hero.caption) + '">' + esc(d.hero.caption) + '</figcaption>' : '') + '</figure>' : '') + '</div>';
     var strip = '<button type="button" class="fold" data-unfold aria-label="Show the title and introduction"><span class="eyebrow">Insights</span>' +
       '<span class="fi"><small>Mood</small><b style="color:' + GOLD + '">' + esc(d.mood) + '</b></span>' +
       (hasFw ? '<span class="fi fi2"><small>Fed</small><b style="color:' + tiltCol(f.tilt) + '">' + esc(f.tilt_label) + '</b></span>' : '') +
