@@ -7,7 +7,8 @@
   if (window.P75INS) return;
   var DATA = 'https://rahulmsaxena.github.io/point75-site/insights/insights.json?v=' + Math.floor(Date.now() / 36e5);
   var FW_API = 'https://news.point75.io/api/fedspeak';
-  var GOLD = '#FFD23F', BLU = '#1FD8FF', RED = '#FF3D5E', NEU = '#B4BAC1';
+  var GOLD = '#FFE03A', BLU = '#00E8FF', RED = '#FF1F5A', NEU = '#C4CAD1';   // fluorescent: they glow on the dark page
+  var GLOW = 'text-shadow:0 0 1px currentColor,0 0 8px currentColor,0 0 20px currentColor';
 
   var CSS =
     '.p75ins{--ink:#111214;--panel:#17181B;--panel2:#1C1D21;--line:#2A2B2F;--cream:#EDE8DC;--soft:#E9E3D6;--muted:#C2BCAF;--gold:#C9A227;' +
@@ -25,7 +26,7 @@
     '.p75ins .lede b{color:#fff}' +
     '.p75ins h2{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:23px;margin:32px 0 4px}' +
     '.p75ins .view > h2:first-child,.p75ins .view > .tk-back + h2{margin-top:16px}' +
-    '.p75ins .hl{text-shadow:0 0 12px currentColor}' +
+    '.p75ins .hl{' + GLOW + '}' +
     // tabs
     '.p75ins .tabs{position:sticky;top:var(--tabs-top,0px);z-index:6;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:10px -20px 0;padding:5px 20px;background:var(--ink);border-bottom:1px solid var(--line)}' +
     '.p75ins .tabs::-webkit-scrollbar{display:none}' +
@@ -44,7 +45,7 @@
     '.p75ins .fold{display:flex;align-items:center;gap:8px 22px;flex-wrap:wrap;width:100%;min-height:44px;margin:0;padding:5px 8px 5px 16px;border-radius:12px;background:var(--panel);border:1px solid var(--line);color:inherit;font:inherit;text-align:left;cursor:pointer}' +
     '.p75ins .fold:hover{border-color:var(--gold)}.p75ins .fold:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
     '.p75ins .fi{display:inline-flex;align-items:baseline;gap:8px;white-space:nowrap}.p75ins .fi small{color:#D2CCBF;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}' +
-    '.p75ins .fi b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:20px;line-height:1;text-shadow:0 0 12px currentColor}' +
+    '.p75ins .fi b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:20px;line-height:1;' + GLOW + '}' +
     '.p75ins .fo{margin-left:auto;display:inline-flex;align-items:center;gap:10px;color:var(--gold);font-size:13px;font-weight:700}' +
     '.p75ins .fo-c{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--gold);display:grid;place-items:center;animation:p75ibob 2.4s ease-in-out infinite}' +
     '.p75ins .fo-c:after{content:"";width:7px;height:7px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:translateY(-2px) rotate(45deg)}' +
@@ -63,7 +64,7 @@
     '.p75ins .pills{display:flex;flex-direction:column;gap:6px}.p75ins .pills span{font-size:12.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border:1px solid currentColor;border-radius:99px;padding:3px 10px;text-align:center;text-shadow:0 0 8px currentColor}' +
     '.p75ins .ovd{flex:0 0 auto;width:96px}.p75ins .ovd svg{display:block;width:100%;height:auto;overflow:visible}' +
     '.p75ins .ovr{display:flex;flex-direction:column;gap:4px;min-width:0}' +
-    '.p75ins .ovr b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:26px;line-height:1.1;text-shadow:0 0 14px currentColor}' +
+    '.p75ins .ovr b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:26px;line-height:1.1;' + GLOW + '}' +
     '.p75ins .ovr em{font-style:normal;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}' +
     '.p75ins .ovr > span{font-size:13.5px;line-height:1.45;color:#F1ECE2}' +
     '.p75ins .avs{flex:0 0 auto;display:grid;grid-template-columns:repeat(4,26px);gap:4px}' +
@@ -121,7 +122,7 @@
     // fed watch
     '.p75ins .fwm{display:grid;grid-template-columns:200px minmax(0,1fr);gap:20px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 18px}' +
     '.p75ins .fwm svg{display:block;width:100%;height:auto;overflow:visible}' +
-    '.p75ins .fwv b{display:block;font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:28px;line-height:1.1;text-shadow:0 0 14px currentColor}' +
+    '.p75ins .fwv b{display:block;font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:28px;line-height:1.1;' + GLOW + '}' +
     '.p75ins .fwv p{margin:6px 0 0;font-size:15px;line-height:1.55;color:#F1ECE2;text-align:justify;hyphens:auto;-webkit-hyphens:auto}' +
     '.p75ins .fwp{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}' +
     '.p75ins .fwp span{font-size:13px;color:#F1ECE2;border:1px solid var(--line);border-radius:99px;padding:3px 10px;white-space:nowrap}.p75ins .fwv .fwp b{display:inline;font-family:Manrope,sans-serif;font-size:13px;font-weight:800;line-height:1.4;color:#fff;text-shadow:none}' +
