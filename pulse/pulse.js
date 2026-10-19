@@ -1240,10 +1240,11 @@
     }
     if (DBG) debug(host, sc, y, dy);
   }
+  if (DBG) setInterval(function () { var sc = SCROLL_SC || document.scrollingElement || document.documentElement; debug(document.querySelector('.p75pulse'), sc, window.pageYOffset, 0); }, 1000);
   function debug(host, sc, y, dy) {   // /page?p75debug=1 shows what the phone reports, for checking a device we cannot test here
     var d = document.getElementById('p75dbg');
     if (!d) { d = document.createElement('div'); d.id = 'p75dbg'; d.style.cssText = 'position:fixed;left:6px;bottom:6px;z-index:99999;background:#000;color:#0f0;font:11px/1.35 monospace;padding:6px 8px;border:1px solid #0f0;border-radius:6px;pointer-events:none;white-space:pre'; document.body.appendChild(d); }
-    d.textContent = 'scroller ' + sc.tagName + '.' + String(sc.className).slice(0, 18) + '\ny ' + Math.round(y) + ' dy ' + Math.round(dy) + ' events ' + DBG_N +
+    d.textContent = 'v3 ' + window.innerWidth + 'px scroller ' + sc.tagName + '.' + String(sc.className).slice(0, 18) + '\ny ' + Math.round(y) + ' dy ' + Math.round(dy) + ' events ' + DBG_N +
       '\nfold ' + FOLD + ' class ' + !!(host && host.classList.contains('folded')) + '\nsh ' + sc.scrollHeight + ' ch ' + sc.clientHeight + ' ih ' + window.innerHeight + '\nhash ' + location.hash;
   }
   window.addEventListener('hashchange', function () {
