@@ -16,8 +16,8 @@
   ];
 
   var CSS =
-    // red: one brighter shade site-wide; red words go bold and lose the glow that blurred them
-    '.p75pulse [style*="color:#FFA8C0"][style]{text-shadow:0 0 5px rgba(255,40,120,.65),0 0 14px rgba(255,20,110,.45)}.p75pulse b[style*="color:#FFA8C0"][style]{text-shadow:0 0 6px rgba(255,40,120,.8),0 0 18px rgba(255,20,110,.6)}.p75pulse [style*="color:#FFA8C0"][style]:not(b):not(.tk-head *):not(.fi *){font-weight:800}' +
+    // the site's one red is a bright baby pink; short pink words go bold so they read at a glance
+    '.p75pulse [style*="color:#FFA8C0"][style]:not(b):not(.tk-head *):not(.fi *){font-weight:800}' +
     '.p75pulse{--ink:#111214;--panel:#17181B;--panel2:#1C1D21;--line:#2A2B2F;--cream:#EDE8DC;--muted:#C2BCAF;--soft:#E4DED1;--gold:#C9A227;' +
       '--bull:' + BULL + ';--bear:' + BEAR + ';background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box}' +
     '.p75pulse *{box-sizing:border-box}' +
@@ -175,7 +175,6 @@
     '.p75pulse .tk{display:flex;flex-direction:column;gap:10px;margin-top:12px}' +
     '.p75pulse .tk-head{margin:0;padding:11px 18px;border-radius:14px;background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold);' +
       'font-family:"Hedvig Letters Serif",Georgia,serif;font-size:21px;line-height:1.45;color:#fff}' +
-    '.p75pulse .tk .hl{text-shadow:0 0 12px currentColor}' +
     '.p75pulse .tk-watch{display:flex;align-items:center;gap:10px;margin:0;font-size:15px;color:#F1ECE2}.p75pulse .tk-watch b{color:#FFD23F}' +
     '.p75pulse .tk-watch i{flex:0 0 auto;width:9px;height:9px;border-radius:50%;background:#FFA8C0;animation:p75ping 1.8s ease-out infinite}' +
     '.p75pulse .tk-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}' +
@@ -186,7 +185,7 @@
     '.p75pulse .tk-b{display:flex;align-items:center;gap:16px}' +
     '.p75pulse .tk-d{flex:0 0 auto;width:96px}.p75pulse .tk-d svg{display:block;width:100%;height:auto;overflow:visible}' +
     '.p75pulse .tk-t{display:flex;flex-direction:column;gap:3px;min-width:0}' +
-    '.p75pulse .tk-t > b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:28px;line-height:1;text-shadow:0 0 14px currentColor}.p75pulse .tk-t > b small{font-size:15px;opacity:.75}' +
+    '.p75pulse .tk-t > b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:28px;line-height:1}.p75pulse .tk-t > b small{font-size:15px;opacity:.75}' +
     '.p75pulse .tk-t em{font-style:normal;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}' +
     '.p75pulse .tk-l{font-size:14px;line-height:1.5;color:#F1ECE2}.p75pulse .tk-news{display:flex;flex-direction:column;gap:9px;font-size:14px;color:#fff;font-weight:600;line-height:1.4}' +
     '.p75pulse .tk-nh small{display:block;margin-top:2px;font-size:11.5px;font-weight:600;color:var(--muted)}' +
@@ -210,8 +209,6 @@
     '.p75pulse .pl-board .p75f{filter:drop-shadow(0 0 6px currentColor)}' +
     '.p75pulse .pl-board .p75n{filter:drop-shadow(0 0 4px rgba(255,255,255,.85))}.p75pulse .pl-board .p75n path,.p75pulse .pl-board .p75n line{fill:#fff;stroke:#fff}' +
     '.p75pulse .pl-board .pl-d path[stroke="#2A2C31"]{stroke:#3A3D44}' +
-    '.p75pulse .pl-board .pl-v b{text-shadow:0 0 14px currentColor}' +
-    '.p75pulse .pl-board .pl-v small{filter:drop-shadow(0 0 5px currentColor)}' +
     '.p75pulse .pl-board .spark path:nth-of-type(2){stroke-width:2.6;filter:brightness(1.25) drop-shadow(0 0 3px rgba(255,255,255,.35))}' +
     '.p75pulse .pl-board .pl-n small,.p75pulse .pl-board .pl-d small{color:#E2DDD2}' +
     '.p75pulse .pl-d{display:flex;flex-direction:column;align-items:center}.p75pulse .ck-i .pl-d svg{width:100px;max-width:none;height:auto;margin:0;overflow:visible}' +
@@ -410,7 +407,7 @@
   }
   function stressDial(stress, label) {
     return dial({ v: stress, min: 0, max: 100, rest: 0, color: stressColor(stress), big: true,
-      zones: [[0, 30, '#2BD17E'], [30, 55, '#B8D43A'], [55, 75, '#F2A33A'], [75, 100, '#FF4D4D']],
+      zones: [[0, 30, '#2BD17E'], [30, 55, '#B8D43A'], [55, 75, '#F2A33A'], [75, 100, '#FFA8C0']],
       labels: [[0, '0'], [50, '50'], [100, '100']],
       aria: 'Stress reading ' + stress + ' out of 100' + (label ? ', ' + label : '') });
   }
@@ -522,7 +519,7 @@
   // Stress dial: 0 at lower-left, 100 at lower-right (270° sweep), banded like the overview gauge
   var ckStressAng = function (v) { return -135 + Math.max(0, Math.min(100, v)) * 2.7; };
   function ckStressDial(code, value) {
-    var bands = [[0, 30, '#2BD17E'], [30, 55, '#B8D43A'], [55, 75, '#F2A33A'], [75, 100, '#FF4D4D']], z = '';
+    var bands = [[0, 30, '#2BD17E'], [30, 55, '#B8D43A'], [55, 75, '#F2A33A'], [75, 100, '#FFA8C0']], z = '';
     bands.forEach(function (b, i) { z += ckArc(84, ckStressAng(b[0] + (i ? .5 : 0)), ckStressAng(b[1] - (i < 3 ? .5 : 0)), b[2], 5); });
     var nums = [0, 20, 40, 60, 80, 100].map(function (n) { var p = ckPt(53, ckStressAng(n)); return ckLabel(p[0], (+p[1] + 5.5).toFixed(2), n, 15); }).join('');
     var col = stressColor(value);

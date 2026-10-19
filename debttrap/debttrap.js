@@ -8,6 +8,8 @@
   var C1 = '#3987e5', C2 = '#d95926', C3 = '#199e70', C4 = '#c98500';
 
   var CSS =
+    // the site's one red is a bright baby pink; short pink words go bold so they read at a glance
+    '.p75debt [style*="color:#FFA8C0"][style]:not(b):not(.tk-head *):not(.fi *){font-weight:800}' +
     '.p75debt{--ink:#111214;--panel:#17181B;--line:#2A2B2F;--grid:#232428;--cream:#EDE8DC;--muted:#C2BCAF;--soft:#E4DED1;--faint:#8a8d93;--gold:#C9A227;' +
       'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box;min-height:calc(100vh - 90px)}' +
     '.p75debt *{box-sizing:border-box}' +
@@ -70,7 +72,7 @@
     '.p75debt .dt-m{display:flex;align-items:center;gap:12px}' +
     '.p75debt .dt-d{flex:0 0 auto;width:112px}.p75debt .dt-d svg{display:block;width:100%;height:auto;overflow:visible}' +
     '.p75debt .dt-r{display:flex;flex-direction:column;gap:3px;min-width:0}' +
-    '.p75debt .dt-r b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:36px;line-height:1;text-shadow:0 0 14px currentColor}' +
+    '.p75debt .dt-r b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:36px;line-height:1}' +
     '.p75debt .dt-r em{font-style:normal;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}' +
     '.p75debt .dt-r > span{font-size:14px;line-height:1.45;color:#F1ECE2}' +
     '.p75debt .p75n{transition:transform 1.25s cubic-bezier(.37,0,.3,1);filter:drop-shadow(0 0 3px rgba(255,255,255,.6))}' +
@@ -92,7 +94,7 @@
     '.p75debt .fold{display:flex;align-items:center;gap:8px 22px;flex-wrap:wrap;width:100%;min-height:44px;margin:0;padding:5px 8px 5px 16px;border-radius:12px;background:var(--panel);border:1px solid var(--line);color:inherit;font:inherit;text-align:left;cursor:pointer}' +
     '.p75debt .fold:hover{border-color:var(--gold)}.p75debt .fold:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
     '.p75debt .fi{display:inline-flex;align-items:baseline;gap:8px;white-space:nowrap}.p75debt .fi small{color:#D2CCBF;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}' +
-    '.p75debt .fi b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:22px;line-height:1;text-shadow:0 0 12px currentColor}' +
+    '.p75debt .fi b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:22px;line-height:1}' +
     '.p75debt .fo{margin-left:auto;display:inline-flex;align-items:center;gap:10px;color:var(--gold);font-size:13px;font-weight:700}' +
     '.p75debt .fo-c{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--gold);display:grid;place-items:center;animation:p75dbob 2.4s ease-in-out infinite}' +
     '.p75debt .fo-c:after{content:"";width:7px;height:7px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:translateY(-2px) rotate(45deg)}' +
@@ -116,7 +118,6 @@
     '@media (min-width:881px){.p75debt .dt-tk{gap:14px}.p75debt .dt-tk .dt-head{font-size:27px;padding:18px 24px}.p75debt .dt-tk .dt-ov{gap:14px}.p75debt .dt-ovc{padding:16px 20px;gap:8px}.p75debt .dt-ovh{font-size:13px}' +
       '.p75debt .dt-tk .dt-d{width:160px}.p75debt .dt-tk .dt-r b{font-size:48px}.p75debt .dt-r em{font-size:13px}.p75debt .dt-r > span{font-size:16px}}' +
     '.p75debt .dt-head{margin:0;padding:16px 20px;border-radius:16px;background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold);font-family:"Hedvig Letters Serif",Georgia,serif;font-size:22px;line-height:1.45;color:#fff}' +
-    '.p75debt .hl{text-shadow:0 0 12px currentColor}' +
     '.p75debt .dt-tk .dt-ov{grid-template-columns:repeat(2,minmax(0,1fr));margin:0}' +
     '.p75debt a.dt-ovc{text-decoration:none}' +
     '.p75debt a.tk-back{display:inline-flex;align-items:center;gap:8px;min-height:40px;margin:0 0 12px;padding:0 16px;border-radius:99px;border:1px solid var(--gold);background:rgba(201,162,39,.1);color:#FFD23F;font-weight:800;font-size:14.5px;text-decoration:none}' +
@@ -347,7 +348,7 @@
     CHARTS = [];
     var w = j.wall, rt = j.rates, it = j.interest, ow = j.owners, R = {};
     (j.readings || []).forEach(function (r) { R[r.key] = r; });
-    var AMB = '#FFB224', RED = '#FF3D5E', BLU = '#1FD8FF', GRN = '#2BFF88';
+    var AMB = '#FFB224', RED = '#FFA8C0', BLU = '#1FD8FF', GRN = '#2BFF88';
     var C = function (t, col) { return '<span class="hl" style="color:' + col + '">' + esc(t) + '</span>'; };
     var mean = function (r) { return r ? '<p class="dt-means"><i aria-hidden="true"></i><span><b>What it means:</b> ' + esc(r.text) + '</span></p>' : ''; };
     var SEC = {};

@@ -6,9 +6,11 @@
 (function () {
   if (window.P75IND) return;
   var DATA = 'https://news.point75.io/api/indicators';
-  var GOOD = '#1FC8FF', BAD = '#E5484D', MID = '#F2A33A', FLAT = '#B4BAC1', GOLD = '#C9A227';
+  var GOOD = '#1FC8FF', BAD = '#FFA8C0', MID = '#F2A33A', FLAT = '#B4BAC1', GOLD = '#C9A227';
 
   var CSS =
+    // the site's one red is a bright baby pink; short pink words go bold so they read at a glance
+    '.p75ind [style*="color:#FFA8C0"][style]:not(b):not(.tk-head *):not(.fi *){font-weight:800}' +
     '.p75ind{--ink:#111214;--panel:#17181B;--panel2:#1C1D21;--line:#2A2B2F;--cream:#EDE8DC;--soft:#D9D3C6;--muted:#A9A396;--gold:' + GOLD + ';' +
       'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box;min-height:calc(100vh - 90px)}' +
     '.p75ind *{box-sizing:border-box}.p75ind,.p75ind *{overflow-anchor:none}' +
@@ -27,7 +29,7 @@
     '.p75ind .og .k{font-size:12.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#DCD6C9}' +
     '.p75ind .ogb{display:flex;align-items:center;gap:10px}.p75ind .ogv{display:flex;flex-direction:column;gap:4px;min-width:0}' +
     '.p75ind .og .gd{flex:0 0 auto;width:140px}.p75ind .og svg{display:block;width:100%;height:auto;overflow:visible}' +
-    '.p75ind .og .v{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:36px;line-height:1;text-shadow:0 0 14px currentColor}.p75ind .og .v small{font-family:Manrope,sans-serif;font-size:13px;margin-left:3px;opacity:.8;text-shadow:none}' +
+    '.p75ind .og .v{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:36px;line-height:1}.p75ind .og .v small{font-family:Manrope,sans-serif;font-size:13px;margin-left:3px;opacity:.8}' +
     '.p75ind .og .c{font-size:13.5px;font-weight:700;white-space:nowrap}.p75ind .og .c span{display:block;color:var(--muted);font-weight:500;margin-top:2px}' +
     // dials
     '.p75ind .p75n{transition:transform 1.25s cubic-bezier(.37,0,.3,1)}' +
@@ -60,9 +62,8 @@
     // takeaway
     '.p75ind .tk{display:flex;flex-direction:column;gap:12px}' +
     '.p75ind .tk-head{margin:0;padding:16px 20px;border-radius:16px;background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold);font-family:"Hedvig Letters Serif",Georgia,serif;font-size:24px;line-height:1.45;color:#fff}' +
-    '.p75ind .hl{text-shadow:0 0 12px currentColor}' +
     '.p75ind .tk-watch{display:flex;align-items:center;gap:10px;margin:0;font-size:16.5px;color:#F1ECE2}.p75ind .tk-watch b{color:#FFD23F}' +
-    '.p75ind .tk-watch i{flex:0 0 auto;width:9px;height:9px;border-radius:50%;background:#FF3D5E;animation:p75iping 1.8s ease-out infinite}' +
+    '.p75ind .tk-watch i{flex:0 0 auto;width:9px;height:9px;border-radius:50%;background:#FFA8C0;animation:p75iping 1.8s ease-out infinite}' +
     '@keyframes p75iping{0%{box-shadow:0 0 0 0 rgba(255,61,94,.6)}100%{box-shadow:0 0 0 10px rgba(255,61,94,0)}}' +
     '.p75ind .tk-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}' +
     '.p75ind a.tk-c{display:flex;flex-direction:column;gap:6px;padding:12px 14px;border-radius:14px;background:var(--panel);border:1px solid var(--line);border-top:2px solid var(--gold);color:inherit;text-decoration:none;transition:border-color .15s,transform .15s}' +
@@ -72,7 +73,7 @@
     '.p75ind .tk-b{display:flex;align-items:center;gap:12px}' +
     '.p75ind .tk-d{flex:0 0 auto;width:104px}.p75ind .tk-d svg{display:block;width:100%;height:auto;overflow:visible}' +
     '.p75ind .tk-t{display:flex;flex-direction:column;gap:2px;min-width:0}' +
-    '.p75ind .tk-t > b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:33px;line-height:1;text-shadow:0 0 14px currentColor}.p75ind .tk-t > b small{font-family:Manrope,sans-serif;font-size:13px;margin-left:3px;opacity:.8;text-shadow:none}' +
+    '.p75ind .tk-t > b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:33px;line-height:1}.p75ind .tk-t > b small{font-family:Manrope,sans-serif;font-size:13px;margin-left:3px;opacity:.8}' +
     '.p75ind .tk-t em{font-style:normal;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}' +
     '.p75ind .tk-l{font-size:15px;line-height:1.45;color:#E4DED1}' +
     // category tab: indicator dial cards, chart below
@@ -88,7 +89,7 @@
     '.p75ind .ic-b{display:flex;align-items:center;gap:12px}' +
     '.p75ind .ic-d{flex:0 0 auto;width:112px}.p75ind .ic-d svg{display:block;width:100%;height:auto;overflow:visible}' +
     '.p75ind .ic-v{display:flex;flex-direction:column;gap:3px;min-width:0}' +
-    '.p75ind .ic-v > b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:32px;line-height:1;text-shadow:0 0 14px currentColor}.p75ind .ic-v > b small{font-family:Manrope,sans-serif;font-size:12.5px;margin-left:3px;opacity:.8;text-shadow:none}' +
+    '.p75ind .ic-v > b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:32px;line-height:1}.p75ind .ic-v > b small{font-family:Manrope,sans-serif;font-size:12.5px;margin-left:3px;opacity:.8}' +
     '.p75ind .ic-v em{font-style:normal;font-size:12.5px;font-weight:700}' +
     '.p75ind .ic-v span{font-size:11.5px;color:var(--muted)}' +
     '.p75ind .ic-s{font-size:12px;color:var(--gold);font-weight:700}' +
