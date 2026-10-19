@@ -392,6 +392,49 @@
     if (expanded[path] && more) more.remove();
   }
 
+  // ---------- Daily Summary: fold its headline as the reader scrolls (same idea as the Pulse Takeaway) ----------
+  // The summary lives in a frame (coupon-news-ui) that grows to fit, so the site does the scrolling and the frame
+  // cannot see it. Tell it: scrolling down folds the headline away so the content rises; back at the top brings it back.
+  // Repeats the message now and then so a freshly drawn view catches up.
+  (function summaryFold() {
+    var tick = false, sc0 = null, last = null, sentAt = 0, hold = 0;
+    function inner() {
+      var fs = document.querySelectorAll('iframe');
+      for (var i = 0; i < fs.length; i++) { try { var b = fs[i].contentDocument && fs[i].contentDocument.getElementById('p75bond'); if (b) return { outer: fs[i], frame: b }; } catch (e) {} }
+      return null;
+    }
+    function send(on) {
+      var f = inner(); if (!f) return;
+      if (on === last && Date.now() - sentAt < 1000) return;
+      last = on; sentAt = Date.now(); hold = Date.now() + (on ? 1200 : 500);   // the fold also scrolls the page: let that finish
+      try { f.frame.contentWindow.postMessage({ p75: true, type: 'fold', on: on }, '*'); } catch (e) {}
+      // The tabs inside the frame cannot stick under the site header, so after the fold bring them to the top:
+      // the reader lands on the tabs with the Takeaway right below.
+      if (on) setTimeout(function () {
+        var tb = document.querySelector('.top-blocks--sticky'), hdr = tb ? tb.getBoundingClientRect().height : 0;
+        var to = f.outer.getBoundingClientRect().top + window.pageYOffset - hdr;
+        if (window.pageYOffset < to + 260) window.scrollTo({ top: Math.max(0, to), behavior: 'smooth' });
+      }, 80);
+    }
+    function run() {
+      tick = false;
+      if (location.pathname.replace(/\/+$/, '') !== '/intelligent-summary') return;
+      var sc = sc0 || document.scrollingElement || document.documentElement;
+      var y = sc === document.scrollingElement || sc === document.documentElement || sc === document.body ? Math.max(window.pageYOffset, sc.scrollTop) : sc.scrollTop;
+      var dy = y - (sc.__p75sy == null ? 0 : sc.__p75sy); sc.__p75sy = y;
+      if (!dy || Date.now() < hold) return;
+      var f = inner(); if (!f) return;
+      var tb = document.querySelector('.top-blocks--sticky'), hdr = tb ? tb.getBoundingClientRect().height : 0;
+      if (dy > 0 && y > 6 && sc.scrollHeight > sc.clientHeight + 400) send(true);
+      else if (dy < 0 && f.outer.getBoundingClientRect().top >= hdr - 24) send(false);
+    }
+    document.addEventListener('scroll', function (e) {
+      var t = e.target, sc = t && t.nodeType === 1 ? t : (document.scrollingElement || document.documentElement);
+      if (sc.scrollHeight < sc.clientHeight + 40) return;
+      sc0 = sc; if (tick) return; tick = true; requestAnimationFrame(run);
+    }, { passive: true, capture: true });
+  })();
+
   // ---------- Main loop (the site swaps pages without reloading) ----------
   var lastPath = null;
   // ---------- News embed polish ----------
