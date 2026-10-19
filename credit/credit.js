@@ -11,7 +11,7 @@
     '.p75cr{--ink:#111214;--panel:#17181B;--panel2:#1f2023;--line:#2A2B2F;--cream:#EDE8DC;--muted:#C2BCAF;--soft:#E4DED1;--faint:#8d887e;--gold:#C9A227;' +
       'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box}' +
     '.p75cr *{box-sizing:border-box}' +
-    '.p75cr .wrap{max-width:1120px;margin:0 auto;padding:16px 20px 72px}' +
+    '.p75cr .wrap{max-width:1120px;margin:0 auto;padding:4px 20px 72px}' +
     '.p75cr .eyebrow{color:var(--gold);letter-spacing:.14em;font-size:12px;font-weight:700;text-transform:uppercase}' +
     '.p75cr .eyebrow a{color:inherit;text-decoration:none}' +
     '.p75cr h1{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:28px;line-height:1.15;margin:4px 0 8px;display:inline-block;vertical-align:baseline;max-width:100%}' +
@@ -83,7 +83,7 @@
     '.p75cr .srow .val{display:flex;flex-direction:column;align-items:flex-end;gap:4px}.p75cr .srow .val b{font-size:27px}' +
     '.p75cr .srow .more{margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:15.5px;line-height:1.6;color:var(--soft)}' +
     '@media (max-width:980px){.p75cr .grid2{grid-template-columns:1fr}.p75cr .sectors{grid-template-columns:repeat(3,minmax(0,1fr))}.p75cr .cush{grid-template-columns:repeat(2,minmax(0,1fr))}.p75cr .hero{grid-template-columns:1fr}}' +
-    '@media (max-width:640px){.p75cr .wrap{padding:12px 14px 56px}.p75cr h1{font-size:24px}.p75cr .sectors{grid-template-columns:repeat(2,minmax(0,1fr))}' +
+    '@media (max-width:640px){.p75cr .wrap{padding:4px 14px 56px}.p75cr h1{font-size:24px}.p75cr .sectors{grid-template-columns:repeat(2,minmax(0,1fr))}' +
       '.p75cr .thead{display:none}.p75cr .row{grid-template-columns:minmax(0,1fr) auto;row-gap:6px}.p75cr .row .bar{grid-column:1/-1;order:3}.p75cr .row .cov,.p75cr .row .rt{display:none}' +
       '.p75cr .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.p75cr .isk{grid-template-columns:repeat(2,minmax(0,1fr))}.p75cr .cush{grid-template-columns:1fr}' +
       '.p75cr .hrow{grid-template-columns:minmax(0,1fr) 70px 54px}.p75cr .hrow .bw{grid-column:1/-1;order:4}.p75cr .card{padding:16px}.p75cr .shead{display:none}.p75cr .srow .top{grid-template-columns:minmax(0,1fr) auto;row-gap:10px}.p75cr .srow .track{grid-column:1/-1;order:3}.p75cr .srow{padding:14px 16px}.p75cr .reading{flex-direction:column;align-items:flex-start;gap:8px}}';

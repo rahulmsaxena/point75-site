@@ -17,7 +17,7 @@ Reference implementation: the Pulse page (`pulse/pulse.js`). Header rules are al
 - Title: **28px** desktop, **24px** phones. Serif (Hedvig Letters Serif). **Title Case** for the page's main title only; everything below it is sentence case.
 - "Updated …" note right-aligned on the title line where a page has one (`.hd-t .asof{margin-left:auto}`).
 - Intro (`.lede`, `.lead`, `.sub`) runs the **full width**, **justified** with hyphens. Never a `max-width` cap on text. On phones, left-aligned.
-- Page starts **16px** from the top (12px on phones).
+- Page starts **4px** below the menu (desktop and phones). No help or dictionary boxes above the content.
 
 ## 2. Spacing
 - Section headings (`h2`): ~23–24px, **32px** above, 4px below. First heading in a tab view: 16px above.
