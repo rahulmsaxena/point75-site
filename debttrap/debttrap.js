@@ -9,7 +9,7 @@
 
   var CSS =
     '.p75debt{--ink:#111214;--panel:#17181B;--line:#2A2B2F;--grid:#232428;--cream:#EDE8DC;--muted:#C2BCAF;--soft:#E4DED1;--faint:#8a8d93;--gold:#C9A227;' +
-      'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box}' +
+      'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box;min-height:calc(100vh - 90px)}' +
     '.p75debt *{box-sizing:border-box}' +
     '.p75debt .wrap{max-width:1040px;margin:0 auto;padding:4px 20px 48px}' +
     '.p75debt .eyebrow{color:var(--gold);letter-spacing:.14em;font-size:12px;font-weight:700;text-transform:uppercase}' +
@@ -112,6 +112,9 @@
     '@media (max-width:760px){.p75debt .dt-key{margin-left:0}.p75debt .dt-spk{width:110px}}' +
     // takeaway
     '.p75debt .dt-tk{display:flex;flex-direction:column;gap:10px}' +
+    // desktop: the Takeaway fits one screen with room to spare, so the dials, numbers and headline take it
+    '@media (min-width:881px){.p75debt .dt-tk{gap:14px}.p75debt .dt-tk .dt-head{font-size:27px;padding:18px 24px}.p75debt .dt-tk .dt-ov{gap:14px}.p75debt .dt-ovc{padding:16px 20px;gap:8px}.p75debt .dt-ovh{font-size:13px}' +
+      '.p75debt .dt-tk .dt-d{width:160px}.p75debt .dt-tk .dt-r b{font-size:48px}.p75debt .dt-r em{font-size:13px}.p75debt .dt-r > span{font-size:16px}}' +
     '.p75debt .dt-head{margin:0;padding:16px 20px;border-radius:16px;background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold);font-family:"Hedvig Letters Serif",Georgia,serif;font-size:22px;line-height:1.45;color:#fff}' +
     '.p75debt .hl{text-shadow:0 0 12px currentColor}' +
     '.p75debt .dt-tk .dt-ov{grid-template-columns:repeat(2,minmax(0,1fr));margin:0}' +
