@@ -805,13 +805,6 @@
   window.addEventListener('message', function (e) {
     var m = e.data;
     if (!m || m.p75 !== true || m.type !== 'nav') return;
-    // /intelligent-summary#archive (the Archives card on Bond Summary): once the summary frame is up, ask it to
-    // open its archive of earlier days
-    if (m.view === 'list' && /^#archive$/.test(location.hash) && e.source && !e.source.p75arc) {
-      try { e.source.p75arc = 1; } catch (err) {}
-      e.source.postMessage({ p75: true, type: 'go', hash: '#/archive' }, '*');
-      try { history.replaceState(null, '', location.pathname + location.search); } catch (err) {}
-    }
     navFrame = m.view === 'article' ? { src: e.source, path: norm(location.pathname), prev: m.older || null, mid: m.up || null, next: m.newer || null } : null;
     var path = norm(location.pathname);
     pageNav(path, navSpecFor(path, navFamilies(families())));
@@ -1311,6 +1304,25 @@
       return;
     } else if (window.P75START) window.P75START.clear();
 
+    // /intelligent-summary#archive (the Archives card on Bond Summary): the summary sits in a frame inside the
+    // site's embed (a same-origin srcdoc frame), so reach in and ask it to open its archive of earlier days.
+    // The embed mounts lazily, so keep trying for a while; repeating the request is harmless.
+    if (path === '/intelligent-summary' && location.hash === '#archive' && !window.p75arcT) {
+      var tries = 0, done = function () { clearInterval(window.p75arcT); try { history.replaceState(null, '', location.pathname + location.search); } catch (err) {} };
+      window.p75arcT = setInterval(function () {
+        if (++tries > 60) return done();
+        document.querySelectorAll('iframe').forEach(function (f) {
+          var w = null, inner = null; try { w = f.contentWindow; inner = f.contentDocument && f.contentDocument.getElementById('p75bond'); } catch (err) {}
+          if (!inner || inner.p75arc) return;
+          inner.p75arc = 1; done();
+          var go = function () { try { inner.contentWindow.postMessage({ p75: true, type: 'go', hash: '#/archive' }, '*'); } catch (err) {} };
+          // the summary says 'nav' each time it draws a view: ask on its first one (it is ready then), and once now
+          // in case it has already drawn
+          var once = function (ev) { if (ev.data && ev.data.p75 && ev.data.type === 'nav') { w.removeEventListener('message', once); go(); } };
+          w.addEventListener('message', once); go();
+        });
+      }, 500);
+    }
     // Hub pages (/kinetics, /bond-summary) are drawn by hubs/hubs.js from SECTIONS above
     var hub = sectionNode(path);
     if (hub && hub.node.hub) {
