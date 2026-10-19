@@ -7,10 +7,12 @@
   if (window.P75INS) return;
   var DATA = 'https://rahulmsaxena.github.io/point75-site/insights/insights.json?v=' + Math.floor(Date.now() / 36e5);
   var FW_API = 'https://news.point75.io/api/fedspeak';
-  var GOLD = '#FFE03A', BLU = '#00E8FF', RED = '#FF1F5A', NEU = '#C4CAD1';   // fluorescent: they glow on the dark page
+  var GOLD = '#FFE03A', BLU = '#00E8FF', RED = '#FF6B6B', NEU = '#C4CAD1';   // fluorescent: they glow on the dark page
   var GLOW = 'text-shadow:0 0 1px currentColor,0 0 8px currentColor,0 0 20px currentColor';
 
   var CSS =
+    // red: one brighter shade site-wide; red words go bold and lose the glow that blurred them
+    '.p75ins [style*="color:#FF6B6B"][style]{text-shadow:0 0 6px rgba(255,107,107,.35)}.p75ins [style*="color:#FF6B6B"][style]:not(b):not(.tk-head *):not(.fi *){font-weight:800}' +
     '.p75ins{--ink:#111214;--panel:#17181B;--panel2:#1C1D21;--line:#2A2B2F;--cream:#EDE8DC;--soft:#E9E3D6;--muted:#C2BCAF;--gold:#C9A227;' +
       'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box;min-height:calc(100vh - 90px)}' +
     '.p75ins *{box-sizing:border-box}' +
