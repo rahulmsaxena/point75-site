@@ -1247,8 +1247,38 @@
     });
   }
 
+  // ---------- Disclosures, sources and footnotes: one line each, tap to read in full ----------
+  // They used to take several lines at the end of every page; folded to a single line they leave the space to the content.
+  var DISC_SEL = '.p75pulse .foot,.p75debt .foot,.p75cr .foot,.p75bonds .foot,.p75edu .foot,.p75edu .src,.p75ins .wrap > .note,.p75ins .src,' +
+    '.p75ind .wrap > .note,.p75ind .view > .foot,.p75ind .rsrc,.p75debt .note,.p75pulse .ck-body .note';
+  (function discOnce() {
+    var st = document.createElement('style'); st.id = 'p75disc-css';
+    // styled by selector too, so a freshly drawn page is one line from its first frame (tagDisc only adds keyboard access)
+    var sel = function (suffix) { return (DISC_SEL + ',.p75disc').split(',').map(function (x) { return x + suffix; }).join(','); };
+    st.textContent = sel('') + '{display:block;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;cursor:pointer;max-width:100%;margin-top:10px!important;padding-top:6px!important}' +
+      sel(' br') + '{display:none}' + sel(':hover') + '{color:#D9D3C6!important}' +
+      sel('.open') + '{white-space:normal!important;overflow:visible!important;text-overflow:clip!important;cursor:auto}' + sel('.open br') + '{display:inline}' +
+      '.p75disc:focus-visible{outline:2px solid #C9A227;outline-offset:2px}';
+    document.head.appendChild(st);
+    document.addEventListener('click', function (e) {
+      var d = e.target.closest && e.target.closest(DISC_SEL + ',.p75disc'); if (!d || d.classList.contains('open')) return;
+      e.preventDefault(); e.stopPropagation(); d.classList.add('open'); d.setAttribute('aria-expanded', 'true');
+    }, true);
+    document.addEventListener('keydown', function (e) {
+      var d = e.target.closest && e.target.closest('.p75disc'); if (d && (e.key === 'Enter' || e.key === ' ') && !d.classList.contains('open')) { e.preventDefault(); d.classList.add('open'); d.setAttribute('aria-expanded', 'true'); }
+    });
+  })();
+  function tagDisc() {
+    document.querySelectorAll(DISC_SEL + ',.p75disc:not([tabindex])').forEach(function (el) {
+      if (el.getAttribute('data-p75disc')) return;
+      el.setAttribute('data-p75disc', '1'); el.classList.add('p75disc');
+      el.setAttribute('tabindex', '0'); el.setAttribute('aria-expanded', 'false'); el.title = 'Tap to read in full';
+    });
+  }
+
   function update() {
     var path = location.pathname.replace(/\/+$/, '') || '/';
+    tagDisc();
 
     // Site search (search/search.js): a Search button in the header and the mobile menu, and "/" to open
     if (window.P75SEARCH) window.P75SEARCH.mount();
@@ -1493,8 +1523,8 @@
       target.appendChild(band('p75d',
         (isPost ? '<a href="/" style="color:' + GOLD + ';text-decoration:none;font-weight:600">&larr; All essays</a><div style="height:14px"></div>' +
           '<div style="margin-bottom:18px;font-size:16px;color:#EDE8DC">Disagree, or have a question? <a href="/contact" style="color:' + GOLD + ';text-decoration:none;font-weight:700">Write to me &rarr;</a></div>' : '') +
-        '<div style="border-left:3px solid ' + GOLD + ';padding-left:14px">' + DISCLAIMER + '</div>' +
-        '<div style="margin-top:12px;color:#9a9a9a;font-size:13px">' + COPYRIGHT +
+        '<div class="p75disc" style="border-left:3px solid ' + GOLD + ';padding-left:14px">' + DISCLAIMER + '</div>' +
+        '<div class="p75disc" style="margin-top:8px;color:#9a9a9a;font-size:13px">' + COPYRIGHT +
           ' <a href="/contact" style="color:' + GOLD + ';text-decoration:none;font-weight:700;white-space:nowrap;margin-left:6px">Write to Point75 &rarr;</a></div>'));
     }
 

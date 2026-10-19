@@ -22,6 +22,7 @@ Reference implementation: the Pulse page (`pulse/pulse.js`). Header rules are al
 ## 2. Spacing
 - Section headings (`h2`): ~23–24px, **32px** above, 4px below. First heading in a tab view: 16px above.
 - Gaps between cards 14px, card padding ~16–18px. Trim any gap over ~24px unless it separates two unrelated things.
+- Disclosures, sources and footnotes sit on **one line** with an ellipsis; a tap shows them in full (`p75.js`, `DISC_SEL`). Add a page's footer selector there.
 - Main column 1040px for data pages. Long reading pages (Education chapters, Insights) may stay ~760–900px for readable line length. Short forms (Contact) stay narrow.
 - Site-wide back / next: on screens ≥1240px they sit in the side margins as slim tabs, halfway down (`p75.js`, `#p75tn`). The top row takes no height there.
 
