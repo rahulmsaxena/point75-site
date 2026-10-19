@@ -1318,6 +1318,8 @@
           var w = null, inner = null; try { w = f.contentWindow; inner = f.contentDocument && f.contentDocument.getElementById('p75bond'); } catch (err) {}
           if (!inner || !w || inner === last) return;
           last = inner;
+          // keep asking until it answers with where the archive starts (an answer ends the interval)
+          var again = setInterval(function () { if (last !== inner || !window.p75arcT) clearInterval(again); else go(); }, 900);
           var go = function () { try { inner.contentWindow.postMessage({ p75: true, type: 'go', hash: '#/archive' }, '*'); } catch (err) {} };
           // the summary says 'nav' each time it draws a view: ask on its first one (it is ready then), and once now in
           // case it already has. It then says where the archive starts: scroll there, under the sticky header.
@@ -1325,7 +1327,7 @@
             var d = ev.data; if (!d || !d.p75 || last !== inner) return;
             if (d.type === 'nav' && !inner.p75asked) { inner.p75asked = 1; go(); }
             if (d.type === 'scrollto') {
-              done(); last = {};
+              done(); window.p75arcT = null; last = {};
               var hdr = document.querySelector('.top-blocks--sticky, header'), off = hdr ? hdr.getBoundingClientRect().height : 0;
               setTimeout(function () { window.scrollTo({ top: Math.max(0, inner.getBoundingClientRect().top + window.scrollY + d.y - off - 12), behavior: 'smooth' }); }, 150);
             }
