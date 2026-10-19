@@ -530,29 +530,43 @@
 
   // On the Takeaway, the header and dials fold away as soon as the reader scrolls down, so the content below
   // slides up into the space; scrolling back up to the top brings them back. Other tabs keep the strip until it is tapped.
-  var SCROLL_TICK = false, LAST_Y = window.pageYOffset, SCROLL_HOLD = 0;
-  window.addEventListener('scroll', function () {
+  // Listens in the capture phase on the document so it works whether the window or a page container does the scrolling
+  // (phones differ), and measures that scroller rather than assuming the window.
+  var SCROLL_TICK = false, SCROLL_HOLD = 0, SCROLL_SC = null, DBG = /p75debug/.test(location.search), DBG_N = 0;
+  document.addEventListener('scroll', function (e) {
+    var t = e.target, sc = t && t.nodeType === 1 ? t : (document.scrollingElement || document.documentElement);
+    if (sc.scrollHeight < sc.clientHeight + 40) return;   // sideways strips and small boxes are not the page
+    SCROLL_SC = sc; DBG_N++;
     if (SCROLL_TICK) return; SCROLL_TICK = true;
-    requestAnimationFrame(function () {
-      SCROLL_TICK = false;
-      var y = window.pageYOffset, dy = y - LAST_Y; LAST_Y = y;
-      if (!dy) return;
-      var host = document.querySelector('.p75debt'), strip = host && host.querySelector('.fstrip');
-      if (!strip) return;
-      var on = host.querySelector('.tab.on');   // only on the Takeaway (the first tab), however it was reached (#takeaway or no hash)
-      if (on && on !== host.querySelector('.tab')) return;
-      var tb = document.querySelector('.top-blocks--sticky'), hdr = tb ? tb.getBoundingClientRect().height : 0;
-      if (Date.now() < SCROLL_HOLD) return;   // let a fold finish before reading the scroll again
-      var top = host.querySelector('.top');
-      if (dy > 0 && !FOLD && y > 6) {
-        // only when the page stays scrollable once folded; otherwise it would bounce open and shut on a short page
-        if (document.documentElement.scrollHeight - top.offsetHeight < window.innerHeight + 80) return;
-        FOLD = true; host.classList.add('folded'); SCROLL_HOLD = Date.now() + 600;
-      } else if (dy < 0 && FOLD && strip.getBoundingClientRect().top >= hdr - 1) {
-        FOLD = false; host.classList.remove('folded'); SCROLL_HOLD = Date.now() + 600;
-      }
-    });
-  }, { passive: true });
+    requestAnimationFrame(foldOnScroll);
+  }, { passive: true, capture: true });
+  function foldOnScroll() {
+    SCROLL_TICK = false;
+    var sc = SCROLL_SC; if (!sc) return;
+    var y = sc === document.scrollingElement || sc === document.documentElement || sc === document.body ? Math.max(window.pageYOffset, sc.scrollTop) : sc.scrollTop;
+    var dy = y - (sc.__p75y == null ? 0 : sc.__p75y); sc.__p75y = y;
+    var host = document.querySelector('.p75debt'), strip = host && host.querySelector('.fstrip'), top = host && host.querySelector('.top');
+    if (DBG) debug(host, sc, y, dy);
+    if (!dy || !strip || !top) return;
+    var on = host.querySelector('.tab.on');   // only on the Takeaway (the first tab), however it was reached (#takeaway or no hash)
+    if (on && on !== host.querySelector('.tab')) return;
+    if (Date.now() < SCROLL_HOLD) return;   // let a fold finish before reading the scroll again
+    var tb = document.querySelector('.top-blocks--sticky'), hdr = tb ? tb.getBoundingClientRect().height : 0;
+    if (dy > 0 && !FOLD && y > 6) {
+      // only when the page stays scrollable once folded; otherwise it would bounce open and shut on a short page
+      if (sc.scrollHeight - top.offsetHeight < sc.clientHeight + 80) return;
+      FOLD = true; host.classList.add('folded'); SCROLL_HOLD = Date.now() + 600;
+    } else if (dy < 0 && FOLD && strip.getBoundingClientRect().top >= hdr - 1) {
+      FOLD = false; host.classList.remove('folded'); SCROLL_HOLD = Date.now() + 600;
+    }
+    if (DBG) debug(host, sc, y, dy);
+  }
+  function debug(host, sc, y, dy) {   // /page?p75debug=1 shows what the phone reports, for checking a device we cannot test here
+    var d = document.getElementById('p75dbg');
+    if (!d) { d = document.createElement('div'); d.id = 'p75dbg'; d.style.cssText = 'position:fixed;left:6px;bottom:6px;z-index:99999;background:#000;color:#0f0;font:11px/1.35 monospace;padding:6px 8px;border:1px solid #0f0;border-radius:6px;pointer-events:none;white-space:pre'; document.body.appendChild(d); }
+    d.textContent = 'scroller ' + sc.tagName + '.' + String(sc.className).slice(0, 18) + '\ny ' + Math.round(y) + ' dy ' + Math.round(dy) + ' events ' + DBG_N +
+      '\nfold ' + FOLD + ' class ' + !!(host && host.classList.contains('folded')) + '\nsh ' + sc.scrollHeight + ' ch ' + sc.clientHeight + ' ih ' + window.innerHeight + '\nhash ' + location.hash;
+  }
   function wireTabs(host, j) {
     if (host.getAttribute('data-dt-wired')) return; host.setAttribute('data-dt-wired', '1');
     host.addEventListener('click', function (e) {
