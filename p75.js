@@ -4,6 +4,17 @@
 (function () {
   // ---------- Settings ----------
   var TENANT_ID = 'NgvHdCEMvUY';                          // FastComments
+  // Pages that moved to tools.point75.io: old links (search, bookmarks, the menu's cache) go straight there,
+  // keeping ?tk=XOM and #tab. (A 301 redirect in the site builder would also catch visitors before this script loads.)
+  var MOVED = {
+    '/sector-credit': 'https://tools.point75.io/market-intelligence/sector-credit',
+    '/lenders': 'https://tools.point75.io/market-intelligence/lenders',
+    '/credit-stress': 'https://tools.point75.io/market-intelligence/credit-stress'
+  };
+  (function () {
+    var p = location.pathname.replace(/\/+$/, '') || '/';
+    if (MOVED[p]) location.replace(MOVED[p] + location.search + location.hash);
+  })();
   var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-introduction', '/bond-history', '/bond-types', '/cash-logistics', '/bond-dictionary', '/bond-players', '/bond-fortunes', '/pulse', '/debt-trap', '/economic-indicators', '/bonds', '/insights', '/sector-credit', '/lenders', '/credit-stress', '/intellegent-summary', '/intelligent-summary', '/kinetics', '/bond-summary', '/start-here', '/contact'];    // no add-ons on these pages
 
   // Difficulty level per post
@@ -670,8 +681,9 @@
 
   // ---------- Sections that go deeper than the menu ----------
   // The menu shows one level (Kinetics > Pulse, Debt Trap, News, Bond Summary, Economic Indicators). Bond Summary's two
-  // pages (Daily Summary, Insights) are cards on its landing page, so the tree lives here. Intelligence (on
-  // tools.point75.io) holds the three credit dashboards that live on this site; intelMenu adds them to its menu.
+  // pages (Daily Summary, Insights) are cards on its landing page, so the tree lives here. Intelligence lives
+  // entirely on tools.point75.io (Sector Credit, Lenders and Credit Stress moved there in Oct 2026); intelMenu
+  // adds its tools to the menu.
   // (Debt Trap's menu entry is added in hubMenus.)
   // It drives the hub pages (hubs/hubs.js), the back / forward arrows and the Previous / Next cards.
   // Order matters: arrows step through each group in this order.
@@ -686,12 +698,6 @@
         { href: '/insights', text: 'Insights' }
       ] },
       { href: '/economic-indicators', text: 'Economic Indicators' }
-    ] },
-    // Intelligence has no hub page here (its overview is the dashboards site); these are its pages on point75.io
-    { href: INTEL_HREF, text: 'Intelligence', kids: [
-      { href: '/credit-stress', text: 'Credit Stress' },
-      { href: '/sector-credit', text: 'Sector Credit' },
-      { href: '/lenders', text: 'Lenders' }
     ] }
   ];
   // Every node with pages under it, flattened: { href, text, hub, kids: [{ href, text, kids }] }
@@ -1041,7 +1047,7 @@
     '/education': 'Easy', '/bond-introduction': 'Easy', '/bond-history': 'Easy', '/bond-types': 'Easy', '/cash-logistics': 'Easy',
     '/bond-dictionary': 'Easy', '/bond-players': 'Easy', '/bond-fortunes': 'Easy',
     '/pulse': 'Medium', '/economic-indicators': 'Medium',
-    '/debt-trap': 'Advanced', '/credit-stress': 'Advanced', '/sector-credit': 'Advanced', '/lenders': 'Advanced', '/insights': 'Advanced'
+    '/debt-trap': 'Advanced', '/insights': 'Advanced'
   };
   // Terms each Advanced page leans on; each links to its Bond Dictionary entry
   // No dictionary help box on any page: it pushed the content down (approved Oct 2026)
@@ -1202,10 +1208,9 @@
     ['Treasury Finder', 'https://tools.point75.io/market-intelligence/treasury-finder'],
     ['Congressional Trading', 'https://tools.point75.io/market-intelligence/congressional-trading'],
     ['AI Investment', 'https://tools.point75.io/market-intelligence/ai-investment'],
-    // the credit dashboards that live on point75.io (they used to sit under Bond Summary)
-    ['Credit Stress', '/credit-stress'],
-    ['Sector Credit', '/sector-credit'],
-    ['Lenders', '/lenders']
+    ['Sector Credit', 'https://tools.point75.io/market-intelligence/sector-credit'],
+    ['Lenders', 'https://tools.point75.io/market-intelligence/lenders'],
+    ['Credit Stress', 'https://tools.point75.io/market-intelligence/credit-stress']
   ];
   function intelMenu(ul) {
     var a = ul.querySelector(':scope>.block-header-item>.block-header-item__label a.item-content[href*="tools.point75.io/market-intelligence"]');
@@ -1465,17 +1470,8 @@
       return;
     } else if (window.P75DEBT) window.P75DEBT.clear();
 
-    // Sector Credit, Lenders and Credit Stress (under Intelligence) are drawn by credit/credit.js; data comes from news.point75.io/api/credit
-    if (path === '/sector-credit' || path === '/lenders' || path === '/credit-stress') {
-      if (window.P75CREDIT) window.P75CREDIT.render(path);
-      else if (!document.getElementById('p75cr-js')) {
-        var cj = document.createElement('script'); cj.id = 'p75cr-js';
-        cj.src = 'https://rahulmsaxena.github.io/point75-site/credit/credit.js?v=' + Math.floor(Date.now() / 36e5);
-        cj.onload = function () { update(); };
-        document.body.appendChild(cj);
-      }
-      return;
-    } else if (window.P75CREDIT) window.P75CREDIT.clear();
+    // Sector Credit, Lenders and Credit Stress moved to tools.point75.io (Intelligence); old links land there
+    if (MOVED[path]) { location.replace(MOVED[path] + location.search + location.hash); return; }
 
     // Insights (/insights) is drawn by insights/insights.js from insights/insights.json
     if (path === '/insights') {

@@ -15,9 +15,6 @@
     '/bond-summary': { blurb: 'The Treasury market day by day: why yields moved, and what the big bond investors are saying about it.', cta: 'Open Bond Summary' },
     '/economic-indicators': { blurb: 'The latest U.S. economic data: inflation, jobs, growth and more.', cta: 'See the indicators' },
     '/intelligent-summary': { blurb: 'Every trading day: why Treasury yields moved, the drivers, the news and what to watch next.', cta: 'Read the summary' },
-    '/credit-stress': { blurb: 'Where corporate credit is showing cracks: delinquencies, write-offs, commercial real estate and companies that can’t cover interest.', cta: 'Open' },
-    '/sector-credit': { blurb: 'Corporate debt sector by sector: the biggest borrowers, leverage, interest coverage and how they are financed.', cta: 'Open' },
-    '/lenders': { blurb: 'Who lends corporate America its short-term money: money market funds, insurers, pension funds, banks and private credit.', cta: 'Open' },
     '/intelligent-summary#archive': { blurb: 'Every earlier daily summary, newest first, one line each, with a search.', cta: 'Open the archive' },
     '/insights': { blurb: 'What the big bond investors are saying: where they agree, where they differ and what they are doing.', cta: 'Open' }
   };
