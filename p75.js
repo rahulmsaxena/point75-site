@@ -1,9 +1,13 @@
 /* Point75 site add-ons: disclaimer, sentiment poll + comments, levels,
-   Editor's picks, "All essays" fix, Listen (read aloud), TL;DR summaries, and copy protection.
+   Editor's picks, "All essays" fix, Listen (read aloud), TL;DR summaries, quote-friendly copying, share row and search metadata.
    Content © Rahul Saxena. All rights reserved. */
 (function () {
   // ---------- Settings ----------
-  var TENANT_ID = 'NgvHdCEMvUY';                          // FastComments
+  var TENANT_ID = 'NgvHdCEMvUY';
+  // Newsletter sign-up page (e.g. https://point75.substack.com). Leave empty to hide the Subscribe button.
+  var SUBSCRIBE_URL = '';
+  // Point75's profiles elsewhere (X, LinkedIn, Substack...), for Google's knowledge panel. Add as they go live.
+  var SAME_AS = [];                          // FastComments
   // Pages that moved to tools.point75.io: old links (search, bookmarks, the menu's cache) go straight there,
   // keeping ?tk=XOM and #tab. (A 301 redirect in the site builder would also catch visitors before this script loads.)
   var MOVED = {
@@ -105,29 +109,113 @@
     document.head.appendChild(st);
   })();
 
-  // ---------- Copy protection (a deterrent: it stops casual copying, not screenshots) ----------
+  // ---------- Quote-friendly copying ----------
+  // Readers can select and quote a passage: the clipboard gets the quote plus a credit line and link, so every
+  // quote shared elsewhere points back here. Copying more than QUOTE_MAX characters still gets only the notice.
+  // Images stay protected from right-click and dragging.
   var PROTECTED = '.page__blocks .text-box, .block-blog-header, .blog-list-item, .p75t';
+  var QUOTE_MAX = 600;
   (function protect() {
     var st = document.createElement('style');
-    st.textContent = '.page__blocks .text-box, .page__blocks .text-box *, .block-blog-header, .block-blog-header *,' +
-      '.blog-list-item, .blog-list-item *, .p75t, .p75t * { -webkit-user-select:none !important; user-select:none !important; -webkit-touch-callout:none !important }' +
-      '.page__blocks img { -webkit-user-drag:none; user-drag:none }';
+    st.textContent = '.page__blocks img { -webkit-user-drag:none; user-drag:none }';
     document.head.appendChild(st);
-    function inside(t) { return t && t.closest && (t.closest(PROTECTED) || (t.tagName === 'IMG' && t.closest('.page__blocks'))); }
-    document.addEventListener('contextmenu', function (e) { if (inside(e.target)) e.preventDefault(); });
-    document.addEventListener('dragstart', function (e) { if (inside(e.target)) e.preventDefault(); });
-    document.addEventListener('selectstart', function (e) { if (inside(e.target)) e.preventDefault(); });
-    // If text gets copied anyway, the clipboard receives a notice instead of the essay
+    function inside(t) { return t && t.closest && t.closest(PROTECTED); }
+    function isImg(t) { return t && t.tagName === 'IMG' && t.closest && t.closest('.page__blocks'); }
+    document.addEventListener('contextmenu', function (e) { if (isImg(e.target)) e.preventDefault(); });
+    document.addEventListener('dragstart', function (e) { if (isImg(e.target)) e.preventDefault(); });
     document.addEventListener('copy', function (e) {
       var sel = window.getSelection && window.getSelection();
       var node = sel && sel.anchorNode;
       if (node && node.nodeType === 3) node = node.parentNode;
       if (!inside(node) || !e.clipboardData) return;
+      var text = String(sel).trim(), url = location.href.split(/[?#]/)[0];
       e.preventDefault();
-      e.clipboardData.setData('text/plain', '\u00a9 ' + YEAR + ' Rahul Saxena. All rights reserved. ' +
-        'Read this essay at ' + location.href.split('?')[0]);
+      e.clipboardData.setData('text/plain', text.length <= QUOTE_MAX
+        ? '“' + text + '” — Rahul Saxena, Point75 ' + url
+        : '© ' + YEAR + ' Rahul Saxena. All rights reserved. Read this essay at ' + url);
     });
   })();
+
+  // ---------- Search & sharing metadata ----------
+  // The Hostinger page settings are the primary place for titles and descriptions; this fills any that are
+  // missing (Google reads the rendered page) and adds structured data so results show the author and date.
+  var SITE_DESC = 'Plain-English analysis of Treasury yields, the Fed and the forces moving bond markets, ' +
+    'plus free tools to stress-test your portfolio.';
+  var HOME_TITLE = 'Point75 — Bond Market & Treasury Yield Intelligence';
+  function plain(html) { var d = document.createElement('div'); d.innerHTML = html; return d.textContent.replace(/\s+/g, ' ').trim(); }
+  function clip(t, n) { return t.length <= n ? t : t.slice(0, n - 1).replace(/\s+\S*$/, '') + '…'; }
+  function meta(attr, key, val, force) {
+    var m = document.head.querySelector('meta[' + attr + '="' + key + '"]');
+    if (!m) { m = document.createElement('meta'); m.setAttribute(attr, key); document.head.appendChild(m); }
+    if (force || !m.getAttribute('content')) m.setAttribute('content', val);
+  }
+  var seoPath = null;
+  function seo(path) {
+    var head = document.querySelector('.block-blog-header__title');
+    var isEssay = path !== '/' && EXCLUDED.indexOf(path) === -1 && !!head;
+    var key = path + '|' + (isEssay ? 1 : 0);
+    if (seoPath === key) return;
+    seoPath = key;
+    var desc, title = document.title;
+    if (path === '/') { document.title = title = HOME_TITLE; desc = SITE_DESC; }
+    else if (TLDR[path]) desc = clip(plain(TLDR[path]), 158);
+    if (desc) { meta('name', 'description', desc, path === '/'); meta('property', 'og:description', desc); meta('name', 'twitter:description', desc); }
+    if (path === '/') { meta('property', 'og:title', title, true); meta('name', 'twitter:title', title, true); }
+    var alt = (head ? head.textContent.trim() : title) + ' — Point75';
+    meta('property', 'og:image:alt', alt); meta('name', 'twitter:image:alt', alt);
+
+    var old = document.getElementById('p75-ld'); if (old) old.remove();
+    var ld;
+    if (path === '/') ld = [
+      { '@context': 'https://schema.org', '@type': 'Organization', name: 'Point75', url: 'https://www.point75.io/',
+        description: SITE_DESC, founder: { '@type': 'Person', name: 'Rahul Saxena' },
+        sameAs: SAME_AS.filter(Boolean) },
+      { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Point75', url: 'https://www.point75.io/' }
+    ];
+    else if (isEssay) {
+      var hdr = document.querySelector('.block-blog-header'), dm = hdr && hdr.textContent.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+      var img = document.head.querySelector('meta[property="og:image"]');
+      ld = { '@context': 'https://schema.org', '@type': 'Article', headline: head.textContent.trim(),
+        author: { '@type': 'Person', name: 'Rahul Saxena', url: 'https://www.point75.io/about' },
+        publisher: { '@type': 'Organization', name: 'Point75', url: 'https://www.point75.io/' },
+        mainEntityOfPage: 'https://www.point75.io' + path };
+      if (desc) ld.description = desc;
+      if (dm) ld.datePublished = dm[3] + '-' + ('0' + dm[1]).slice(-2) + '-' + ('0' + dm[2]).slice(-2);
+      if (img && img.content) ld.image = img.content;
+    }
+    if (ld) {
+      var sc = document.createElement('script'); sc.type = 'application/ld+json'; sc.id = 'p75-ld';
+      sc.textContent = JSON.stringify(ld); document.head.appendChild(sc);
+    }
+  }
+
+  // ---------- Share + subscribe row under essays ----------
+  function shareRow(path) {
+    var url = 'https://www.point75.io' + path;
+    var head = document.querySelector('.block-blog-header__title');
+    var t = encodeURIComponent((head ? head.textContent.trim() : document.title) + ' — Point75');
+    var u = encodeURIComponent(url);
+    var a = 'color:' + GOLD + ';text-decoration:none;font-weight:700;border:1px solid ' + GOLD +
+      ';border-radius:16px;padding:5px 14px;display:inline-block;margin:4px 6px 4px 0;font-size:14px';
+    var links = [
+      ['X', 'https://x.com/intent/post?text=' + t + '&url=' + u],
+      ['LinkedIn', 'https://www.linkedin.com/sharing/share-offsite/?url=' + u],
+      ['Reddit', 'https://www.reddit.com/submit?url=' + u + '&title=' + t]
+    ].map(function (l) { return '<a href="' + l[1] + '" target="_blank" rel="noopener" style="' + a + '">' + l[0] + '</a>'; }).join('') +
+      '<a href="#" class="p75copy" style="' + a + '">Copy link</a>';
+    var sub = SUBSCRIBE_URL ? '<div style="margin:0 0 18px;font-size:16px;color:#EDE8DC">New essays, once a week. ' +
+      '<a href="' + SUBSCRIBE_URL + '" target="_blank" rel="noopener" style="color:#000;background:' + GOLD +
+      ';text-decoration:none;font-weight:700;border-radius:16px;padding:6px 16px;display:inline-block;margin-left:6px">Subscribe free &rarr;</a></div>' : '';
+    return sub + '<div style="margin-bottom:18px"><span style="color:#9a9a9a;margin-right:8px">Share</span>' + links + '</div>';
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('.p75copy');
+    if (!b) return;
+    e.preventDefault();
+    var url = 'https://www.point75.io' + (location.pathname.replace(/\/+$/, '') || '/');
+    var done = function () { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy link'; }, 1500); };
+    if (navigator.clipboard) navigator.clipboard.writeText(url).then(done, done); else done();
+  });
 
   // ---------- FastComments loader ----------
   var queue = [], loading = false;
@@ -1311,6 +1399,7 @@
   function update() {
     var path = location.pathname.replace(/\/+$/, '') || '/';
     tagDisc();
+    seo(path);
 
     // Site search (search/search.js): a Search button in the header and the mobile menu, and "/" to open
     if (window.P75SEARCH) window.P75SEARCH.mount();
@@ -1544,7 +1633,7 @@
 
     if (!disc) {
       target.appendChild(band('p75d',
-        (isPost ? '<a href="/" style="color:' + GOLD + ';text-decoration:none;font-weight:600">&larr; All essays</a><div style="height:14px"></div>' +
+        (isPost ? '<a href="/" style="color:' + GOLD + ';text-decoration:none;font-weight:600">&larr; All essays</a><div style="height:14px"></div>' + shareRow(path) +
           '<div style="margin-bottom:18px;font-size:16px;color:#EDE8DC">Disagree, or have a question? <a href="/contact" style="color:' + GOLD + ';text-decoration:none;font-weight:700">Write to me &rarr;</a></div>' : '') +
         '<div class="p75disc" style="border-left:3px solid ' + GOLD + ';padding-left:14px">' + DISCLAIMER + '</div>' +
         // the contact link leads, so it stays in view when the line is folded to one row
