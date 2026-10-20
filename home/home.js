@@ -154,6 +154,11 @@
     '.p75ex a span{font:600 14px/1.5 Manrope,system-ui,sans-serif;color:#F1ECE2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}' +
     '.p75ex a em{margin-top:auto;padding-top:6px;font:800 13.5px Manrope,system-ui,sans-serif;font-style:normal;color:#C9A227}' +
     // Phones: three small tiles in one row, icon over a short name (the descriptions stay on desktop)
+    // The title's words sit in .tt so a long name ("Market Intelligence") wraps inside its box instead of running out of it.
+    // Between phones and wide screens five boxes are narrow, so the icon moves above the name and "Market" drops.
+    '.p75ex a b .tt{min-width:0}.p75ex .tt .lv{display:inline-block;vertical-align:middle}' +
+    '@media (min-width:761px) and (max-width:1240px){' + L + ' .p75ex a{padding:12px 14px}' +
+      L + ' .p75ex a b{flex-direction:column;align-items:flex-start;gap:6px;font-size:19px}' + L + ' .p75ex .lg{display:none}}' +
     '@media (max-width:760px){.p75ex .g{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}.p75ex a .ar{display:none}.p75ex .lv{display:none}' + L + ' .p75ex{margin-top:22px}' + L + ' .p75ex .eb{margin-bottom:10px}' +
       L + ' .p75ex a{align-items:center;justify-content:center;gap:0;padding:14px 4px 12px;border-radius:10px;text-align:center}' +
       L + ' .p75ex a b{flex-direction:column;gap:7px;font:700 13.5px/1.2 Manrope,system-ui,sans-serif;color:#EDE8DC}' +
@@ -348,8 +353,8 @@
     if (list.querySelector(':scope > .p75ex')) return;
     list.insertAdjacentHTML('beforeend', '<nav class="p75ex" aria-label="Explore Point75"><div class="eb">Explore</div><div class="g">' +
       // each box is the link itself (no "Open the ..." line); Pulse leads, with a live heartbeat trace
-      EXPLORE.map(function (x) { return '<a href="' + x[0] + '"' + (x[4] === 'zoom' ? ' class="live"' : '') + '><b><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + EXPLORE_ICON[x[4]] + '</svg>' + x[1].replace('Market ', '<i class="lg" style="font-style:normal">Market </i>') +
-        (x[4] === 'zoom' ? '<i class="lv" aria-hidden="true"></i>' : '') + '</b><span>' + x[2] + '</span><i class="ar" aria-hidden="true">›</i></a>'; }).join('') + '</div></nav>');
+      EXPLORE.map(function (x) { return '<a href="' + x[0] + '"' + (x[4] === 'zoom' ? ' class="live"' : '') + '><b><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + EXPLORE_ICON[x[4]] + '</svg><i class="tt" style="font-style:normal">' + x[1].replace('Market ', '<i class="lg" style="font-style:normal">Market </i>') +
+        (x[4] === 'zoom' ? ' <i class="lv" aria-hidden="true"></i>' : '') + '</i></b><span>' + x[2] + '</span><i class="ar" aria-hidden="true">›</i></a>'; }).join('') + '</div></nav>');
   }
 
   function render() {
