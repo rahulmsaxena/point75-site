@@ -1231,7 +1231,15 @@
       '<tr><td class="r">Treasury</td><td>The U.S. government</td><td>Interest every six months</td><td>Face value at maturity</td></tr>' +
       '<tr><td class="r">Corporate</td><td>A company</td><td>Interest every six months, if it can pay</td><td>Face value at maturity, unless called early or in default</td></tr>' +
       '<tr><td class="r">Fund / ETF</td><td>Hundreds of issuers</td><td>Monthly payouts that vary</td><td>Sell your shares at the going price</td></tr>' +
-      '</tbody></table><p class="note">Figures use a sample 4% coupon on $1,000: $20 every six months for a single bond, or roughly $3 a month from a fund, before fees.</p></section>' +
+      '</tbody></table><p class="note">Figures use a sample 4% coupon on $1,000: $20 every six months for a single bond, or roughly $3 a month from a fund, before fees.</p>' +
+      // Every step as plain text: the diagram shows one step at a time, so this is what readers who prefer text
+      // (and search engines) see of the whole story.
+      '<details class="list"><summary>Read every step as text</summary>' + Object.keys(CASH).map(function (k) {
+        return '<h3>' + esc(CASH[k][0]) + '</h3><ol>' +
+          CASH[k][3].map(function (x) {
+            return '<li><b>' + esc(x[1]) + '.</b> ' + esc(x[5]) + ' <i>What can go wrong:</i> ' + esc(x[6]) + '</li>';
+          }).join('') + '</ol>';
+      }).join('') + '</details></section>' +
       '<a class="next" href="/bond-types">See every kind of bond in Classification of Bonds &rarr;</a>' +
       '<p class="foot">A simplified illustration for learning, not financial advice.<br>&copy; ' + new Date().getFullYear() + ' Rahul Saxena. All rights reserved.</p></div>';
   }
