@@ -77,13 +77,15 @@
     '.p75debt .dt-r > span{font-size:14px;line-height:1.45;color:#F1ECE2}' +
     '.p75debt .p75n{transition:transform 1.25s cubic-bezier(.37,0,.3,1);filter:drop-shadow(0 0 3px rgba(255,255,255,.6))}' +
     '.p75debt .p75f{stroke-dashoffset:100;transition:stroke-dashoffset 1.25s cubic-bezier(.37,0,.3,1)}.p75debt .dt-ov.go .p75f{stroke-dashoffset:0}' +
-    // tabs (same look as Pulse)
-    '.p75debt .tabs{position:sticky;top:var(--tabs-top,0px);z-index:6;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:8px -20px 0;padding:6px 20px;background:var(--ink);border-bottom:1px solid var(--line)}' +
+    // tab bar: the site standard (ONE-SHOT.md §6), same as Pulse and the tools site. Full-width row of stretched pills, gold = the page you are on.
+    // 8px above the pills, 12px from the pills to the view (6px bar padding + 1px line + 5px)
+    '.p75debt .tabs{position:sticky;top:var(--tabs-top,0px);z-index:6;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:2px -20px 0;padding:6px 20px;background:var(--ink);border-bottom:1px solid var(--line)}' +
     '.p75debt .tabs::-webkit-scrollbar{display:none}' +
-    '.p75debt .tab{flex:none;display:inline-flex;align-items:center;min-height:40px;padding:0 18px;border-radius:999px;border:1px solid #3A3C42;color:#F1ECE2;font-weight:700;font-size:14.5px;text-decoration:none;white-space:nowrap;transition:border-color .15s,background .15s,color .15s}' +
-    '.p75debt .tab:hover{border-color:var(--gold);color:#fff}.p75debt .tab.on{background:var(--gold);border-color:var(--gold);color:#111214}' +
+    '.p75debt .tab{flex:1 0 auto;display:inline-flex;align-items:center;justify-content:center;padding:9px 16px;border-radius:999px;border:1px solid #2A2B2F;background:#17181B;color:#C2BCAF;font-weight:700;font-size:15px;line-height:24px;text-decoration:none;white-space:nowrap;cursor:pointer;transition:border-color .15s,background .15s,color .15s}' +
+    '.p75debt .tab:hover{border-color:#55575e;color:#fff}.p75debt .tab.on{background:#C9A227;border-color:#C9A227;color:#111214}' +
     '.p75debt .tab:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
-    '.p75debt .view{padding-top:8px}' +
+    '@media (max-width:640px){.p75debt .tabs{gap:4px}.p75debt .tab{padding:8px 10px;font-size:14px}}' +   // one row that slides sideways, never wraps
+    '.p75debt .view{padding-top:5px}' +
     // fold-away title: the strip takes its place once a tab is picked
     '.p75debt .top,.p75debt .fstrip{display:grid;transition:grid-template-rows .5s cubic-bezier(.4,0,.2,1),opacity .4s}' +
     '.p75debt .top > div,.p75debt .fstrip > div{min-height:0;overflow:hidden}' +
@@ -129,9 +131,9 @@
     '.p75debt .tab .ts{display:none}' +
     '@media (max-width:880px){.p75debt .dt-ov,.p75debt .dt-tk .dt-ov{grid-template-columns:1fr;gap:10px}.p75debt .hd-t{gap:2px 12px}.p75debt .hd-t .eyebrow{flex-basis:100%}' +
       '.p75debt .hd-t .asof{margin:0 0 0 auto}.p75debt .asx{display:none}.p75debt .lede{text-align:left}}' +
-    '@media (max-width:560px){.p75debt .dt-d{width:96px}.p75debt .dt-r b{font-size:30px}.p75debt .tabs{margin:6px -16px 0;padding:6px 16px;gap:5px;flex-wrap:wrap;overflow:visible}.p75debt .tab{flex:1 1 auto;justify-content:center;padding:0 8px;font-size:13px;min-height:40px}.p75debt .tab .tl{display:none}.p75debt .tab .ts{display:inline}.p75debt .fold{gap:6px 14px}.p75debt .fo-t{display:none}.p75debt .fi small{font-size:10px}.p75debt .dt-head{font-size:18px;padding:14px 16px}}' +
-    // narrow phones (to 320px): title and date still share a line, and the five tabs still fit one row
-    '@media (max-width:370px){.p75debt .hd-t{column-gap:8px}.p75debt .hd-t .asof{font-size:11.5px}.p75debt .tabs{gap:4px}.p75debt .tab{padding:0 6px;font-size:12.5px}}' +
+    '@media (max-width:560px){.p75debt .dt-d{width:96px}.p75debt .dt-r b{font-size:30px}.p75debt .tabs{margin:2px -16px 0;padding:6px 16px}.p75debt .tab .tl{display:none}.p75debt .tab .ts{display:inline}.p75debt .fold{gap:6px 14px}.p75debt .fo-t{display:none}.p75debt .fi small{font-size:10px}.p75debt .dt-head{font-size:18px;padding:14px 16px}}' +
+    // narrow phones (to 320px): title and date still share a line; the tabs keep one row that slides sideways
+    '@media (max-width:370px){.p75debt .hd-t{column-gap:8px}.p75debt .hd-t .asof{font-size:11.5px}}' +
     '@media (prefers-reduced-motion:reduce){.p75debt .dt-means i,.p75debt .fo-c{animation:none}.p75debt .dt-ovc:hover{transform:none}.p75debt .top,.p75debt .fstrip{transition:none}}' +
 
     '@media (max-width:880px){.p75debt .two{grid-template-columns:1fr}.p75debt .tiles{grid-template-columns:1fr}.p75debt .ownk{grid-template-columns:repeat(2,minmax(0,1fr))}}' +
