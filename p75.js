@@ -3,11 +3,11 @@
    Content © Rahul Saxena. All rights reserved. */
 (function () {
   // ---------- Settings ----------
-  var TENANT_ID = 'NgvHdCEMvUY';
+  var TENANT_ID = 'NgvHdCEMvUY';                          // FastComments
   // Newsletter sign-up page (e.g. https://point75.substack.com). Leave empty to hide the Subscribe button.
   var SUBSCRIBE_URL = 'https://point75.substack.com/subscribe';
   // Point75's profiles elsewhere (X, LinkedIn, Substack...), for Google's knowledge panel. Add as they go live.
-  var SAME_AS = ['https://point75.substack.com'];                          // FastComments
+  var SAME_AS = ['https://point75.substack.com'];
   // Pages that moved to tools.point75.io: old links (search, bookmarks, the menu's cache) go straight there,
   // keeping ?tk=XOM and #tab. (A 301 redirect in the site builder would also catch visitors before this script loads.)
   var MOVED = {
