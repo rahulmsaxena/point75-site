@@ -1,6 +1,268 @@
 {
   "summaries": [
     {
+      "market_date": "2026-10-20",
+      "key": "2026-10-20",
+      "edition": "close",
+      "generated_at": "2026-10-20T22:57:44Z",
+      "as_of": "Market close quotes (Treasury's official curve for today not yet posted)",
+      "title": "Long yields slip on record-weak housing and a pullback in oil, while the 2-year holds near 4.8%",
+      "regime": "Twist flattener",
+      "regime_note": "Long end eases on soft data; front end anchored by hike bets",
+      "conviction": "Low",
+      "takeaway": "The 10-year yield dipped about 2 bp to 5.12% and the 30-year about 4 bp to 5.43%, helped by very weak housing reports and oil easing back from its morning highs. The 2-year barely moved and ended near 4.79%, because traders still expect the Fed to raise rates by December. The moves were small, and sources disagree on the 2-year's direction, so this was a quiet, mixed day rather than a clear turn.",
+      "tape": [
+        {
+          "k": "2Y",
+          "level": 4.79,
+          "d": 3,
+          "w": -1
+        },
+        {
+          "k": "10Y",
+          "level": 5.12,
+          "d": -2,
+          "w": -10
+        },
+        {
+          "k": "30Y",
+          "level": 5.43,
+          "d": -4,
+          "w": -14
+        },
+        {
+          "k": "2s10s",
+          "level": 33,
+          "d": -5,
+          "w": -9,
+          "unit": "bp",
+          "group": "Curve"
+        }
+      ],
+      "fed": {
+        "meeting": "Oct 28"
+      },
+      "cross": [
+        {
+          "k": "S&P 500",
+          "v": "+0.3%",
+          "dir": "up",
+          "read": "Stocks edged up to 7,712.57 as money rotated into healthcare, utilities and other defensive sectors; tech lagged on AI and debt worries."
+        },
+        {
+          "k": "Russell 2000",
+          "v": "+1.7%",
+          "dir": "up",
+          "read": "Small companies, which borrow more and are more sensitive to interest rates, led the gains as long yields eased."
+        },
+        {
+          "k": "Dow",
+          "v": "+1.0%",
+          "dir": "up",
+          "read": "The blue-chip index rose about 530 points to 52,495.88."
+        },
+        {
+          "k": "Dollar index",
+          "v": "101.70 (−0.3%)",
+          "dir": "down",
+          "read": "A softer dollar fit with slightly lower long-term US yields."
+        },
+        {
+          "k": "Brent",
+          "v": "$108.79 (−0.7%)",
+          "dir": "down",
+          "read": "Oil hit about $112 in the European morning, then fell back on a report of a Qatar-Pakistan proposal to settle the US-Iran standoff."
+        },
+        {
+          "k": "VIX",
+          "v": "17.44 (−1.00)",
+          "dir": "down",
+          "read": "Stock-market fear gauge eased, a calm backdrop for bonds."
+        }
+      ],
+      "drivers": [
+        {
+          "title": "Housing data comes in very weak",
+          "tags": [
+            "Housing",
+            "Growth"
+          ],
+          "bp": -2,
+          "of": "10Y",
+          "total": -2,
+          "what": "Housing starts fell 5.2% in September to a 1.221 million annual pace, well below the 1.30 million expected. Pending home sales (contracts signed on existing homes) fell 7.3% to an index of 66.0, the lowest since the series began in 2001.",
+          "why": "Mortgage rates follow long-term Treasury yields, and with the 10-year above 5% buyers and builders are pulling back. A weaker housing market points to slower growth, which tends to pull long-term yields down.",
+          "response": "The 10-year ended about 2 bp lower at 5.12% and the 30-year about 4 bp lower at 5.43%, according to closing quotes from Investrade and Trading Economics.",
+          "signal": "High rates are clearly biting in housing. NAR's chief economist said mortgage rates 'could be topping out', but the bond market needs broader signs of slowing before yields fall much further."
+        },
+        {
+          "title": "Oil eases from its highs on Iran diplomacy report",
+          "tags": [
+            "Energy",
+            "Geopolitics",
+            "Inflation"
+          ],
+          "impact": "Took some inflation pressure off long-term yields",
+          "what": "Brent crude peaked at $111.99 a barrel in the European session, then pulled back after a report (Al Araby Al Jadeed) of a Qatar-Pakistan compromise proposal between the US and Iran. Brent closed at $108.79, down 0.7%.",
+          "why": "Oil feeds directly into inflation. When oil falls, investors worry a little less that inflation will force the Fed to keep raising rates, which lets long-term yields drift lower.",
+          "response": "Newsquawk noted that higher energy prices no longer appeared to weigh on Treasuries as the session went on; long-end yields finished lower.",
+          "signal": "Iran's foreign ministry called the US response 'incomplete and insufficient', so the diplomacy is fragile. Oil near $110 still keeps a floor under yields."
+        },
+        {
+          "title": "Strong Japanese bond auction supports Treasuries early",
+          "tags": [
+            "Global",
+            "Supply"
+          ],
+          "impact": "Early support for Treasury prices",
+          "what": "An overnight 20-year Japanese government bond auction drew bids worth more than five times the amount on offer.",
+          "why": "Strong demand for long-term bonds abroad eases fears that global investors are going on a 'buyers' strike' for long-dated debt, which helps Treasuries too.",
+          "response": "Treasury futures were a few ticks firmer in the European morning, with the JGB auction cited as one reason.",
+          "signal": "Wednesday's 20-year Treasury auction is the next test of whether demand for long-term US debt holds up at yields above 5%."
+        }
+      ],
+      "macro": [
+        {
+          "tag": "Housing",
+          "title": "Housing starts (September)",
+          "actual": "1.221M",
+          "consensus": "1.30M",
+          "prior": "1.288M",
+          "note": "Down 5.2% on the month. Single-family starts fell to 859,000."
+        },
+        {
+          "tag": "Housing",
+          "title": "Building permits (September)",
+          "actual": "1.400M",
+          "consensus": "1.39M",
+          "prior": "1.403M",
+          "note": "Slightly above expectations overall, but single-family permits fell 4% to 845,000, the lowest since 2023."
+        },
+        {
+          "tag": "Housing",
+          "title": "Pending home sales (September)",
+          "actual": "−7.3% m/m",
+          "note": "Index 66.0, a record low in data back to 2001; down 11.3% from a year earlier. NAR blamed fast-rising mortgage rates."
+        },
+        {
+          "tag": "Fed",
+          "title": "Fed pricing",
+          "note": "Markets priced about a 15% (14.9%) chance of a quarter-point hike at the October 27–28 meeting, down from 22% a week earlier and 58% a month ago, according to market data cited by Rallies.ai. Traders still lean toward a hike in December. The Fed is in its pre-meeting quiet period, so no officials spoke."
+        },
+        {
+          "tag": "Supply",
+          "title": "Treasury supply",
+          "note": "No coupon auctions today. The 20-year bond auction is Wednesday at 1:00 PM ET; the last one sold at 5.42%."
+        }
+      ],
+      "geo": [
+        {
+          "title": "US-Iran talks and the Strait of Hormuz",
+          "impact": "Moderate",
+          "text": "A reported Qatar-Pakistan compromise proposal, with Pakistan's army chief arriving in Tehran, pulled oil back from its highs. At the same time Iran's Revolutionary Guards warned ships against crossing the mined route through Hormuz, and Iran called the US response insufficient, keeping the oil risk premium in place."
+        },
+        {
+          "title": "Houthi attacks on Saudi Arabia",
+          "impact": "Low",
+          "text": "Bloomberg reported the UK is set to fly missions to Saudi Arabia to help defend against Houthi attacks. There was no visible effect on Treasuries."
+        }
+      ],
+      "events": [
+        {
+          "t": "Overnight",
+          "cat": "Global",
+          "title": "20-year JGB auction draws more than 5x cover",
+          "react": "Treasuries firmer in early trading"
+        },
+        {
+          "t": "European morning",
+          "cat": "Energy",
+          "title": "Brent peaks at $111.99, then falls back on Iran diplomacy report",
+          "react": "Energy no longer weighing on Treasuries"
+        },
+        {
+          "t": "Morning",
+          "cat": "Data",
+          "title": "Housing starts 1.221M vs 1.30M expected; pending home sales at record low",
+          "react": "Long-end yields drift lower"
+        },
+        {
+          "t": "4:00 PM",
+          "cat": "Equities",
+          "title": "S&P 500 +0.3% at 7,712.57; Russell 2000 +1.7%",
+          "react": "10Y at 5.12%, about 2 bp lower on the day"
+        }
+      ],
+      "interpretation": {
+        "text": "Long-term yields fell a little while the 2-year held steady, so the curve flattened. That mix says the market is weighing a slowing housing market and easing oil against a Fed that still looks likely to raise rates by December. The moves were small, and with no Fed speakers and only second-tier data, the bond market is mostly marking time before the October 28 decision.",
+        "change": "A weak 20-year auction on Wednesday or another oil spike above $110 could push the 10-year back toward 5.2–5.3%; a renewed tech selloff after Wednesday's big earnings would likely pull yields lower."
+      },
+      "watch": [
+        {
+          "when": "Wed 10:30 AM",
+          "what": "EIA crude oil inventories"
+        },
+        {
+          "when": "Wed 1:00 PM",
+          "what": "20-year Treasury bond auction"
+        },
+        {
+          "when": "Thu 8:30 AM",
+          "what": "Weekly jobless claims"
+        },
+        {
+          "when": "Thu 10:00 AM",
+          "what": "Conference Board leading economic index (September)"
+        },
+        {
+          "when": "Fri 9:45 AM",
+          "what": "S&P Global flash PMIs (October)"
+        },
+        {
+          "when": "Fri 10:00 AM",
+          "what": "University of Michigan sentiment and inflation expectations (October final)"
+        },
+        {
+          "when": "Oct 27–28",
+          "what": "FOMC meeting; decision Wednesday Oct 28"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Investrade: Market Review, October 20, 2026",
+          "url": "https://investrade.com/market-review-october-20-2026/"
+        },
+        {
+          "name": "Newsquawk: European Market Wrap, 20 October 2026",
+          "url": "https://www.newsquawk.com/headlines/newsquawk-european-market-wrap---20th-october-2026"
+        },
+        {
+          "name": "Trading Economics: US 10-year Treasury yield",
+          "url": "https://tradingeconomics.com/united-states/government-bond-yield"
+        },
+        {
+          "name": "Rallies.ai: U.S. yields lower as AI risk is gauged",
+          "url": "https://rallies.ai/news/us-yields-lower-as-ai-risk-is-gauged-649e606df800b0fa"
+        },
+        {
+          "name": "RealtyWire: Pending home sales fall 7.3% to a record low",
+          "url": "https://realtywire.com/pending-home-sales-record-low-september/"
+        },
+        {
+          "name": "VistaP Global: Stock market today, October 20, 2026",
+          "url": "https://vistapglobal.com/stock-market-today-october-20-2026-dow-gains-530-points-small-caps-lead-as-housing-weakens-amwl-brze-crm-docs-eprx-gm-lly-modd-noc-nvda-ser-spcx-tsla-wmt/"
+        },
+        {
+          "name": "Kiplinger: This week's economic calendar",
+          "url": "https://www.kiplinger.com/investing/economy/this-weeks-economic-calendar"
+        },
+        {
+          "name": "Investing.com: U.S. economic calendar preview, Oct 19–23, 2026",
+          "url": "https://www.investing.com/news/stock-market-news/us-economic-calendar-preview-key-releases-for-the-week-of-oct-1923-2026-93CH-4958178"
+        }
+      ]
+    },
+    {
       "market_date": "2026-10-19",
       "key": "2026-10-19",
       "edition": "close",
