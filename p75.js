@@ -9,7 +9,8 @@
   var MOVED = {
     '/sector-credit': 'https://tools.point75.io/market-intelligence/sector-credit',
     '/lenders': 'https://tools.point75.io/market-intelligence/lenders',
-    '/credit-stress': 'https://tools.point75.io/market-intelligence/credit-stress'
+    '/credit-stress': 'https://tools.point75.io/market-intelligence/credit-stress',
+    '/outlook': 'https://tools.point75.io/outlook'   // the short address for essays and newsletters
   };
   (function () {
     var p = location.pathname.replace(/\/+$/, '') || '/';
@@ -1133,6 +1134,14 @@
       D + '>.p75tools-li.block-header-item>.block-header-item__label>.item-content-wrapper>.item-content:focus-visible{color:#111214!important}' +
       D + ' .p75s-btn{height:40px;padding:0 12px;font-size:15px;font-weight:700;border-color:rgba(201,162,39,.8)}' +
       D + '>.p75start-li{order:-1;list-style:none}' +
+      // Outlook: a gold outline beside the solid gold Tools button. To make room for it, the "Start here" pill
+      // (also on the homepage) now drops out below 1320px instead of 1240px.
+      D + '>.p75outlook-li{list-style:none;align-self:center}' +
+      D + '>.p75outlook-li a{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 14px;border:1.5px solid #C9A227;border-radius:20px;color:#E0B53A!important;font:800 15px Manrope,system-ui,sans-serif;text-decoration:none!important;white-space:nowrap}' +
+      D + '>.p75outlook-li a:hover,' + D + '>.p75outlook-li a:focus-visible{background:rgba(201,162,39,.14);outline:none}' +
+      '@media (max-width:1320px){' + D + '>.p75start-li{display:none!important}}' +
+      '.block-header-layout-mobile .p75outlook-li{list-style:none;width:100%;border-bottom:1px solid rgba(255,255,255,.07)}' +
+      '.block-header-layout-mobile .p75outlook-li a{display:flex;align-items:center;gap:8px;padding:17px 0;color:#C9A227!important;font:600 19px Manrope,system-ui,sans-serif;text-decoration:none!important}' +
       D + '>.p75start-li a{display:inline-flex;align-items:center;height:32px;padding:0 10px;border:1px dashed rgba(201,162,39,.6);border-radius:99px;color:#C9A227!important;font:700 13.5px Manrope,system-ui,sans-serif;text-decoration:none!important;white-space:nowrap}' +
       D + '>.p75start-li a:hover,' + D + '>.p75start-li a:focus-visible{border-style:solid;outline:none}' +
       // phone menu: Tools in gold so it stands out there too
@@ -1260,6 +1269,13 @@
       });
       if (!ul.closest('.block-header-layout-mobile') && !ul.querySelector(':scope>.p75start-li'))
         ul.insertAdjacentHTML('afterbegin', '<li class="p75start-li"><a href="/start-here">Start here &rarr;</a></li>');
+      // Outlook (forecasts on tools.point75.io): one gold-outlined item just before the Tools button, desktop and phone
+      if (!ul.querySelector(':scope>.p75outlook-li')) {
+        var tools = ul.querySelector(':scope>.p75tools-li');
+        var oli = document.createElement('li'); oli.className = 'p75outlook-li';
+        oli.innerHTML = '<a href="https://tools.point75.io/outlook"><span aria-hidden="true">&#9733;</span> Outlook</a>';
+        if (tools) ul.insertBefore(oli, tools); else ul.appendChild(oli);
+      }
     });
   }
 
