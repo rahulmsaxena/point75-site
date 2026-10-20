@@ -116,9 +116,9 @@
     '@media (max-width:760px){.p75debt .dt-key{margin-left:0}.p75debt .dt-spk{width:110px}}' +
     // takeaway
     '.p75debt .dt-tk{display:flex;flex-direction:column;gap:10px}' +
-    // desktop: the Takeaway fits one screen with room to spare, so the dials, numbers and headline take it
-    '@media (min-width:881px){.p75debt .dt-tk{gap:14px}.p75debt .dt-tk .dt-head{font-size:27px;padding:18px 24px}.p75debt .dt-tk .dt-ov{gap:14px}.p75debt .dt-ovc{padding:16px 20px;gap:8px}.p75debt .dt-ovh{font-size:13px}' +
-      '.p75debt .dt-tk .dt-d{width:160px}.p75debt .dt-tk .dt-r b{font-size:48px}.p75debt .dt-r em{font-size:13px}.p75debt .dt-r > span{font-size:16px}}' +
+    // desktop: the same type scale as Economic Indicators' Takeaway (24px headline, 104px dials, 33px numbers, 15px lines), so Kinetics pages read alike
+    '@media (min-width:881px){.p75debt .dt-tk{gap:12px}.p75debt .dt-tk .dt-head{font-size:24px;padding:16px 20px}.p75debt .dt-tk .dt-ov{gap:10px}.p75debt .dt-tk .dt-ovc{padding:12px 14px}' +
+      '.p75debt .dt-tk .dt-d{width:104px}.p75debt .dt-tk .dt-r b{font-size:33px}.p75debt .dt-tk .dt-r > span{font-size:15px}}' +
     '.p75debt .dt-head{margin:0;padding:16px 20px;border-radius:16px;background:linear-gradient(180deg,#24262B 0%,#1A1B1F 100%);border:2px solid var(--gold);font-family:"Hedvig Letters Serif",Georgia,serif;font-size:22px;line-height:1.45;color:#fff}' +
     '.p75debt .dt-tk .dt-ov{grid-template-columns:repeat(2,minmax(0,1fr));margin:0}' +
     '.p75debt a.dt-ovc{text-decoration:none}' +
