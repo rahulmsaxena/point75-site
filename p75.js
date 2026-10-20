@@ -189,6 +189,19 @@
     }
   }
 
+  // ---------- Essay pictures shown whole ----------
+  var CROP_RE = /^(https:\/\/assets\.zyrosite\.com)\/cdn-cgi\/image\/[^\/]*fit=crop[^\/]*\/(.+)$/;
+  function uncropImages() {
+    document.querySelectorAll('.page__blocks img.image__image').forEach(function (img) {
+      var m = (img.getAttribute('src') || '').match(CROP_RE);
+      if (!m) return;
+      img.removeAttribute('srcset');
+      img.removeAttribute('sizes');
+      img.src = m[1] + '/cdn-cgi/image/format=auto,w=1600,fit=scale-down/' + m[2];
+      img.style.setProperty('object-fit', 'contain', 'important');
+    });
+  }
+
   // ---------- Share + subscribe row under essays ----------
   function shareRow(path) {
     var url = 'https://www.point75.io' + path;
@@ -1455,6 +1468,11 @@
     // Mark essay pages so the desktop typography applies only there
     document.documentElement.classList.toggle('p75-essay',
       path !== '/' && EXCLUDED.indexOf(path) === -1 && !!document.querySelector('.block-blog-header'));
+
+    // Essay pictures: Hostinger serves each image pre-cropped to its box (fit=crop), cutting off the top and
+    // bottom on desktop and the sides on phones. Load the uncropped original and fit all of it in the box;
+    // the black page background hides the spare space. Re-checked every tick, as the builder swaps images.
+    if (document.documentElement.classList.contains('p75-essay')) uncropImages();
 
     // News (/news): the Coupon briefing is a Hostinger embed (same-origin iframe). Bring it in line with
     // the rest of the site: cream text tones, Manrope + Hedvig type, one label style, and a clear search bar.
