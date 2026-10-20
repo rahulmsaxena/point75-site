@@ -30,6 +30,7 @@
     '/the-machine-that-doesnt-need-cheap-money': 'Medium',
     '/the-welfare-state-was-always-a-ticking-clock': 'Medium',
     '/right-fear-wrong-reasons-copy': 'Advanced',
+    '/right-fear-wrong-reasons': 'Advanced',   // same essay after its address drops "-copy"
     '/nightmare-on-bond-street': 'Medium'
   };
 
@@ -46,6 +47,7 @@
     '/nightmare-on-bond-street': "Bonds, the \u201csafe\u201d corner of finance, just had a scary stretch: the 30-year Treasury yield touched levels last seen in 2007 as U.S. debt crossed $40 trillion. The Treasury's answer, bigger bond buybacks, is a few billion dollars thrown at a $30 trillion market, and the Fed is staying quiet. Higher yields don't stay on Wall Street; they show up in mortgages, loans and prices. <em>So how long will this Halloween last?</em>",
     '/the-welfare-state-was-always-a-ticking-clock': "Welfare promises were made when many workers supported each retiree. Japan is down to about two, and the U.S. faces soaring healthcare costs and nearly $40 trillion in debt. Now AI could wipe out jobs just as those bills peak, forcing governments to spend even more, and opening a window for China. <em>Is this just another cycle, or a countdown?</em>"
   };
+  TLDR['/right-fear-wrong-reasons'] = TLDR['/right-fear-wrong-reasons-copy'];   // same essay, cleaner address
   var expanded = {};   // posts the reader has opened in full, by path
 
   var DISCLAIMER = '<b>Disclaimer:</b> The views expressed here are my own and are for informational ' +
@@ -275,6 +277,7 @@
     '/the-machine-that-doesnt-need-cheap-money': 1,
     '/the-welfare-state-was-always-a-ticking-clock': 1,
     '/right-fear-wrong-reasons-copy': 1,
+    '/right-fear-wrong-reasons': 1,
     '/nightmare-on-bond-street': 1
   };
 
