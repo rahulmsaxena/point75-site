@@ -1,6 +1,6 @@
 {
-  "updated": "2026-10-19",
-  "window": "Sep 4 – Oct 16, 2026",
+  "updated": "2026-10-20",
+  "window": "Sep 4 – Oct 18, 2026",
   "hero": {
     "src": "https://rahulmsaxena.github.io/point75-site/insights/hero.jpg",
     "small": "https://rahulmsaxena.github.io/point75-site/insights/hero-sm.jpg",
@@ -12,7 +12,7 @@
   "bigPicture": [
     "The shared view among the market’s leading voices is that the era of cheap money is over. The Federal Reserve raised rates in September because inflation has been above its 2% goal for more than five years, and minutes released Oct 7 show most officials expect another hike by year end. Consumer prices rose 3.7% in the year to September, a hotter reading than expected. The 10-year Treasury yield touched about 5.35% on Oct 7, its highest level since 2002, then eased to about 5.1% by Oct 16 as a stock selloff sent investors into Treasuries.",
     "The pressure comes from supply as much as inflation. Federal debt has passed $40 trillion, the government keeps borrowing heavily, and traditional foreign buyers such as Japan and China are buying fewer Treasuries. Ray Dalio says the U.S. is nearing the limit of how much debt it can carry and that the bond bear market probably has a long way to go, and several of these investors say that makes buy-and-hold in long-term bonds riskier than it used to be.",
-    "They are not all bearish on bonds. BlackRock’s Rick Rieder sees today’s yields as an opportunity, especially in shorter-term bonds, though PIMCO’s Dan Ivascyn warns the 10-year yield could still reach 6% and expects the Fed to hold this month, then probably raise rates once more this year. Treasury Secretary Scott Bessent says the rise is a global trend rather than a U.S. problem, promising that growth and spending restraint will soon slow government borrowing. Gundlach warns that long-term Treasuries may not protect investors the way they used to, Dalio is betting against bonds and holding gold instead, and Bill Gross now says not to own bonds at all, apart from one-year Treasury bills."
+    "They are not all bearish on bonds. BlackRock’s Rick Rieder sees today’s yields as an opportunity, especially in shorter-term bonds, though PIMCO’s Dan Ivascyn warns the 10-year yield could still reach 6% and expects the Fed to hold this month, then probably raise rates once more this year. Treasury Secretary Scott Bessent blames September’s jump in inflation on an energy shock from the Iran conflict and says prices will come down once it is over. Gundlach warns that long-term Treasuries may not protect investors the way they used to, Dalio is betting against bonds and holding gold instead, and Bill Gross now says not to own bonds at all, apart from one-year Treasury bills."
   ],
   "agree": ["Rates will stay higher for longer", "Government debt is the core pressure on yields", "Quality matters more than chasing extra yield"],
   "differ": [
@@ -32,15 +32,15 @@
       "sources": [["Axios, Oct 16", "https://www.axios.com/2026/10/16/warsh-federal-reserve-interest-rates"], ["FOMC statement, Sep 16", "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm"], ["FOMC minutes, released Oct 7", "https://www.federalreserve.gov/monetarypolicy/fomcminutes20260916.htm"]]
     },
     {
-      "name": "Scott Bessent", "role": "U.S. Treasury Secretary", "initials": "SB", "theme": "Not alarmed yet",
-      "when": "Oct 3–5, 2026", "where": "Axios interview; fireside chat in Pennsylvania, reported by Bloomberg",
+      "name": "Scott Bessent", "role": "U.S. Treasury Secretary", "initials": "SB", "theme": "Blames an energy shock",
+      "when": "Oct 18, 2026", "where": "NBC’s Meet the Press",
       "points": [
-        "He played down the jump in yields as part of a global rise in borrowing costs rather than a U.S.-specific problem, noting investors are not selling Treasuries to buy German or Japanese bonds.",
-        "On Oct 5 he told investors that economic growth and spending restraint would very quickly start to change the path of government borrowing.",
-        "He acknowledged the limits of his role, saying he cannot control the bond market but can urge people to slow down and think."
+        "He said September’s hotter inflation reading was an energy shock tied to the Iran conflict, not a sign of broad price pressure.",
+        "He argued that core inflation, which leaves out food and energy, had been very flat before September and had fallen four months in a row.",
+        "He said prices should come down once the U.S. gets to the other side of the Iran conflict, but that whether gas prices fall by the new year depends on how it goes."
       ],
-      "quote": "I can’t control the bond market.",
-      "sources": [["Yahoo Finance (Bloomberg), Oct 3", "https://finance.yahoo.com/economy/policy/articles/bessent-downplays-worries-rising-yields-145907014.html"], ["Yahoo Finance (Bloomberg), Oct 6", "https://finance.yahoo.com/economy/policy/articles/us-yields-fall-2002-high-102019892.html"]]
+      "quote": "We have an energy shock.",
+      "sources": [["Benzinga, Oct 18", "https://www.benzinga.com/markets/economic-data/26/10/62430283/scott-bessent-blames-energy-shock-hot-inflation"], ["The Eastern Herald, Oct 18", "https://easternherald.com/2026/10/18/bessent-own-economy-energy-shock-inflation/"]]
     },
     {
       "name": "Mohamed El-Erian", "role": "Economist; former PIMCO CEO", "initials": "ME", "theme": "Buyers are drifting away",
