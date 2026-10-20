@@ -4,7 +4,7 @@
       gallery wall. Titles appear when you hover; the featured essay keeps its title on show.
    3. Phone carousel: one painting at a time. Swipe (or use the arrows) to move; the first tap shows the title
       and the essay's closing question, a second tap opens the essay.
-   4. Explore: doorways to Market Intelligence, Tools and Education under the gallery.
+   4. Explore: doorways to Kinetics, Market Intelligence, Outlook, Tools and Education under the gallery.
    p75.js calls render() about once a second, so everything here is safe to run repeatedly.
    (c) Rahul Saxena. All rights reserved. */
 (function () {
@@ -136,7 +136,7 @@
     // Explore
     '.p75ex{max-width:1224px;width:calc(100% - 40px);margin:64px auto 0;box-sizing:border-box}' +
     '.p75ex .eb{color:#C9A227;font:800 12px Manrope,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}' +
-    '.p75ex .g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}' +
+    '.p75ex .g{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}' +
     '.p75ex a{position:relative}.p75ex a .ar{position:absolute;right:14px;top:14px;color:#C9A227;font:400 24px/1 Manrope,sans-serif;font-style:normal;transition:transform .15s}' +
     '.p75ex a:hover .ar,.p75ex a:focus-visible .ar{transform:translateX(4px)}' +
     // Pulse: gold edge, a live dot, and a heartbeat that draws itself across the icon like a monitor
@@ -154,7 +154,7 @@
     '.p75ex a span{font:600 14px/1.5 Manrope,system-ui,sans-serif;color:#F1ECE2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}' +
     '.p75ex a em{margin-top:auto;padding-top:6px;font:800 13.5px Manrope,system-ui,sans-serif;font-style:normal;color:#C9A227}' +
     // Phones: three small tiles in one row, icon over a short name (the descriptions stay on desktop)
-    '@media (max-width:760px){.p75ex .g{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.p75ex a .ar{display:none}.p75ex .lv{display:none}' + L + ' .p75ex{margin-top:22px}' + L + ' .p75ex .eb{margin-bottom:10px}' +
+    '@media (max-width:760px){.p75ex .g{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}.p75ex a .ar{display:none}.p75ex .lv{display:none}' + L + ' .p75ex{margin-top:22px}' + L + ' .p75ex .eb{margin-bottom:10px}' +
       L + ' .p75ex a{align-items:center;justify-content:center;gap:0;padding:14px 4px 12px;border-radius:10px;text-align:center}' +
       L + ' .p75ex a b{flex-direction:column;gap:7px;font:700 13.5px/1.2 Manrope,system-ui,sans-serif;color:#EDE8DC}' +
       L + ' .p75ex a b svg{width:28px;height:28px}' + L + ' .p75ex a span,' + L + ' .p75ex a em,' + L + ' .p75ex .lg{display:none}}' +
@@ -171,12 +171,15 @@
       '<path d="M12 5.5v12.6"/><path d="M8 9.2c1 .1 1.8.8 2 1.8M6.6 13.6c1-.4 2.2 0 2.8.9M16 9.2c-1 .1-1.8.8-2 1.8M17.4 13.6c-1-.4-2.2 0-2.8.9"/>',
     toolbox: '<path d="M9 9V7a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 7v2"/><rect x="3" y="9" width="18" height="10.5" rx="1.6"/>' +
       '<path d="M3 13.5h7.5M13.5 13.5H21"/><rect x="10.5" y="12" width="3" height="3" rx=".6"/>',
+    // Outlook: a telescope on its stand, pointed up and ahead
+    scope: '<path d="M3.2 12.6l12.6-5.4 1.5 3.5-12.6 5.4z"/><path d="M15.8 7.2l3.3-1.4 1.5 3.5-3.3 1.4"/><path d="M9.8 14.3l-2.6 6.2M11.2 13.7l2.6 6.8"/><path d="M5.4 14.3l-.7-1.6"/>',
     books: '<rect x="3.5" y="5" width="4.2" height="14.5" rx=".8"/><rect x="7.7" y="3.5" width="4.6" height="16" rx=".8"/>' +
       '<path d="M14.4 6.6l3.7-1 3.6 13.2-3.7 1z"/><path d="M3.5 8h4.2M7.7 7h4.6M7.7 16h4.6M3.5 16.5h4.2M15.2 9.5l3.7-1"/>'
   };
   var EXPLORE = [
     ['/kinetics', 'Kinetics', 'What moves bonds now: the Pulse, daily summary, news and debt.', '', 'zoom'],
     ['https://tools.point75.io/market-intelligence', 'Market Intelligence', 'Rates, credit, sectors and flows, as clear dashboards.', 'Open the dashboards', 'brain'],
+    ['https://tools.point75.io/outlook', 'Outlook', 'Where rates, AI and the big risks are most likely headed, with the odds.', 'See the odds', 'scope'],
     ['https://tools.point75.io/', 'Tools', 'Portfolio, tax and retirement, with honest numbers.', 'Try the tools', 'toolbox'],
     ['/education', 'Education', 'Bonds from first principles, in plain English.', 'Start learning', 'books']
   ];
