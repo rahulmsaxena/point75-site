@@ -46,7 +46,6 @@
     '@keyframes p75bob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}' +
     '@media (max-width:560px){.p75pulse .fold{gap:6px 14px}.p75pulse .fo-t{display:none}.p75pulse .fi em{display:none}}' +
     '@media (prefers-reduced-motion:reduce){.p75pulse .top,.p75pulse .fstrip{transition:none}.p75pulse .fo-c{animation:none}}' +
-    '.p75pulse.folded .tabs{margin-top:10px}' +
     '.p75pulse .hd-t{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px}.p75pulse .hd-t h1{margin:0}' +
     '.p75pulse .hd-t .asof{margin:0 0 0 auto}' +
     '@media (max-width:880px){.p75pulse .hd-t{flex-direction:column;align-items:flex-start;gap:2px}.p75pulse .hd-t .asof{margin:4px 0 0}}' +
@@ -125,18 +124,19 @@
     '.p75pulse .strip a{margin-left:auto;color:var(--gold);font-weight:700;text-decoration:none}' +
     '.p75pulse .pn{display:flex;justify-content:space-between;gap:12px;margin-top:40px;border-top:1px solid var(--line);padding-top:16px}' +
     '.p75pulse .pn a{color:var(--soft);font-weight:600;text-decoration:none;font-size:15px}.p75pulse .pn a.nx{color:var(--gold);font-weight:800}' +
-    '.p75pulse .view > h2:first-child{margin-top:16px}' +
-    '.p75pulse .tabs{position:sticky;top:var(--tabs-top,0px);z-index:6;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:12px -20px 0;padding:6px 20px;background:var(--ink);border-bottom:1px solid var(--line)}' +
+    // tab bar: the site standard (ONE-SHOT.md §6), same as the tools site. Full-width row of stretched pills, gold = the page you are on.
+    // 8px above the pills, 12px from the pills to the view (6px bar padding + 1px line + 5px)
+    '.p75pulse .view{padding-top:5px}.p75pulse .view > :first-child{margin-top:0}' +
+    '.p75pulse .tabs{position:sticky;top:var(--tabs-top,0px);z-index:6;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:2px -20px 0;padding:6px 20px;background:var(--ink);border-bottom:1px solid var(--line)}' +
     '.p75pulse .tabs::-webkit-scrollbar{display:none}' +
     // the tab bar is what follows the reader down this page, so the site's floating back/next bar stays hidden here
     'html.p75tabs #p75tf{display:none!important}' +
-    '.p75pulse .tab{flex:none;display:inline-flex;align-items:center;min-height:40px;padding:0 18px;border-radius:999px;border:1px solid #3A3C42;color:var(--soft);font-weight:700;font-size:14.5px;text-decoration:none;white-space:nowrap;transition:border-color .15s,background .15s,color .15s}' +
-    '.p75pulse .tab:hover{border-color:var(--gold);color:#fff}' +
-    '.p75pulse .tab.on{background:var(--gold);border-color:var(--gold);color:#111214}' +
+    '.p75pulse .tab{flex:1 0 auto;display:inline-flex;align-items:center;justify-content:center;padding:9px 16px;border-radius:999px;border:1px solid #2A2B2F;background:#17181B;color:#C2BCAF;font-weight:700;font-size:15px;line-height:24px;text-decoration:none;white-space:nowrap;cursor:pointer;transition:border-color .15s,background .15s,color .15s}' +
+    '.p75pulse .tab:hover{border-color:#55575e;color:#fff}' +
+    '.p75pulse .tab.on{background:#C9A227;border-color:#C9A227;color:#111214}' +
     '.p75pulse .tab:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
-    '@media (max-width:560px){.p75pulse .tabs{margin:12px -16px 0;padding:6px 16px;gap:6px}.p75pulse .tab{min-height:38px;padding:0 15px;font-size:14px}}' +
-    '@media (max-width:460px){.p75pulse .tabs{gap:5px}.p75pulse .tab{flex:1 1 auto;justify-content:center;padding:0 6px;font-size:13px}}' +
-    '@media (max-width:400px){.p75pulse .tab{flex:none;min-height:36px;padding:0 12px}}' +   // one row that slides sideways: a second row cost ~40px
+    '@media (max-width:640px){.p75pulse .tabs{gap:4px}.p75pulse .tab{padding:8px 10px;font-size:14px}}' +   // one row that slides sideways, never wraps
+    '@media (max-width:560px){.p75pulse .tabs{margin:2px -16px 0;padding:6px 16px}}' +
     '@media (max-width:700px){.p75pulse .secs{grid-template-columns:1fr;gap:14px}.p75pulse a.sec{min-height:0;padding:22px 20px}.p75pulse a.sec .nm{font-size:23px}.p75pulse .strip a{margin-left:0}}' +
     // cockpit (the #why view): one instrument per signal, plus an info screen that explains the one you tap
     '.p75pulse .ck{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start;margin-top:8px}' +

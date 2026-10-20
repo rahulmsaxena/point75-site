@@ -49,15 +49,17 @@
     '.p75ind .fo-c{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--gold);display:grid;place-items:center;animation:p75ibob 2.4s ease-in-out infinite}' +
     '.p75ind .fo-c:after{content:"";width:7px;height:7px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:translateY(-2px) rotate(45deg)}' +
     '@keyframes p75ibob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}' +
-    // tabs
-    '.p75ind .tabs{position:sticky;top:var(--tabs-top,0px);z-index:6;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:12px -20px 0;padding:8px 20px;background:var(--ink);border-bottom:1px solid var(--line)}' +
+    // tab bar: the site standard (ONE-SHOT.md §6), same as Pulse and the tools site. Full-width row of stretched pills, gold = the page you are on.
+    // 8px above the pills, 12px from the pills to the view (6px bar padding + 1px line + 5px)
+    '.p75ind .tabs{position:sticky;top:var(--tabs-top,0px);z-index:6;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:2px -20px 0;padding:6px 20px;background:var(--ink);border-bottom:1px solid var(--line)}' +
     '.p75ind .tabs::-webkit-scrollbar{display:none}' +
-    '.p75ind .tab{flex:none;display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:0 16px;border-radius:999px;border:1px solid #3A3C42;color:var(--soft);font-weight:700;font-size:14.5px;text-decoration:none;white-space:nowrap;transition:border-color .15s,background .15s,color .15s}' +
-    '.p75ind .tab:hover{border-color:var(--gold);color:#fff}' +
-    '.p75ind .tab.on{background:var(--gold);border-color:var(--gold);color:#111214}' +
+    '.p75ind .tab{flex:1 0 auto;display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:9px 16px;border-radius:999px;border:1px solid #2A2B2F;background:#17181B;color:#C2BCAF;font-weight:700;font-size:15px;line-height:24px;text-decoration:none;white-space:nowrap;cursor:pointer;transition:border-color .15s,background .15s,color .15s}' +
+    '.p75ind .tab:hover{border-color:#55575e;color:#fff}' +
+    '.p75ind .tab.on{background:#C9A227;border-color:#C9A227;color:#111214}' +
     '.p75ind .tab:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
     '.p75ind .tab i{width:7px;height:7px;border-radius:50%;flex:none}' +
-    '.p75ind .view{padding-top:14px}' +
+    '@media (max-width:640px){.p75ind .tabs{gap:4px}.p75ind .tab{gap:6px;padding:8px 10px;font-size:14px}}' +   // one row that slides sideways, never wraps
+    '.p75ind .view{padding-top:5px}' +
     '.p75ind a.tk-back{display:inline-flex;align-items:center;gap:8px;min-height:36px;margin:0 0 10px;padding:0 14px;border-radius:99px;border:1px solid var(--gold);background:rgba(201,162,39,.1);color:#FFD23F;font-weight:800;font-size:14px;text-decoration:none}' +
     // takeaway
     '.p75ind .tk{display:flex;flex-direction:column;gap:12px}' +
@@ -145,7 +147,7 @@
     '@media (max-width:880px){.p75ind .hd-t{flex-direction:column;align-items:flex-start;gap:2px}.p75ind .asof{margin:2px 0 0}.p75ind .tk-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}' +
     '@media (max-width:720px){.p75ind .ov{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.p75ind .rmini{grid-template-columns:1fr}}' +
     '@media (max-width:560px){.p75ind .wrap{padding:4px 16px 32px}.p75ind h1{font-size:24px}.p75ind .lede{text-align:left;font-size:15px}' +
-      '.p75ind .tabs{margin:10px -16px 0;padding:8px 16px;gap:6px}.p75ind .tab{min-height:36px;padding:0 12px;font-size:14px}' +
+      '.p75ind .tabs{margin:2px -16px 0;padding:6px 16px}' +
       '.p75ind .og{padding:8px 10px}.p75ind .og .gd{width:84px}.p75ind .og .v{font-size:24px}' +
       '.p75ind .tk-grid{grid-template-columns:1fr}.p75ind .tk-head{font-size:19px;padding:13px 15px}.p75ind .tk-watch{font-size:15px}' +
       '.p75ind .fold{gap:4px 14px}.p75ind .fo-t{display:none}.p75ind .ics{grid-template-columns:1fr}' +

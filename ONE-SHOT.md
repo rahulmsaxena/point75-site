@@ -20,7 +20,7 @@ Reference implementation: the Pulse page (`pulse/pulse.js`). Header rules are al
 - Page starts **4px** below the menu (desktop and phones). No help or dictionary boxes above the content.
 
 ## 2. Spacing
-- Section headings (`h2`): ~23–24px, **32px** above, 4px below. First heading in a tab view: 16px above.
+- Section headings (`h2`): ~23–24px, **32px** above, 4px below. First thing in a tab view sits **12px** below the tab pills (see Tab bar, §6).
 - Gaps between cards 14px, card padding ~16–18px. Trim any gap over ~24px unless it separates two unrelated things.
 - Disclosures, sources and footnotes sit on **one line** with an ellipsis; a tap shows them in full (`p75.js`, `DISC_SEL`). Add a page's footer selector there.
 - Main column 1040px for data pages. Long reading pages (Education chapters, Insights) may stay ~760–900px for readable line length. Short forms (Contact) stay narrow.
@@ -38,12 +38,20 @@ Reference implementation: the Pulse page (`pulse/pulse.js`). Header rules are al
 - The **info screen** (explanation column, ~350px) appears only while a section is open, already showing that section's first instrument. Text 14.5px.
 - Tap cues: hint line with a pulsing gold dot at the top of each open section, "What it means ›" label on every card ("Showing ▸" on the active one), hover lift, one-time glow when a section first opens.
 - Phones: explanation opens as a bottom sheet on tap (never automatically).
+- Switchers inside a tab (sub-pickers, chips such as `.pk-chips`, Treasury / Corporate style toggles, chapter section links) stay **small** pills, never the page tab size, so the big gold pill always means "page tab".
 
 ## 5. Takeaway first
 - A page with several tabs opens on a **Takeaway** tab: a headline sentence written from the live numbers by simple rules, a **Watch** line for the most extreme reading, and one card per tab (reading, mini dial where it fits, one plain line, "See why ›" jumping to that tab).
 - Takeaway never repeats the detail; it points to it.
 
 ## 6. Fold-away top
+- **Tab bar** (every page's main tabs; same as the AI Investment tool on tools.point75.io): one full-width row of **stretched pills** — never small pills bunched on the left.
+  - Row: `display:flex; gap:6px; overflow-x:auto; scrollbar-width:none`, the full width of the content column; it stays sticky under the site header.
+  - Pill: `flex:1 0 auto; padding:9px 16px; font:700 15px/24px` (44px tall), `border-radius:999px`, border `#2A2B2F`, background `#17181B`, text `#C2BCAF`, `white-space:nowrap`.
+  - Hover: text `#fff`, border `#55575e`. Current tab (`.on` / `aria-selected`): gold fill — background and border `#C9A227`, text `#111214`.
+  - Phones (≤640px): `gap:4px`, pills `padding:8px 10px; font-size:14px`. Still one row; it slides sideways.
+  - Spacing: 8px above the pills, 12px from the pills to the content below.
+  - Same CSS block in `pulse/pulse.js`, `debttrap/debttrap.js` and `indicators/indicators.js` (each page scopes its own); change all three together.
 - Picking a tab folds the header and overview dials into a **one-line strip** (eyebrow + key readings + "Show dials" with a gently bobbing down arrow). The tab content slides up into the freed space.
 - Stays folded across tabs until the reader taps the strip. Deep links to a tab (`/page#tab`) arrive folded.
 - Animate with `grid-template-rows: 1fr ↔ 0fr` (~0.5s); never scroll-jack.
