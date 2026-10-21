@@ -1,6 +1,251 @@
 {
   "summaries": [
     {
+      "market_date": "2026-10-21",
+      "key": "2026-10-21",
+      "edition": "close",
+      "generated_at": "2026-10-21T23:03:45Z",
+      "as_of": "Market close quotes (Treasury's official curve for today not yet posted)",
+      "title": "Yields edge up late after a deadly drone attack on a Saudi oil field; the 20-year auction passes without drama",
+      "regime": "Bear shift (small)",
+      "regime_note": "Late oil scare nudged yields up across the curve",
+      "conviction": "Low",
+      "takeaway": "The 10-year yield ended about 3 bp higher at roughly 5.15% and the 2-year about 3 bp higher near 4.82%, with most of the rise coming in the last hour after a drone attack on a Saudi Aramco oil field pushed Brent crude back above $110. Earlier in the day yields were slightly lower, and a $13 billion 20-year bond auction drew decent demand. With the Fed silent before next week's meeting, this was a small, headline-driven move rather than a change in direction.",
+      "tape": [
+        {
+          "k": "2Y",
+          "level": 4.82,
+          "d": 3,
+          "w": 2
+        },
+        {
+          "k": "10Y",
+          "level": 5.15,
+          "d": 3,
+          "w": -4
+        },
+        {
+          "k": "2s10s",
+          "level": 33,
+          "d": 0,
+          "w": -6,
+          "unit": "bp",
+          "group": "Curve"
+        }
+      ],
+      "fed": {
+        "meeting": "Oct 28"
+      },
+      "cross": [
+        {
+          "k": "S&P 500",
+          "v": "+0.6%",
+          "dir": "up",
+          "read": "Stocks rose to 7,757.17, led by technology after strong SpaceX results, but gave back some gains in the final hour as oil and yields rose."
+        },
+        {
+          "k": "Nasdaq",
+          "v": "+1.1%",
+          "dir": "up",
+          "read": "Chip and AI-linked stocks led; the Nasdaq Composite closed at 26,702.86."
+        },
+        {
+          "k": "Dow",
+          "v": "+0.7%",
+          "dir": "up",
+          "read": "The blue-chip index gained about 360 points to 52,856."
+        },
+        {
+          "k": "Russell 2000",
+          "v": "+0.3%",
+          "dir": "up",
+          "read": "Small companies, which are more sensitive to borrowing costs, lagged as yields firmed."
+        },
+        {
+          "k": "Brent",
+          "v": "$108.82 (flat)",
+          "dir": "flat",
+          "read": "Brent settled little changed, then jumped to about $110.33 after the settlement on news of the Saudi oil field attack."
+        }
+      ],
+      "drivers": [
+        {
+          "title": "Drone attack on a Saudi oil field revives the oil scare",
+          "tags": [
+            "Energy",
+            "Geopolitics",
+            "Inflation"
+          ],
+          "bp": 3,
+          "of": "10Y",
+          "total": 3,
+          "what": "A drone attack on a Saudi Aramco oil field left two people dead, according to the Saudi Press Agency. Reuters also reported, citing US officials, that the State Department was preparing to order some staff and families out of US embassies across the Gulf. Brent settled at $108.82, then rose to about $110.33 after the settlement.",
+          "why": "Oil feeds straight into inflation. With the Fed already expected to raise rates by December, any new jump in energy prices makes investors demand higher yields to hold bonds.",
+          "response": "Earlier in the afternoon, quotes had the 10-year slightly lower near 5.11%; it finished around 5.145% to 5.15%, about 3 bp higher, and the 2-year ended near 4.82%, up about 3–4 bp, according to closing reports from Investrade and Yahoo Finance.",
+          "signal": "The bond market is still very sensitive to Middle East supply risk. Oil near $110 keeps a floor under yields even on days when other news is calm."
+        },
+        {
+          "title": "20-year bond auction draws decent demand",
+          "tags": [
+            "Supply"
+          ],
+          "impact": "No clear push in either direction",
+          "what": "Treasury sold $13 billion of 20-year bonds at 5.469%, the highest yield at a 20-year auction since 1985, according to Wolf Street, and up from 5.420% in September. Bids totaled 2.73 times the amount offered, better than last month's 2.57. The yield was 0.9 bp above where the bond traded just before the sale, a small sign of soft demand. Foreign and other indirect bidders took 58.2%, below their recent average.",
+          "why": "Auctions show whether investors are willing to absorb more long-term US debt. A badly received sale can push yields up across the curve.",
+          "response": "Helious rated the result 'in line' with no directional read for bonds; long-end yields were little changed around the sale.",
+          "signal": "Investors are buying long bonds, but only at yields near 5.5%. The next test of long-end appetite comes with month-end supply after the Fed meeting."
+        },
+        {
+          "title": "Weak mortgage demand underscores the housing slowdown",
+          "tags": [
+            "Housing",
+            "Growth"
+          ],
+          "impact": "Limited reaction",
+          "what": "Mortgage applications fell 5.3% in the week to October 16, and home purchase applications fell about 7%, even though the average 30-year mortgage rate dipped to 7.41% from 7.50%, according to the Mortgage Bankers Association.",
+          "why": "High mortgage rates are cooling the housing market, which points to slower growth. Slower growth usually pulls long-term yields down.",
+          "response": "The report came early and did little to yields, which were overshadowed later by the oil news.",
+          "signal": "Together with Tuesday's record-low pending home sales, housing is clearly the weakest part of the economy; the question is whether that spreads elsewhere."
+        }
+      ],
+      "macro": [
+        {
+          "tag": "Housing",
+          "title": "MBA mortgage applications (week to Oct 16)",
+          "actual": "−5.3% w/w",
+          "prior": "−2.7%",
+          "note": "Purchase index down 7.3% to 129.2; average 30-year fixed rate 7.41%, down from 7.50%."
+        },
+        {
+          "tag": "Energy",
+          "title": "EIA crude inventories (week to Oct 16)",
+          "actual": "−3.06M bbl",
+          "consensus": "−0.82M bbl",
+          "note": "A bigger draw than expected; gasoline stocks fell 2.95M barrels."
+        },
+        {
+          "tag": "Supply",
+          "title": "20-year bond auction ($13B reopening)",
+          "actual": "5.469%",
+          "prior": "5.420%",
+          "note": "Bid-to-cover 2.73 (2.57 last time); 0.9 bp tail; indirect bidders 58.2%, direct 31.6%, dealers 10.3%."
+        },
+        {
+          "tag": "Fed",
+          "title": "Fed pricing",
+          "note": "Fed funds futures priced a 16.1% chance of a quarter-point hike at the October 27–28 meeting (about 15% a day earlier), and about an 87% chance that rates are at least a quarter point higher after the December 9 meeting, according to Investing.com's Fed Rate Monitor at 3:55 PM ET. The Fed is in its pre-meeting quiet period, so no officials spoke."
+        }
+      ],
+      "geo": [
+        {
+          "title": "Attack on Saudi Aramco oil field",
+          "impact": "Moderate",
+          "text": "A drone attack killed two people at a Saudi Aramco oil field. Brent jumped after the news and Treasury yields rose in the final hour of trading."
+        },
+        {
+          "title": "US-Iran standoff and Gulf embassy staffing",
+          "impact": "Low",
+          "text": "Reuters reported the State Department was preparing an ordered departure of some personnel from US embassies in the Gulf. Headlines about a US warning to Iran and Iran's rejection had little visible effect on markets before the oil field attack."
+        }
+      ],
+      "events": [
+        {
+          "t": "Morning",
+          "cat": "Data",
+          "title": "MBA mortgage applications −5.3%; purchase applications fall about 7%",
+          "react": "Little reaction"
+        },
+        {
+          "t": "Morning",
+          "cat": "Energy",
+          "title": "EIA: crude stocks fall 3.06M barrels, more than expected",
+          "react": "Little reaction in Treasuries"
+        },
+        {
+          "t": "Afternoon",
+          "cat": "Supply",
+          "title": "20-year bond auction sells at 5.469%, 2.73x cover, 0.9 bp tail",
+          "react": "Rated in line; yields little changed"
+        },
+        {
+          "t": "Afternoon",
+          "cat": "Geopolitics",
+          "title": "Drone attack on Saudi Aramco oil field; Brent rises to about $110 after settlement",
+          "react": "Yields drift higher into the close; stocks trim gains"
+        },
+        {
+          "t": "4:00 PM",
+          "cat": "Close",
+          "title": "S&P 500 +0.6% at 7,757; Nasdaq +1.1%",
+          "react": "10Y about 5.15%, up roughly 3 bp on the day"
+        }
+      ],
+      "interpretation": {
+        "text": "The 2-year and 10-year both rose about 3 bp, so the curve's shape barely changed. That points to a broad, modest repricing on an oil scare, not a shift in the Fed outlook: hike odds for next week stayed low at about 16%, and a December hike is still mostly expected. The day's housing data was weak, but it was swamped by the late energy headline. Because the move came in thin late trading and midday quotes showed yields slightly lower, the evidence for a clear direction is weak.",
+        "change": "A sustained move in Brent above $110 or new attacks on Gulf energy sites would likely push the 10-year back toward its October highs; signs of de-escalation, or weak jobless claims or business surveys later this week, would likely pull yields lower."
+      },
+      "watch": [
+        {
+          "when": "Thu 8:30 AM",
+          "what": "Weekly jobless claims (forecast 200K, prior 199K)"
+        },
+        {
+          "when": "Fri 9:45 AM",
+          "what": "S&P Global flash PMIs for October (services forecast 58.0, manufacturing 55.5)"
+        },
+        {
+          "when": "Fri 10:00 AM",
+          "what": "University of Michigan sentiment and 1-year inflation expectations (forecast 4.7%)"
+        },
+        {
+          "when": "Tue Oct 27",
+          "what": "Durable goods orders (8:30 AM), Case-Shiller home prices (9:00 AM), new home sales (10:00 AM)"
+        },
+        {
+          "when": "Wed Oct 28 2:00 PM",
+          "what": "FOMC rate decision"
+        },
+        {
+          "when": "Thu Oct 29 8:30 AM",
+          "what": "GDP and PCE inflation"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Investrade: Market Review, October 21, 2026",
+          "url": "https://investrade.com/market-review-october-21-2026/"
+        },
+        {
+          "name": "Yahoo Finance: Stock market today, October 21, 2026",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-wednesday-october-21-dow-sp-500-nasdaq-100000105.html"
+        },
+        {
+          "name": "Rigzone (Bloomberg): Oil gains after Saudi oil field attack",
+          "url": "https://www.rigzone.com/news/wire/oil_gains_after_saudi_oil_field_attack-21-oct-2026-184901-article/"
+        },
+        {
+          "name": "Wolf Street: 20-year Treasury bond sells at 5.47%",
+          "url": "https://wolfstreet.com/2026/10/21/the-unloved-20-year-treasury-bond-sells-at-5-47-highest-auction-yield-since-1985/"
+        },
+        {
+          "name": "RS Trading Desk: Everyone had an opinion today, the market bought tech anyway",
+          "url": "https://rstradingdesk.substack.com/p/everyone-had-an-opinion-today-the"
+        },
+        {
+          "name": "Helious: 20-year bond auction results",
+          "url": "https://helious.io/news/auc-912810UX4-2026-10-21/20-year-bond-auction-in-line"
+        },
+        {
+          "name": "Investing.com: Fed Rate Monitor",
+          "url": "https://www.investing.com/central-banks/fed-rate-monitor"
+        },
+        {
+          "name": "Investing.com: U.S. economic calendar preview, Oct 19–23, 2026",
+          "url": "https://in.investing.com/news/stock-market-news/us-economic-calendar-preview-key-releases-for-the-week-of-oct-1923-2026-93CH-5641075"
+        }
+      ]
+    },
+    {
       "market_date": "2026-10-20",
       "key": "2026-10-20",
       "edition": "close",
