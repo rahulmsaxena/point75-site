@@ -191,6 +191,21 @@
     }
   }
 
+  // ---------- Kinetics pages use the width of wide screens ----------
+  // Pulse, News, Bond Summary (Daily Summary, Insights), Economic Indicators and Debt Trap grow with the screen:
+  // 1040px as before up to 1240px wide, then the screen less room for the side back / next tabs, up to 1520px
+  // (the same widest column as tools.point75.io). The header widens with them so the edges line up.
+  var WIDE = ['/kinetics', '/pulse', '/news', '/bond-summary', '/intelligent-summary', '/intellegent-summary', '/insights', '/economic-indicators', '/debt-trap'];
+  (function wideStyle() {
+    var st = document.createElement('style'); st.id = 'p75-wide-css';
+    var W = 'html.p75-wide ';
+    st.textContent = '@media (min-width:1240px){' +
+      'html.p75-wide{--p75w:max(1040px,min(1520px,calc(100vw - 250px)))}' +
+      W + '.p75pulse .wrap,' + W + '.p75hubpg .wrap,' + W + '.p75debt .wrap,' + W + '.p75ind .wrap,' + W + '.p75ins .wrap{max-width:var(--p75w)!important}' +
+      W + '.block-header-layout-desktop{max-width:max(1224px,var(--p75w))!important}}';
+    document.head.appendChild(st);
+  })();
+
   // ---------- Essay pictures shown whole ----------
   var CROP_RE = /^(https:\/\/assets\.zyrosite\.com)\/cdn-cgi\/image\/[^\/]*fit=crop[^\/]*\/(.+)$/;
   function uncropImages() {
@@ -1044,7 +1059,7 @@
           'background:rgba(17,18,20,.88);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}' +
         '#p75tn a.pill span{white-space:normal;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}' +
         '#p75tn a.pill i{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;border:1.5px solid ' + G + ';font-style:normal;font-size:16px}' +
-        '#p75tn a.pv{left:max(12px,calc((100vw - 1100px)/2 - 108px))}#p75tn a.nx{right:max(12px,calc((100vw - 1100px)/2 - 108px))}' +
+        '#p75tn a.pv{left:max(12px,calc((100vw - var(--p75w,1100px))/2 - 108px))}#p75tn a.nx{right:max(12px,calc((100vw - var(--p75w,1100px))/2 - 108px))}' +
         '#p75tn a.nx{flex-direction:column-reverse}#p75tn a.up{position:static;margin:0}}' +
       '@media (max-width:1239px){#p75tn{padding-top:4px;padding-bottom:0}#p75tn .r{min-height:30px}#p75tn a.pill{padding:5px 12px}#p75tn a.pill i{font-style:normal}}' +
       '@media print{#p75tn,#p75tf{display:none!important}}';
@@ -1476,6 +1491,7 @@
     // bottom on desktop and the sides on phones. Load the uncropped original and fit all of it in the box;
     // the black page background hides the spare space. Re-checked every tick, as the builder swaps images.
     if (document.documentElement.classList.contains('p75-essay')) uncropImages();
+    document.documentElement.classList.toggle('p75-wide', WIDE.indexOf(path) !== -1);
 
     // News (/news): the Coupon briefing is a Hostinger embed (same-origin iframe). Bring it in line with
     // the rest of the site: cream text tones, Manrope + Hedvig type, one label style, and a clear search bar.

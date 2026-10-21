@@ -60,6 +60,21 @@
     '.p75ind .tab i{width:7px;height:7px;border-radius:50%;flex:none}' +
     '@media (max-width:640px){.p75ind .tabs{gap:4px}.p75ind .tab{gap:6px;padding:8px 10px;font-size:14px}}' +   // one row that slides sideways, never wraps
     '.p75ind .view{padding-top:5px}' +
+    // Wide screens: the tabs become a numbered menu down the left (as on tools.point75.io), pinned as you scroll;
+    // the open tab glows gold with a gold edge. Phones and tablets keep the row above.
+    '@media (min-width:1100px){' +
+      '.p75ind .wrap{display:grid;grid-template-columns:220px minmax(0,1fr);column-gap:20px}' +
+      '.p75ind .wrap > *{grid-column:1 / -1}' +
+      '.p75ind .wrap > .tabs{grid-column:1;align-self:start;position:sticky;top:calc(var(--tabs-top,0px) + 12px);margin:12px 0 0;padding:6px;flex-direction:column;gap:2px;overflow:visible;counter-reset:p75t;' +
+        'border:1px solid #2A2B30;border-bottom:1px solid #2A2B30;border-radius:14px;background:linear-gradient(180deg,#1B1C20,#141518)}' +
+      '.p75ind .wrap > .view{grid-column:2;min-width:0;padding-top:12px}' +
+      '.p75ind .tabs .tab{position:relative;flex:0 0 auto;justify-content:flex-start;gap:10px;padding:10px 12px 10px 14px;border:0;border-radius:10px;background:transparent;color:#D9D3C6;white-space:normal;text-align:left;line-height:1.25}' +
+      '.p75ind .tabs .tab:before{counter-increment:p75t;content:counter(p75t,decimal-leading-zero);font-size:10.5px;font-weight:800;letter-spacing:.06em;color:#6E6A61;font-variant-numeric:tabular-nums}' +
+      '.p75ind .tabs .tab:hover{background:#222328;color:#fff}' +
+      '.p75ind .tabs .tab.on{background:linear-gradient(90deg,rgba(201,162,39,.22),rgba(201,162,39,.05));color:#FFE38A;box-shadow:inset 0 0 0 1px rgba(201,162,39,.45)}' +
+      '.p75ind .tabs .tab.on:before{color:#C9A227}' +
+      '.p75ind .tabs .tab.on:after{content:"";position:absolute;left:0;top:9px;bottom:9px;width:3px;border-radius:3px;background:#C9A227}' +
+    '}' +
     '.p75ind a.tk-back{display:inline-flex;align-items:center;gap:8px;min-height:36px;margin:0 0 10px;padding:0 14px;border-radius:99px;border:1px solid var(--gold);background:rgba(201,162,39,.1);color:#FFD23F;font-weight:800;font-size:14px;text-decoration:none}' +
     // takeaway
     '.p75ind .tk{display:flex;flex-direction:column;gap:12px}' +
