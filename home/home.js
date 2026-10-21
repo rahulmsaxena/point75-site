@@ -5,6 +5,8 @@
    3. Phone carousel: one painting at a time. Swipe (or use the arrows) to move; the first tap shows the title
       and the essay's closing question, a second tap opens the essay.
    4. Explore: doorways to Kinetics, Market Intelligence, Outlook, Tools and Education under the gallery.
+   5. Bond Summary window: a small card just before the newest painting with the latest daily summary's
+      headline and 10Y / 30Y yields (from intelsummary/editions.json), linking to that day's summary.
    p75.js calls render() about once a second, so everything here is safe to run repeatedly.
    (c) Rahul Saxena. All rights reserved. */
 (function () {
@@ -163,7 +165,23 @@
       L + ' .p75ex a{align-items:center;justify-content:center;gap:0;padding:14px 4px 12px;border-radius:10px;text-align:center}' +
       L + ' .p75ex a b{flex-direction:column;gap:7px;font:700 13.5px/1.2 Manrope,system-ui,sans-serif;color:#EDE8DC}' +
       L + ' .p75ex a b svg{width:28px;height:28px}' + L + ' .p75ex a span,' + L + ' .p75ex a em,' + L + ' .p75ex .lg{display:none}}' +
-    '@media (prefers-reduced-motion:reduce){' + I + ' .block-blog-list-item__cover-image{transition:none}}';
+    '@media (prefers-reduced-motion:reduce){' + I + ' .block-blog-list-item__cover-image{transition:none}}' +
+    // Bond Summary window: first in the painting row, narrower than a painting, the whole card is the link
+    L + ' .p75bw{flex:0 0 auto;align-self:center;display:flex;flex-direction:column;gap:9px;box-sizing:border-box;padding:16px;border:1px solid rgba(201,162,39,.75);border-radius:10px;' +
+      'background:#17181B;color:#EDE8DC!important;text-decoration:none!important;font:500 13px/1.35 Manrope,system-ui,sans-serif;scroll-snap-align:start;transition:border-color .2s,transform .2s}' +
+    L + ' .p75bw:hover,' + L + ' .p75bw:focus-visible{border-color:#C9A227;outline:none;transform:translateY(-2px)}' +
+    L + ' .p75bw .eb{display:flex;justify-content:space-between;gap:8px;font-weight:800;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#C9A227}' +
+    L + ' .p75bw .eb span{color:#BDB7AA;letter-spacing:.04em}' +
+    L + ' .p75bw svg{display:block;width:100%;height:44px}' +
+    L + ' .p75bw .y{display:flex;justify-content:space-between;align-items:baseline;font-variant-numeric:tabular-nums;font-weight:700}' +
+    L + ' .p75bw .y b{font-size:17px;color:#fff;font-weight:800;margin-left:4px}' +
+    L + ' .p75bw .t{font:400 17px/1.25 "Hedvig Letters Serif",Georgia,serif;color:#fff;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}' +
+    L + ' .p75bw .go{margin-top:auto;color:#C9A227;font-weight:800;font-size:13.5px;transition:transform .2s}' +
+    L + ' .p75bw:hover .go{transform:translateX(4px)}' +
+    '@media (min-width:' + (PHONE + 1) + 'px){' + L + ' .p75bw{width:clamp(200px,calc(var(--p75H) * .55),236px);height:max(calc(var(--p75H) * .72),250px)}}' +
+    '@media (max-width:' + PHONE + 'px){' + L + ' .p75bw{flex:0 0 46%;align-self:stretch;padding:12px;gap:6px}' + L + ' .p75bw svg{display:none}' +
+      L + ' .p75bw .eb{font-size:10px}' + L + ' .p75bw .y b{font-size:15px}' + L + ' .p75bw .t{font-size:15px;-webkit-line-clamp:2}}' +
+    '@media (prefers-reduced-motion:reduce){' + L + ' .p75bw,' + L + ' .p75bw .go{transition:none}}';
 
   // Line icons (24px grid, gold stroke) beside each Explore title: a brain, a toolbox, a stack of books.
   var EXPLORE_ICON = {
@@ -210,7 +228,7 @@
     // Remember that the reader left the homepage for a page on this site (Pulse strip, Explore). p75.js reads
     // this so that page's back pill says "Journal" and leads home, instead of into the page's menu section.
     document.addEventListener('click', function (e) {
-      var a = e.target.closest && e.target.closest('.p75ps, .p75ex a'); if (!a) return;
+      var a = e.target.closest && e.target.closest('.p75ps, .p75ex a, .p75bw'); if (!a) return;
       var href = a.getAttribute('href') || '';
       if (href.charAt(0) !== '/') return;
       try { sessionStorage.setItem('p75fromHome', href.replace(/[?#].*$/, '').replace(/\/+$/, '') || '/'); } catch (err) {}
@@ -271,6 +289,65 @@
     if (top.firstElementChild !== strip) top.insertBefore(strip, top.firstElementChild);   // Pulse first, then "New to bonds?"
   }
 
+  // ---------- Bond Summary window ----------
+  var EDITIONS = 'https://rahulmsaxena.github.io/point75-site/intelsummary/editions.json?v=' + Math.floor(Date.now() / 36e5);
+  var eds = null, edState = 'idle';
+  function loadEditions(cb) {
+    if (edState === 'done') return cb(eds);
+    if (edState === 'loading') return;
+    edState = 'loading';
+    fetch(EDITIONS).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; })
+      .then(function (j) {
+        var s = j && Array.isArray(j.summaries) ? j.summaries.filter(function (x) { return x && x.market_date && x.title; }) : [];
+        s.sort(function (a, b) { return String(b.generated_at || b.market_date).localeCompare(String(a.generated_at || a.market_date)); });
+        eds = s.length ? s : null; edState = 'done'; cb(eds);
+      });
+  }
+  function tapeOf(s, k) { var t = (s.tape || []).filter(function (x) { return x.k === k; })[0]; return t && t.level != null ? t : null; }
+  // Yields up is bad for bond prices (red), down is good (blue): the site's colour rule
+  function chg(t) {
+    if (!t || t.d == null) return '';
+    var d = Math.round(t.d), c = d > 0 ? BEAR : d < 0 ? BULL : NEUT;
+    return '<span style="color:' + c + '">' + (d > 0 ? '&#9650; +' : d < 0 ? '&#9660; ' : '') + d + ' bp</span>';
+  }
+  // 10Y and 30Y over the recent close editions, oldest to newest
+  function spark(list) {
+    var pts = list.filter(function (s) { return s.edition !== 'morning'; }).slice(0, 12).reverse()
+      .map(function (s) { var a = tapeOf(s, '10Y'), b = tapeOf(s, '30Y'); return [a && a.level, b && b.level]; });
+    var vals = [].concat.apply([], pts).filter(function (v) { return v != null; });
+    if (pts.length < 2 || !vals.length) return '';
+    var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals); if (hi - lo < 0.05) { lo -= 0.03; hi += 0.03; }
+    var W = 180, H = 44, x = function (i) { return (i * (W - 6) / (pts.length - 1) + 3).toFixed(1); }, y = function (v) { return (3 + (hi - v) * (H - 6) / (hi - lo)).toFixed(1); };
+    var line = function (k, c) {
+      var d = ''; pts.forEach(function (p, i) { if (p[k] != null) d += (d ? 'L' : 'M') + x(i) + ' ' + y(p[k]); });
+      return d ? '<path d="' + d + '" fill="none" stroke="' + c + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>' : '';
+    };
+    return '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" aria-hidden="true">' + line(1, '#C9A227') + line(0, '#EDE8DC') + '</svg>';
+  }
+  function bondWindow(list) {
+    var track = list.querySelector('.block-blog-list__list'); if (!track) return;
+    var w = track.querySelector(':scope > .p75bw');
+    if (w) { if (track.firstElementChild !== w) track.insertBefore(w, track.firstElementChild); return; }
+    loadEditions(function (s) {
+      var track = list.querySelector('.block-blog-list__list');
+      if (!s || !track || !document.body.contains(track) || track.querySelector(':scope > .p75bw')) return;
+      var e = s[0], id = e.market_date + (e.edition === 'morning' ? '-am' : '');
+      var day = new Date(e.market_date + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      var t10 = tapeOf(e, '10Y'), t30 = tapeOf(e, '30Y');
+      var h = '<a class="p75bw" href="/intelligent-summary#/' + esc(id) + '" aria-label="Bond Summary for ' + esc(day) + ': ' + esc(e.title) + '">' +
+        '<span class="eb">Bond Summary<span>' + esc(day) + (e.edition === 'morning' ? ' AM' : '') + '</span></span>' + spark(s) +
+        (t10 ? '<span class="y"><span>10Y<b>' + t10.level.toFixed(2) + '%</b></span>' + chg(t10) + '</span>' : '') +
+        (t30 ? '<span class="y"><span style="color:#C9A227">30Y<b>' + t30.level.toFixed(2) + '%</b></span>' + chg(t30) + '</span>' : '') +
+        '<span class="t">' + esc(e.title) + '</span><span class="go">Read today&rsquo;s &rarr;</span></a>';
+      // The browser keeps the first painting where it was when something is added in front of it, which would
+      // scroll the new window just out of view. If the row was at its start, keep it there.
+      var atStart = track.scrollLeft < 2;
+      track.style.overflowAnchor = 'none';
+      track.insertAdjacentHTML('afterbegin', h);
+      if (atStart) track.scrollLeft = 0;
+    });
+  }
+
   // ---------- Paintings ----------
   function frames(list) {
     var items = list.querySelectorAll('.block-blog-list__list > .block-blog-list-item');
@@ -313,7 +390,7 @@
       d.addEventListener('click', function (e) {
         var b = e.target.closest('[data-p75go], [data-p75to]'); if (!b) return;
         var i = b.hasAttribute('data-p75to') ? +b.getAttribute('data-p75to') : current(track) + +b.getAttribute('data-p75go');
-        goTo(track, Math.max(0, Math.min(track.children.length - 1, i)));
+        goTo(track, Math.max(0, Math.min(paintings(track).length - 1, i)));
       });
     }
     if (!track.getAttribute('data-p75scroll')) {
@@ -326,13 +403,18 @@
     }
     mark(list, track);
   }
+  // The paintings only: the Bond Summary window sits in the same row but isn't one of the dots
+  function paintings(track) { return track.querySelectorAll(':scope > .block-blog-list-item'); }
   // Where each painting sits relative to the row's starting edge (paintings differ in width on desktop)
   function offsets(track) {
     var start = track.getBoundingClientRect().left + (parseFloat(getComputedStyle(track).paddingLeft) || 0);
-    return [].map.call(track.children, function (c) { return c.getBoundingClientRect().left - start; });
+    var bw = track.querySelector(':scope > .p75bw'), shift = bw ? bw.getBoundingClientRect().width + (parseFloat(getComputedStyle(track).columnGap) || 0) : 0;
+    // with the window in front, "the first painting" is the row's resting place (window and painting both in view)
+    return [].map.call(paintings(track), function (c, k) { return c.getBoundingClientRect().left - start - (k === 0 ? shift : 0); });
   }
   function current(track) {
-    if (track.scrollLeft >= track.scrollWidth - track.clientWidth - 2) return track.children.length - 1;
+    var n = paintings(track).length;
+    if (track.scrollLeft >= track.scrollWidth - track.clientWidth - 2) return n - 1;
     var o = offsets(track), best = 0;
     o.forEach(function (x, k) { if (Math.abs(x) < Math.abs(o[best])) best = k; });
     return best;
@@ -343,7 +425,7 @@
   }
   function mark(list, track) {
     var d = list.querySelector(':scope > .p75dots'); if (!d) return;
-    var n = track.children.length, i = current(track);
+    var n = paintings(track).length, i = current(track);
     d.querySelectorAll('.ds button').forEach(function (x, k) { x.classList.toggle('on', k === i); x.setAttribute('aria-current', k === i ? 'true' : 'false'); });
     var lbl = (i + 1) + ' / ' + n; if (d.querySelector('.n').textContent !== lbl) d.querySelector('.n').textContent = lbl;
   }
@@ -362,6 +444,7 @@
     once();
     list.classList.add('p75wall');
     pulseStrip(list);
+    bondWindow(list);
     var items = frames(list);
     if (items.length) dots(list, items);
     explore(list);
@@ -382,7 +465,7 @@
   function clear() {
     var top = document.querySelector('.p75top'), cta = top && top.querySelector('.p75cta');
     if (cta) top.parentNode.insertBefore(cta, top);
-    document.querySelectorAll('.p75top, .p75ps, .p75ex, .p75dots').forEach(function (x) { x.remove(); });
+    document.querySelectorAll('.p75top, .p75ps, .p75ex, .p75dots, .p75bw').forEach(function (x) { x.remove(); });
     var list = document.querySelector('.block-blog-list.p75wall'); if (list) list.classList.remove('p75wall');
     document.querySelectorAll('[data-p75home-hid]').forEach(function (n) { n.style.display = ''; n.removeAttribute('data-p75home-hid'); });
   }
