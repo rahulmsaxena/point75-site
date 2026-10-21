@@ -13,7 +13,7 @@
     // the site's one red is a bright warm red (#FF6640); short red words go bold so they read at a glance
     '.p75ins [style*="color:#FF6640"][style]:not(b):not(.tk-head *):not(.fi *){font-weight:800}' +
     '.p75ins{--ink:#111214;--panel:#17181B;--panel2:#1C1D21;--line:#2A2B2F;--cream:#EDE8DC;--soft:#E9E3D6;--muted:#C2BCAF;--gold:#C9A227;' +
-      'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box;min-height:calc(100vh - 90px)}' +
+      'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box}' +   // no fixed full-screen height: what follows (the page links) sits right under the content
     '.p75ins *{box-sizing:border-box}' +
     '.p75ins,.p75ins *{overflow-anchor:none}' +
     '.p75ins .wrap{max-width:1040px;margin:0 auto;padding:4px 20px 48px}' +
@@ -30,7 +30,7 @@
     // tabs
     '.p75ins .tabs{position:sticky;top:var(--tabs-top,0px);z-index:6;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:10px -20px 0;padding:5px 20px;background:var(--ink);border-bottom:1px solid var(--line)}' +
     '.p75ins .tabs::-webkit-scrollbar{display:none}' +
-    '.p75ins .tab{flex:none;display:inline-flex;align-items:center;min-height:36px;padding:0 16px;border-radius:999px;border:1px solid #3A3C42;color:#F1ECE2;font-weight:700;font-size:13.5px;text-decoration:none;white-space:nowrap;transition:border-color .15s,background .15s,color .15s}' +
+    '.p75ins .tab{flex:1 0 auto;display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 16px;border-radius:999px;border:1px solid #3A3C42;color:#F1ECE2;font-weight:700;font-size:13.5px;text-decoration:none;white-space:nowrap;transition:border-color .15s,background .15s,color .15s}' +
     '.p75ins .tab:hover{border-color:var(--gold);color:#fff}.p75ins .tab.on{background:var(--gold);border-color:var(--gold);color:#111214}' +
     '.p75ins .tab:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
     '.p75ins .tab .ts{display:none}' +
