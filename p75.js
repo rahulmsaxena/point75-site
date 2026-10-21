@@ -236,7 +236,7 @@
     var sub = SUBSCRIBE_URL ? '<div style="margin:0 0 18px;font-size:16px;color:#EDE8DC">New essays, once a week. ' +
       '<a href="' + SUBSCRIBE_URL + '" target="_blank" rel="noopener" style="color:#000;background:' + GOLD +
       ';text-decoration:none;font-weight:700;border-radius:16px;padding:6px 16px;display:inline-block;margin-left:6px">Subscribe free &rarr;</a></div>' : '';
-    return sub + '<div style="margin-bottom:18px"><span style="color:#9a9a9a;margin-right:8px">Share</span>' + links + '</div>';
+    return sub + '<div style="margin-bottom:18px"><span style="color:#C8C2B6;margin-right:8px">Share</span>' + links + '</div>';
   }
   document.addEventListener('click', function (e) {
     var b = e.target.closest && e.target.closest('.p75copy');
@@ -571,7 +571,7 @@
   // ---------- News embed polish ----------
   var NEWS_CSS =
     '.coupon-embed{--bg:#111214!important;--bg-raised:#17181B!important;--panel-border:#2A2B2F!important;--gold:#C9A227!important;' +
-      '--paper:#EDE8DC!important;--paper-dim:#CFC9BC!important;--dim:#A9A396!important;' +
+      '--paper:#EDE8DC!important;--paper-dim:#CFC9BC!important;--dim:#C8C2B6!important;' +
       '--serif:"Hedvig Letters Serif",Georgia,serif!important;--mono:Manrope,system-ui,sans-serif!important;font-family:Manrope,system-ui,sans-serif!important}' +
     '.coupon-embed .ce-masthead-title,.coupon-embed .ce-article h2{font-family:"Hedvig Letters Serif",Georgia,serif!important;font-weight:400!important}' +
     '.coupon-embed .ce-inner{padding-top:4px!important}.coupon-embed .ce-masthead-title{font-size:2rem!important}' +
@@ -1674,7 +1674,7 @@
           '<div style="margin-bottom:18px;font-size:16px;color:#EDE8DC">Disagree, or have a question? <a href="/contact" style="color:' + GOLD + ';text-decoration:none;font-weight:700">Write to me &rarr;</a></div>' : '') +
         '<div class="p75disc" style="border-left:3px solid ' + GOLD + ';padding-left:14px">' + DISCLAIMER + '</div>' +
         // the contact link leads, so it stays in view when the line is folded to one row
-        '<div class="p75disc" style="margin-top:8px;color:#9a9a9a;font-size:13px"><a href="/contact" style="color:' + GOLD + ';text-decoration:none;font-weight:700;white-space:nowrap;margin-right:8px">Write to Point75 &rarr;</a>' + COPYRIGHT + '</div>'));
+        '<div class="p75disc" style="margin-top:8px;color:#C8C2B6;font-size:13px"><a href="/contact" style="color:' + GOLD + ';text-decoration:none;font-weight:700;white-space:nowrap;margin-right:8px">Write to Point75 &rarr;</a>' + COPYRIGHT + '</div>'));
     }
 
     if (isPost && !comments) {

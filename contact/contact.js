@@ -8,7 +8,7 @@
   var TOPICS = ['A question', 'Tool idea', 'Suggest a topic', 'Collaboration', 'Just saying hi'];
 
   var CSS =
-    '.p75contact{--ink:#111214;--panel:#17181B;--line:#34363C;--cream:#EDE8DC;--soft:#D9D3C6;--muted:#B8B2A5;--gold:#C9A227;' +
+    '.p75contact{--ink:#111214;--panel:#17181B;--line:#34363C;--cream:#EDE8DC;--soft:#D9D3C6;--muted:#DCD6C9;--gold:#C9A227;' +
       'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box}' +
     '.p75contact *{box-sizing:border-box}' +
     '.p75contact .wrap{max-width:640px;margin:0 auto;padding:4px 20px 64px}' +
@@ -27,7 +27,7 @@
     '.p75contact .row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;margin-bottom:16px}' +
     '.p75contact input,.p75contact textarea{width:100%;padding:12px 14px;border-radius:8px;border:1px solid #4A4C52;background:#111214;color:#fff;font:500 16px/1.5 Manrope,system-ui,sans-serif}' +
     '.p75contact input:focus,.p75contact textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,.2)}' +
-    '.p75contact input::placeholder,.p75contact textarea::placeholder{color:#7D786E}' +
+    '.p75contact input::placeholder,.p75contact textarea::placeholder{color:#A9A396}' +
     '.p75contact textarea{min-height:150px;resize:vertical}' +
     '.p75contact .hp{position:absolute!important;left:-10000px!important;width:1px;height:1px;overflow:hidden}' +
     '.p75contact .err{min-height:20px;margin:10px 0 0;font-size:14px;font-weight:600;color:#FF8A8A}' +

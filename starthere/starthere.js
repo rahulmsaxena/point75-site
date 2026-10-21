@@ -31,7 +31,7 @@
   ];
 
   var CSS =
-    '.p75start{--ink:#111214;--panel:#17181B;--line:#2A2B2F;--cream:#EDE8DC;--soft:#D9D3C6;--muted:#B8B2A5;--gold:#C9A227;' +
+    '.p75start{--ink:#111214;--panel:#17181B;--line:#2A2B2F;--cream:#EDE8DC;--soft:#D9D3C6;--muted:#DCD6C9;--gold:#C9A227;' +
       'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box}' +
     '.p75start *{box-sizing:border-box}' +
     '.p75start .wrap{max-width:1100px;margin:0 auto;padding:4px 20px 72px}' +
