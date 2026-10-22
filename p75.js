@@ -1573,6 +1573,17 @@
       return;
     } else if (window.P75JOURNAL) window.P75JOURNAL.clear();
 
+    // The painting beside each Kinetics, Intelligence and Education page (catalog/catalog.js), on wide screens
+    var PLATED = ['/pulse', '/economic-indicators', '/debt-trap', '/news', '/intelligent-summary', '/insights',
+      '/bond-introduction', '/bond-types', '/bond-dictionary', '/cash-logistics', '/bond-players', '/bond-history', '/bond-fortunes'];
+    if (window.P75CATALOG) window.P75CATALOG.plate(PLATED.indexOf(path) > -1 ? path : '');
+    else if (PLATED.indexOf(path) > -1 && !document.getElementById('p75catalog-js')) {
+      var pj = document.createElement('script'); pj.id = 'p75catalog-js';
+      pj.src = BASE + 'catalog/catalog.js?v=' + Math.floor(Date.now() / 36e5);
+      pj.onload = function () { update(); };
+      document.body.appendChild(pj);
+    }
+
     // Catalog pages (Kinetics, Intelligence at /bond-summary, Education): categories on the left and a card with a painting for each page,
     // drawn by catalog/catalog.js (the same model as tools.point75.io's Tools and Outlook pages)
     if (CATALOG_AT[path]) {
