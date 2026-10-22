@@ -209,7 +209,7 @@
   // ---------- Essay pictures shown whole ----------
   var CROP_RE = /^(https:\/\/assets\.zyrosite\.com)\/cdn-cgi\/image\/[^\/]*fit=crop[^\/]*\/(.+)$/;
   function uncropImages() {
-    document.querySelectorAll('.page__blocks img.image__image').forEach(function (img) {
+    document.querySelectorAll('.page__blocks img.image__image, .block-blog-header img').forEach(function (img) {
       var m = (img.getAttribute('src') || '').match(CROP_RE);
       if (!m) return;
       img.removeAttribute('srcset');

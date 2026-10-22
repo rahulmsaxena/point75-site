@@ -109,8 +109,9 @@
       L + ' .block-blog-list__list::-webkit-scrollbar{display:none}' +
       I + '{flex:0 0 86%;min-width:0;scroll-snap-align:start;margin:0!important}' +
       I + ' .block-blog-list-item__cover-image-container{height:auto!important}' +
-      I + ' .block-blog-list-item__cover-image-wrapper{position:relative;height:auto!important;min-height:0!important;aspect-ratio:5/3;border-radius:8px}' +
-      I + ' .block-blog-list-item__cover-image{width:100%!important;height:100%!important;object-fit:cover!important}' +
+      I + ' .block-blog-list-item__cover-image-wrapper{position:relative;height:auto!important;min-height:0!important;aspect-ratio:5/3;border-radius:8px;background:#141518}' +
+      // contain, not cover: a painting that isn't 5:3 (a portrait like Machiavelli) shows whole instead of losing its head
+      I + ' .block-blog-list-item__cover-image{width:100%!important;height:100%!important;object-fit:contain!important}' +
       I + ' .block-blog-list-item__content{display:none!important}' +
       I + ' .p75band{display:none}' +
       I + '.p75show .p75hook{opacity:1}' +
@@ -348,6 +349,22 @@
     });
   }
 
+  // ---------- Paintings, uncropped ----------
+  // Hostinger serves each cover pre-cropped to the builder's box (fit=crop, and a different crop per screen size
+  // in srcset), so on phones a painting arrives with its sides or head already cut off. Load the whole original
+  // instead; the frames above then show all of it. Re-checked every pass, as the builder swaps images.
+  var COVER_CROP = /^(https:\/\/assets\.zyrosite\.com)\/cdn-cgi\/image\/[^\/]*fit=crop[^\/]*\/(.+)$/;
+  function uncropCovers(items) {
+    [].forEach.call(items, function (it) {
+      var img = it.querySelector('img.block-blog-list-item__cover-image'); if (!img) return;
+      var m = (img.getAttribute('src') || '').match(COVER_CROP);
+      if (!m) return;
+      img.removeAttribute('srcset');
+      img.removeAttribute('sizes');
+      img.src = m[1] + '/cdn-cgi/image/format=auto,w=1200,fit=scale-down/' + m[2];
+    });
+  }
+
   // ---------- Paintings ----------
   function frames(list) {
     var items = list.querySelectorAll('.block-blog-list__list > .block-blog-list-item');
@@ -446,6 +463,7 @@
     pulseStrip(list);
     bondWindow(list);
     var items = frames(list);
+    uncropCovers(items);
     if (items.length) dots(list, items);
     explore(list);
     var ex = list.querySelector(':scope > .p75ex');
