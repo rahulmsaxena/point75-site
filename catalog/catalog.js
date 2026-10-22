@@ -83,11 +83,11 @@
     '#p75L .cat-page{flex:1;min-height:0;display:flex;flex-direction:column;width:100%;max-width:1560px;margin:0 auto;padding:6px 46px 10px;font-family:Jost,system-ui,sans-serif;color:#F3F0EA}',
     '#p75L .cat-hd{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;padding-bottom:16px}',
     '#p75L .cat-eb{font-size:12.5px;letter-spacing:.3em;text-transform:uppercase;color:#E6BD3C}',
-    '#p75L .cat-hd h1{font:400 19px/1.3 Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#fff}',
+    '#p75L .cat-hd h1{font:500 19px/1.3 Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#fff}',
     '#p75L .cat-body{flex:1;min-height:0;display:grid;grid-template-columns:260px minmax(0,1fr);gap:40px;align-items:start}',
     '#p75L .cat-side ul{list-style:none;margin:0;padding:0}',
     '#p75L .cat-side li{border-bottom:1px solid #34363C}',
-    '#p75L .cat-side button{width:100%;display:flex;align-items:center;gap:12px;min-height:60px;padding:0 14px 0 16px;background:none;border:0;color:#F3F0EA;font:400 14px Jost,sans-serif;letter-spacing:.18em;text-transform:uppercase;text-align:left;cursor:pointer}',
+    '#p75L .cat-side button{width:100%;display:flex;align-items:center;gap:12px;min-height:60px;padding:0 14px 0 16px;background:none;border:0;color:#F3F0EA;font:500 14px Jost,sans-serif;letter-spacing:.18em;text-transform:uppercase;text-align:left;cursor:pointer}',
     '#p75L .cat-side button>span:first-child{flex:1}',
     '#p75L .cat-side .cat-n{font-size:12px;letter-spacing:.08em;color:#9D978C}',
     '#p75L .cat-side svg{width:16px;height:16px;flex:none}',
@@ -99,13 +99,15 @@
     '#p75L .cat-pic{display:flex;align-items:center;justify-content:center;height:clamp(210px,calc((100svh - 535px) / 2),300px);border-radius:6px;background:radial-gradient(ellipse at 50% 60%,#1D1E22 0%,#121316 72%);overflow:hidden}',
     '#p75L .cat-pic img{max-height:100%;max-width:100%;width:auto;height:auto;display:block;box-shadow:0 10px 30px rgba(0,0,0,.55);transition:transform .6s ease}',
     '#p75L .cat-card>a:hover .cat-pic img{transform:scale(1.03)}',
-    '#p75L .cat-tag{margin-top:14px;font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;color:#E6BD3C}',
-    '#p75L .cat-card h2{margin:6px 0 0;font:400 21px/1.25 Jost,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#fff}',
-    '#p75L .cat-card>a:hover h2{color:#FFD23F}',
-    '#p75L .cat-line{margin:6px 0 0;font-size:15px;line-height:1.45;color:#D6D1C7;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}',
+    '#p75L .cat-groups{min-width:0;display:flex;flex-direction:column;gap:34px}',
+    '#p75L .cat-gh{display:flex;align-items:center;gap:18px;margin:0 0 18px;font:600 14.5px Jost,sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#E6BD3C}',
+    '#p75L .cat-gh::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(201,162,39,.85),rgba(201,162,39,.15))}',
+    '#p75L .cat-card h3{margin:14px 0 0;font:500 21px/1.25 Jost,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#fff}',
+    '#p75L .cat-card>a:hover h3{color:#FFD23F}',
+    '#p75L .cat-line{margin:6px 0 0;font-size:15px;line-height:1.45;color:#E6E1D7;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}',
     '#p75L .cat-art{margin-top:6px;font-size:12px;letter-spacing:.02em;color:#A9A397;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}',
     '#p75L .cat-art i{color:#C9C4B9}',
-    '@media (max-width:1200px){#p75L .cat-body{grid-template-columns:220px minmax(0,1fr);gap:28px}#p75L .cat-card h2{font-size:18px}}',
+    '@media (max-width:1200px){#p75L .cat-body{grid-template-columns:220px minmax(0,1fr);gap:28px}#p75L .cat-card h3{font-size:18px}}',
     '@media (max-width:1000px){#p75L .cat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#p75L .cat-pic{height:clamp(140px,calc((100svh - 560px) / 3),260px)}}',
     '@media (max-width:760px){#p75L .cat-page{padding:4px 16px 8px}#p75L .cat-hd h1{font-size:15px;letter-spacing:.14em}#p75L .cat-body{grid-template-columns:1fr;gap:14px}',
     '#p75L .cat-side{margin:0 -16px;overflow-x:auto;scrollbar-width:none}#p75L .cat-side::-webkit-scrollbar{display:none}',
@@ -113,25 +115,28 @@
     '#p75L .cat-side button{min-height:44px;padding:0 16px;border:1px solid #34363C;border-radius:999px;font-size:12.5px;letter-spacing:.14em;white-space:nowrap}',
     '#p75L .cat-side button[aria-pressed=true]{border-color:#E6BD3C;background:rgba(230,189,60,.1)}#p75L .cat-side svg{display:none}',
     '#p75L .cat-grid{grid-template-columns:1fr 1fr;gap:18px 12px}#p75L .cat-pic{height:clamp(84px,calc((100svh - 640px) / 3),150px)}',
-    '#p75L .cat-card h2{font-size:14.5px;letter-spacing:.08em}#p75L .cat-line{font-size:13px}#p75L .cat-tag{margin-top:10px;font-size:10.5px;letter-spacing:.18em}#p75L .cat-art{display:none}}'
+    '#p75L .cat-card h3{margin-top:10px;font-size:14.5px;letter-spacing:.08em}#p75L .cat-line{font-size:13px}#p75L .cat-groups{gap:24px}#p75L .cat-gh{margin-bottom:12px;font-size:12px;letter-spacing:.22em;gap:12px}#p75L .cat-art{display:none}}'
   ].join('\n');
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   var CHEV = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   function cards(main, cfg, cat) {
-    var label = {}; cfg.cats.forEach(function (c) { label[c[0]] = c[1]; });
-    main.querySelector('.cat-grid').innerHTML = cfg.items.filter(function (it) { return cat === 'all' || it[0] === cat; }).map(function (it) {
-      var a = ART[it[4]];
-      return '<li class="cat-card"><a href="' + esc(it[2]) + '">' +
-        '<span class="cat-pic">' + (a ? '<img src="' + WM + a[0] + '" alt="" loading="lazy" decoding="async" title="' + esc(a[1] + ', ' + a[2]) + '">' : '') + '</span>' +
-        '<span class="cat-tag">' + esc(label[it[0]]) + '</span><h2>' + esc(it[1]) + '</h2><span class="cat-line">' + esc(it[3]) + '</span>' +
-        (a ? '<span class="cat-art"><i>' + esc(a[1]) + '</i> · ' + esc(a[2]) + ' · ' + esc(a[3]) + '</span>' : '') +
-        '</a></li>';
+    // Cards grouped under their category's heading (a gold rule), in the order of the left column
+    main.querySelector('.cat-groups').innerHTML = cfg.cats.filter(function (c) { return cat === 'all' || c[0] === cat; }).map(function (c) {
+      var list = cfg.items.filter(function (it) { return it[0] === c[0]; });
+      if (!list.length) return '';
+      return '<section class="cat-group"><h2 class="cat-gh">' + esc(c[1]) + '</h2><ul class="cat-grid">' + list.map(function (it) {
+        var a = ART[it[4]];
+        return '<li class="cat-card"><a href="' + esc(it[2]) + '">' +
+          '<span class="cat-pic">' + (a ? '<img src="' + WM + a[0] + '" alt="" loading="lazy" decoding="async" title="' + esc(a[1] + ', ' + a[2]) + '">' : '') + '</span>' +
+          '<h3>' + esc(it[1]) + '</h3><span class="cat-line">' + esc(it[3]) + '</span>' +
+          (a ? '<span class="cat-art"><i>' + esc(a[1]) + '</i> · ' + esc(a[2]) + ' · ' + esc(a[3]) + '</span>' : '') +
+          '</a></li>';
+      }).join('') + '</ul></section>';
     }).join('');
     main.querySelectorAll('.cat-side button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-c') === cat ? 'true' : 'false'); });
   }
-
   function build(key) {
     var cfg = PAGES[key]; if (!cfg) return;
     var main = window.P75SHELL.mount(key);
@@ -143,7 +148,7 @@
       rows.map(function (r) {
         var n = r[0] === 'all' ? cfg.items.length : cfg.items.filter(function (it) { return it[0] === r[0]; }).length;
         return '<li><button type="button" data-c="' + r[0] + '"><span>' + esc(r[1]) + '</span><span class="cat-n">' + n + '</span>' + CHEV + '</button></li>';
-      }).join('') + '</ul></nav><ul class="cat-grid" aria-live="polite"></ul></div></div>';
+      }).join('') + '</ul></nav><div class="cat-groups" aria-live="polite"></div></div></div>';
     var q = new URLSearchParams(location.search).get('c');
     var cat = q && rows.some(function (r) { return r[0] === q; }) ? q : 'all';
     cards(main, cfg, cat);
