@@ -24,6 +24,7 @@
   }
   // Page scripts load from the live site, or from the preview branch. (Data files always come from main.)
   var BASE = PREVIEW ? 'https://raw.githack.com/rahulmsaxena/point75-site/' + PREVIEW + '/' : 'https://rahulmsaxena.github.io/point75-site/';
+  window.P75BASE = BASE;
   if (PREVIEW) (function badge() {
     if (!document.body) return setTimeout(badge, 50);
     if (document.getElementById('p75pv')) return;
@@ -46,13 +47,14 @@
     '/sector-credit': 'https://tools.point75.io/market-intelligence/sector-credit',
     '/lenders': 'https://tools.point75.io/market-intelligence/lenders',
     '/credit-stress': 'https://tools.point75.io/market-intelligence/credit-stress',
-    '/outlook': 'https://tools.point75.io/outlook'   // the short address for essays and newsletters
+    '/outlook': 'https://tools.point75.io/outlook',  // short addresses for essays and newsletters (add /sectors and /terminal when they open)
+    '/tools': 'https://tools.point75.io/'
   };
   (function () {
     var p = location.pathname.replace(/\/+$/, '') || '/';
     if (MOVED[p]) location.replace(MOVED[p] + location.search + location.hash);
   })();
-  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-introduction', '/bond-history', '/bond-types', '/cash-logistics', '/bond-dictionary', '/bond-players', '/bond-fortunes', '/pulse', '/debt-trap', '/economic-indicators', '/bonds', '/insights', '/sector-credit', '/lenders', '/credit-stress', '/intellegent-summary', '/intelligent-summary', '/kinetics', '/bond-summary', '/start-here', '/contact'];    // no add-ons on these pages
+  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-introduction', '/bond-history', '/bond-types', '/cash-logistics', '/bond-dictionary', '/bond-players', '/bond-fortunes', '/pulse', '/debt-trap', '/economic-indicators', '/bonds', '/insights', '/sector-credit', '/lenders', '/credit-stress', '/intellegent-summary', '/intelligent-summary', '/kinetics', '/bond-summary', '/start-here', '/contact', '/journal'];    // no add-ons on these pages
 
   // Difficulty level per post
   var LEVELS = {
@@ -79,6 +81,8 @@
     '/nightmare-on-bond-street': "Bonds, the \u201csafe\u201d corner of finance, just had a scary stretch: the 30-year Treasury yield touched levels last seen in 2007 as U.S. debt crossed $40 trillion. The Treasury's answer, bigger bond buybacks, is a few billion dollars thrown at a $30 trillion market, and the Fed is staying quiet. Higher yields don't stay on Wall Street; they show up in mortgages, loans and prices. <em>So how long will this Halloween last?</em>",
     '/the-welfare-state-was-always-a-ticking-clock': "Welfare promises were made when many workers supported each retiree. Japan is down to about two, and the U.S. faces soaring healthcare costs and nearly $40 trillion in debt. Now AI could wipe out jobs just as those bills peak, forcing governments to spend even more, and opening a window for China. <em>Is this just another cycle, or a countdown?</em>"
   };
+  // Shared with the Journal page (journal/journal.js): reading level, Editor's picks and the plain-English summary
+  window.P75META = { levels: LEVELS, picks: PICKS, tldr: TLDR };
   TLDR['/right-fear-wrong-reasons'] = TLDR['/right-fear-wrong-reasons-copy'];   // same essay, cleaner address
   var expanded = {};   // posts the reader has opened in full, by path
 
@@ -1529,6 +1533,18 @@
     // the rest of the site: cream text tones, Manrope + Hedvig type, one label style, and a clear search bar.
     if (path === '/news') polishNews();
 
+    // Every page but home and the Journal: the new header (Menu, logo, Sign in) and left menu across the top, in
+    // place of the builder's header (shell/shell.js), so the menu and the way home are always one click away
+    if (path !== '/' && path !== '/journal') {
+      if (window.P75SHELL) window.P75SHELL.bar();
+      else if (!document.getElementById('p75shell-js')) {
+        var sj2 = document.createElement('script'); sj2.id = 'p75shell-js';
+        sj2.src = BASE + 'shell/shell.js?v=' + Math.floor(Date.now() / 36e5);
+        sj2.onload = function () { update(); };
+        document.body.appendChild(sj2);
+      }
+    }
+
     // Homepage (/): Pulse strip, the salon-wall gallery (one painting at a time on phones) and Explore,
     // drawn by home/home.js on top of the Journal cards decorated above
     if (path === '/') {
@@ -1540,6 +1556,18 @@
         document.body.appendChild(hm);
       }
     } else if (window.P75HOME) window.P75HOME.clear();
+
+    // Journal (/journal): every essay on one screen, drawn by journal/journal.js into a blank Hostinger page
+    if (path === '/journal') {
+      if (window.P75JOURNAL) window.P75JOURNAL.render();
+      else if (!document.getElementById('p75journal-js')) {
+        var jj = document.createElement('script'); jj.id = 'p75journal-js';
+        jj.src = BASE + 'journal/journal.js?v=' + Math.floor(Date.now() / 36e5);
+        jj.onload = function () { update(); };
+        document.body.appendChild(jj);
+      }
+      return;
+    } else if (window.P75JOURNAL) window.P75JOURNAL.clear();
 
     // Contact (/contact) is drawn by contact/contact.js into a blank Hostinger page
     if (path === '/contact') {
