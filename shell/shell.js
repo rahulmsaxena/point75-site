@@ -63,9 +63,20 @@
   }
   // Every other page: the same header across the top, in place of the builder's. It goes inside the builder's
   // sticky header block, so it stays on screen and page tab bars that sit under the header line up on their own.
+  // One step up beside Menu (as on tools.point75.io): back to the page a page belongs to. Essays go back to the
+  // Journal (p75.js marks them with html.p75-essay once the article has drawn, so this is re-checked every tick).
+  function upLink(r) {
+    var p = location.pathname.replace(/\/+$/, '');
+    var up = UP[p] || (document.documentElement.classList.contains('p75-essay') ? ['/journal', 'Journal'] : null);
+    if (!up || r.querySelector('.up')) return;
+    var btn = r.querySelector('#menuBtn'), left = document.createElement('span'); left.className = 'left';
+    btn.parentNode.insertBefore(left, btn); left.appendChild(btn);
+    var a = document.createElement('a'); a.className = 'up'; a.href = up[0];
+    a.innerHTML = '<span aria-hidden="true">‹</span> ' + up[1]; left.appendChild(a);
+  }
   function bar() {
     var r = document.getElementById('p75L');
-    if (r) return;                              // a full page (home, Journal) or the bar is already there
+    if (r) { if (r.classList.contains('bar')) upLink(r); return; }   // a full page (home, Journal), or the bar is already there
     head();
     var host = document.querySelector('.top-blocks--sticky');
     r = document.createElement('div'); r.id = 'p75L'; r.className = 'bar' + (host ? '' : ' solo'); r.setAttribute('data-page', 'bar');
@@ -75,14 +86,7 @@
     while (tmp.firstChild) d.appendChild(tmp.firstChild);
     if (host) host.insertBefore(r, host.firstChild); else document.body.insertBefore(r, document.body.firstChild);
     document.body.appendChild(d);
-    // One step up beside Menu (as on tools.point75.io): back to the catalog page a page belongs to
-    var up = UP[location.pathname.replace(/\/+$/, '')];
-    if (up) {
-      var btn = r.querySelector('#menuBtn'), left = document.createElement('span'); left.className = 'left';
-      btn.parentNode.insertBefore(left, btn); left.appendChild(btn);
-      var a = document.createElement('a'); a.className = 'up'; a.href = up[0];
-      a.innerHTML = '<span aria-hidden="true">‹</span> ' + up[1]; left.appendChild(a);
-    }
+    upLink(r);
     document.documentElement.classList.add('p75B-on');
     wireMenu({ querySelector: function (s) { return r.querySelector(s) || d.querySelector(s); } });
   }
