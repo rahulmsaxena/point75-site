@@ -1,492 +1,177 @@
-/* Point75 - homepage (/) extras. Loaded by p75.js on the homepage only.
-   1. Pulse strip: today's two Pulse readings, linking to /pulse (data from news.point75.io/api/pulse).
-   2. Salon wall (desktop): the Journal's paintings hung in different sizes along a centre line, like an old
-      gallery wall. Titles appear when you hover; the featured essay keeps its title on show.
-   3. Phone carousel: one painting at a time. Swipe (or use the arrows) to move; the first tap shows the title
-      and the essay's closing question, a second tap opens the essay.
-   4. Explore: doorways to Kinetics, Market Intelligence, Outlook, Tools and Education under the gallery.
-   5. Bond Summary window: a small card just before the newest painting with the latest daily summary's
-      headline and 10Y / 30Y yields (from intelsummary/editions.json), linking to that day's summary.
-   p75.js calls render() about once a second, so everything here is safe to run repeatedly.
-   (c) Rahul Saxena. All rights reserved. */
+/* Point75 home page (/): the rope. A thick three-strand rope tied in a tight knot, both ends fraying, slowly pulled
+   apart and released, under a quiet caption and today's Treasury readings (from intelsummary/editions.json).
+   The header and the left menu come from shell/shell.js. Everything draws in a full-screen layer over the site
+   builder's page. p75.js calls render() about once a second, so it is safe to run repeatedly.
+   Built from the landing mock (Point75-BusinessPlan/landing/rope-hero.html). (c) Rahul Saxena. All rights reserved. */
 (function () {
   if (window.P75HOME) return;
-  var API = 'https://news.point75.io/api/pulse';
-  var PHONE = 920;   // matches the breakpoint the Journal cards already use
-  var BULL = '#1FC8FF', BEAR = '#E5484D', NEUT = '#9AA0A6';
-
-  // Desktop: one salon-style row. Each painting keeps its true 5:3 shape; its height is a share of the row
-  // height (--p75H, set from the window height so the whole homepage fits on a typical laptop screen).
-  // The first painting is the featured essay; the pattern repeats for later essays.
-  var SCALE = [1, 0.7, 0.86, 0.62, 0.8, 0.68, 0.92, 0.66];
-  function scaleFor(i) { return SCALE[i % SCALE.length]; }
-
-  var L = '.block-blog-list.p75wall', I = L + ' .block-blog-list-item';
-  var CSS =
-    // Pulse strip
-    '.p75ps{max-width:1224px;width:calc(100% - 40px);margin:0 auto 14px;box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;gap:8px 22px;' +
-      'padding:10px 16px;border:1px solid rgba(201,162,39,.32);border-radius:12px;background:#1B1C20;color:#EDE8DC!important;text-decoration:none!important;font:500 14px/1.4 Manrope,system-ui,sans-serif}' +
-    '.p75ps:hover,.p75ps:focus-visible{border-color:rgba(201,162,39,.7);outline:none}' +
-    '.p75ps .lb{display:flex;flex-direction:column;gap:2px}' +
-    '.p75ps .lb b{color:#C9A227;font-weight:800;font-size:12px;letter-spacing:.14em;text-transform:uppercase}' +
-    '.p75ps .lb span{color:#E4DED1;font-size:13px;font-weight:600}.p75ps .lb .u{font-style:normal}' +
-    '.p75ps .rd{display:flex;align-items:center;gap:10px}' +
-    '.p75ps .rd svg{flex:none}' +
-    '.p75ps .rd .k{color:#E4DED1;font-size:12.5px;font-weight:700;letter-spacing:.03em}' +
-    '.p75ps .rd .v{font:400 26px/1 "Hedvig Letters Serif",Georgia,serif;font-variant-numeric:tabular-nums;filter:brightness(1.15)}' +
-    '.p75ps .rd .w{font-size:13.5px;font-weight:800;filter:brightness(1.15)}' +
-    '.p75ps .go{margin-left:auto;color:#C9A227;font-weight:800;white-space:nowrap;font-size:13.5px}' +
-    '@media (min-width:' + (PHONE + 1) + 'px){.p75ps{flex-wrap:nowrap}.p75ps .lb .u{display:none}.p75ps .rd{white-space:nowrap}.p75ps .go{font-size:0}.p75ps .go:after{content:"\\203A";font-size:26px;line-height:1}}' +
-    '@media (max-width:640px){.p75ps{gap:8px 12px;padding:10px 14px}.p75ps .lb{flex:1 1 auto;order:0;flex-direction:row;gap:8px;align-items:baseline}' +
-      '.p75ps .lb .u{display:none}.p75ps .go{order:1;margin-left:auto;font-size:13px}' +
-      '.p75ps .rd{order:2;flex:1 1 40%;min-width:0;gap:8px}.p75ps .rd svg[width="80"]{width:52px}.p75ps .rd .v{font-size:24px}.p75ps .rd .w{font-size:13px}}' +
-    // "New to bonds?" (drawn by p75.js as .p75cta), restyled on the homepage as a light signpost rather than a box
-    '.p75top>.p75cta{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none}' +
-    '.p75top>.p75cta .go{transition:transform .2s}' +
-    '.p75top>.p75cta:hover .go,.p75top>.p75cta:focus-visible .go{transform:translateX(4px)}' +
-    '@media (min-width:' + (PHONE + 1) + 'px){' +
-      '.p75top>.p75cta{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:3px;flex-wrap:nowrap;' +
-        'border-left:2px solid #C9A227!important;padding:2px 0 2px 18px!important;font-size:13.5px;line-height:1.4;color:#D2CCBF!important}' +
-      '.p75top>.p75cta b{display:block;margin-bottom:0;font:400 19px/1.15 "Hedvig Letters Serif",Georgia,serif;color:#EDE8DC}' +
-      '.p75top>.p75cta .go{font-size:13.5px}' +
-      '.p75top>.p75cta:hover,.p75top>.p75cta:focus-visible{background:transparent!important}' +
-      '.p75top>.p75cta:hover b{color:#fff}' +
-    '}' +
-    '@media (max-width:' + PHONE + 'px){' +
-      '.p75top>.p75cta{flex-wrap:nowrap;margin:0 auto 12px!important;padding:9px 18px!important;border:1px solid rgba(201,162,39,.4)!important;border-radius:99px!important;font-size:14.5px}' +
-      '.p75top>.p75cta>span:first-child{font-size:0}' +   // keeps the line read aloud, shows only the question
-      '.p75top>.p75cta b{font-size:15px}' +
-      '.p75top>.p75cta:hover,.p75top>.p75cta:focus-visible{background:rgba(201,162,39,.08)!important}' +
-    '}' +
-    L + '{padding-bottom:24px!important}' +   // the builder's 60px under the Journal, before the disclaimer
-    I + ' .block-blog-list-item__cover-image-container{padding-bottom:0!important}' +   // the builder's 20px under every painting
-    // Captions on the paintings (shared by desktop and phone)
-    I + ' .p75ht{display:flex;flex-direction:column;gap:6px}' +
-    I + ' .p75ht .m{display:flex;align-items:center;gap:8px;font:500 12px Manrope,system-ui,sans-serif;color:#C4BEB1}' +
-    I + ' .p75ht .m .p75lvl{margin-left:0;padding:1px 8px;font-size:11px}' +
-    I + ' .p75ht .t{font:400 21px/1.25 "Hedvig Letters Serif",Georgia,serif;color:#fff}' +
-    I + ' .p75hook{justify-content:flex-end}' +
-    I + ' .p75hook i{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}' +
-    I + '.p75sm .p75hook{padding:16px}' + I + '.p75sm .p75hook i{display:none}' + I + '.p75sm .p75ht .t{font-size:17px}' +
-    I + ' .p75band{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:18px 22px;background:rgba(17,18,20,.74);transition:opacity .25s;pointer-events:none}' +
-    I + ' .p75band .t{font-size:30px;line-height:1.15}' +
-    I + ' .p75tap{display:none}' +
-    // Desktop: one salon row along a centre line; arrows and dots below move along it
-    '@media (min-width:' + (PHONE + 1) + 'px){' +
-      L + '{padding-top:6px!important;--p75H:clamp(170px,calc(100vh - 470px),440px)}' +
-      L + ' .block-blog-list__list{display:flex!important;flex-wrap:nowrap!important;align-items:center;gap:24px!important;overflow-x:auto;overscroll-behavior-x:contain;' +
-        'scroll-snap-type:x proximity;scroll-padding:0 20px;padding:10px 20px 10px!important;grid-template-columns:none!important;scrollbar-width:none}' +
-      L + ' .block-blog-list__list::-webkit-scrollbar{display:none}' +
-      I + '{flex:0 0 auto;height:calc(var(--p75H) * var(--p75k));width:calc(var(--p75H) * var(--p75k) * 5 / 3);min-width:0;margin:0!important;' +
-        'grid-column:auto!important;grid-row:auto!important;display:flex!important;flex-direction:column;scroll-snap-align:start}' +
-      I + ' .block-blog-list-item__cover-image-container{display:block!important;flex:1 1 auto;height:100%!important}' +
-      I + ' .block-blog-list-item__cover-image-wrapper{position:relative;height:100%!important;min-height:0!important;border-radius:3px;box-shadow:0 0 0 1px rgba(201,162,39,.28),0 10px 26px rgba(0,0,0,.45)}' +
-      I + ' .block-blog-list-item__cover-image{width:100%!important;height:100%!important;object-fit:cover!important;transition:transform .7s ease}' +
-      I + ' .block-blog-list-item__content{display:none!important}' +
-      '@media (hover:hover){' + I + ':hover .block-blog-list-item__cover-image{transform:scale(1.035)}' + I + ':hover .p75band{opacity:0}}' +
-      I + ' .block-blog-list-item__cover-image-container:focus-visible .p75hook{opacity:1}' +
-      I + ' .block-blog-list-item__cover-image-container:focus-visible{outline:3px solid #F2D27A;outline-offset:4px}' +
-      I + ' .p75hook{padding:16px 18px;gap:8px}' +
-      I + ' .p75hook i{-webkit-line-clamp:3;font-size:17px}' +
-      I + ' .p75band{padding:14px 18px}' + I + ' .p75band .t{font-size:26px}' +
-      // Pulse strip and "New to bonds?" share one row
-      '.p75top{display:flex;align-items:stretch;gap:14px;max-width:1224px;width:calc(100% - 40px);margin:0 auto 4px}' +
-      '.p75top>.p75ps{flex:1.5 1 0;width:auto;margin:0;max-width:none}' +
-      '.p75top>.p75cta{flex:1 1 0;width:auto;margin:0!important;max-width:none}' +
-      // Explore, compact
-      L + ' .p75ex{margin-top:10px}' + L + ' .p75ex .eb{margin-bottom:6px}' +
-      L + ' .p75ex a{padding:12px 34px 12px 16px;gap:4px}' + L + ' .p75ex a b{font-size:19px}' + L + ' .p75ex a b svg{width:26px;height:26px}' + L + ' .p75ex a span{font-size:14px}' + L + ' .p75ex a em{padding-top:4px}' +
-    '}' +
-    // The site builder slides each card in as it scrolls into view. On a sideways carousel that fires on every
-    // painting and fights the swipe, so the wall's cards simply stay put.
-    I + '{animation:none!important;transition:none!important;transform:none!important;opacity:1!important}' +
-    // Phones and small tablets: one painting at a time, uncropped, with the next one peeking in from the right
-    '@media (max-width:' + PHONE + 'px){' +
-      L + '{padding-top:10px!important}' +
-      '.p75top>.p75ps{margin-bottom:10px}' +   // the builder's 60px gap under the site header wastes a phone's first screen
-      L + ' .block-blog-list__list{display:flex!important;flex-wrap:nowrap!important;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;gap:12px!important;' +
-        'scrollbar-width:none;-webkit-overflow-scrolling:touch;grid-template-columns:none!important}' +
-      L + ' .block-blog-list__list::-webkit-scrollbar{display:none}' +
-      I + '{flex:0 0 86%;min-width:0;scroll-snap-align:start;margin:0!important}' +
-      I + ' .block-blog-list-item__cover-image-container{height:auto!important}' +
-      I + ' .block-blog-list-item__cover-image-wrapper{position:relative;height:auto!important;min-height:0!important;aspect-ratio:5/3;border-radius:8px;background:#141518}' +
-      // contain, not cover: a painting that isn't 5:3 (a portrait like Machiavelli) shows whole instead of losing its head
-      I + ' .block-blog-list-item__cover-image{width:100%!important;height:100%!important;object-fit:contain!important}' +
-      I + ' .block-blog-list-item__content{display:none!important}' +
-      I + ' .p75band{display:none}' +
-      I + '.p75show .p75hook{opacity:1}' +
-      I + ' .p75hook{padding:12px 14px;gap:6px}' +
-      I + ' .p75ht{gap:4px}' + I + ' .p75ht .m{font-size:11px}' +
-      I + ' .p75ht .t,' + I + '.p75sm .p75ht .t{font-size:18px;line-height:1.2}' +
-      I + ' .p75hook i,' + I + '.p75sm .p75hook i{display:-webkit-box;-webkit-line-clamp:2;font-size:14px;line-height:1.35}' +
-      I + ' .p75hook b{font-size:12.5px}' +
-      I + ' .p75pick{top:8px;left:8px;font-size:10px;padding:3px 7px}' +
-      I + ' .p75tap{display:inline-flex;align-items:center;gap:6px;position:absolute;top:8px;right:8px;z-index:2;padding:3px 9px;border-radius:99px;' +
-        'background:rgba(17,18,20,.72);color:#EDE8DC;font:700 11px Manrope,system-ui,sans-serif;transition:opacity .2s}' +
-      I + '.p75show .p75tap{opacity:0}' +
-    '}' +
-    // Arrows and dots (desktop and phones)
-    '.p75dots{display:flex;align-items:center;justify-content:center;gap:14px;margin:2px auto 0}' +
-    '@media (hover:hover) and (min-width:761px){.p75dots>button{min-width:38px;min-height:38px}}' +
-    '.p75dots>button{min-width:44px;min-height:44px;border-radius:22px;border:1px solid #3A3C42;background:#17181B;color:#EDE8DC;font:700 18px Manrope,system-ui,sans-serif;cursor:pointer}' +
-    '.p75dots>button:hover,.p75dots>button:focus-visible{border-color:#C9A227;outline:none}' +
-    '.p75dots .ds{display:flex;gap:2px}' +
-    '.p75dots .ds button{width:22px;height:22px;padding:0;border:0;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center}' +
-    '.p75dots .ds button i{width:7px;height:7px;border-radius:50%;background:#4A4C52;transition:background .2s,transform .2s}' +
-    '.p75dots .ds button.on i{background:#C9A227;transform:scale(1.25)}' +
-    '.p75dots .ds button:focus-visible{outline:2px solid #F2D27A;border-radius:50%}' +
-    '.p75dots .n{color:#A9A396;font:600 12.5px Manrope,system-ui,sans-serif;min-width:44px;text-align:center}' +
-    // Explore
-    '.p75ex{max-width:1224px;width:calc(100% - 40px);margin:64px auto 0;box-sizing:border-box}' +
-    '.p75ex .eb{color:#C9A227;font:800 12px Manrope,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}' +
-    '.p75ex .g{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}' +
-    '.p75ex a{position:relative}.p75ex a .ar{position:absolute;right:14px;top:14px;color:#C9A227;font:400 24px/1 Manrope,sans-serif;font-style:normal;transition:transform .15s}' +
-    '.p75ex a:hover .ar,.p75ex a:focus-visible .ar{transform:translateX(4px)}' +
-    // Pulse: gold edge, a live dot, and a heartbeat that draws itself across the icon like a monitor
-    '.p75ex a.live{border-color:rgba(201,162,39,.75);background:linear-gradient(160deg,#211F18 0%,#1B1C20 70%);box-shadow:0 0 22px rgba(201,162,39,.12)}' +
-    '.p75ex a.live b svg{stroke:#2BFF88;filter:drop-shadow(0 0 4px rgba(43,255,136,.7))}' +
-    '.p75ex .zl{stroke-dasharray:2.2 1.6;animation:p75zl .45s linear infinite}.p75ex .zc{animation:p75zc 1.2s ease-in-out infinite}' +
-    '@keyframes p75zl{to{stroke-dashoffset:3.8}}@keyframes p75zc{0%,100%{transform:translate(0,0)}50%{transform:translate(.6px,-.4px)}}' +
-    '.p75ex .lv{width:8px;height:8px;margin-left:2px;border-radius:50%;background:#2BFF88;box-shadow:0 0 0 0 rgba(43,255,136,.6);animation:p75lv 1.8s ease-out infinite;align-self:center}' +
-    '@keyframes p75lv{0%{box-shadow:0 0 0 0 rgba(43,255,136,.6)}80%,100%{box-shadow:0 0 0 8px rgba(43,255,136,0)}}' +
-    '@media (prefers-reduced-motion:reduce){.p75ex .zl,.p75ex .zc{animation:none}.p75ex .lv{animation:none}}' +
-    '.p75ex a{display:flex;flex-direction:column;gap:6px;padding:14px 34px 14px 18px;border:1px solid #34363C;border-radius:12px;background:#1B1C20;text-decoration:none!important;transition:border-color .2s}' +
-    '.p75ex a:hover,.p75ex a:focus-visible{border-color:rgba(201,162,39,.7);outline:none}' +
-    '.p75ex a b{display:flex;align-items:center;gap:10px;font:400 23px/1.2 "Hedvig Letters Serif",Georgia,serif;color:#fff}' +
-    '.p75ex a b svg{flex:none;width:28px;height:28px;fill:none;stroke:#C9A227;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}' +
-    '.p75ex a span{font:600 14px/1.5 Manrope,system-ui,sans-serif;color:#F1ECE2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}' +
-    '.p75ex a em{margin-top:auto;padding-top:6px;font:800 13.5px Manrope,system-ui,sans-serif;font-style:normal;color:#C9A227}' +
-    // Phones: three small tiles in one row, icon over a short name (the descriptions stay on desktop)
-    // The title's words sit in .tt so a long name ("Market Intelligence") wraps inside its box instead of running out of it.
-    // Between phones and wide screens five boxes are narrow, so the icon moves above the name and "Market" drops.
-    '.p75ex a b .tt{min-width:0}.p75ex .tt .lv{display:inline-block;vertical-align:middle}' +
-    '@media (min-width:761px) and (max-width:1240px){' + L + ' .p75ex a{padding:12px 14px}' +
-      L + ' .p75ex a b{flex-direction:column;align-items:flex-start;gap:6px;font-size:19px}' + L + ' .p75ex .lg{display:none}}' +
-    '@media (max-width:760px){.p75ex .g{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}.p75ex a .ar{display:none}.p75ex .lv{display:none}' + L + ' .p75ex{margin-top:22px}' + L + ' .p75ex .eb{margin-bottom:10px}' +
-      L + ' .p75ex a{align-items:center;justify-content:center;gap:0;padding:14px 4px 12px;border-radius:10px;text-align:center}' +
-      L + ' .p75ex a b{flex-direction:column;gap:7px;font:700 13.5px/1.2 Manrope,system-ui,sans-serif;color:#EDE8DC}' +
-      L + ' .p75ex a b svg{width:28px;height:28px}' + L + ' .p75ex a span,' + L + ' .p75ex a em,' + L + ' .p75ex .lg{display:none}}' +
-    '@media (prefers-reduced-motion:reduce){' + I + ' .block-blog-list-item__cover-image{transition:none}}' +
-    // Bond Summary window: first in the painting row, narrower than a painting, the whole card is the link
-    L + ' .p75bw{flex:0 0 auto;align-self:center;display:flex;flex-direction:column;gap:9px;box-sizing:border-box;padding:16px;border:1px solid rgba(201,162,39,.75);border-radius:10px;' +
-      'background:#17181B;color:#EDE8DC!important;text-decoration:none!important;font:500 13px/1.35 Manrope,system-ui,sans-serif;scroll-snap-align:start;transition:border-color .2s,transform .2s}' +
-    L + ' .p75bw:hover,' + L + ' .p75bw:focus-visible{border-color:#C9A227;outline:none;transform:translateY(-2px)}' +
-    L + ' .p75bw .eb{display:flex;justify-content:space-between;gap:8px;font-weight:800;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#C9A227}' +
-    L + ' .p75bw .eb span{color:#BDB7AA;letter-spacing:.04em}' +
-    L + ' .p75bw svg{display:block;width:100%;height:44px}' +
-    L + ' .p75bw .y{display:flex;justify-content:space-between;align-items:baseline;font-variant-numeric:tabular-nums;font-weight:700}' +
-    L + ' .p75bw .y b{font-size:17px;color:#fff;font-weight:800;margin-left:4px}' +
-    L + ' .p75bw .t{font:400 17px/1.25 "Hedvig Letters Serif",Georgia,serif;color:#fff;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}' +
-    L + ' .p75bw .go{margin-top:auto;color:#C9A227;font-weight:800;font-size:13.5px;transition:transform .2s}' +
-    L + ' .p75bw:hover .go{transform:translateX(4px)}' +
-    '@media (min-width:' + (PHONE + 1) + 'px){' + L + ' .p75bw{width:clamp(200px,calc(var(--p75H) * .55),236px);height:max(calc(var(--p75H) * .72),250px)}}' +
-    '@media (max-width:' + PHONE + 'px){' + L + ' .p75bw{flex:0 0 46%;align-self:stretch;padding:12px;gap:6px}' + L + ' .p75bw svg{display:none}' +
-      L + ' .p75bw .eb{font-size:10px}' + L + ' .p75bw .y b{font-size:15px}' + L + ' .p75bw .t{font-size:15px;-webkit-line-clamp:2}}' +
-    '@media (prefers-reduced-motion:reduce){' + L + ' .p75bw,' + L + ' .p75bw .go{transition:none}}';
-
-  // Line icons (24px grid, gold stroke) beside each Explore title: a brain, a toolbox, a stack of books.
-  var EXPLORE_ICON = {
-    // Kinetics: a low sports car with speed lines streaming behind it
-    zoom: '<g class="zc"><path d="M7.6 16.2H6.9a1 1 0 0 1-1-1v-1.5c0-.6.4-1.1 1-1.3l3.3-1 2.6-2.3c.4-.4.9-.6 1.5-.6h3.2c.7 0 1.3.3 1.7.9l1.5 2.2 1.5.5c.5.2.8.6.8 1.1v1a1 1 0 0 1-1 1h-.6M10.8 16.2h5.8"/>' +
-      '<path d="M12.3 11.5l1.8-1.6h3l1.1 1.6z"/><circle cx="9.2" cy="16.3" r="1.6"/><circle cx="18.2" cy="16.3" r="1.6"/></g>' +
-      '<path class="zl" d="M.8 10.6h4.4M2.2 13.2h2.8M.8 15.8h3"/>',
-    brain: '<path d="M12 5.5A2.6 2.6 0 0 0 7.2 4.6 2.8 2.8 0 0 0 4.6 8a2.9 2.9 0 0 0-.9 4.6 3 3 0 0 0 1.8 4.6A2.8 2.8 0 0 0 10 19.3a2.2 2.2 0 0 0 2-1.2Z"/>' +
-      '<path d="M12 5.5a2.6 2.6 0 0 1 4.8-.9A2.8 2.8 0 0 1 19.4 8a2.9 2.9 0 0 1 .9 4.6 3 3 0 0 1-1.8 4.6 2.8 2.8 0 0 1-4.5 2.1 2.2 2.2 0 0 1-2-1.2Z"/>' +
-      '<path d="M12 5.5v12.6"/><path d="M8 9.2c1 .1 1.8.8 2 1.8M6.6 13.6c1-.4 2.2 0 2.8.9M16 9.2c-1 .1-1.8.8-2 1.8M17.4 13.6c-1-.4-2.2 0-2.8.9"/>',
-    toolbox: '<path d="M9 9V7a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 7v2"/><rect x="3" y="9" width="18" height="10.5" rx="1.6"/>' +
-      '<path d="M3 13.5h7.5M13.5 13.5H21"/><rect x="10.5" y="12" width="3" height="3" rx=".6"/>',
-    // Outlook: a telescope on its stand, pointed up and ahead
-    scope: '<path d="M3.2 12.6l12.6-5.4 1.5 3.5-12.6 5.4z"/><path d="M15.8 7.2l3.3-1.4 1.5 3.5-3.3 1.4"/><path d="M9.8 14.3l-2.6 6.2M11.2 13.7l2.6 6.8"/><path d="M5.4 14.3l-.7-1.6"/>',
-    books: '<rect x="3.5" y="5" width="4.2" height="14.5" rx=".8"/><rect x="7.7" y="3.5" width="4.6" height="16" rx=".8"/>' +
-      '<path d="M14.4 6.6l3.7-1 3.6 13.2-3.7 1z"/><path d="M3.5 8h4.2M7.7 7h4.6M7.7 16h4.6M3.5 16.5h4.2M15.2 9.5l3.7-1"/>'
-  };
-  var EXPLORE = [
-    ['/kinetics', 'Kinetics', 'What moves bonds now: the Pulse, daily summary, news and debt.', '', 'zoom'],
-    ['https://tools.point75.io/market-intelligence', 'Market Intelligence', 'Rates, credit, sectors and flows, as clear dashboards.', 'Open the dashboards', 'brain'],
-    ['https://tools.point75.io/outlook', 'Outlook', 'Where rates, AI and the big risks are most likely headed, with the odds.', 'See the odds', 'scope'],
-    ['https://tools.point75.io/', 'Tools', 'Portfolio, tax and retirement, with honest numbers.', 'Try the tools', 'toolbox'],
-    ['/education', 'Education', 'Bonds from first principles, in plain English.', 'Start learning', 'books']
-  ];
-
-  var esc = function (s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); };
-  function bullColor(s) { return s >= 20 ? BULL : s <= -20 ? BEAR : NEUT; }
-  function stressColor(s) { return s < 30 ? '#2BD17E' : s < 55 ? '#B8D43A' : s < 75 ? '#F2A33A' : '#FF4D4D'; }
-
-  function once() {
-    if (document.getElementById('p75home-css')) return;
-    var st = document.createElement('style'); st.id = 'p75home-css'; st.textContent = CSS; document.head.appendChild(st);
-    // Phones: first tap on a painting shows its title, the second opens the essay.
-    // Capture phase, so the site's own link handling doesn't run on that first tap.
-    document.addEventListener('click', function (e) {
-      if (window.innerWidth > PHONE) return;
-      var a = e.target.closest && e.target.closest(L + ' .block-blog-list-item__cover-image-container'); if (!a) return;
-      var it = a.closest('.block-blog-list-item');
-      if (it.classList.contains('p75show')) return;
-      e.preventDefault(); e.stopPropagation();
-      document.querySelectorAll(I + '.p75show').forEach(function (x) { x.classList.remove('p75show'); });
-      it.classList.add('p75show');
-    }, true);
-    // Remember that the reader left the homepage for a page on this site (Pulse strip, Explore). p75.js reads
-    // this so that page's back pill says "Journal" and leads home, instead of into the page's menu section.
-    document.addEventListener('click', function (e) {
-      var a = e.target.closest && e.target.closest('.p75ps, .p75ex a, .p75bw'); if (!a) return;
-      var href = a.getAttribute('href') || '';
-      if (href.charAt(0) !== '/') return;
-      try { sessionStorage.setItem('p75fromHome', href.replace(/[?#].*$/, '').replace(/\/+$/, '') || '/'); } catch (err) {}
-    }, true);
-  }
-
-  // ---------- Pulse strip ----------
-  var pulse = null, pulseState = 'idle';
-  function loadPulse(cb) {
-    if (pulseState === 'done') return cb(pulse);
-    if (pulseState === 'loading') return;
-    pulseState = 'loading';
-    fetch(API).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; })
-      .then(function (j) { pulse = j && j.gauges ? j : null; pulseState = 'done'; cb(pulse); });
-  }
-  function meterBar(score) {   // −100 … +100, marker on a short track
-    var x = 4 + (Math.max(-100, Math.min(100, score)) + 100) / 200 * 72, c = bullColor(score);
-    return '<svg width="80" height="16" viewBox="0 0 80 16" aria-hidden="true"><rect x="4" y="6" width="36" height="4" rx="2" fill="' + BEAR + '" opacity=".45"/>' +
-      '<rect x="40" y="6" width="36" height="4" rx="2" fill="' + BULL + '" opacity=".45"/><rect x="39.5" y="3" width="1" height="10" fill="#6B6E75"/>' +
-      '<circle cx="' + x.toFixed(1) + '" cy="8" r="5" fill="' + c + '" stroke="#111214" stroke-width="2"/></svg>';
-  }
-  function meterArc(score) {   // 0 … 100 half-dial
-    var p = Math.max(0, Math.min(100, score)), c = stressColor(p);
-    return '<svg width="44" height="26" viewBox="0 0 100 56" aria-hidden="true"><path d="M10 50 A40 40 0 0 1 90 50" fill="none" stroke="#2F3136" stroke-width="10" stroke-linecap="round"/>' +
-      '<path d="M10 50 A40 40 0 0 1 90 50" fill="none" stroke="' + c + '" stroke-width="10" stroke-linecap="round" pathLength="100" stroke-dasharray="' + p.toFixed(0) + ' 100"/></svg>';
-  }
-  // The Pulse strip and p75.js's "New to bonds?" line (.p75cta) live together in .p75top at the top of the list:
-  // side by side on desktop, stacked on phones
-  function topRow(list) {
-    var top = list.querySelector(':scope > .p75top');
-    if (!top) { top = document.createElement('div'); top.className = 'p75top'; list.insertBefore(top, list.firstElementChild); }
-    if (list.firstElementChild !== top) list.insertBefore(top, list.firstElementChild);
-    var cta = list.querySelector(':scope > .p75cta'); if (cta) top.appendChild(cta);
-    return top;
-  }
-  function pulseStrip(list) {
-    var top = topRow(list), strip = top.querySelector(':scope > .p75ps');
-    if (!strip) {
-      loadPulse(function (j) {
-        var top = topRow(list);
-        if (!j || !document.body.contains(list) || top.querySelector(':scope > .p75ps')) return;
-        var b = j.gauges.bull || {}, s = j.gauges.stress || {};
-        if (b.score == null && s.score == null) return;
-        var when = j.generated_at ? new Date(j.generated_at).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' }) : '';
-        var bs = b.score != null ? Math.round(b.score) : null, ss = s.score != null ? Math.round(s.score) : null;
-        var h = '<a class="p75ps" href="/pulse" aria-label="Pulse: bull/bear ' + (bs != null ? bs : 'n/a') + ' ' + esc(b.label || '') +
-          ', stress ' + (ss != null ? ss : 'n/a') + ' ' + esc(s.label || '') + '. Open Pulse.">' +
-          '<span class="lb"><b>Pulse</b><span>' + (when ? '<i class="u">Updated </i>' + esc(when) : 'The bond market today') + '</span></span>' +
-          (bs != null ? '<span class="rd">' + meterBar(bs) + '<span><span class="k">Bull / Bear</span><br><span class="v" style="color:' + bullColor(bs) + '">' + (bs > 0 ? '+' : '') + bs +
-            '</span> <span class="w" style="color:' + bullColor(bs) + '">' + esc(b.label || '') + '</span></span></span>' : '') +
-          (ss != null ? '<span class="rd">' + meterArc(ss) + '<span><span class="k">Stress</span><br><span class="v" style="color:' + stressColor(ss) + '">' + ss +
-            '</span> <span class="w" style="color:' + stressColor(ss) + '">' + esc(s.label || '') + '</span></span></span>' : '') +
-          '<span class="go">Open Pulse &rarr;</span></a>';
-        top.insertAdjacentHTML('afterbegin', h);
-      });
-      return;
-    }
-    if (top.firstElementChild !== strip) top.insertBefore(strip, top.firstElementChild);   // Pulse first, then "New to bonds?"
-  }
-
-  // ---------- Bond Summary window ----------
+  var BASE = window.P75BASE || 'https://rahulmsaxena.github.io/point75-site/';
   var EDITIONS = 'https://rahulmsaxena.github.io/point75-site/intelsummary/editions.json?v=' + Math.floor(Date.now() / 36e5);
-  var eds = null, edState = 'idle';
-  function loadEditions(cb) {
-    if (edState === 'done') return cb(eds);
-    if (edState === 'loading') return;
-    edState = 'loading';
-    fetch(EDITIONS).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; })
-      .then(function (j) {
-        var s = j && Array.isArray(j.summaries) ? j.summaries.filter(function (x) { return x && x.market_date && x.title; }) : [];
-        s.sort(function (a, b) { return String(b.generated_at || b.market_date).localeCompare(String(a.generated_at || a.market_date)); });
-        eds = s.length ? s : null; edState = 'done'; cb(eds);
-      });
-  }
-  function tapeOf(s, k) { var t = (s.tape || []).filter(function (x) { return x.k === k; })[0]; return t && t.level != null ? t : null; }
-  // Yields up is bad for bond prices (red), down is good (blue): the site's colour rule
-  function chg(t) {
-    if (!t || t.d == null) return '';
-    var d = Math.round(t.d), c = d > 0 ? BEAR : d < 0 ? BULL : NEUT;
-    return '<span style="color:' + c + '">' + (d > 0 ? '&#9650; +' : d < 0 ? '&#9660; ' : '') + d + ' bp</span>';
-  }
-  // 10Y and 30Y over the recent close editions, oldest to newest
-  function spark(list) {
-    var pts = list.filter(function (s) { return s.edition !== 'morning'; }).slice(0, 12).reverse()
-      .map(function (s) { var a = tapeOf(s, '10Y'), b = tapeOf(s, '30Y'); return [a && a.level, b && b.level]; });
-    var vals = [].concat.apply([], pts).filter(function (v) { return v != null; });
-    if (pts.length < 2 || !vals.length) return '';
-    var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals); if (hi - lo < 0.05) { lo -= 0.03; hi += 0.03; }
-    var W = 180, H = 44, x = function (i) { return (i * (W - 6) / (pts.length - 1) + 3).toFixed(1); }, y = function (v) { return (3 + (hi - v) * (H - 6) / (hi - lo)).toFixed(1); };
-    var line = function (k, c) {
-      var d = ''; pts.forEach(function (p, i) { if (p[k] != null) d += (d ? 'L' : 'M') + x(i) + ' ' + y(p[k]); });
-      return d ? '<path d="' + d + '" fill="none" stroke="' + c + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>' : '';
-    };
-    return '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" aria-hidden="true">' + line(1, '#C9A227') + line(0, '#EDE8DC') + '</svg>';
-  }
-  function bondWindow(list) {
-    var track = list.querySelector('.block-blog-list__list'); if (!track) return;
-    var w = track.querySelector(':scope > .p75bw');
-    if (w) { if (track.firstElementChild !== w) track.insertBefore(w, track.firstElementChild); return; }
-    loadEditions(function (s) {
-      var track = list.querySelector('.block-blog-list__list');
-      if (!s || !track || !document.body.contains(track) || track.querySelector(':scope > .p75bw')) return;
-      var e = s[0], id = e.market_date + (e.edition === 'morning' ? '-am' : '');
-      var day = new Date(e.market_date + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-      var t10 = tapeOf(e, '10Y'), t30 = tapeOf(e, '30Y');
-      var h = '<a class="p75bw" href="/intelligent-summary#/' + esc(id) + '" aria-label="Bond Summary for ' + esc(day) + ': ' + esc(e.title) + '">' +
-        '<span class="eb">Bond Summary<span>' + esc(day) + (e.edition === 'morning' ? ' AM' : '') + '</span></span>' + spark(s) +
-        (t10 ? '<span class="y"><span>10Y<b>' + t10.level.toFixed(2) + '%</b></span>' + chg(t10) + '</span>' : '') +
-        (t30 ? '<span class="y"><span style="color:#C9A227">30Y<b>' + t30.level.toFixed(2) + '%</b></span>' + chg(t30) + '</span>' : '') +
-        '<span class="t">' + esc(e.title) + '</span><span class="go">Read today&rsquo;s &rarr;</span></a>';
-      // The browser keeps the first painting where it was when something is added in front of it, which would
-      // scroll the new window just out of view. If the row was at its start, keep it there.
-      var atStart = track.scrollLeft < 2;
-      track.style.overflowAnchor = 'none';
-      track.insertAdjacentHTML('afterbegin', h);
-      if (atStart) track.scrollLeft = 0;
-    });
-  }
+  var CSS = "#p75L .hero{text-align:center;padding:4px 16px 0}\n#p75L .kick{font-size:11px;font-weight:400;letter-spacing:.34em;text-transform:uppercase;color:#C9A227}\n#p75L h1{margin:14px 0 0;font-family:'Hedvig Letters Serif',Georgia,serif;font-weight:400;font-size:clamp(24px,2.6vw,34px);line-height:1.2;letter-spacing:-.01em;color:#ECE8E0}\n#p75L h1 em{font-style:normal;color:#D9B43F}\n#p75L .sub{margin:10px auto 0;max-width:620px;color:var(--muted);font-size:14.5px;font-weight:300;line-height:1.55;text-wrap:balance}\n#p75L .tape{margin:16px auto 0;padding:0 16px;display:flex;flex-wrap:wrap;justify-content:center;gap:8px 22px;font-family:Jost,sans-serif;font-size:12.5px;letter-spacing:.04em;color:#CFCBC3}\n#p75L .tape b{font-weight:400;letter-spacing:.06em;color:#8E8A80;margin-right:4px}\n#p75L .tape i{font-style:normal;font-weight:400;color:#FF6640;margin-left:2px}\n#p75L .tape .asof{color:#8E8A80}\n#p75L .stage{position:relative;width:min(1060px,100%,calc((100svh - 310px) * 1200 / 580));margin:2vh auto 0;aspect-ratio:1200/580}\n#p75L .stage canvas,#p75L .stage svg{position:absolute;inset:0;width:100%;height:100%}\n#p75L[data-page=home] .p75main{justify-content:center;padding-bottom:4vh}\n#p75L .stage{opacity:0;transition:opacity 1.2s ease}\n#p75L .stage.on{opacity:1}\n#p75L .tape i.dn{color:#1FC8FF}\n#p75L .foot{text-align:center;color:#8E8A80;font-size:11.5px;letter-spacing:.04em;padding:14px 16px 18px;margin:0}\n@media (prefers-reduced-motion: reduce){#p75L .stage{transition:none}}";
+  var MARKUP = "<div class=\"stage\" role=\"img\" aria-label=\"A thick rope tied in a tight knot, both ends fraying\">\n<canvas id=\"p75rope\" aria-hidden=\"true\"></canvas><canvas id=\"p75fibers\" aria-hidden=\"true\"></canvas></div>\n<div class=\"hero\">\n<div class=\"kick\">Data on what moves bonds</div>\n<h1>Every bond has a <em>breaking point.</em></h1>\n<p class=\"sub\">Daily analysis, forward odds and the numbers behind every move.</p>\n<div class=\"tape\" aria-label=\"Latest Treasury readings\" hidden></div>\n</div>\n<p class=\"foot\">Built on public data from the Federal Reserve, U.S. Treasury, SEC and EIA.</p>";
+  var stopRope = null;
 
-  // ---------- Paintings, uncropped ----------
-  // Hostinger serves each cover pre-cropped to the builder's box (fit=crop, and a different crop per screen size
-  // in srcset), so on phones a painting arrives with its sides or head already cut off. Load the whole original
-  // instead; the frames above then show all of it. Re-checked every pass, as the builder swaps images.
-  var COVER_CROP = /^(https:\/\/assets\.zyrosite\.com)\/cdn-cgi\/image\/[^\/]*fit=crop[^\/]*\/(.+)$/;
-  function uncropCovers(items) {
-    [].forEach.call(items, function (it) {
-      var img = it.querySelector('img.block-blog-list-item__cover-image'); if (!img) return;
-      var m = (img.getAttribute('src') || '').match(COVER_CROP);
-      if (!m) return;
-      img.removeAttribute('srcset');
-      img.removeAttribute('sizes');
-      img.src = m[1] + '/cdn-cgi/image/format=auto,w=1200,fit=scale-down/' + m[2];
-    });
-  }
-
-  // ---------- Paintings ----------
-  function frames(list) {
-    var items = list.querySelectorAll('.block-blog-list__list > .block-blog-list-item');
-    [].forEach.call(items, function (it, i) {
-      var k = String(scaleFor(i));
-      if (it.getAttribute('data-p75k') !== k) {
-        it.style.setProperty('--p75k', k);
-        it.classList.toggle('p75sm', +k <= 0.7);
-        it.setAttribute('data-p75k', k);
+  function startRope(rc, fc) {
+    
+    var W=1200,H=580,SS=(window.innerWidth<700?1:2),TAU=Math.PI*2,S=Math.sin,K=Math.cos,PI=Math.PI;
+    var R=50;                       // rope radius (logical px)
+    var KC={x:600,y:252},KS=63;     // knot centre and scale
+    // ---------- centreline: an open trefoil (overhand knot) with two long tails ----------
+    function tref(t){return{x:KC.x+KS*(S(t)+2*S(2*t)),y:KC.y-KS*0.9*(K(t)-2*K(2*t)),z:-S(3*t)};}
+    // lowest lobe apex (largest screen y)
+    var tc=0,best=-1e9;for(var a=0;a<TAU;a+=0.001){var p=tref(a);if(p.y>best){best=p.y;tc=a;}}
+    var D=0.62,knot=[];
+    for(var tt=tc+D;tt<=tc+TAU-D;tt+=0.004)knot.push(tref(tt));
+    function bez(p0,p1,p2,p3,u){var m=1-u;return{x:m*m*m*p0.x+3*m*m*u*p1.x+3*m*u*u*p2.x+u*u*u*p3.x,y:m*m*m*p0.y+3*m*m*u*p1.y+3*m*u*u*p2.y+u*u*u*p3.y};}
+    var s0=knot[0],s1=knot[1],e0=knot[knot.length-1],e1=knot[knot.length-2];
+    function dir(a,b){var dx=b.x-a.x,dy=b.y-a.y,l=Math.hypot(dx,dy);return{x:dx/l,y:dy/l};}
+    var dS=dir(s0,s1),dE=dir(e1,e0);
+    var FL={x:165,y:426},FR={x:1035,y:406};
+    var tailL=[],tailR=[],u;
+    for(u=0;u<1;u+=0.0025){var q=bez(FL,{x:FL.x+180,y:FL.y+14},{x:s0.x-dS.x*120,y:s0.y-dS.y*120},s0,u);q.z=s0.z;tailL.push(q);}
+    for(u=0.0025;u<=1;u+=0.0025){var q2=bez(e0,{x:e0.x+dE.x*120,y:e0.y+dE.y*120},{x:FR.x-180,y:FR.y-10},FR,u);q2.z=e0.z;tailR.push(q2);}
+    var raw=tailL.concat(knot,tailR);
+    // resample evenly every 0.5px
+    var P=[raw[0]],acc=0;
+    for(var i=1;i<raw.length;i++){var a0=P[P.length-1],b0=raw[i],d=Math.hypot(b0.x-a0.x,b0.y-a0.y);
+     while(d>=0.5){var f=0.5/d;var np={x:a0.x+(b0.x-a0.x)*f,y:a0.y+(b0.y-a0.y)*f,z:a0.z+(b0.z-a0.z)*f};P.push(np);a0=np;d=Math.hypot(b0.x-a0.x,b0.y-a0.y);}}
+    var N=P.length,LEN=N*0.5;
+    for(i=0;i<N;i++){var pa=P[Math.max(0,i-3)],pb=P[Math.min(N-1,i+3)],tx=pb.x-pa.x,ty=pb.y-pa.y,tl=Math.hypot(tx,ty)||1;P[i].tx=tx/tl;P[i].ty=ty/tl;P[i].nx=-ty/tl;P[i].ny=tx/tl;P[i].s=i*0.5;}
+    // smooth z so the depth ordering changes gently
+    for(var pass=0;pass<4;pass++)for(i=1;i<N-1;i++)P[i].z=(P[i-1].z+P[i].z*2+P[i+1].z)/4;
+    
+    // ---------- raster the rope: three twisted strands, z-buffered, with ambient occlusion ----------
+    var RW=W*SS,RH=H*SS,img=new ImageData(RW,RH),px=img.data,zb=new Float32Array(RW*RH).fill(-1e9),lum=new Float32Array(RW*RH);
+    function hash(n){var x=S(n*127.1+311.7)*43758.5453;return x-Math.floor(x);}
+    var L3={x:-0.45,y:-0.6,z:0.66};var ll=Math.hypot(L3.x,L3.y,L3.z);L3.x/=ll;L3.y/=ll;L3.z/=ll;
+    var LAY=5.0*R,FRAY=105,RS=0.6*R,RHO=0.43*R,ZD=2.9*R;
+    for(var j=0;j<3;j++){
+     var phi=j*TAU/3;
+     for(i=0;i<N;i++){
+      var p=P[i],sEnd=Math.min(p.s,LEN-p.s),loose=sEnd<FRAY?Math.pow(1-sEnd/FRAY,1.7):0;
+      if(sEnd<2)continue;
+      var dphi=TAU/LAY*0.5*(1-0.9*loose);phi+=dphi;
+      var rho=RHO+loose*R*0.55,rs=RS*(1-0.22*loose);
+      var cphi=K(phi),sphi=S(phi);
+      var cx=p.x+p.nx*rho*cphi,cy=p.y+p.ny*rho*cphi,cz=p.z*ZD+rho*sphi;
+      // the strand's own screen direction (a helix seen from the side leans)
+      var lean=-rho*sphi*(dphi/0.5),stx=p.tx+p.nx*lean,sty=p.ty+p.ny*lean,sl=Math.hypot(stx,sty);stx/=sl;sty/=sl;
+      var snx=-sty,sny=stx;
+      var along=p.s*1.0+j*97;
+      for(var v=-1;v<=1;v+=0.42/rs){
+       var c=Math.sqrt(Math.max(0,1-v*v)),x=(cx+snx*v*rs)*SS|0,y=(cy+sny*v*rs)*SS|0,z=cz+rs*c;
+       // light on the strand surface
+       var nx3=snx*v,ny3=sny*v,nz3=c,dif=Math.max(0,nx3*L3.x+ny3*L3.y+nz3*L3.z);
+       var sh=0.07+0.93*dif;sh*=0.5+0.5*Math.pow(c,0.6);
+       // yarns: a finer twist the other way, plus fibre streaks and grain
+       var th=Math.asin(v),yq=5*(along/(1.25*R)-th/TAU*1.6),yu=yq-Math.floor(yq),yarn=0.74+0.26*Math.pow(S(PI*yu),0.8);
+       var streak=0.82+0.18*hash(Math.floor(v*18+0.6*S(along*0.05))+j*31+Math.floor(yq)*7);
+       for(var oy=0;oy<2;oy++)for(var ox=0;ox<2;ox++){var X=x+ox,Y=y+oy;if(X<0||Y<0||X>=RW||Y>=RH)continue;var id=Y*RW+X;
+        if(z>zb[id]){zb[id]=z;lum[id]=sh*yarn*streak*(0.9+0.2*hash(X*0.37+Y*1.91));}}
       }
-      var wrap = it.querySelector('.block-blog-list-item__cover-image-wrapper'), hook = wrap && wrap.querySelector('.p75hook');
-      if (!wrap || !hook) return;   // p75.js adds the hook first; try again on the next pass
-      var title = (it.querySelector('.block-blog-list-item__title') || {}).textContent || '';
-      var meta = it.querySelector('.p75cm');
-      if (!hook.querySelector('.p75ht')) {
-        hook.insertAdjacentHTML('afterbegin', '<div class="p75ht"><div class="m">' + (meta ? meta.innerHTML : '') + '</div><div class="t">' + esc(title) + '</div></div>');
-        var a = it.querySelector('a.block-blog-list-item__cover-image-container');
-        if (a && title) a.setAttribute('aria-label', title.trim());
-        wrap.insertAdjacentHTML('beforeend', '<span class="p75tap" aria-hidden="true">Tap to preview</span>');
-      }
-      var band = wrap.querySelector('.p75band');
-      if (it.classList.contains('p75feat') && !band) {
-        wrap.insertAdjacentHTML('beforeend', '<div class="p75band p75ht" aria-hidden="true"><div class="m">' + (meta ? meta.innerHTML : '') + '</div><div class="t">' + esc(title) + '</div></div>');
-      } else if (!it.classList.contains('p75feat') && band) band.remove();
-    });
-    return items;
+     }
+    }
+    // ambient occlusion from the depth buffer: grooves, crossings and the inside of the knot go dark
+    var dirs=[];for(var a8=0;a8<10;a8++)dirs.push([K(a8/10*TAU),S(a8/10*TAU)]);
+    for(var Y=0;Y<RH;Y++)for(var X=0;X<RW;X++){var id=Y*RW+X,z0=zb[id];if(z0<-1e8)continue;var occ=0;
+     for(var d8=0;d8<10;d8++)for(var rr=7;rr<=34;rr+=13){var X2=X+dirs[d8][0]*rr|0,Y2=Y+dirs[d8][1]*rr|0;if(X2<0||Y2<0||X2>=RW||Y2>=RH)continue;var dz=zb[Y2*RW+X2]-z0;if(dz>3)occ+=Math.min(1,dz/(R*0.9));}
+     var ao=1-0.62*Math.min(1,occ/12),g=Math.pow(lum[id]*ao,0.9)*238+8;
+     px[id*4]=px[id*4+1]=g;px[id*4+2]=g-2;px[id*4+3]=255;}
+    var off=document.createElement('canvas');off.width=RW;off.height=RH;off.getContext('2d').putImageData(img,0,0);
+    
+    // ---------- paint once into an offscreen layer: shadow, rope, stray hairs ----------
+    var dpr=Math.min(2,window.devicePixelRatio||1);
+    
+    [rc,fc].forEach(function(c){c.width=W*dpr;c.height=H*dpr;});
+    var comp=document.createElement('canvas');comp.width=W*dpr;comp.height=H*dpr;
+    var ctx=comp.getContext('2d');ctx.scale(dpr,dpr);
+    ctx.save();ctx.filter='blur(16px)';ctx.strokeStyle='rgba(0,0,0,0.85)';ctx.lineWidth=R*2;ctx.lineCap='round';ctx.lineJoin='round';
+    ctx.beginPath();for(i=0;i<N;i+=6){var sp=P[i];if(i)ctx.lineTo(sp.x+14,sp.y+22);else ctx.moveTo(sp.x+14,sp.y+22);}ctx.stroke();ctx.restore();
+    ctx.imageSmoothingQuality='high';ctx.drawImage(off,0,0,W,H);
+    ctx.lineCap='round';
+    for(i=0;i<520;i++){var sI=Math.floor(hash(i*3.1)*N),pp=P[sI],sg2=hash(i*7.7)<0.5?-1:1,ends=Math.min(pp.s,LEN-pp.s)<FRAY*1.4;
+     if(!ends&&hash(i*5.3)<0.45)continue;
+     var ang=Math.atan2(pp.ny*sg2,pp.nx*sg2)+(hash(i*9.1)-0.5)*1.6,len=4+hash(i*2.2)*(ends?20:11),ox3=pp.x+pp.nx*sg2*R*0.96,oy3=pp.y+pp.ny*sg2*R*0.96;
+     ctx.strokeStyle='rgba(205,203,198,'+(0.25+0.4*hash(i*4.4)).toFixed(2)+')';ctx.lineWidth=0.5+0.5*hash(i*6.6);
+     ctx.beginPath();ctx.moveTo(ox3,oy3);ctx.quadraticCurveTo(ox3+K(ang)*len*0.6+(hash(i)-0.5)*5,oy3+S(ang)*len*0.6,ox3+K(ang)*len,oy3+S(ang)*len);ctx.stroke();}
+    
+    // ---------- tension: the ends are drawn outward, the knot cinches, then it all eases back ----------
+    var view=rc.getContext('2d');
+    var CX=KC.x,CY=KC.y+20,INN=170,OUT=330,PULL=24,CINCH=0.045;
+    function sm(a,b,x){var t=Math.max(0,Math.min(1,(x-a)/(b-a)));return t*t*(3-2*t);}
+    function mapX(x,T){var d=x-CX,ad=Math.abs(d),w=sm(INN,OUT,ad);return x+T*((d<0?-1:1)*PULL*w-CINCH*d*(1-w));}
+    function scaleY(x,T){return 1-T*CINCH*1.2*(1-sm(INN,OUT,Math.abs(x-CX)));}
+    var STRIP=3;
+    function drawRope(T){view.setTransform(1,0,0,1,0,0);view.clearRect(0,0,rc.width,rc.height);
+     if(T<=0.0005){view.drawImage(comp,0,0);return;}
+     for(var x=0;x<W;x+=STRIP){var x0=mapX(x,T),x1=mapX(x+STRIP,T),k=scaleY(x+STRIP/2,T),hy=H*k,y0=CY-CY*k;
+      view.drawImage(comp,x*dpr,0,STRIP*dpr,H*dpr,x0*dpr,y0*dpr,(x1-x0+0.6)*dpr,hy*dpr);}}
+    
+    // ---------- frayed ends: fibres that drift, and splay a little more under strain ----------
+    var fib=[];
+    [[4,-1],[N-5,1]].forEach(function(e){var p=P[e[0]],sgn=e[1],tx2=p.tx*sgn,ty2=p.ty*sgn,base=Math.atan2(ty2,tx2);
+     for(var j=0;j<260;j++){var tuft=j%3,tv=(tuft-1)*0.8+(hash(j*1.3+e[0])-0.5)*0.5;
+      var rr=R*1.05;fib.push({side:sgn,base:base,x:p.x+p.nx*tv*rr-tx2*hash(j*8.8)*22,y:p.y+p.ny*tv*rr-ty2*hash(j*8.8)*22,
+       a:base+(tuft-1)*0.42+tv*0.25+(hash(j*2.9+e[0])-0.5)*0.6,len:24+hash(j*4.1+e[0])*(j%9===0?95:62),
+       bend:(hash(j*6.2+e[0])-0.5)*0.9,g:Math.floor(120+hash(j*3.3)*115),al:(j%9===0?0.3:0.4)+hash(j*5.5)*0.5,w:(j%9===0?0.45:0.55)+hash(j*7.1)*(j%9===0?0.4:1.0),ph:hash(j*9.9)*TAU,sp:0.25+hash(j*1.7)*0.35});}});
+    var fx=fc.getContext('2d');fx.scale(dpr,dpr);fx.lineCap='round';
+    function drawFibers(t,T){fx.clearRect(0,0,W,H);
+     for(var j=0;j<fib.length;j++){var b=fib[j],sway=0.06*S(t*b.sp+b.ph)*(b.len/90),bend=b.bend+0.12*S(t*b.sp*0.7+b.ph*1.3);
+      var ox=b.x+b.side*PULL*T,oy=b.y,a=b.base+(b.a-b.base)*(1+0.45*T)+sway,ln=b.len*(1+0.07*T);
+      var ex=ox+K(a)*ln,ey=oy+S(a)*ln,mx=ox+K(a)*ln*0.5-S(a)*ln*bend*0.5,my=oy+S(a)*ln*0.5+K(a)*ln*bend*0.5;
+      fx.strokeStyle='rgba('+b.g+','+b.g+','+(b.g-4)+','+b.al.toFixed(2)+')';fx.lineWidth=b.w;
+      fx.beginPath();fx.moveTo(ox,oy);fx.quadraticCurveTo(mx,my,ex,ey);fx.stroke();}}
+    
+    var PERIOD=10;
+    function tension(t){var c=(1-K(TAU*t/PERIOD))/2;return Math.pow(c*c*(3-2*c),1.2);}
+    drawRope(0);drawFibers(0,0);
+    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var stopped=false;
+    if(!reduce){var st=performance.now(),last=0;(function loop(now){if(stopped)return;if(now-last>=40&&!document.hidden){last=now;var t=(now-st)/1000,T=tension(t);drawRope(T);drawFibers(t,T);}requestAnimationFrame(loop);})(st);}
+    return function(){stopped=true;};
   }
 
-  // ---------- Arrows and dots (desktop and phones) ----------
-  function dots(list, items) {
-    var track = list.querySelector('.block-blog-list__list'); if (!track) return;
-    var d = list.querySelector(':scope > .p75dots'), n = items.length;
-    if (!d || +d.getAttribute('data-n') !== n) {
-      if (d) d.remove();
-      var ds = ''; for (var k = 0; k < n; k++) ds += '<button type="button" data-p75to="' + k + '" aria-label="Show essay ' + (k + 1) + ' of ' + n + '"><i></i></button>';
-      track.insertAdjacentHTML('afterend', '<div class="p75dots" data-n="' + n + '"><button type="button" data-p75go="-1" aria-label="Previous essay">&larr;</button>' +
-        '<span class="ds">' + ds + '</span><span class="n" aria-live="polite"></span>' +
-        '<button type="button" data-p75go="1" aria-label="Next essay">&rarr;</button></div>');
-      d = list.querySelector(':scope > .p75dots');
-      d.addEventListener('click', function (e) {
-        var b = e.target.closest('[data-p75go], [data-p75to]'); if (!b) return;
-        var i = b.hasAttribute('data-p75to') ? +b.getAttribute('data-p75to') : current(track) + +b.getAttribute('data-p75go');
-        goTo(track, Math.max(0, Math.min(paintings(track).length - 1, i)));
-      });
-    }
-    if (!track.getAttribute('data-p75scroll')) {
-      track.setAttribute('data-p75scroll', '1');
-      track.addEventListener('scroll', function () {
-        clearTimeout(track._p75t);
-        track._p75t = setTimeout(function () { mark(list, track); }, 60);
-        track.querySelectorAll('.p75show').forEach(function (x) { x.classList.remove('p75show'); });
-      }, { passive: true });
-    }
-    mark(list, track);
+  function withShell(cb) {
+    if (window.P75SHELL) return cb();
+    if (document.getElementById('p75shell-js')) return;
+    var s = document.createElement('script'); s.id = 'p75shell-js';
+    s.src = BASE + 'shell/shell.js?v=' + Math.floor(Date.now() / 36e5);
+    s.onload = cb; document.body.appendChild(s);
   }
-  // The paintings only: the Bond Summary window sits in the same row but isn't one of the dots
-  function paintings(track) { return track.querySelectorAll(':scope > .block-blog-list-item'); }
-  // Where each painting sits relative to the row's starting edge (paintings differ in width on desktop)
-  function offsets(track) {
-    var start = track.getBoundingClientRect().left + (parseFloat(getComputedStyle(track).paddingLeft) || 0);
-    var bw = track.querySelector(':scope > .p75bw'), shift = bw ? bw.getBoundingClientRect().width + (parseFloat(getComputedStyle(track).columnGap) || 0) : 0;
-    // with the window in front, "the first painting" is the row's resting place (window and painting both in view)
-    return [].map.call(paintings(track), function (c, k) { return c.getBoundingClientRect().left - start - (k === 0 ? shift : 0); });
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function readings(el) {
+    fetch(EDITIONS).then(function (r) { return r.json(); }).then(function (j) {
+      var e = (j.summaries || j)[0]; if (!e || !e.tape) return;
+      var h = e.tape.map(function (t) {
+        var bp = t.unit === 'bp', lv = bp ? Math.round(t.level) + 'bp' : Number(t.level).toFixed(2) + '%';
+        var d = t.d == null ? '' : (t.d > 0 ? '+' : t.d < 0 ? '\u2212' : '') + Math.abs(t.d) + 'bp';
+        return '<span><b>' + esc(t.k) + '</b> ' + lv + (d && t.d !== 0 ? ' <i class="' + (t.d < 0 ? 'dn' : 'up') + '">' + d + '</i>' : '') + '</span>';
+      }).join('');
+      var day = new Date((e.market_date || '') + 'T12:00:00');
+      var when = isNaN(day) ? '' : day.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + (e.edition === 'close' ? ' close' : '');
+      el.innerHTML = h + (when ? '<span class="asof">' + when + '</span>' : '');
+      el.hidden = false;
+    }).catch(function () {});
   }
-  function current(track) {
-    var n = paintings(track).length;
-    if (track.scrollLeft >= track.scrollWidth - track.clientWidth - 2) return n - 1;
-    var o = offsets(track), best = 0;
-    o.forEach(function (x, k) { if (Math.abs(x) < Math.abs(o[best])) best = k; });
-    return best;
+  function build() {
+    var main = window.P75SHELL.mount('home');
+    if (main.querySelector('.stage')) return;
+    if (!document.getElementById('p75home-css')) { var st = document.createElement('style'); st.id = 'p75home-css'; st.textContent = CSS; document.head.appendChild(st); }
+    main.innerHTML = MARKUP;
+    readings(main.querySelector('.tape'));
+    var stage = main.querySelector('.stage');
+    // draw the rope after the first paint, then fade it in
+    setTimeout(function () {
+      if (!document.body.contains(stage)) return;
+      stopRope = startRope(stage.querySelector('#p75rope'), stage.querySelector('#p75fibers'));
+      stage.classList.add('on');
+    }, 60);
   }
-  function goTo(track, i) {
-    var o = offsets(track)[i]; if (o == null) return;
-    track.scrollBy({ left: o, behavior: 'smooth' });
-  }
-  function mark(list, track) {
-    var d = list.querySelector(':scope > .p75dots'); if (!d) return;
-    var n = paintings(track).length, i = current(track);
-    d.querySelectorAll('.ds button').forEach(function (x, k) { x.classList.toggle('on', k === i); x.setAttribute('aria-current', k === i ? 'true' : 'false'); });
-    var lbl = (i + 1) + ' / ' + n; if (d.querySelector('.n').textContent !== lbl) d.querySelector('.n').textContent = lbl;
-  }
-
-  // ---------- Explore ----------
-  function explore(list) {
-    if (list.querySelector(':scope > .p75ex')) return;
-    list.insertAdjacentHTML('beforeend', '<nav class="p75ex" aria-label="Explore Point75"><div class="eb">Explore</div><div class="g">' +
-      // each box is the link itself (no "Open the ..." line); Pulse leads, with a live heartbeat trace
-      EXPLORE.map(function (x) { return '<a href="' + x[0] + '"' + (x[4] === 'zoom' ? ' class="live"' : '') + '><b><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + EXPLORE_ICON[x[4]] + '</svg><i class="tt" style="font-style:normal">' + x[1].replace('Market ', '<i class="lg" style="font-style:normal">Market </i>') +
-        (x[4] === 'zoom' ? ' <i class="lv" aria-hidden="true"></i>' : '') + '</i></b><span>' + x[2] + '</span><i class="ar" aria-hidden="true">›</i></a>'; }).join('') + '</div></nav>');
-  }
-
-  function render() {
-    var list = document.querySelector('.block-blog-list'); if (!list) return;
-    once();
-    list.classList.add('p75wall');
-    pulseStrip(list);
-    bondWindow(list);
-    var items = frames(list);
-    uncropCovers(items);
-    if (items.length) dots(list, items);
-    explore(list);
-    var ex = list.querySelector(':scope > .p75ex');
-    if (ex && list.lastElementChild !== ex) list.appendChild(ex);
-    spacers(list);
-  }
-  // The homepage has an empty builder section after the Journal: a ~100px blank band above the disclaimer.
-  // Hide sections after the Journal with nothing visible in them; clear() puts them back.
-  function spacers(list) {
-    var sec = list.closest('section'); if (!sec) return;
-    for (var n = sec.nextElementSibling; n; n = n.nextElementSibling) {
-      if (n.tagName !== 'SECTION' || n.getAttribute('data-p75home-hid') || getComputedStyle(n).display === 'none') continue;
-      if ((n.innerText || '').trim() || n.querySelector('img, iframe, video, canvas, svg, form')) continue;
-      n.setAttribute('data-p75home-hid', '1'); n.style.display = 'none';
-    }
-  }
+  function render() { withShell(build); }
   function clear() {
-    var top = document.querySelector('.p75top'), cta = top && top.querySelector('.p75cta');
-    if (cta) top.parentNode.insertBefore(cta, top);
-    document.querySelectorAll('.p75top, .p75ps, .p75ex, .p75dots, .p75bw').forEach(function (x) { x.remove(); });
-    var list = document.querySelector('.block-blog-list.p75wall'); if (list) list.classList.remove('p75wall');
-    document.querySelectorAll('[data-p75home-hid]').forEach(function (n) { n.style.display = ''; n.removeAttribute('data-p75home-hid'); });
+    if (stopRope) { stopRope(); stopRope = null; }
+    var r = document.getElementById('p75L');
+    if (r && r.getAttribute('data-page') === 'home' && window.P75SHELL) window.P75SHELL.unmount();
   }
-
   window.P75HOME = { render: render, clear: clear };
 })();
