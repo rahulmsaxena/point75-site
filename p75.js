@@ -1110,7 +1110,8 @@
     '/education', '/bond-introduction', '/bond-history', '/bond-types', '/cash-logistics', '/bond-dictionary', '/bond-players', '/bond-fortunes'];
   function pageNav(path, s) {
     var top = document.getElementById('p75tn'), bar = document.getElementById('p75tf');
-    if (NO_PAGE_NAV.indexOf(path) !== -1) s = null;   // pages that do without the back / next pills
+    // No back / next pills anywhere now: the header's step-up link (‹ Journal, ‹ Kinetics...) and the left menu cover it
+    s = null;
     if (!s) { if (top) top.remove(); if (bar) bar.remove(); return; }
     navCss();
     var key = path + '|' + JSON.stringify([s.prev, s.mid, s.next]);
