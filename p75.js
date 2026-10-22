@@ -2,6 +2,38 @@
    Editor's picks, "All essays" fix, Listen (read aloud), TL;DR summaries, quote-friendly copying, share row and search metadata.
    Content © Rahul Saxena. All rights reserved. */
 (function () {
+  // ---------- Preview: try a branch on the live site, in your own browser only ----------
+  // Visit any page with ?p75preview=<branch> (for example ?p75preview=landing). This browser then loads the site's
+  // scripts from that branch, until ?p75preview=off. Everyone else keeps the live scripts from main.
+  var PREVIEW = (function () {
+    try {
+      var m = location.search.match(/[?&]p75preview=([A-Za-z0-9._-]+)/);
+      if (m) { if (m[1] === 'off') localStorage.removeItem('p75preview'); else localStorage.setItem('p75preview', m[1]); }
+      return localStorage.getItem('p75preview') || '';
+    } catch (e) { return ''; }
+  })();
+  if (PREVIEW && window.P75_BRANCH !== PREVIEW) {   // this is the live copy: hand over to the branch's copy and stop
+    if (!window.P75_HANDOFF) {
+      window.P75_HANDOFF = 1; window.P75_BRANCH = PREVIEW;
+      var ps = document.createElement('script');
+      ps.src = 'https://raw.githack.com/rahulmsaxena/point75-site/' + PREVIEW + '/p75.js?v=' + Math.floor(Date.now() / 6e4);
+      ps.onerror = function () { try { localStorage.removeItem('p75preview'); } catch (e) {} location.reload(); };
+      (document.head || document.documentElement).appendChild(ps);
+    }
+    return;
+  }
+  // Page scripts load from the live site, or from the preview branch. (Data files always come from main.)
+  var BASE = PREVIEW ? 'https://raw.githack.com/rahulmsaxena/point75-site/' + PREVIEW + '/' : 'https://rahulmsaxena.github.io/point75-site/';
+  if (PREVIEW) (function badge() {
+    if (!document.body) return setTimeout(badge, 50);
+    if (document.getElementById('p75pv')) return;
+    var b = document.createElement('a'); b.id = 'p75pv'; b.href = location.pathname + '?p75preview=off';
+    b.textContent = 'Preview: ' + PREVIEW + ' \u00b7 exit';
+    b.style.cssText = 'position:fixed;left:12px;bottom:12px;z-index:2147483600;padding:8px 14px;border-radius:999px;' +
+      'background:#C9A227;color:#111214;font:600 12px/1.2 system-ui,sans-serif;letter-spacing:.04em;text-decoration:none';
+    document.body.appendChild(b);
+  })();
+
   // ---------- Settings ----------
   var TENANT_ID = 'NgvHdCEMvUY';                          // FastComments
   // Newsletter sign-up page (e.g. https://point75.substack.com). Leave empty to hide the Subscribe button.
@@ -1436,7 +1468,7 @@
     if (window.P75SEARCH) window.P75SEARCH.mount();
     else if (!document.getElementById('p75s-js')) {
       var sj = document.createElement('script'); sj.id = 'p75s-js';
-      sj.src = 'https://rahulmsaxena.github.io/point75-site/search/search.js?v=' + Math.floor(Date.now() / 36e5);
+      sj.src = BASE + 'search/search.js?v=' + Math.floor(Date.now() / 36e5);
       sj.onload = function () { window.P75SEARCH && window.P75SEARCH.mount(); };
       document.body.appendChild(sj);
     }
@@ -1503,7 +1535,7 @@
       if (window.P75HOME) window.P75HOME.render();
       else if (!document.getElementById('p75home-js')) {
         var hm = document.createElement('script'); hm.id = 'p75home-js';
-        hm.src = 'https://rahulmsaxena.github.io/point75-site/home/home.js?v=' + Math.floor(Date.now() / 36e5);
+        hm.src = BASE + 'home/home.js?v=' + Math.floor(Date.now() / 36e5);
         hm.onload = function () { update(); };
         document.body.appendChild(hm);
       }
@@ -1514,7 +1546,7 @@
       if (window.P75CONTACT) window.P75CONTACT.render();
       else if (!document.getElementById('p75contact-js')) {
         var ct = document.createElement('script'); ct.id = 'p75contact-js';
-        ct.src = 'https://rahulmsaxena.github.io/point75-site/contact/contact.js?v=' + Math.floor(Date.now() / 36e5);
+        ct.src = BASE + 'contact/contact.js?v=' + Math.floor(Date.now() / 36e5);
         ct.onload = function () { update(); };
         document.body.appendChild(ct);
       }
@@ -1526,7 +1558,7 @@
       if (window.P75START) window.P75START.render();
       else if (!document.getElementById('p75start-js')) {
         var sh = document.createElement('script'); sh.id = 'p75start-js';
-        sh.src = 'https://rahulmsaxena.github.io/point75-site/starthere/starthere.js?v=' + Math.floor(Date.now() / 36e5);
+        sh.src = BASE + 'starthere/starthere.js?v=' + Math.floor(Date.now() / 36e5);
         sh.onload = function () { update(); };
         document.body.appendChild(sh);
       }
@@ -1577,7 +1609,7 @@
       if (window.P75HUBS) window.P75HUBS.render(path, hub.node, hub.parent || null);
       else if (!document.getElementById('p75hub-js')) {
         var hj = document.createElement('script'); hj.id = 'p75hub-js';
-        hj.src = 'https://rahulmsaxena.github.io/point75-site/hubs/hubs.js?v=' + Math.floor(Date.now() / 36e5);
+        hj.src = BASE + 'hubs/hubs.js?v=' + Math.floor(Date.now() / 36e5);
         hj.onload = function () { update(); };
         document.body.appendChild(hj);
       }
@@ -1590,7 +1622,7 @@
       if (window.P75EDU) window.P75EDU.render(path);
       else if (!document.getElementById('p75edu-js')) {
         var ej = document.createElement('script'); ej.id = 'p75edu-js';
-        ej.src = 'https://rahulmsaxena.github.io/point75-site/education/education.js?v=' + Math.floor(Date.now() / 36e5);
+        ej.src = BASE + 'education/education.js?v=' + Math.floor(Date.now() / 36e5);
         ej.onload = function () { update(); };
         document.body.appendChild(ej);
       }
@@ -1602,7 +1634,7 @@
       if (window.P75PULSE) window.P75PULSE.render();
       else if (!document.getElementById('p75pulse-js')) {
         var pj = document.createElement('script'); pj.id = 'p75pulse-js';
-        pj.src = 'https://rahulmsaxena.github.io/point75-site/pulse/pulse.js?v=' + Math.floor(Date.now() / 36e5);
+        pj.src = BASE + 'pulse/pulse.js?v=' + Math.floor(Date.now() / 36e5);
         pj.onload = function () { update(); };
         document.body.appendChild(pj);
       }
@@ -1614,7 +1646,7 @@
       if (window.P75DEBT) window.P75DEBT.render();
       else if (!document.getElementById('p75debt-js')) {
         var dj = document.createElement('script'); dj.id = 'p75debt-js';
-        dj.src = 'https://rahulmsaxena.github.io/point75-site/debttrap/debttrap.js?v=' + Math.floor(Date.now() / 36e5);
+        dj.src = BASE + 'debttrap/debttrap.js?v=' + Math.floor(Date.now() / 36e5);
         dj.onload = function () { update(); };
         document.body.appendChild(dj);
       }
@@ -1629,7 +1661,7 @@
       if (window.P75INS) window.P75INS.render();
       else if (!document.getElementById('p75ins-js')) {
         var nj = document.createElement('script'); nj.id = 'p75ins-js';
-        nj.src = 'https://rahulmsaxena.github.io/point75-site/insights/insights.js?v=' + Math.floor(Date.now() / 36e5);
+        nj.src = BASE + 'insights/insights.js?v=' + Math.floor(Date.now() / 36e5);
         nj.onload = function () { update(); };
         document.body.appendChild(nj);
       }
@@ -1648,7 +1680,7 @@
       if (window.P75IND) window.P75IND.render();
       else if (!document.getElementById('p75ind-js')) {
         var ij = document.createElement('script'); ij.id = 'p75ind-js';
-        ij.src = 'https://rahulmsaxena.github.io/point75-site/indicators/indicators.js?v=' + Math.floor(Date.now() / 36e5);
+        ij.src = BASE + 'indicators/indicators.js?v=' + Math.floor(Date.now() / 36e5);
         ij.onload = function () { update(); };
         document.body.appendChild(ij);
       }
