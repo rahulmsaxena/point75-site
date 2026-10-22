@@ -43,11 +43,11 @@
   var PAGES = {
     kinetics: {
       eyebrow: 'Kinetics', title: 'The forces moving the bond market',
-      cats: [['signals', 'Signals'], ['debt', 'Debt']],
+      cats: [['debt', 'Debt'], ['signals', 'Signals']],   // A–Z: headings and the cards under them
       items: [
-        ['signals', 'Pulse', '/pulse', 'The bond market’s vital signs at a glance.', 'pulse'],
+        ['debt', 'Debt Trap', '/debt-trap', 'How much U.S. debt rolls over, and what it costs.', 'debt'],
         ['signals', 'Economic Indicators', '/economic-indicators', 'Inflation, jobs and growth: the data underneath.', 'indicators'],
-        ['debt', 'Debt Trap', '/debt-trap', 'How much U.S. debt rolls over, and what it costs.', 'debt']
+        ['signals', 'Pulse', '/pulse', 'The bond market’s vital signs at a glance.', 'pulse']
       ]
     },
     // At /bond-summary, the page that already grouped these
