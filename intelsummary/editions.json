@@ -1,6 +1,274 @@
 {
   "summaries": [
     {
+      "market_date": "2026-10-22",
+      "key": "2026-10-22",
+      "edition": "close",
+      "generated_at": "2026-10-22T23:03:58Z",
+      "as_of": "Late-session quotes (investingLive market wrap; Treasury's official curve for today not yet posted)",
+      "title": "A rush to safety drives the 10-year below 5% as AI worries and Iran strike reports hit stocks",
+      "regime": "Bull rally (belly-led)",
+      "regime_note": "Flight to safety; yields fell across the curve, most in the 5-year",
+      "conviction": "Medium",
+      "takeaway": "Treasury yields had their biggest one-day drop in over a year: the 10-year fell about 19 bp to roughly 4.96%, below 5% for the first time since September 23, and the 5-year fell about 19 bp. Investors piled into bonds as tech stocks slumped on AI-spending worries and a New York Times report that the US and Israel are weighing renewed strikes on Iran after the midterms. Oil jumped at the same time, so the bond rally was about fear for growth and markets, not about inflation easing.",
+      "tape": [
+        {
+          "k": "2Y",
+          "level": 4.65,
+          "d": -17,
+          "w": -11
+        },
+        {
+          "k": "5Y",
+          "level": 4.78,
+          "d": -19
+        },
+        {
+          "k": "10Y",
+          "level": 4.96,
+          "d": -19,
+          "w": -13
+        },
+        {
+          "k": "30Y",
+          "level": 5.29,
+          "d": -15,
+          "w": -14
+        },
+        {
+          "k": "2s10s",
+          "level": 31,
+          "d": -2,
+          "w": -2,
+          "unit": "bp",
+          "group": "Curve"
+        },
+        {
+          "k": "5s30s",
+          "level": 51,
+          "d": 4,
+          "unit": "bp",
+          "group": "Curve"
+        }
+      ],
+      "fed": {
+        "meeting": "Oct 28"
+      },
+      "cross": [
+        {
+          "k": "S&P 500",
+          "v": "−1.2%",
+          "dir": "down",
+          "read": "The index fell 93.74 points to 7,663.43 as chip and AI-linked stocks sold off; money rotated into consumer staples and other defensive sectors."
+        },
+        {
+          "k": "Nasdaq",
+          "v": "−2.6%",
+          "dir": "down",
+          "read": "The Nasdaq Composite closed at 26,008.86, its worst day since June 5, after Meta and chipmakers slumped."
+        },
+        {
+          "k": "Dow",
+          "v": "+0.02%",
+          "dir": "flat",
+          "read": "Blue chips ended flat at 52,873.28, helped by less tech-heavy sectors."
+        },
+        {
+          "k": "Brent",
+          "v": "≈$113 (+~4%)",
+          "dir": "up",
+          "read": "Crude hit its highest level since May on reports of possible renewed strikes on Iran; normally that would push yields up, but fear won out today."
+        },
+        {
+          "k": "Gold",
+          "v": "−2.9%",
+          "dir": "down",
+          "read": "Gold fell to about $4,022, so investors seeking safety chose Treasuries over metals today."
+        },
+        {
+          "k": "USD/JPY",
+          "v": "−0.8%",
+          "dir": "down",
+          "read": "The yen gained as a safe haven, and the dollar finished mixed against other currencies."
+        }
+      ],
+      "drivers": [
+        {
+          "title": "Tech sell-off on AI-spending worries sparks a rush into bonds",
+          "tags": [
+            "Risk-off",
+            "Equities"
+          ],
+          "bp": 19,
+          "of": "10Y",
+          "total": 19,
+          "what": "A Meta filing showed $825 billion of additional AI infrastructure commitments, and the stock fell about 7%. Nvidia CEO Jensen Huang told CNBC that capital to fund the AI build-out was becoming scarce. The Nasdaq fell 2.6%, its worst day since June.",
+          "why": "When stocks fall sharply, investors often sell risky assets and buy government bonds, which pushes bond prices up and yields down. Worries that AI spending is stretching company finances also raise doubts about future growth.",
+          "response": "By late morning the 10-year was down about 15 bp; it broke below 5% around midday and finished near 4.96%. The 5-year fell the most, about 19 bp.",
+          "signal": "This was a safety trade. The biggest drop came in the 5-year, the part of the curve that reflects both the Fed outlook and growth over the next few years."
+        },
+        {
+          "title": "Reports of possible renewed US–Israeli strikes on Iran",
+          "tags": [
+            "Geopolitics",
+            "Energy"
+          ],
+          "impact": "Added to safe-haven demand despite higher oil",
+          "what": "The New York Times, citing unnamed US officials, reported that the US and Israel are weighing a new round of strikes on Iran after the November 3 midterm elections. The US ordered nonessential embassy staff to leave Saudi Arabia after attacks on the country's airports and oil fields. Brent rose nearly 4% to about $113.",
+          "why": "War risk usually pushes investors toward Treasuries. Higher oil normally raises inflation fears and pushes yields up, so the two effects pull in opposite directions.",
+          "response": "Yields fell anyway: worry about the shock to markets and growth outweighed the inflation risk from oil.",
+          "signal": "The market is treating escalation risk as a threat to growth first. If oil stays above $110, inflation worries could come back once stocks settle down."
+        },
+        {
+          "title": "Jobless claims fall to a three-month low",
+          "tags": [
+            "Labor"
+          ],
+          "impact": "Did not stop the rally",
+          "what": "Initial jobless claims fell to 194,000 in the week to October 17, below the 200,000 forecast and the lowest since July. Continuing claims rose to 1.728 million.",
+          "why": "Few layoffs means a solid job market, which normally supports higher yields and further Fed rate hikes.",
+          "response": "The data came before most of the move. Yields kept falling as stocks weakened through the day.",
+          "signal": "The labor data still argues for a firm Fed, which is a reason to doubt that a fear-driven bond rally will last."
+        }
+      ],
+      "macro": [
+        {
+          "tag": "Labor",
+          "title": "Initial jobless claims (week to Oct 17)",
+          "time": "8:30 AM",
+          "actual": "194K",
+          "consensus": "200K",
+          "prior": "200K (revised from 199K)",
+          "note": "Lowest since July; four-week average 197,750."
+        },
+        {
+          "tag": "Labor",
+          "title": "Continuing claims (week to Oct 10)",
+          "time": "8:30 AM",
+          "actual": "1.728M",
+          "consensus": "1.720M",
+          "prior": "1.703M (revised)"
+        },
+        {
+          "tag": "Supply",
+          "title": "5-year TIPS auction ($26B)",
+          "actual": "2.367%",
+          "note": "High yield per an investingLive headline. This is an inflation-protected bond, so its yield is a 'real' yield after inflation."
+        },
+        {
+          "tag": "Fed",
+          "title": "Fed pricing",
+          "note": "Ahead of next week's Fed meeting, markets priced roughly a 90% chance that the Fed holds rates (Trading Economics; Yahoo Finance put it at 89%). A December hike remained the more likely outcome: Trading Economics put the odds at about 76%, and investingLive put the chance of no further hike this year at 22%. That compares with about 87% for a December hike in Wednesday's edition, although the sources differ. The Fed is in its pre-meeting quiet period."
+        }
+      ],
+      "geo": [
+        {
+          "title": "Possible renewed US–Israeli strikes on Iran",
+          "impact": "High",
+          "text": "A New York Times report said the US and Israel are weighing strikes on Iran after the November 3 midterms; Iranian officials threatened wide retaliation. Brent jumped to its highest since May, and the report added to the flight into Treasuries."
+        },
+        {
+          "title": "Attacks in Saudi Arabia and US embassy departures",
+          "impact": "Moderate",
+          "text": "The US ordered nonessential embassy personnel to leave Saudi Arabia after attacks on airports and oil fields there, which added to oil's rise."
+        }
+      ],
+      "events": [
+        {
+          "t": "8:05 AM",
+          "cat": "Equities",
+          "title": "S&P futures down about 1%, Nasdaq futures down 1.6% after overnight chip sell-off in Asia",
+          "react": "Tokyo Electron and SK Hynix fell about 6% overnight"
+        },
+        {
+          "t": "8:30 AM",
+          "cat": "Data",
+          "title": "Jobless claims 194K vs 200K expected",
+          "react": "Little lasting effect; yields kept falling"
+        },
+        {
+          "t": "Late morning",
+          "cat": "Rates",
+          "title": "10-year down about 15 bp near 4.996%; 2-year down 14 bp",
+          "react": "Oil up more than 2%; stocks lower"
+        },
+        {
+          "t": "12:48 PM",
+          "cat": "Rates",
+          "title": "10-year yield falls below 5% for the first time in a month",
+          "react": "Defensive stock sectors rally while tech sinks"
+        },
+        {
+          "t": "Afternoon",
+          "cat": "Supply",
+          "title": "$26B 5-year TIPS auction sells at 2.367%",
+          "react": "No visible disruption to the rally"
+        },
+        {
+          "t": "4:00 PM",
+          "cat": "Close",
+          "title": "S&P 500 −1.2%, Nasdaq −2.6%, Dow flat",
+          "react": "10-year near 4.96%, down about 19 bp on the day"
+        }
+      ],
+      "interpretation": {
+        "text": "Yields fell sharply across the curve while oil rose and stocks fell, which points to fear rather than relief about inflation. The 5-year and 10-year fell slightly more than the 2-year and 30-year. That suggests investors are pulling forward worries about growth and markets over the next few years, while the Fed itself is still expected to hike by December. With strong jobless claims and $113 oil working in the other direction, the rally depends on stocks staying under pressure.",
+        "change": "A rebound in tech stocks, or another spike in oil that revives inflation worries, could quickly reverse part of today's drop. An actual US strike on Iran or a deeper equity sell-off would likely push yields lower still."
+      },
+      "watch": [
+        {
+          "when": "Fri Oct 23",
+          "what": "S&P Global flash PMIs for October"
+        },
+        {
+          "when": "Wed Oct 28",
+          "what": "FOMC rate decision (markets mostly expect a hold) and the Bank of Canada decision"
+        },
+        {
+          "when": "Thu Oct 29",
+          "what": "Q3 GDP and PCE inflation; ECB decision also due next week"
+        },
+        {
+          "when": "Ongoing",
+          "what": "Iran headlines and oil prices; whether the tech sell-off spreads"
+        }
+      ],
+      "sources": [
+        {
+          "name": "investingLive: Americas FX news wrap, 22 Oct",
+          "url": "https://investinglive.com/news/investinglive-americas-fx-news-wrap-22-oct-nasdaq-sinks-as-ai-worries-bite-treasury-yields-tumble/"
+        },
+        {
+          "name": "Yahoo Finance: Stock market today, October 22, 2026",
+          "url": "https://finance.yahoo.com/markets/article/stock-market-today-thursday-october-22-dow-sp-500-nasdaq-tesla-meta-112217857.html"
+        },
+        {
+          "name": "Yahoo Finance: Oil prices top $112 on worries of Iran-US escalations",
+          "url": "https://finance.yahoo.com/markets/article/oil-price-gains-on-possible-escalation-of-iran-us-tensions-after-midterms-120738560.html"
+        },
+        {
+          "name": "Yahoo Finance (NBC News): Markets tumble as Iran war and AI spending concerns collide",
+          "url": "https://finance.yahoo.com/markets/articles/market-sell-off-gains-steam-150946423.html"
+        },
+        {
+          "name": "TheStreet Pro: Stock market today, October 22, 2026",
+          "url": "https://pro.thestreet.com/stock-market-today/2026-10-22"
+        },
+        {
+          "name": "Briefs: Treasuries rally as stocks fall, oil surges",
+          "url": "https://www.briefs.co/news/treasuries-rally-as-stocks-sell-off-and-oil-jumps/"
+        },
+        {
+          "name": "Trading Economics: US 10-year Treasury yield",
+          "url": "https://tradingeconomics.com/united-states/government-bond-yield"
+        },
+        {
+          "name": "Trading Economics: US 30-year Treasury yield",
+          "url": "https://tradingeconomics.com/united-states/30-year-bond-yield"
+        }
+      ]
+    },
+    {
       "market_date": "2026-10-21",
       "key": "2026-10-21",
       "edition": "close",
