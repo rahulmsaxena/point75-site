@@ -43,20 +43,20 @@
   var PAGES = {
     kinetics: {
       eyebrow: 'Kinetics', title: 'The forces moving the bond market',
-      cats: [['signals', 'Signals'], ['debt', 'Debt'], ['news', 'News']],
+      cats: [['signals', 'Signals'], ['debt', 'Debt']],
       items: [
         ['signals', 'Pulse', '/pulse', 'The bond market’s vital signs at a glance.', 'pulse'],
         ['signals', 'Economic Indicators', '/economic-indicators', 'Inflation, jobs and growth: the data underneath.', 'indicators'],
-        ['debt', 'Debt Trap', '/debt-trap', 'How much U.S. debt rolls over, and what it costs.', 'debt'],
-        ['news', 'News', '/news', 'Today’s bond, rates and central-bank headlines.', 'news']
+        ['debt', 'Debt Trap', '/debt-trap', 'How much U.S. debt rolls over, and what it costs.', 'debt']
       ]
     },
     // At /bond-summary, the page that already grouped these
     intelligence: {
       eyebrow: 'Intelligence', title: 'Every move, explained',
-      cats: [['daily', 'Daily read'], ['research', 'Research']],
+      cats: [['daily', 'Daily read'], ['research', 'Research']],   // News sits under Bond Summary (moved from Kinetics, Oct 2026)
       items: [
         ['daily', 'Today’s Summary', '/intelligent-summary', 'Why yields moved today, the drivers and what to watch.', 'summary'],
+        ['daily', 'News', '/news', 'Today’s bond, rates and central-bank headlines.', 'news'],
         ['research', 'Archive', '/intelligent-summary#archive', 'Every earlier daily summary, newest first.', 'archive'],
         ['research', 'Insights', '/insights', 'What the biggest voices in bonds are saying.', 'insights']
       ]

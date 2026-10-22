@@ -836,8 +836,8 @@
   var HUB_LABEL = { '/education': 'All Education guides', '/kinetics': 'All of Kinetics', '/bond-summary': 'Bond Summary overview', '/economic-indicators': 'Economic Indicators', 'https://tools.point75.io/market-intelligence': 'All dashboards' };
 
   // ---------- Sections that go deeper than the menu ----------
-  // The menu shows one level (Kinetics > Bond Summary, Debt Trap, Economic Indicators, News, Pulse). Bond Summary's two
-  // pages (Daily Summary, Insights) are cards on its landing page, so the tree lives here. Intelligence lives
+  // The menu shows one level (Kinetics > Bond Summary, Debt Trap, Economic Indicators, Pulse). Bond Summary's three
+  // pages (Daily Summary, Insights, News) are cards on its landing page, so the tree lives here. Intelligence lives
   // entirely on tools.point75.io (Sector Credit, Lenders and Credit Stress moved there in Oct 2026); intelMenu
   // adds its tools to the menu.
   // (Debt Trap's menu entry is added in hubMenus.)
@@ -848,11 +848,11 @@
     { href: '/kinetics', text: 'Kinetics', hub: true, kids: [   // A–Z, like the menu (sortMenu)
       { href: '/bond-summary', text: 'Bond Summary', hub: true, kids: [
         { href: '/intelligent-summary', text: 'Daily Summary' },
-        { href: '/insights', text: 'Insights' }
+        { href: '/insights', text: 'Insights' },
+        { href: '/news', text: 'News' }
       ] },
       { href: '/debt-trap', text: 'Debt Trap' },
       { href: '/economic-indicators', text: 'Economic Indicators' },
-      { href: '/news', text: 'News' },
       { href: '/pulse', text: 'Pulse' }
     ] }
   ];
@@ -928,6 +928,11 @@
           pl.parentNode.insertBefore(dl, pl.nextSibling);
         }
       }
+      // News moved under Bond Summary (Oct 2026); the site builder still lists it under Kinetics, so hide that entry
+      if (f.href === '/kinetics') [].slice.call(f.ul.querySelectorAll(':scope > li')).forEach(function (x) {
+        var xa = x.querySelector('a.item-content');
+        if (xa && /\/news\/?$/.test(xa.getAttribute('href') || '') && x.style.display !== 'none') x.style.display = 'none';
+      });
       if (f.href === '/kinetics') sortMenu(f.ul);
       if (!hubReady() || !f.kids.length) return;
       var has = [].slice.call(f.ul.querySelectorAll(':scope > li a.item-content')).some(function (a) { return isHub(a, f.href); });

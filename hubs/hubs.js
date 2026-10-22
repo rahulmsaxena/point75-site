@@ -24,8 +24,8 @@
 
   // Page heading and introduction per hub
   var HEAD = {
-    '/kinetics': { eyebrow: 'Kinetics', title: 'The Forces Moving the Bond Market', lede: 'Five ways in: the daily bond summary, the government’s debt bill, the economic numbers underneath, the day’s news and the market’s pulse. Pick where you’d like to start.' },
-    '/bond-summary': { eyebrow: 'Kinetics', title: 'Bond Summary', lede: 'The Treasury market day by day: the daily summary of why yields moved, and what the big bond investors are saying.' }
+    '/kinetics': { eyebrow: 'Kinetics', title: 'The Forces Moving the Bond Market', lede: 'Four ways in: the daily bond summary and the day’s news, the government’s debt bill, the economic numbers underneath and the market’s pulse. Pick where you’d like to start.' },
+    '/bond-summary': { eyebrow: 'Kinetics', title: 'Bond Summary', lede: 'The Treasury market day by day: the daily summary of why yields moved, the day’s headlines, and what the big bond investors are saying.' }
   };
 
   var CSS =
