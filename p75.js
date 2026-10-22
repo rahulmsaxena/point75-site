@@ -1535,7 +1535,7 @@
 
     // Every page but home and the Journal: the new header (Menu, logo, Sign in) and left menu across the top, in
     // place of the builder's header (shell/shell.js), so the menu and the way home are always one click away
-    if (path !== '/' && path !== '/journal') {
+    if (path !== '/' && path !== '/journal' && path !== '/kinetics') {
       if (window.P75SHELL) window.P75SHELL.bar();
       else if (!document.getElementById('p75shell-js')) {
         var sj2 = document.createElement('script'); sj2.id = 'p75shell-js';
@@ -1568,6 +1568,19 @@
       }
       return;
     } else if (window.P75JOURNAL) window.P75JOURNAL.clear();
+
+    // Kinetics (/kinetics): a catalog page, categories on the left and a card with a painting for each page,
+    // drawn by catalog/catalog.js (the same model as tools.point75.io's Tools and Outlook pages)
+    if (path === '/kinetics') {
+      if (window.P75CATALOG) window.P75CATALOG.render('kinetics');
+      else if (!document.getElementById('p75catalog-js')) {
+        var cj = document.createElement('script'); cj.id = 'p75catalog-js';
+        cj.src = BASE + 'catalog/catalog.js?v=' + Math.floor(Date.now() / 36e5);
+        cj.onload = function () { update(); };
+        document.body.appendChild(cj);
+      }
+      return;
+    } else if (window.P75CATALOG) window.P75CATALOG.clear('kinetics');
 
     // Contact (/contact) is drawn by contact/contact.js into a blank Hostinger page
     if (path === '/contact') {
