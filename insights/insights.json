@@ -1,6 +1,6 @@
 {
-  "updated": "2026-10-20",
-  "window": "Sep 4 – Oct 18, 2026",
+  "updated": "2026-10-22",
+  "window": "Sep 4 – Oct 21, 2026",
   "hero": {
     "src": "https://rahulmsaxena.github.io/point75-site/insights/hero.jpg",
     "small": "https://rahulmsaxena.github.io/point75-site/insights/hero-sm.jpg",
@@ -10,13 +10,13 @@
   "headline": "What the biggest voices in bonds are saying",
   "mood": "Cautious vigilance",
   "bigPicture": [
-    "The shared view among the market’s leading voices is that the era of cheap money is over. The Federal Reserve raised rates in September because inflation has been above its 2% goal for more than five years, and minutes released Oct 7 show most officials expect another hike by year end. Consumer prices rose 3.7% in the year to September, a hotter reading than expected. The 10-year Treasury yield touched about 5.35% on Oct 7, its highest level since 2002, then eased to about 5.1% by Oct 16 as a stock selloff sent investors into Treasuries.",
-    "The pressure comes from supply as much as inflation. Federal debt has passed $40 trillion, the government keeps borrowing heavily, and traditional foreign buyers such as Japan and China are buying fewer Treasuries. Ray Dalio says the U.S. is nearing the limit of how much debt it can carry and that the bond bear market probably has a long way to go, and several of these investors say that makes buy-and-hold in long-term bonds riskier than it used to be.",
-    "They are not all bearish on bonds. BlackRock’s Rick Rieder sees today’s yields as an opportunity, especially in shorter-term bonds, though PIMCO’s Dan Ivascyn warns the 10-year yield could still reach 6% and expects the Fed to hold this month, then probably raise rates once more this year. Treasury Secretary Scott Bessent blames September’s jump in inflation on an energy shock from the Iran conflict and says prices will come down once it is over. Gundlach warns that long-term Treasuries may not protect investors the way they used to, Dalio is betting against bonds and holding gold instead, and Bill Gross now says not to own bonds at all, apart from one-year Treasury bills."
+    "The shared view among the market’s leading voices is that the era of cheap money is over. The Federal Reserve raised rates in September because inflation has been above its 2% goal for more than five years, and minutes released Oct 7 show most officials expect another hike by year end. Consumer prices rose 3.7% in the year to September, a hotter reading than expected. The 10-year Treasury yield touched about 5.35% on Oct 7, its highest level since 2002, then eased to about 5.1% by Oct 16 as a stock selloff sent investors into Treasuries, and was still near 5.1% on Oct 20.",
+    "The pressure comes from supply as much as inflation. Federal debt has passed $40 trillion, the government keeps borrowing heavily, and traditional foreign buyers such as Japan and China are buying fewer Treasuries. Turmoil in France’s bond market, where 10-year yields topped 5% on Oct 22, is a reminder that the pressure is global, though for now it is sending some safe-haven money into Treasuries. Ray Dalio says the U.S. is nearing the limit of how much debt it can carry and that the bond bear market probably has a long way to go, and several of these investors say that makes buy-and-hold in long-term bonds riskier than it used to be.",
+    "They are not all bearish on bonds. BlackRock’s Rick Rieder calls today’s yields on high-quality, shorter-term bonds a historic opportunity and names investment-grade corporate bonds his top pick, though PIMCO’s Dan Ivascyn warns the 10-year yield could still reach 6% and expects the Fed to hold this month, then probably raise rates once more this year. Treasury Secretary Scott Bessent blames September’s jump in inflation on an energy shock from the Iran conflict, says prices will come down once it is over, and does not expect France’s troubles to spill over to the U.S. Gundlach warns that long-term Treasuries may not protect investors the way they used to, Dalio is betting against bonds and holding gold instead, and Bill Gross now says not to own bonds at all, apart from one-year Treasury bills."
   ],
   "agree": ["Rates will stay higher for longer", "Government debt is the core pressure on yields", "Quality matters more than chasing extra yield"],
   "differ": [
-    ["Long-term Treasuries are starting to look worth owning", "Capital Group and Rieder (in small amounts)"],
+    ["High-quality bonds now pay enough to be worth owning", "Rieder (shorter-term, investment-grade)"],
     ["Long-term Treasuries may not be a safe haven next time", "Gundlach, Dalio, Gross"]
   ],
   "voices": [
@@ -33,14 +33,14 @@
     },
     {
       "name": "Scott Bessent", "role": "U.S. Treasury Secretary", "initials": "SB", "theme": "Blames an energy shock",
-      "when": "Oct 18, 2026", "where": "NBC’s Meet the Press",
+      "when": "Oct 18–20, 2026", "where": "NBC’s Meet the Press; 2Way livestream",
       "points": [
-        "He said September’s hotter inflation reading was an energy shock tied to the Iran conflict, not a sign of broad price pressure.",
-        "He argued that core inflation, which leaves out food and energy, had been very flat before September and had fallen four months in a row.",
-        "He said prices should come down once the U.S. gets to the other side of the Iran conflict, but that whether gas prices fall by the new year depends on how it goes."
+        "On Oct 20 he said he does not expect France’s bond-market turmoil to spill over to the U.S., and that money is flowing out of some countries of concern and into Treasuries as a safe haven.",
+        "On Oct 18 he said September’s hotter inflation reading was an energy shock tied to the Iran conflict, not a sign of broad price pressure, noting that core inflation, which leaves out food and energy, had fallen four months in a row.",
+        "He said prices, and mortgage rates, should come down once the energy shock fades, and that the government is considering ending the conservatorship of Fannie Mae and Freddie Mac within the next year or two."
       ],
       "quote": "We have an energy shock.",
-      "sources": [["Benzinga, Oct 18", "https://www.benzinga.com/markets/economic-data/26/10/62430283/scott-bessent-blames-energy-shock-hot-inflation"], ["The Eastern Herald, Oct 18", "https://easternherald.com/2026/10/18/bessent-own-economy-energy-shock-inflation/"]]
+      "sources": [["BigGo Finance (2Way livestream), Oct 20", "https://finance.biggo.com/news/3259e04c-c2af-4a33-91c3-41007ecfc22c"], ["Benzinga, Oct 18", "https://www.benzinga.com/markets/economic-data/26/10/62430283/scott-bessent-blames-energy-shock-hot-inflation"], ["The Eastern Herald, Oct 18", "https://easternherald.com/2026/10/18/bessent-own-economy-energy-shock-inflation/"]]
     },
     {
       "name": "Mohamed El-Erian", "role": "Economist; former PIMCO CEO", "initials": "ME", "theme": "Buyers are drifting away",
@@ -50,7 +50,7 @@
         "He sees the core problem as a fiscal imbalance with no political appetite to fix it, which keeps upward pressure on borrowing costs for households and businesses.",
         "He also cautions that investors anchored to a decade of ultra-low yields may be reacting to today’s levels with more fear than the fundamentals justify."
       ],
-      "quote": "It has much more to do with fundamental imbalance than inflation or Fed credibility.",
+      "quote": "It has much more to do with a fundamental imbalance…",
       "sources": [["CNBC, Sep 4", "https://www.cnbc.com/2026/09/04/el-erian-government-bond-selloff.html"], ["Benzinga, Sep 24", "https://www.benzinga.com/markets/bonds/26/09/61968162/bond-market-alarm-bells-are-ringing-but-mohamed-el-erian-says-psychology-may-be-fueling-the-fear-more-than-fundamentals"], ["Summary of Oct 1 post", "https://gokhshtein.com/news/2026-10-01-mohamed-el-erian-says-upward-pressure-dominates-bond-yields"]]
     },
     {
@@ -87,15 +87,15 @@
       "sources": [["Yahoo Finance (Stocktwits), Oct 13", "https://finance.yahoo.com/economy/policy/articles/ray-dalio-cautions-us-treasury-185817789.html"], ["The Standard, Oct 14", "https://www.thestandard.com.hk/finance/article/345493/Ray-Dalio-warns-US-bond-selloff-has-long-way-to-go"], ["TheStreet (Bloomberg TV interview), Oct 6", "https://www.thestreet.com/crypto/markets/billionaire-ray-dalio-reveals-deadline-for-u-s-debt-crisis"]]
     },
     {
-      "name": "Rick Rieder", "role": "CIO of Global Fixed Income, BlackRock", "initials": "RR", "theme": "Bonds are back",
-      "when": "Sep 16 – Oct 8, 2026", "where": "CNBC; Bloomberg Surveillance",
+      "name": "Rick Rieder", "role": "CIO of Global Fixed Income, BlackRock", "initials": "RR", "theme": "A historic opportunity",
+      "when": "Oct 21, 2026", "where": "CNBC interview on his fourth-quarter outlook",
       "points": [
-        "On Oct 8 he said short-term bonds at the front of the yield curve are still very attractive, a way to keep income high while keeping price swings down, and that he is positioned for a hawkish Fed, one leaning toward more rate hikes.",
-        "He has turned more cautious on U.S. stocks and has started adding a little in long-term Treasuries.",
-        "He warns that every 1-point rise in rates adds about $100 billion a year to government interest costs, which eventually has to pull rates back down."
+        "On Oct 21 he called today’s yields on high-quality bonds historic: a diversified portfolio with under three years of duration and an average A- rating could yield over 7%, levels usually seen only in an economic or default crisis, which he says this is not.",
+        "Investment-grade corporate bonds are now his top pick, including debt from cash-rich tech giants such as Alphabet, Amazon, Meta and Oracle, but he is cautious about lower-rated credit and data-center debt they don’t back.",
+        "He expects the Fed to raise rates in December but disagrees, saying higher rates hurt housing, credit cards and auto loans while doing little to slow tech spending, and warns that heavy AI bond issuance is starting to crowd out other borrowers."
       ],
-      "quote": "Still very attractive.",
-      "sources": [["Bloomberg via Yahoo Finance, Oct 8", "https://finance.yahoo.com/video/blackrocks-rieder-yield-curve-federal-131036567.html"], ["Whatfinger (Bloomberg Surveillance), Oct 8", "https://money.whatfinger.com/2026/10/08/blackrocks-rieder-says-front-end-of-yield-curve-still-very-attractive/"], ["Benzinga (corrected), Sep 16", "https://www.benzinga.com/markets/bonds/26/09/61811344/blackrocks-rick-rieder-turns-cautious-on-us-stocks-warns-40-trillion-debt-is-becoming-a-compoundingproblem"]]
+      "quote": "So you don’t really have to worry about defaults of any significance.",
+      "sources": [["10bmnews (CNBC interview), Oct 22", "https://10bmnews.com/blackrocks-rick-rieder-sees-historic-opportunity-in-high-quality-bonds/"], ["investingLive, Oct 21", "https://investinglive.com/stock-market-update/blackrock-s-rieder-sees-historic-opportunity-in-high-grade-bonds-including-hyperscalers/"], ["KuCoin (CoinDesk), Oct 21", "https://www.kucoin.com/news/flash/blackrock-s-rick-rieder-hails-historic-opportunity-in-high-quality-bonds"]]
     },
     {
       "name": "Dan Ivascyn", "role": "Group CIO, PIMCO", "initials": "DI", "theme": "6% is possible",
