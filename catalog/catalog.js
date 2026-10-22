@@ -40,6 +40,7 @@
   };
 
   var CSS = [
+    '#p75L[data-page=kinetics] .p75main{min-height:auto}',
     '#p75L .cat-page{flex:1;min-height:0;display:flex;flex-direction:column;width:100%;max-width:1560px;margin:0 auto;padding:6px 46px 10px;font-family:Jost,system-ui,sans-serif;color:#F3F0EA}',
     '#p75L .cat-hd{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;padding-bottom:16px}',
     '#p75L .cat-eb{font-size:12.5px;letter-spacing:.3em;text-transform:uppercase;color:#E6BD3C}',
@@ -56,7 +57,7 @@
     '#p75L .cat-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 36px}',
     '#p75L .cat-card{min-width:0}',
     '#p75L .cat-card>a{display:flex;flex-direction:column;color:inherit;text-decoration:none}',
-    '#p75L .cat-pic{display:flex;align-items:center;justify-content:center;height:clamp(150px,calc((100svh - 470px) / 2),300px);border-radius:6px;background:radial-gradient(ellipse at 50% 60%,#1D1E22 0%,#121316 72%);overflow:hidden}',
+    '#p75L .cat-pic{display:flex;align-items:center;justify-content:center;height:clamp(110px,calc((100svh - 535px) / 2),300px);border-radius:6px;background:radial-gradient(ellipse at 50% 60%,#1D1E22 0%,#121316 72%);overflow:hidden}',
     '#p75L .cat-pic img{max-height:100%;max-width:100%;width:auto;height:auto;display:block;box-shadow:0 10px 30px rgba(0,0,0,.55);transition:transform .6s ease}',
     '#p75L .cat-card>a:hover .cat-pic img{transform:scale(1.03)}',
     '#p75L .cat-tag{margin-top:14px;font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;color:#E6BD3C}',
@@ -72,7 +73,7 @@
     '#p75L .cat-side ul{display:flex;padding:0 16px;gap:8px;width:max-content}#p75L .cat-side li{border:0}',
     '#p75L .cat-side button{min-height:44px;padding:0 16px;border:1px solid #34363C;border-radius:999px;font-size:12.5px;letter-spacing:.14em;white-space:nowrap}',
     '#p75L .cat-side button[aria-pressed=true]{border-color:#E6BD3C;background:rgba(230,189,60,.1)}#p75L .cat-side svg{display:none}',
-    '#p75L .cat-grid{grid-template-columns:1fr 1fr;gap:18px 12px}#p75L .cat-pic{height:clamp(96px,calc((100svh - 470px) / 3),170px)}',
+    '#p75L .cat-grid{grid-template-columns:1fr 1fr;gap:18px 12px}#p75L .cat-pic{height:clamp(84px,calc((100svh - 640px) / 3),150px)}',
     '#p75L .cat-card h2{font-size:14.5px;letter-spacing:.08em}#p75L .cat-line{font-size:13px}#p75L .cat-tag{margin-top:10px;font-size:10.5px;letter-spacing:.18em}#p75L .cat-art{display:none}}'
   ].join('\n');
 
