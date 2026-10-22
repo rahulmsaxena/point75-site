@@ -167,5 +167,78 @@
     var r = document.getElementById('p75L');
     if (r && r.getAttribute('data-page') === key && window.P75SHELL) window.P75SHELL.unmount();
   }
-  window.P75CATALOG = { render: render, clear: clear, pages: PAGES, at: AT };
+
+  // ---------- The page's painting beside the page (Kinetics, Intelligence and Education pages) ----------
+  // Fixed down the left on screens 1200px and wider (the page moves over to make room), click to enlarge;
+  // none on smaller screens. Same as tools.point75.io's tool pages.
+  var MEANING = {
+    pulse: 'Two doctor saints take the pulse of a sick woman. Pulse does the same for the bond market: a quick read of its vital signs before anything else.',
+    indicators: 'Thomas would not believe until he saw the evidence for himself. Economic indicators are that evidence: the data underneath the story.',
+    debt: 'Penelope weaves by day and unpicks by night, so the work is never done. A debt trap works the same way: new borrowing undoes the repaying.',
+    news: 'An angel brings the news to shepherds in the fields, and everything changes. Markets live on the same moment: the headline that arrives before anyone is ready.',
+    summary: 'Jerome at his desk, reading and writing in the quiet of his study. The daily summary is that desk: the day’s moves, read carefully and set down plainly.',
+    insights: 'The young Christ debates the learned elders of the temple. Insights weighs what the biggest voices in bonds are saying, and where they disagree.',
+    intro: 'An old man and his grandson: the oldest kind of lesson. The introduction starts there, with what a bond is, from the beginning.',
+    types: 'Saints set out rank by rank around the throne. Bonds are ranked the same way, from Treasuries and AAA down to D.',
+    dictionary: 'A young Florentine with his finger keeping the place in a book. The dictionary is that book, for the language of bonds.',
+    cash: 'Tobias travels with the angel Raphael to collect a debt owed to his father, and brings the money home. Cash Logistics follows $1,000 on the same round trip.',
+    players: 'Three sisters at the chessboard, every move watched. The bond market is a game of the same kind: who holds what, and who moves next.',
+    history: 'Roman soldiers parade the trophies and bullion of conquest. The history of bonds is the history of how states paid for wars like these.',
+    fortunes: 'A calm path to virtue on one side, a storm and a broken tree on the other. The bond market’s fortunes have taken both roads.'
+  };
+  // Page path -> painting, from the catalog cards (the Archive card is the summary page itself, so it is left out)
+  var PLATE_AT = {};
+  Object.keys(PAGES).forEach(function (k) { PAGES[k].items.forEach(function (it) { if (it[2].indexOf('#') < 0) PLATE_AT[it[2]] = it[4]; }); });
+  var PCSS = [
+    'html.p75P-on main.page .page__blocks{margin-left:300px}',
+    '@media (min-width:1600px){html.p75P-on main.page .page__blocks{margin-left:340px}}',
+    '#p75P{position:fixed;left:28px;top:104px;width:252px;max-height:calc(100vh - 124px);overflow:auto;z-index:50;font-family:Jost,system-ui,sans-serif;color:#F3F0EA;scrollbar-width:none}',
+    '#p75P::-webkit-scrollbar{display:none}',
+    '@media (min-width:1600px){#p75P{width:288px;left:32px}}',
+    '#p75P .pic{position:relative;display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in}',
+    '#p75P .pic img{display:block;width:100%;height:auto;max-height:calc(100vh - 340px);object-fit:contain;object-position:left top;box-shadow:0 10px 30px rgba(0,0,0,.5)}',
+    '#p75P .zoom{position:absolute;right:8px;bottom:8px;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:rgba(10,11,12,.7);color:#F3F0EA;opacity:.75}',
+    '#p75P .pic:hover .zoom{opacity:1}#p75P .zoom svg{width:15px;height:15px}',
+    '#p75P .t,#p75B .t{margin:12px 0 0;font-family:"Hedvig Letters Serif",Georgia,serif;font-size:17px;line-height:1.3;font-style:italic;color:#F3F0EA}',
+    '#p75P .a,#p75B .a{margin:3px 0 0;font-size:13.5px;color:#E6BD3C}',
+    '#p75P .c,#p75B .c{margin:2px 0 0;font-size:12px;color:#A9A397}',
+    '#p75B .c a{color:#D6D1C7}',
+    '#p75P .m,#p75B .m{margin:10px 0 0;padding-top:10px;border-top:1px solid #2A2B30;font-size:14.5px;line-height:1.55;color:#D6D1C7}',
+    '@media (max-width:1199px){#p75P{display:none}html.p75P-on main.page .page__blocks{margin-left:0}}',
+    '#p75B{width:min(1500px,96vw);max-width:none;max-height:94vh;margin:auto;padding:0;border:0;background:transparent;color:#F3F0EA;font-family:Jost,system-ui,sans-serif}',
+    '#p75B::backdrop{background:rgba(6,7,8,.92)}',
+    '#p75B .in{display:flex;gap:32px;align-items:center;justify-content:center}',
+    '#p75B .in>img{display:block;max-width:calc(96vw - 380px);max-height:90vh;width:auto;height:auto;box-shadow:0 20px 60px rgba(0,0,0,.6)}',
+    '#p75B .txt{flex:none;width:300px}',
+    '#p75B .x{position:fixed;top:18px;right:22px;display:grid;place-items:center;width:44px;height:44px;border:1px solid #3A3B40;border-radius:50%;background:#0D0E10;color:#F3F0EA;cursor:pointer}',
+    '#p75B .x:hover{color:#FFD23F;border-color:#FFD23F}#p75B .x svg{width:20px;height:20px}'
+  ].join('\n');
+  function credit(a, key, withSource) {
+    return '<p class="t">' + esc(a[1]) + '</p><p class="a">' + esc(a[2]) + '</p><p class="c">' + esc(a[3]) + ' · ' + esc(a[4]) +
+      (withSource ? ' · <a href="https://commons.wikimedia.org/wiki/File:' + a[5] + '" target="_blank" rel="noopener">Source</a>' : '') + '</p>' +
+      (MEANING[key] ? '<p class="m">' + esc(MEANING[key]) + '</p>' : '');
+  }
+  function plate(path) {
+    var key = PLATE_AT[path], el = document.getElementById('p75P');
+    if (!key || !ART[key]) { if (el) el.remove(); var bx = document.getElementById('p75B'); if (bx) bx.remove(); document.documentElement.classList.remove('p75P-on'); return; }
+    if (el && el.getAttribute('data-k') === key) return;
+    if (el) el.remove();
+    if (!document.getElementById('p75plate-css')) { var st = document.createElement('style'); st.id = 'p75plate-css'; st.textContent = PCSS; document.head.appendChild(st); }
+    var a = ART[key], src = WM + a[0];
+    el = document.createElement('aside'); el.id = 'p75P'; el.setAttribute('data-k', key); el.setAttribute('aria-label', 'The painting for this page');
+    el.innerHTML = '<button type="button" class="pic" aria-label="Enlarge the painting: ' + esc(a[1]) + '"><img src="' + src + '" alt="" decoding="async">' +
+      '<span class="zoom" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M9.5 2.5h4v4M13.5 2.5 9 7M6.5 13.5h-4v-4M2.5 13.5 7 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>' +
+      credit(a, key, false);
+    document.body.appendChild(el);
+    document.documentElement.classList.add('p75P-on');
+    var box = document.getElementById('p75B'); if (box) box.remove();
+    box = document.createElement('dialog'); box.id = 'p75B'; box.setAttribute('aria-label', a[1]);
+    box.innerHTML = '<div class="in"><img src="' + src + '" alt=""><div class="txt">' + credit(a, key, true) + '</div>' +
+      '<button type="button" class="x" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>';
+    document.body.appendChild(box);
+    el.querySelector('.pic').addEventListener('click', function () { if (box.showModal) box.showModal(); });
+    box.querySelector('.x').addEventListener('click', function () { box.close(); });
+    box.addEventListener('click', function (e) { if (e.target === box) box.close(); });
+  }
+  window.P75CATALOG = { render: render, clear: clear, pages: PAGES, at: AT, plate: plate, plateAt: PLATE_AT };
 })();
