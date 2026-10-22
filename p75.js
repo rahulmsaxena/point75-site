@@ -1106,7 +1106,8 @@
     return ' href="' + escH(navHref(s, it)) + '" title="' + escH(it.title || it.text) + '" aria-label="' + escH(it.title || it.text) + '"' + (s.frame ? ' data-hash="' + escH(it.hash) + '"' : '');
   }
   // Pages that do without the back / next pills. Kinetics pages: the left menu and the header's "‹ Kinetics" cover it.
-  var NO_PAGE_NAV = ['/insights', '/kinetics', '/pulse', '/debt-trap', '/economic-indicators', '/news', '/intelligent-summary', '/bond-summary'];
+  var NO_PAGE_NAV = ['/insights', '/kinetics', '/pulse', '/debt-trap', '/economic-indicators', '/news', '/intelligent-summary', '/bond-summary',
+    '/education', '/bond-introduction', '/bond-history', '/bond-types', '/cash-logistics', '/bond-dictionary', '/bond-players', '/bond-fortunes'];
   function pageNav(path, s) {
     var top = document.getElementById('p75tn'), bar = document.getElementById('p75tf');
     if (NO_PAGE_NAV.indexOf(path) !== -1) s = null;   // pages that do without the back / next pills
@@ -1188,7 +1189,8 @@
     var sib = document.getElementById('p75sib');
     // Kinetics pages (top row) and tabbed sections (tab strip) have their own navigation: no bottom cards there.
     // They stay on reading sequences such as the Education guides.
-    if (!fam || HUB_BACK.indexOf(fam.href) > -1 || TABBED.indexOf(fam.href) > -1) { if (sib) sib.remove(); return; }
+    // Education guides too: the header's "‹ Education" and the left menu cover it.
+    if (!fam || HUB_BACK.indexOf(fam.href) > -1 || TABBED.indexOf(fam.href) > -1 || fam.href === '/education') { if (sib) sib.remove(); return; }
     var host = document.querySelector(PAGE_HOSTS);
     if (!host) return;                                   // bottom links wait until the page has drawn
     var parent = host.parentNode;
@@ -1536,7 +1538,8 @@
 
     // Every page but home and the Journal: the new header (Menu, logo, Sign in) and left menu across the top, in
     // place of the builder's header (shell/shell.js), so the menu and the way home are always one click away
-    if (path !== '/' && path !== '/journal' && path !== '/kinetics') {
+    var CATALOG_AT = { '/kinetics': 'kinetics', '/bond-summary': 'intelligence', '/education': 'education' };
+    if (path !== '/' && path !== '/journal' && !CATALOG_AT[path]) {
       if (window.P75SHELL) window.P75SHELL.bar();
       else if (!document.getElementById('p75shell-js')) {
         var sj2 = document.createElement('script'); sj2.id = 'p75shell-js';
@@ -1570,10 +1573,10 @@
       return;
     } else if (window.P75JOURNAL) window.P75JOURNAL.clear();
 
-    // Kinetics (/kinetics): a catalog page, categories on the left and a card with a painting for each page,
+    // Catalog pages (Kinetics, Intelligence at /bond-summary, Education): categories on the left and a card with a painting for each page,
     // drawn by catalog/catalog.js (the same model as tools.point75.io's Tools and Outlook pages)
-    if (path === '/kinetics') {
-      if (window.P75CATALOG) window.P75CATALOG.render('kinetics');
+    if (CATALOG_AT[path]) {
+      if (window.P75CATALOG) window.P75CATALOG.render(CATALOG_AT[path]);
       else if (!document.getElementById('p75catalog-js')) {
         var cj = document.createElement('script'); cj.id = 'p75catalog-js';
         cj.src = BASE + 'catalog/catalog.js?v=' + Math.floor(Date.now() / 36e5);
@@ -1581,7 +1584,7 @@
         document.body.appendChild(cj);
       }
       return;
-    } else if (window.P75CATALOG) window.P75CATALOG.clear('kinetics');
+    } else if (window.P75CATALOG) ['kinetics', 'intelligence', 'education'].forEach(function (k) { window.P75CATALOG.clear(k); });
 
     // Contact (/contact) is drawn by contact/contact.js into a blank Hostinger page
     if (path === '/contact') {

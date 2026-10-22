@@ -1,4 +1,4 @@
-/* Point75 catalog pages (now /kinetics): categories down the left, a card per page on the right, each with its own
+/* Point75 catalog pages (/kinetics; Intelligence at /bond-summary; /education): categories down the left, a card per page on the right, each with its own
    Italian Renaissance painting (public domain or CC0 from the holding museum), its name and one line. The same
    model as tools.point75.io's Tools and Outlook pages. Picking a category filters in place (?c= in the address).
    Header, left menu and footer from shell/shell.js. Fits one screen: the pictures size to the window.
@@ -21,26 +21,65 @@
     indicators: ['5/54/Cima_da_Conegliano_London_NG_Incredulita_STommaso_1504.jpg/1280px-Cima_da_Conegliano_London_NG_Incredulita_STommaso_1504.jpg',
       'The Incredulity of Saint Thomas', 'Cima da Conegliano, c. 1502–1504', 'National Gallery, London', 'Public domain', 'Cima_da_Conegliano_London_NG_Incredulita_STommaso_1504.jpg'],
     debt: ['b/b7/Penelope_with_the_Suitors_-_Pinturicchio_(National_Gallery).jpg/1280px-Penelope_with_the_Suitors_-_Pinturicchio_(National_Gallery).jpg',
-      'Penelope with the Suitors', 'Pinturicchio, c. 1509', 'National Gallery, London', 'Public domain', 'Penelope_with_the_Suitors_-_Pinturicchio_(National_Gallery).jpg']
+      'Penelope with the Suitors', 'Pinturicchio, c. 1509', 'National Gallery, London', 'Public domain', 'Penelope_with_the_Suitors_-_Pinturicchio_(National_Gallery).jpg'],
+    archive: ['2/20/Lorenzo_Lotto_-_Andrea_Odoni_(1488-1545)_-_Google_Art_Project.jpg/1280px-Lorenzo_Lotto_-_Andrea_Odoni_(1488-1545)_-_Google_Art_Project.jpg',
+      'Andrea Odoni', 'Lorenzo Lotto, 1527', 'Royal Collection', 'Public domain', 'Lorenzo_Lotto_-_Andrea_Odoni_(1488-1545)_-_Google_Art_Project.jpg'],
+    intro: ['c/c4/Ghirlandaio,_Domenico_-_An_Old_Man_and_His_Grandson_-_Louvre_-_Google_Art_Project.jpg/1280px-Ghirlandaio,_Domenico_-_An_Old_Man_and_His_Grandson_-_Louvre_-_Google_Art_Project.jpg',
+      'An Old Man and His Grandson', 'Domenico Ghirlandaio, c. 1490', 'Musée du Louvre, Paris', 'Public domain', 'Ghirlandaio,_Domenico_-_An_Old_Man_and_His_Grandson_-_Louvre_-_Google_Art_Project.jpg'],
+    types: ['a/ad/Lorenzo_Monaco,_Coronation_of_the_Virgin,_1409,_London_NG.jpg/1280px-Lorenzo_Monaco,_Coronation_of_the_Virgin,_1409,_London_NG.jpg',
+      'The Coronation of the Virgin', 'Lorenzo Monaco, 1409', 'National Gallery, London', 'Public domain', 'Lorenzo_Monaco,_Coronation_of_the_Virgin,_1409,_London_NG.jpg'],
+    dictionary: ['d/d4/Bronzino_(Agnolo_di_Cosimo_di_Mariano)_-_Portrait_of_a_Young_Man_-_The_Metropolitan_Museum_of_Art.jpg/1280px-Bronzino_(Agnolo_di_Cosimo_di_Mariano)_-_Portrait_of_a_Young_Man_-_The_Metropolitan_Museum_of_Art.jpg',
+      'Portrait of a Young Man', 'Bronzino, 1530s', 'The Metropolitan Museum of Art, New York', 'Public domain', 'Bronzino_(Agnolo_di_Cosimo_di_Mariano)_-_Portrait_of_a_Young_Man_-_The_Metropolitan_Museum_of_Art.jpg'],
+    cash: ['1/15/Workshop_of_Andrea_del_Verrocchio._Tobias_and_the_Angel._33x26cm._1470-75._NG_London.jpg/1280px-Workshop_of_Andrea_del_Verrocchio._Tobias_and_the_Angel._33x26cm._1470-75._NG_London.jpg',
+      'Tobias and the Angel', 'Workshop of Andrea del Verrocchio, c. 1470–1475', 'National Gallery, London', 'Public domain', 'Workshop_of_Andrea_del_Verrocchio._Tobias_and_the_Angel._33x26cm._1470-75._NG_London.jpg'],
+    players: ['3/3c/The_Chess_Game_(Sofonisba_Anguissola)_1555_(4096x3236px).jpg/1280px-The_Chess_Game_(Sofonisba_Anguissola)_1555_(4096x3236px).jpg',
+      'The Chess Game', 'Sofonisba Anguissola, 1555', 'National Museum, Poznań', 'Public domain', 'The_Chess_Game_(Sofonisba_Anguissola)_1555_(4096x3236px).jpg'],
+    history: ['a/a2/Andrea_Mantegna_(1431-1506)_-_The_Triumphs_of_Caesar,_3._The_Bearers_of_Trophies_and_Bullion_-_RCIN_403960_-_Royal_Collection.jpg/1280px-Andrea_Mantegna_(1431-1506)_-_The_Triumphs_of_Caesar,_3._The_Bearers_of_Trophies_and_Bullion_-_RCIN_403960_-_Royal_Collection.jpg',
+      'The Triumphs of Caesar: Bearers of Trophies and Bullion', 'Andrea Mantegna, c. 1484–1492', 'Royal Collection, Hampton Court', 'Public domain', 'Andrea_Mantegna_(1431-1506)_-_The_Triumphs_of_Caesar,_3._The_Bearers_of_Trophies_and_Bullion_-_RCIN_403960_-_Royal_Collection.jpg'],
+    fortunes: ['a/a6/Lorenzo_Lotto,_Allegory_of_Virtue_and_Vice,_1505,_NGA_297.jpg/1280px-Lorenzo_Lotto,_Allegory_of_Virtue_and_Vice,_1505,_NGA_297.jpg',
+      'Allegory of Virtue and Vice', 'Lorenzo Lotto, 1505', 'National Gallery of Art, Washington', 'CC0', 'Lorenzo_Lotto,_Allegory_of_Virtue_and_Vice,_1505,_NGA_297.jpg']
   };
 
   var PAGES = {
     kinetics: {
       eyebrow: 'Kinetics', title: 'The forces moving the bond market',
-      cats: [['daily', 'Daily read'], ['signals', 'Signals'], ['debt', 'Debt']],
+      cats: [['signals', 'Signals'], ['debt', 'Debt'], ['news', 'News']],
       items: [
-        ['daily', 'Daily Summary', '/intelligent-summary', 'Why yields moved today, the drivers and what to watch.', 'summary'],
-        ['daily', 'News', '/news', 'Today’s bond, rates and central-bank headlines.', 'news'],
-        ['daily', 'Insights', '/insights', 'What the biggest voices in bonds are saying.', 'insights'],
         ['signals', 'Pulse', '/pulse', 'The bond market’s vital signs at a glance.', 'pulse'],
         ['signals', 'Economic Indicators', '/economic-indicators', 'Inflation, jobs and growth: the data underneath.', 'indicators'],
-        ['debt', 'Debt Trap', '/debt-trap', 'How much U.S. debt rolls over, and what it costs.', 'debt']
+        ['debt', 'Debt Trap', '/debt-trap', 'How much U.S. debt rolls over, and what it costs.', 'debt'],
+        ['news', 'News', '/news', 'Today’s bond, rates and central-bank headlines.', 'news']
+      ]
+    },
+    // At /bond-summary, the page that already grouped these
+    intelligence: {
+      eyebrow: 'Intelligence', title: 'Every move, explained',
+      cats: [['daily', 'Daily read'], ['research', 'Research']],
+      items: [
+        ['daily', 'Today’s Summary', '/intelligent-summary', 'Why yields moved today, the drivers and what to watch.', 'summary'],
+        ['research', 'Archive', '/intelligent-summary#archive', 'Every earlier daily summary, newest first.', 'archive'],
+        ['research', 'Insights', '/insights', 'What the biggest voices in bonds are saying.', 'insights']
+      ]
+    },
+    education: {
+      eyebrow: 'Education', title: 'Learn the language of bonds',
+      cats: [['basics', 'Basics'], ['market', 'The market'], ['stories', 'Stories']],
+      items: [
+        ['basics', 'Introduction', '/bond-introduction', 'What a bond is, and why its price moves when rates change.', 'intro'],
+        ['basics', 'Classification', '/bond-types', 'Treasuries, corporates, mortgage bonds, and ratings from AAA to D.', 'types'],
+        ['basics', 'Bond Dictionary', '/bond-dictionary', 'Bond terms in everyday language, from basis points to yield curves.', 'dictionary'],
+        ['market', 'Cash Logistics', '/cash-logistics', 'Follow $1,000 from your account to the borrower and back.', 'cash'],
+        ['market', 'The Players', '/bond-players', 'Who owns the national debt, and the giants who move the market.', 'players'],
+        ['stories', 'A Short History', '/bond-history', 'From clay tablets to a $40 trillion debt.', 'history'],
+        ['stories', 'Fortunes Made and Lost', '/bond-fortunes', 'The bond market’s greatest wins and wipeouts.', 'fortunes']
       ]
     }
   };
+  // Which catalog a path shows
+  var AT = { '/kinetics': 'kinetics', '/bond-summary': 'intelligence', '/education': 'education' };
 
   var CSS = [
-    '#p75L[data-page=kinetics] .p75main{min-height:auto}',
+    '#p75L:is([data-page=kinetics],[data-page=intelligence],[data-page=education]) .p75main{min-height:auto}',
     '#p75L .cat-page{flex:1;min-height:0;display:flex;flex-direction:column;width:100%;max-width:1560px;margin:0 auto;padding:6px 46px 10px;font-family:Jost,system-ui,sans-serif;color:#F3F0EA}',
     '#p75L .cat-hd{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;padding-bottom:16px}',
     '#p75L .cat-eb{font-size:12.5px;letter-spacing:.3em;text-transform:uppercase;color:#E6BD3C}',
@@ -128,5 +167,5 @@
     var r = document.getElementById('p75L');
     if (r && r.getAttribute('data-page') === key && window.P75SHELL) window.P75SHELL.unmount();
   }
-  window.P75CATALOG = { render: render, clear: clear, pages: PAGES };
+  window.P75CATALOG = { render: render, clear: clear, pages: PAGES, at: AT };
 })();
