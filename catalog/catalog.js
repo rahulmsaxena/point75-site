@@ -53,12 +53,12 @@
     // At /bond-summary, the page that already grouped these
     intelligence: {
       eyebrow: 'Intelligence', title: 'Every move, explained',
-      cats: [['daily', 'Daily read'], ['research', 'Research']],   // News sits under Bond Summary (moved from Kinetics, Oct 2026)
+      cats: [['daily', 'Daily read'], ['news', 'News'], ['history', 'History']],   // News sits under Bond Summary (moved from Kinetics, Oct 2026)
       items: [
         ['daily', 'Today’s Summary', '/intelligent-summary', 'Why yields moved today, the drivers and what to watch.', 'summary'],
-        ['daily', 'News', '/news', 'Today’s bond, rates and central-bank headlines.', 'news'],
-        ['research', 'Archive', '/intelligent-summary#archive', 'Every earlier daily summary, newest first.', 'archive'],
-        ['research', 'Insights', '/insights', 'What the biggest voices in bonds are saying.', 'insights']
+        ['news', 'News', '/news', 'Today’s bond, rates and central-bank headlines.', 'news'],
+        ['history', 'Archive', '/intelligent-summary#archive', 'Every earlier daily summary, newest first.', 'archive'],
+        ['history', 'Insights', '/insights', 'What the biggest voices in bonds are saying.', 'insights']
       ]
     },
     education: {
