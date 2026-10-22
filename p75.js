@@ -1532,6 +1532,18 @@
     // the rest of the site: cream text tones, Manrope + Hedvig type, one label style, and a clear search bar.
     if (path === '/news') polishNews();
 
+    // Every page but home and the Journal: the new header (Menu, logo, Sign in) and left menu across the top, in
+    // place of the builder's header (shell/shell.js), so the menu and the way home are always one click away
+    if (path !== '/' && path !== '/journal') {
+      if (window.P75SHELL) window.P75SHELL.bar();
+      else if (!document.getElementById('p75shell-js')) {
+        var sj2 = document.createElement('script'); sj2.id = 'p75shell-js';
+        sj2.src = BASE + 'shell/shell.js?v=' + Math.floor(Date.now() / 36e5);
+        sj2.onload = function () { update(); };
+        document.body.appendChild(sj2);
+      }
+    }
+
     // Homepage (/): Pulse strip, the salon-wall gallery (one painting at a time on phones) and Explore,
     // drawn by home/home.js on top of the Journal cards decorated above
     if (path === '/') {
