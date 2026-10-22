@@ -190,6 +190,7 @@
   var PLATE_AT = {};
   Object.keys(PAGES).forEach(function (k) { PAGES[k].items.forEach(function (it) { if (it[2].indexOf('#') < 0) PLATE_AT[it[2]] = it[4]; }); });
   var PCSS = [
+    'html.p75P-on,html.p75P-on body,html.p75P-on main.page{background:#111214!important}',
     'html.p75P-on main.page .page__blocks{margin-left:300px}',
     '@media (min-width:1600px){html.p75P-on main.page .page__blocks{margin-left:340px}}',
     '#p75P{position:fixed;left:28px;top:104px;width:252px;max-height:calc(100vh - 124px);overflow:auto;z-index:50;font-family:Jost,system-ui,sans-serif;color:#F3F0EA;scrollbar-width:none}',
