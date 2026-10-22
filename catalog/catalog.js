@@ -1,4 +1,4 @@
-/* Point75 catalog pages (/kinetics; Intelligence at /bond-summary; /education): categories down the left, a card per page on the right, each with its own
+/* Point75 catalog pages (/kinetics; Briefings at /bond-summary; /education): categories down the left, a card per page on the right, each with its own
    Italian Renaissance painting (public domain or CC0 from the holding museum), its name and one line. The same
    model as tools.point75.io's Tools and Outlook pages. Picking a category filters in place (?c= in the address).
    Header, left menu and footer from shell/shell.js. Fits one screen: the pictures size to the window.
@@ -51,9 +51,9 @@
         ['news', 'News', '/news', 'Today’s bond, rates and central-bank headlines.', 'news']
       ]
     },
-    // At /bond-summary, the page that already grouped these
+    // Briefings, at /bond-summary (the page that already grouped these)
     intelligence: {
-      eyebrow: 'Intelligence', title: 'Every move, explained',
+      eyebrow: 'Briefings', title: 'Every move, explained',
       cats: [['daily', 'Daily read'], ['research', 'Research']],
       items: [
         ['daily', 'Today’s Summary', '/intelligent-summary', 'Why yields moved today, the drivers and what to watch.', 'summary'],
