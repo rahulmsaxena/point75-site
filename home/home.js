@@ -1,7 +1,7 @@
 /* Point75 home page (/): the rope. A thick three-strand rope tied in a tight knot, both ends worn and slowly coming
    undone, almost imperceptibly drawn tight and eased over thirty seconds, seen through three frames side by side
    (thin page-coloured gaps cut it into a triptych; the middle one, 30%–70% of the width, holds the whole knot), under a quiet caption and today's Treasury readings (from intelsummary/editions.json).
-   Every two seconds it trades places with a second picture under the same frames (a newborn's hand wrapped around a parent's
+   Every five seconds it trades places with a second picture under the same frames (a newborn's hand wrapped around a parent's
    finger, "Some bonds are priceless."); see startSlides().
    The header and the left menu come from shell/shell.js. Everything draws in a full-screen layer over the site
    builder's page. p75.js calls render() about once a second, so it is safe to run repeatedly.
@@ -160,7 +160,7 @@
     return function(){stopped=true;};
   }
 
-  // The slideshow: the rope (the main picture) and the hands ("Some bonds are priceless") take turns every two
+  // The slideshow: the rope (the main picture) and the hands ("Some bonds are priceless") take turns every five
   // seconds under the same three frames, each with its own caption. Hovering or focusing the picture holds it;
   // the round button pauses it; with reduced motion it starts paused on the rope.
   var SLIDES = [
@@ -192,7 +192,7 @@
     art.addEventListener('focusin', function () { hold = true; });
     art.addEventListener('focusout', function () { hold = false; });
     label();
-    timer = setInterval(tick, 2000);
+    timer = setInterval(tick, 5000);
     return stop;
   }
 
