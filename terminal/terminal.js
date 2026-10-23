@@ -19,6 +19,7 @@
   var TONE = { good: '#1FC8FF', warn: '#FFB224', bad: '#FF6640', gold: '#FFD23F', neutral: '#F3F0EA' };
   var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   var PRICE = '$15';   // point75-tools config/membership.ts PRICES.monthly.early
+  var OPEN = true;     // point75-tools config/membership.ts OPEN_ACCESS: no "Members" labels while everything is open
 
   // The free commands answered on this site, and what each one offers next (as the answer service would)
   var S = function (code, help) { return { code: code, title: code, help: help, access: 'free', kind: 'link' }; };
@@ -39,7 +40,7 @@
   };
   // Shown before the answer service has replied (the same starters it returns for an empty prompt)
   var STARTERS = ['NVDA', 'CMP MSFT GOOGL', 'TOP STRAIN', 'LIQ', '10Y', 'AI SPEND', 'RATES'].map(function (c) {
-    var s = S(c, HELP[c] || ''); if (c === 'NVDA' || c === 'CMP MSFT GOOGL' || c === 'TOP STRAIN') s.access = 'members'; return s;
+    var s = S(c, HELP[c] || ''); if (!OPEN && (c === 'NVDA' || c === 'CMP MSFT GOOGL' || c === 'TOP STRAIN')) s.access = 'members'; return s;
   });
 
   /* ---------- small helpers ---------- */
@@ -383,7 +384,7 @@
         l.map(function (s, i) {
           return '<li id="p75T-o' + i + '" role="option" aria-selected="' + (i === st.active) + '"' + (i === st.active ? ' class="on"' : '') + ' data-run="' + esc(s.code) + '">' +
             '<span class="p75t-sc">' + esc(s.code) + '</span><span class="p75t-sh">' + esc(s.help) + '</span>' +
-            '<span class="p75t-sk">' + (s.access === 'members' ? 'Members' : s.kind === 'page' ? 'Page' : 'Free') + '</span></li>';
+            '<span class="p75t-sk">' + (s.access === 'members' && !OPEN ? 'Members' : s.kind === 'page' ? 'Page' : 'Free') + '</span></li>';
         }).join('') + '</ul></div>';
     } else if (t && st.sugg && st.sugg.q === t) {
       h = '<p class="p75t-none">Nothing starts with that. Press ↵ to try it anyway, or type HELP.</p>';
