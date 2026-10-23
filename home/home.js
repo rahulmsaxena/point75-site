@@ -1,6 +1,8 @@
 /* Point75 home page (/): the rope. A thick three-strand rope tied in a tight knot, both ends worn and slowly coming
    undone, almost imperceptibly drawn tight and eased over thirty seconds, seen through three frames side by side
    (thin page-coloured gaps cut it into a triptych; the middle one, 30%–70% of the width, holds the whole knot), under a quiet caption and today's Treasury readings (from intelsummary/editions.json).
+   Every two seconds it trades places with a second picture under the same frames (a child's hand gripping a parent's
+   little finger, "Some bonds are priceless."); see startSlides().
    The header and the left menu come from shell/shell.js. Everything draws in a full-screen layer over the site
    builder's page. p75.js calls render() about once a second, so it is safe to run repeatedly.
    Built from the landing mock (Point75-BusinessPlan/landing/rope-hero.html). (c) Rahul Saxena. All rights reserved. */
@@ -8,9 +10,9 @@
   if (window.P75HOME) return;
   var BASE = window.P75BASE || 'https://rahulmsaxena.github.io/point75-site/';
   var EDITIONS = 'https://rahulmsaxena.github.io/point75-site/intelsummary/editions.json?v=' + Math.floor(Date.now() / 36e5);
-  var CSS = "#p75L .hero{text-align:center;padding:12px 16px 0}\n#p75L .kick{font-size:12.5px;font-weight:400;letter-spacing:.34em;text-transform:uppercase;color:#E6BD3C}\n#p75L h1{margin:8px 0 0;font-family:'Hedvig Letters Serif',Georgia,serif;font-weight:400;font-size:clamp(24px,2.6vw,34px);line-height:1.2;letter-spacing:-.01em;color:#F6F3EC}\n#p75L h1 em{font-style:normal;color:#F2C94C}\n#p75L .sub{margin:6px auto 0;max-width:620px;color:var(--muted);font-size:16px;font-weight:400;line-height:1.55;text-wrap:balance}\n#p75L .first{display:inline-flex;align-items:center;gap:10px;min-height:44px;margin:14px auto 0;padding:0 20px 0 8px;border:1px solid #C9A227;border-radius:999px;color:#F2D27A;font-size:14.5px;font-weight:600;letter-spacing:.02em;text-decoration:none;transition:background .15s,color .15s}\n#p75L .first b{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#C9A227;color:#111214;font-size:12px;font-weight:800;letter-spacing:.06em}\n#p75L .first:hover{background:rgba(201,162,39,.14);color:#fff}\n#p75L .first:focus-visible{outline:3px solid #F2D27A;outline-offset:3px}\n@media (prefers-reduced-motion: reduce){#p75L .first{transition:none}}\n#p75L .tape{margin:10px auto 0;padding:0 16px;display:flex;flex-wrap:wrap;justify-content:center;gap:8px 22px;font-family:Jost,sans-serif;font-size:14px;letter-spacing:.04em;color:#F6F3EC}\n#p75L .tape b{font-weight:400;letter-spacing:.06em;color:#B9B3A7;margin-right:4px}\n#p75L .tape i{font-style:normal;font-weight:400;color:#FF6640;margin-left:2px}\n#p75L .tape .asof{color:#B9B3A7}\n#p75L .stage{position:relative;width:min(1360px,100%,calc((100svh - 340px) * 1200 / 580));margin:0 auto;aspect-ratio:1200/580}\n#p75L .stage canvas,#p75L .stage svg{position:absolute;inset:0;width:100%;height:100%}\n#p75L .stage .frames{position:absolute;inset:0;pointer-events:none;--gap:clamp(5px,0.9%,10px);--a:30%;--b:70%;background:linear-gradient(90deg,transparent calc(var(--a) - var(--gap)/2),var(--bg) 0,var(--bg) calc(var(--a) + var(--gap)/2),transparent 0,transparent calc(var(--b) - var(--gap)/2),var(--bg) 0,var(--bg) calc(var(--b) + var(--gap)/2),transparent 0)}\n#p75L .stage .frames span{position:absolute;top:0;bottom:0}\n#p75L .stage .frames span:nth-child(1){left:0;right:calc(100% - var(--a) + var(--gap)/2)}\n#p75L .stage .frames span:nth-child(2){left:calc(var(--a) + var(--gap)/2);right:calc(100% - var(--b) + var(--gap)/2)}\n#p75L .stage .frames span:nth-child(3){left:calc(var(--b) + var(--gap)/2);right:0}\n@media (max-width:700px){#p75L .stage{width:calc(100% - 24px)}}\n#p75L .stage .frames span{border:1px solid rgba(201,164,58,.45);border-radius:3px;box-shadow:inset 0 0 40px rgba(0,0,0,.35)}\n#p75L[data-page=home] .p75main{justify-content:center;padding-bottom:1vh}\n#p75L[data-page=home] .p75foot{padding:2px 16px 8px}\n#p75L[data-page=home] .p75foot .own,#p75L[data-page=home] .p75foot .note{display:none}\n#p75L[data-page=home] .p75foot .mini{display:block;font-size:11px;color:#8E897F;letter-spacing:.03em;overflow:visible}\n#p75L[data-page=home] .p75foot.open .own,#p75L[data-page=home] .p75foot.open .note{display:block;font-size:11.5px;color:#B9B3A7;margin-top:4px}\n#p75L .p75more{background:none;border:0;padding:0 2px;color:#B9B3A7;font:inherit;letter-spacing:inherit;text-decoration:underline;text-decoration-color:#55575e;text-underline-offset:2px;cursor:pointer}\n#p75L .p75more:hover,#p75L .p75more:focus-visible{color:#F3F0EA}\n#p75L .p75more:after{content:' \\25BE'}#p75L .p75foot.open .p75more:after{content:' \\25B4'}\n#p75L .stage{opacity:0;transition:opacity 1.2s ease}\n#p75L .stage.on{opacity:1}\n#p75L .tape i.dn{color:#1FC8FF}\n#p75L .foot{text-align:center;color:#CFCAC0;font-size:13px;letter-spacing:.04em;padding:14px 16px 18px;margin:0}\n@media (prefers-reduced-motion: reduce){#p75L .stage{transition:none}}";
-  var MARKUP = "<div class=\"stage\" role=\"img\" aria-label=\"A thick rope tied in a tight knot, both ends fraying\">\n<canvas id=\"p75rope\" aria-hidden=\"true\"></canvas><canvas id=\"p75fibers\" aria-hidden=\"true\"></canvas><div class=\"frames\" aria-hidden=\"true\"><span></span><span></span><span></span></div></div>\n<div class=\"hero\">\n<div class=\"kick\">Data on what moves bonds</div>\n<h1>Every bond has a <em>breaking point.</em></h1>\n<p class=\"sub\">Daily analysis, forward odds and the numbers behind every move.</p>\n<a class=\"first\" href=\"/guide\"><b>1st</b>Read this first: how to use Point75 &rsaquo;</a>\n<div class=\"tape\" aria-label=\"Latest Treasury readings\" hidden></div>\n</div>";
-  var stopRope = null;
+  var CSS = "#p75L .hero{text-align:center;padding:12px 16px 0}\n#p75L .kick{font-size:12.5px;font-weight:400;letter-spacing:.34em;text-transform:uppercase;color:#E6BD3C}\n#p75L h1{margin:8px 0 0;font-family:'Hedvig Letters Serif',Georgia,serif;font-weight:400;font-size:clamp(24px,2.6vw,34px);line-height:1.2;letter-spacing:-.01em;color:#F6F3EC}\n#p75L h1 em{font-style:normal;color:#F2C94C}\n#p75L .sub{margin:6px auto 0;max-width:620px;color:var(--muted);font-size:16px;font-weight:400;line-height:1.55;text-wrap:balance}\n#p75L .first{display:inline-flex;align-items:center;gap:10px;min-height:44px;margin:14px auto 0;padding:0 20px 0 8px;border:1px solid #C9A227;border-radius:999px;color:#F2D27A;font-size:14.5px;font-weight:600;letter-spacing:.02em;text-decoration:none;transition:background .15s,color .15s}\n#p75L .first b{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#C9A227;color:#111214;font-size:12px;font-weight:800;letter-spacing:.06em}\n#p75L .first:hover{background:rgba(201,162,39,.14);color:#fff}\n#p75L .first:focus-visible{outline:3px solid #F2D27A;outline-offset:3px}\n@media (prefers-reduced-motion: reduce){#p75L .first{transition:none}}\n#p75L .tape{margin:10px auto 0;padding:0 16px;display:flex;flex-wrap:wrap;justify-content:center;gap:8px 22px;font-family:Jost,sans-serif;font-size:14px;letter-spacing:.04em;color:#F6F3EC}\n#p75L .tape b{font-weight:400;letter-spacing:.06em;color:#B9B3A7;margin-right:4px}\n#p75L .tape i{font-style:normal;font-weight:400;color:#FF6640;margin-left:2px}\n#p75L .tape .asof{color:#B9B3A7}\n#p75L .stage{position:relative;width:min(1360px,100%,calc((100svh - 340px) * 1200 / 580));margin:0 auto;aspect-ratio:1200/580}\n#p75L .stage canvas,#p75L .stage svg{position:absolute;inset:0;width:100%;height:100%}\n#p75L .stage .frames{position:absolute;inset:0;pointer-events:none;--gap:clamp(5px,0.9%,10px);--a:30%;--b:70%;background:linear-gradient(90deg,transparent calc(var(--a) - var(--gap)/2),var(--bg) 0,var(--bg) calc(var(--a) + var(--gap)/2),transparent 0,transparent calc(var(--b) - var(--gap)/2),var(--bg) 0,var(--bg) calc(var(--b) + var(--gap)/2),transparent 0)}\n#p75L .stage .frames span{position:absolute;top:0;bottom:0}\n#p75L .stage .frames span:nth-child(1){left:0;right:calc(100% - var(--a) + var(--gap)/2)}\n#p75L .stage .frames span:nth-child(2){left:calc(var(--a) + var(--gap)/2);right:calc(100% - var(--b) + var(--gap)/2)}\n#p75L .stage .frames span:nth-child(3){left:calc(var(--b) + var(--gap)/2);right:0}\n@media (max-width:700px){#p75L .stage{width:calc(100% - 24px)}}\n#p75L .stage .frames span{border:1px solid rgba(201,164,58,.45);border-radius:3px;box-shadow:inset 0 0 40px rgba(0,0,0,.35)}\n#p75L[data-page=home] .p75main{justify-content:center;padding-bottom:1vh}\n#p75L[data-page=home] .p75foot{padding:2px 16px 8px}\n#p75L[data-page=home] .p75foot .own,#p75L[data-page=home] .p75foot .note{display:none}\n#p75L[data-page=home] .p75foot .mini{display:block;font-size:11px;color:#8E897F;letter-spacing:.03em;overflow:visible}\n#p75L[data-page=home] .p75foot.open .own,#p75L[data-page=home] .p75foot.open .note{display:block;font-size:11.5px;color:#B9B3A7;margin-top:4px}\n#p75L .p75more{background:none;border:0;padding:0 2px;color:#B9B3A7;font:inherit;letter-spacing:inherit;text-decoration:underline;text-decoration-color:#55575e;text-underline-offset:2px;cursor:pointer}\n#p75L .p75more:hover,#p75L .p75more:focus-visible{color:#F3F0EA}\n#p75L .p75more:after{content:' \\25BE'}#p75L .p75foot.open .p75more:after{content:' \\25B4'}\n#p75L .stage{opacity:0;transition:opacity 1.2s ease}\n#p75L .stage.on{opacity:1}\n#p75L .tape i.dn{color:#1FC8FF}\n#p75L .foot{text-align:center;color:#CFCAC0;font-size:13px;letter-spacing:.04em;padding:14px 16px 18px;margin:0}\n#p75L .stage .art{position:absolute;inset:0}\n#p75L .stage .slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .7s ease}\n#p75L .stage.s2 .slide{opacity:1}\n#p75L .stage .frames span{transition:border-color .7s ease}\n#p75L .stage.s2 .frames span{border-color:rgba(222,184,72,.8)}\n@keyframes p75in{from{opacity:0}to{opacity:1}}\n#p75L .hero.swap .kick,#p75L .hero.swap h1{animation:p75in .6s ease}\n#p75L .stage .pause{position:absolute;right:10px;bottom:10px;z-index:2;width:44px;height:44px;display:flex;align-items:center;justify-content:center;padding:0;line-height:0;border:1px solid rgba(201,164,58,.45);border-radius:50%;background:rgba(12,13,15,.6);color:#F2D27A;cursor:pointer;opacity:.7;transition:opacity .2s}\n#p75L .stage .pause:hover,#p75L .stage .pause:focus-visible{opacity:1}\n#p75L .stage .pause:focus-visible{outline:3px solid #F2D27A;outline-offset:3px}\n#p75L .stage .pause svg{display:block;width:16px;height:16px;margin:auto}\n@media (prefers-reduced-motion: reduce){#p75L .stage .slide,#p75L .stage .frames span{transition:none}#p75L .hero.swap .kick,#p75L .hero.swap h1{animation:none}}\n@media (prefers-reduced-motion: reduce){#p75L .stage{transition:none}}";
+  var MARKUP = "<div class=\"stage\">\n<div class=\"art\" role=\"img\" aria-label=\"A thick rope tied in a tight knot, both ends fraying\"><canvas id=\"p75rope\" aria-hidden=\"true\"></canvas><canvas id=\"p75fibers\" aria-hidden=\"true\"></canvas><img class=\"slide\" src=\"" + BASE + "images/home-priceless.jpg\" alt=\"\" aria-hidden=\"true\" decoding=\"async\"><div class=\"frames\" aria-hidden=\"true\"><span></span><span></span><span></span></div></div><button type=\"button\" class=\"pause\" aria-label=\"Pause slideshow\"></button></div>\n<div class=\"hero\">\n<div class=\"kick\">Data on what moves bonds</div>\n<h1>Every bond has a <em>breaking point.</em></h1>\n<p class=\"sub\">Daily analysis, forward odds and the numbers behind every move.</p>\n<a class=\"first\" href=\"/guide\"><b>1st</b>Read this first: how to use Point75 &rsaquo;</a>\n<div class=\"tape\" aria-label=\"Latest Treasury readings\" hidden></div>\n</div>";
+  var stopRope = null, stopSlides = null;
 
   // The rope, drawn at a run of tensions from slack to taut. Slack: the knot's loops open wide and the strands
   // lie in a tight twist. Taut: the ends are hauled outward, the loops cinch in and the strands stretch and
@@ -158,6 +160,42 @@
     return function(){stopped=true;};
   }
 
+  // The slideshow: the rope (the main picture) and the hands ("Some bonds are priceless") take turns every two
+  // seconds under the same three frames, each with its own caption. Hovering or focusing the picture holds it;
+  // the round button pauses it; with reduced motion it starts paused on the rope.
+  var SLIDES = [
+    { kick: 'Data on what moves bonds', h1: 'Every bond has a <em>breaking point.</em>', alt: 'A thick rope tied in a tight knot, both ends fraying' },
+    { kick: 'The ones we hold onto', h1: 'Some bonds are <em>priceless.</em>', alt: "A child's small hand gripping a parent's little finger" }
+  ];
+  var ICON_PAUSE = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="2.5" width="3" height="11" rx="1" fill="currentColor"/><rect x="9.5" y="2.5" width="3" height="11" rx="1" fill="currentColor"/></svg>';
+  var ICON_PLAY = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 2.8v10.4a.6.6 0 0 0 .9.5l8.2-5.2a.6.6 0 0 0 0-1L5.4 2.3a.6.6 0 0 0-.9.5z" fill="currentColor"/></svg>';
+  function startSlides(stage, hero) {
+    var art = stage.querySelector('.art'), btn = stage.querySelector('.pause'), img = stage.querySelector('.slide');
+    var kick = hero.querySelector('.kick'), h1 = hero.querySelector('h1');
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var idx = 0, paused = !!reduce, hold = false, timer = null;
+    function label() { btn.innerHTML = paused ? ICON_PLAY : ICON_PAUSE; btn.setAttribute('aria-label', paused ? 'Play slideshow' : 'Pause slideshow'); }
+    function show(i) {
+      idx = i; stage.classList.toggle('s2', i === 1); art.setAttribute('aria-label', SLIDES[i].alt);
+      kick.textContent = SLIDES[i].kick; h1.innerHTML = SLIDES[i].h1;
+      hero.classList.remove('swap'); void hero.offsetWidth; hero.classList.add('swap');
+    }
+    function tick() {
+      if (!document.body.contains(stage)) { stop(); return; }
+      if (paused || hold || document.hidden || !img.complete || !img.naturalWidth) return;
+      show(1 - idx);
+    }
+    function stop() { clearInterval(timer); }
+    btn.addEventListener('click', function () { paused = !paused; label(); });
+    stage.addEventListener('mouseenter', function () { hold = true; });
+    stage.addEventListener('mouseleave', function () { hold = false; });
+    art.addEventListener('focusin', function () { hold = true; });
+    art.addEventListener('focusout', function () { hold = false; });
+    label();
+    timer = setInterval(tick, 2000);
+    return stop;
+  }
+
   function withShell(cb) {
     if (window.P75SHELL) return cb();
     if (document.getElementById('p75shell-js')) return;
@@ -199,11 +237,13 @@
       if (!document.body.contains(stage)) return;
       stopRope = startRope(stage.querySelector('#p75rope'), stage.querySelector('#p75fibers'));
       stage.classList.add('on');
+      stopSlides = startSlides(stage, main.querySelector('.hero'));
     }, 60);
   }
   function render() { withShell(build); }
   function clear() {
     if (stopRope) { stopRope(); stopRope = null; }
+    if (stopSlides) { stopSlides(); stopSlides = null; }
     var r = document.getElementById('p75L');
     if (r && r.getAttribute('data-page') === 'home' && window.P75SHELL) window.P75SHELL.unmount();
   }
