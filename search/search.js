@@ -1,5 +1,6 @@
 /* Point75 site search. Loaded on every page by p75.js. Index: search/index.json (built by tools/build_search.py).
-   Adds a "Search" button to the header (and to the top of the mobile menu); "/" also opens it. Nothing opens on its own.
+   Adds a "Search" button to the header (and to the top of the mobile menu); "/" opens it only where the
+   Point75 Terminal hasn't loaded (the terminal takes "/"). Nothing opens on its own.
    (c) Rahul Saxena. All rights reserved. */
 (function () {
   if (window.P75SEARCH) return;
@@ -162,6 +163,7 @@
   }
   document.addEventListener('keydown', function (e) {
     if (e.key !== '/' || e.metaKey || e.ctrlKey || e.altKey || ov) return;
+    if (window.P75TERM) return;   // the Point75 Terminal (terminal/terminal.js) takes "/" and searches pages too
     var t = e.target, tag = t && t.tagName;
     if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (t && t.isContentEditable)) return;
     e.preventDefault(); open();
