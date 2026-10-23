@@ -21,7 +21,7 @@
     ['Outlook', 'The odds ahead', 'Where rates, the Fed, inflation, oil, gold, emerging markets, geopolitics, government debt and AI are likely in a year, as scenarios with odds. Plus Who’s Paying for AI?', 'Weekly', TOOLS + '/outlook'],
     ['Tools', 'Work with your own numbers', 'Portfolio (The Ledger, Treasury Finder), Tax & Retirement (Tax Alpha, Retirement Accounts), Intelligence (credit stress, lenders, congressional trading, AI investment) and Macro (geopolitical risk, market crashes).', 'Live', TOOLS + '/'],
     ['Terminal', 'Ask for any number', 'Type a code or plain words, such as <b>10Y</b>, <b>NVDA</b> or <b>RATES</b>, and get the figure, the odds or the page. Press <kbd>/</kbd> anywhere.', 'Live', TOOLS + '/terminal'],
-    ['Education', 'Bond guides from the ground up', 'Introduction, Classification, the Bond Dictionary, Cash Logistics, The Players, a short history and the great fortunes made and lost.', 'Read any time', '/education']
+    ['Education', 'Bond guides from the ground up', 'Introduction, Classification, the Bond Dictionary, Cash Logistics, The Players, a short history and the great fortunes made and lost.', 'Any time', '/education']
   ];
 
   // Getting around: [keys or label, what]
@@ -64,7 +64,7 @@
     '.p75guide .start i,.p75guide .sec i{font-style:normal;color:var(--gold);font-weight:700;font-size:14px;margin-top:10px}' +
     '.p75guide .map{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}' +
     '.p75guide .sec{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px 16px;transition:transform .15s,border-color .15s}' +
-    '.p75guide .sec .hd{display:flex;align-items:baseline;justify-content:space-between;gap:8px}' +
+    '.p75guide .sec .hd{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 8px;min-width:0}' +
     '.p75guide .sec b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:21px;color:#fff}' +
     '.p75guide .sec em{font-style:normal;font-size:11.5px;font-weight:700;letter-spacing:.06em;color:var(--blue);white-space:nowrap;border:1px solid rgba(31,200,255,.35);border-radius:99px;padding:2px 8px}' +
     '.p75guide .sec .tg{display:block;margin:2px 0 6px;color:var(--gold);font-size:13.5px;font-weight:600}' +
