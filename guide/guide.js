@@ -47,7 +47,11 @@
     '.p75guide{--ink:#111214;--panel:#17181B;--line:#2A2B2F;--cream:#EDE8DC;--soft:#DCD6C9;--muted:#C8C2B6;--gold:#C9A227;--blue:#1FC8FF;' +
       'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box}' +
     '.p75guide *{box-sizing:border-box}' +
-    '.p75guide .wrap{max-width:1040px;margin:0 auto;padding:4px 20px 56px}' +
+    '.p75guide .wrap{position:relative;max-width:1040px;margin:0 auto;padding:4px 20px 56px}' +
+    '.p75guide .x{position:absolute;top:0;right:20px;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid #4A4C52;background:var(--panel);color:var(--cream);cursor:pointer;transition:border-color .15s,color .15s}' +
+    '.p75guide .x:hover{border-color:var(--gold);color:#F2D27A}' +
+    '.p75guide .x:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
+    '.p75guide h1{padding-right:56px}' +
     '.p75guide .eyebrow{color:var(--gold);letter-spacing:.12em;font-size:12.5px;font-weight:800;text-transform:uppercase}' +
     '.p75guide h1{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:28px;line-height:1.15;margin:4px 0 8px;color:#fff;letter-spacing:-.01em;display:inline-block;vertical-align:baseline;max-width:100%}' +
     '.p75guide .eyebrow:has(+ h1){display:inline-block;margin-right:14px;vertical-align:baseline}' +
@@ -87,13 +91,14 @@
     '@media (prefers-reduced-motion:reduce){.p75guide .start,.p75guide .sec{transition:none}.p75guide .start:hover,.p75guide .sec:hover{transform:none}}' +
     '@media (max-width:960px){.p75guide .map{grid-template-columns:repeat(2,minmax(0,1fr))}.p75guide .two{grid-template-columns:1fr;gap:0}}' +
     '@media (max-width:700px){.p75guide .g3{grid-template-columns:1fr;gap:10px}}' +
-    '@media (max-width:600px){.p75guide .wrap{padding:4px 16px 44px}.p75guide h1{font-size:24px}.p75guide .lede{text-align:left}' +
+    '@media (max-width:600px){.p75guide .wrap{padding:4px 16px 44px}.p75guide .x{right:16px}.p75guide h1{font-size:24px}.p75guide .lede{text-align:left}' +
       '.p75guide .map{grid-template-columns:1fr;gap:10px}.p75guide dl>div{grid-template-columns:1fr;gap:4px}}';
 
   var esc = function (s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
 
   function page() {
     return '<div class="wrap">' +
+      '<button type="button" class="x" aria-label="Close the guide and go back" title="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>' +
       '<div class="eyebrow">Read this first</div><h1>How to Use Point75</h1>' +
       '<p class="lede">Point75 explains what moves the bond market and what it could mean for your money: daily briefings, forward odds, essays, tools you can run on your own numbers, and a Terminal that answers with any figure. Everything here is free to explore. This page shows where to start, what each part is for and how to get around.</p>' +
 
@@ -128,11 +133,21 @@
     var host = document.createElement('div'); host.className = 'p75guide';
     host.innerHTML = page();
     var blocks = main.querySelector('.page__blocks'); (blocks || main).appendChild(host);
+    host.querySelector('.x').addEventListener('click', goBack);
     // The Hostinger page is blank; hide its empty sections so they don't show as a tall band above the page
     if (blocks) [].forEach.call(blocks.children, function (sec) {
       if (sec.tagName !== 'SECTION' || (sec.innerText || '').trim() || sec.querySelector('img, iframe, video, canvas, svg, form')) return;
       sec.setAttribute('data-p75guide-hid', '1'); sec.style.display = 'none';
     });
+  }
+  // Close: back to the page the reader came from on this site; to the homepage if they landed here first
+  function goBack() {
+    var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+    var landedHere = !nav || new URL(nav.name).pathname === '/guide';
+    var fromSite = false;
+    try { fromSite = !!document.referrer && /(^|\.)point75\.io$/.test(new URL(document.referrer).hostname); } catch (e) {}
+    if (history.length > 1 && (!landedHere || fromSite)) history.back();
+    else location.href = '/';
   }
   function clear() {
     var h = document.querySelector('.p75guide'); if (h) h.remove();
