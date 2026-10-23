@@ -1,6 +1,273 @@
 {
   "summaries": [
     {
+      "market_date": "2026-10-23",
+      "key": "2026-10-23",
+      "edition": "close",
+      "generated_at": "2026-10-23T22:53:02Z",
+      "as_of": "3:00 PM ET settlement (Newsquawk US market wrap; Treasury's official curve for today not yet posted)",
+      "title": "Yields edge back up as $117 oil and hot price gauges revive inflation worries",
+      "regime": "Mild bear move (near-parallel)",
+      "regime_note": "Partial give-back of Thursday's rally; yields up 3–4 bp across the curve",
+      "conviction": "Medium",
+      "takeaway": "Treasury yields rose about 3 bp after Thursday's sharp rally: the 10-year settled near 4.99% and the 2-year near 4.68%. Brent oil climbed to about $117 as President Trump kept the door open to new strikes on Iran, and business surveys showed companies raising prices at the fastest pace in four years. Even so, the 10-year ended the week about 11 bp lower, because the earlier flight to safety outweighed today's inflation worries.",
+      "tape": [
+        {
+          "k": "2Y",
+          "level": 4.68,
+          "d": 4,
+          "w": -5
+        },
+        {
+          "k": "5Y",
+          "level": 4.81,
+          "d": 3
+        },
+        {
+          "k": "10Y",
+          "level": 4.99,
+          "d": 3,
+          "w": -11
+        },
+        {
+          "k": "30Y",
+          "level": 5.32,
+          "d": 3
+        },
+        {
+          "k": "2s10s",
+          "level": 31,
+          "d": 0,
+          "w": -5,
+          "unit": "bp",
+          "group": "Curve"
+        },
+        {
+          "k": "5s30s",
+          "level": 51,
+          "d": 0,
+          "unit": "bp",
+          "group": "Curve"
+        }
+      ],
+      "fed": {
+        "meeting": "Oct 28"
+      },
+      "cross": [
+        {
+          "k": "S&P 500",
+          "v": "−0.5%",
+          "dir": "down",
+          "read": "The index fell 39.75 points to 7,623.68; consumer staples were the weakest sector while energy gained about 2.5%."
+        },
+        {
+          "k": "Dow",
+          "v": "−1.2%",
+          "dir": "down",
+          "read": "Blue chips dropped 652.82 points to 52,215.16 as the sell-off spread beyond tech; American Express fell about 3% after announcing job cuts."
+        },
+        {
+          "k": "Nasdaq",
+          "v": "−0.2%",
+          "dir": "down",
+          "read": "The Nasdaq Composite slipped to 25,955.34 but steadied after Thursday's worst day since June, with some chip stocks rebounding."
+        },
+        {
+          "k": "Brent",
+          "v": "$116.72 (+$3.55)",
+          "dir": "up",
+          "read": "Crude hit a six-month high on Iran escalation fears and Gulf shipping attacks; higher oil raises inflation risk, which pushes yields up."
+        },
+        {
+          "k": "Gold",
+          "v": "≈$4,010 (−1.2%)",
+          "dir": "down",
+          "read": "Gold slipped and briefly dipped below $4,000, weighed down by a firmer dollar."
+        },
+        {
+          "k": "Dollar",
+          "v": "Higher",
+          "dir": "up",
+          "read": "The dollar gained on the day on inflation worries but was still set for a slight weekly loss."
+        }
+      ],
+      "drivers": [
+        {
+          "title": "Oil climbs toward $117 as Trump keeps Iran strikes on the table",
+          "tags": [
+            "Energy",
+            "Geopolitics",
+            "Inflation"
+          ],
+          "bp": 3,
+          "of": "10Y",
+          "total": 3,
+          "what": "Brent settled up $3.55 at $116.72 a barrel and WTI rose $3.80 to $103.27. In remarks reported around 2:05 PM ET, President Trump said the US \"may do another operation against Iran.\" Attacks on vessels in the Strait of Hormuz added to supply worries.",
+          "why": "Higher oil feeds into gasoline and transport costs, which can keep inflation high. That makes investors demand higher yields and makes further Fed rate hikes more likely.",
+          "response": "Yields rose about 3 bp across the curve, taking back a small part of Thursday's roughly 19 bp drop in the 10-year. Fed futures added a little to December hike pricing.",
+          "signal": "After Thursday's fear-driven rally, the inflation side of the oil shock was back in focus. The market is torn between oil as a threat to growth and oil as a threat to inflation."
+        },
+        {
+          "title": "Business surveys show the fastest price increases in four years",
+          "tags": [
+            "Growth",
+            "Inflation"
+          ],
+          "impact": "Supported higher yields",
+          "what": "S&P Global's flash October PMIs showed services at 57.9 (58.0 expected) and manufacturing at 56.0 (55.5 expected). The firm said companies raised selling prices at the sharpest rate in over four years, and the output prices gauge was the highest since August 2022.",
+          "why": "Readings above 50 mean business activity is growing. Strong activity combined with rising prices gives the Fed less reason to stop raising rates.",
+          "response": "The data added to the upward pressure on yields alongside oil.",
+          "signal": "The economy still looks strong and price pressure is building. That argues against a lasting bond rally unless stocks fall much further."
+        },
+        {
+          "title": "Consumers expect higher inflation",
+          "tags": [
+            "Inflation",
+            "Sentiment"
+          ],
+          "impact": "Added to inflation worries",
+          "what": "The University of Michigan's final October consumer sentiment index was 48, little changed from 48.1. One-year inflation expectations rose to 4.7% from 4.6%, and long-run expectations rose to 3.5% from 3.4%.",
+          "why": "The Fed watches inflation expectations closely. If people expect higher prices, they may demand higher wages and accept price increases, which can make inflation harder to bring down.",
+          "response": "The rise in long-run expectations fit the day's theme of inflation worries.",
+          "signal": "Long-run expectations at 3.5% are well above the Fed's 2% goal, a reason the Fed may keep a December hike on the table."
+        }
+      ],
+      "macro": [
+        {
+          "tag": "Growth",
+          "title": "S&P Global flash services PMI (Oct)",
+          "actual": "57.9",
+          "consensus": "58.0",
+          "prior": "58.8"
+        },
+        {
+          "tag": "Growth",
+          "title": "S&P Global flash manufacturing PMI (Oct)",
+          "actual": "56.0",
+          "consensus": "55.5",
+          "prior": "55.9"
+        },
+        {
+          "tag": "Growth",
+          "title": "S&P Global flash composite PMI (Oct)",
+          "actual": "57.6",
+          "prior": "58.4",
+          "note": "Output prices index at its highest since August 2022; S&P Global said hiring surged."
+        },
+        {
+          "tag": "Sentiment",
+          "title": "University of Michigan consumer sentiment (Oct final)",
+          "actual": "48",
+          "prior": "48.1",
+          "note": "One-year inflation expectations 4.7% (from 4.6%); long-run expectations 3.5% (from 3.4%)."
+        },
+        {
+          "tag": "Fed",
+          "title": "Fed pricing",
+          "note": "Per CME FedWatch figures cited by Newsquawk, futures priced about 2.4 bp of hikes for next week's meeting (from 1.8 bp), so a hold is expected, and about 21.8 bp of hikes by December (from 20.3 bp), close to a full quarter-point move. The effective fed funds rate was 3.88%. The Fed is in its pre-meeting quiet period."
+        }
+      ],
+      "geo": [
+        {
+          "title": "US–Iran escalation risk",
+          "impact": "High",
+          "text": "President Trump said the US \"may do another operation against Iran\", and reports said US and Israeli militaries are drawing up plans to resume strikes. The US ambassador to the UN reportedly said the US is ready for a standoff lasting perhaps another year. Brent rose to a six-month high, which pushed yields up today."
+        },
+        {
+          "title": "Attacks on shipping in the Gulf and Red Sea region",
+          "impact": "Moderate",
+          "text": "Attacks on vessels in the Strait of Hormuz and Houthi–Saudi strikes added to oil supply fears."
+        },
+        {
+          "title": "US–Canada tariffs",
+          "impact": "Low",
+          "text": "The Wall Street Journal reported plans to lift 50% tariffs on some Canadian farm and forestry products. There was no visible effect on Treasuries."
+        }
+      ],
+      "events": [
+        {
+          "t": "9:34 AM",
+          "cat": "Equities",
+          "title": "Stocks open lower after the Nasdaq's worst day since June",
+          "react": "Selling spread to consumer and healthcare stocks"
+        },
+        {
+          "t": "Morning",
+          "cat": "Data",
+          "title": "Flash PMIs: manufacturing 56.0 beats 55.5; services 57.9 vs 58.0; prices rising fastest in over four years",
+          "react": "Added to inflation worries"
+        },
+        {
+          "t": "Morning",
+          "cat": "Data",
+          "title": "Final UMich sentiment 48; long-run inflation expectations rise to 3.5%",
+          "react": "Fit the inflation-worry theme"
+        },
+        {
+          "t": "2:05 PM",
+          "cat": "Geopolitics",
+          "title": "Trump says the US may conduct another operation against Iran",
+          "react": "Brent briefly near $117"
+        },
+        {
+          "t": "3:00 PM",
+          "cat": "Close",
+          "title": "Treasuries settle: 2Y 4.684% (+3.6 bp), 10Y 4.990% (+2.9 bp), 30Y 5.316% (+3.0 bp)",
+          "react": "20-year rose the most, about 4 bp"
+        },
+        {
+          "t": "4:00 PM",
+          "cat": "Close",
+          "title": "S&P 500 −0.5%, Dow −1.2%, Nasdaq −0.2%",
+          "react": "Energy the best sector, staples the worst"
+        }
+      ],
+      "interpretation": {
+        "text": "Yields rose by similar amounts across the curve while oil climbed and stocks slipped. That points to renewed inflation worry, not optimism about growth. The moves were small next to Thursday's rally, so the market has not decided whether the Iran-driven oil shock is mainly a threat to growth (bonds rally) or to inflation (bonds sell off). Strong PMIs, the fastest price increases in four years and higher consumer inflation expectations all lean toward the inflation side and a December Fed hike.",
+        "change": "Another sharp fall in stocks or an actual strike on Iran could revive the flight to safety and push yields lower. Hot PCE inflation or a hawkish message from the Fed next week would likely push them higher."
+      },
+      "watch": [
+        {
+          "when": "Wed Oct 28",
+          "what": "FOMC rate decision (markets expect a hold, with a December hike mostly priced)"
+        },
+        {
+          "when": "Next week",
+          "what": "Advance Q3 GDP and PCE inflation; ECB, Bank of Japan and Bank of Canada decisions"
+        },
+        {
+          "when": "Ongoing",
+          "what": "Iran headlines and oil near $117; whether the tech sell-off resumes as Big Tech reports earnings"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Newsquawk: US Market Wrap, Oct 23",
+          "url": "https://www.newsquawk.com/headlines/us-market-wrap-stocks-hit-as-oil-rally-stokes-inflation-concerns-trump-keeps-iran-strikes-on-the-table"
+        },
+        {
+          "name": "Yahoo Finance: Stock market today, October 23, 2026",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-october-23-dow-sp-500-nasdaq-tesla-meta-093000521.html"
+        },
+        {
+          "name": "investingLive: US flash October services PMI 57.9 vs 58.0 expected",
+          "url": "https://investinglive.com/news/us-s-p-global-flash-october-services-pmi-57-9-vs-58-0-expected/"
+        },
+        {
+          "name": "Kitco: Gold struggles as S&P PMI shows healthy activity",
+          "url": "https://www.kitco.com/news/article/2026-10-23/gold-struggles-sp-pmi-shows-health-activity-manufacturing-services-sectors"
+        },
+        {
+          "name": "TradingKey: US stocks close, Dow drops over 600 points",
+          "url": "https://www.tradingkey.com/analysis/stocks/us-stocks/262236830-us-market-close-dow-drop-consumer-healthcare-chips-rebound-crowdstrike-tradingkey"
+        },
+        {
+          "name": "Trading Economics: US 10-year Treasury yield",
+          "url": "https://tradingeconomics.com/united-states/government-bond-yield"
+        }
+      ]
+    },
+    {
       "market_date": "2026-10-22",
       "key": "2026-10-22",
       "edition": "close",
