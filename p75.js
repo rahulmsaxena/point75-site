@@ -55,7 +55,7 @@
     var p = location.pathname.replace(/\/+$/, '') || '/';
     if (MOVED[p]) location.replace(MOVED[p] + location.search + location.hash);
   })();
-  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-introduction', '/bond-history', '/bond-types', '/cash-logistics', '/bond-dictionary', '/bond-players', '/bond-fortunes', '/pulse', '/debt-trap', '/economic-indicators', '/bonds', '/insights', '/sector-credit', '/lenders', '/credit-stress', '/intellegent-summary', '/intelligent-summary', '/kinetics', '/bond-summary', '/start-here', '/contact', '/journal'];    // no add-ons on these pages
+  var EXCLUDED  = ['/news', '/bondsummary', '/about', '/education', '/bond-introduction', '/bond-history', '/bond-types', '/cash-logistics', '/bond-dictionary', '/bond-players', '/bond-fortunes', '/pulse', '/debt-trap', '/economic-indicators', '/bonds', '/insights', '/sector-credit', '/lenders', '/credit-stress', '/intellegent-summary', '/intelligent-summary', '/kinetics', '/bond-summary', '/start-here', '/contact', '/access', '/guide', '/journal'];    // no add-ons on these pages
 
   // Difficulty level per post
   var LEVELS = {
@@ -965,7 +965,7 @@
       document.head.appendChild(st);
     }
   }
-  var PAGE_HOSTS = '.p75edu, .p75debt, .p75ins, .p75pulse, .p75bonds, .p75ind, .p75cr, .p75hubpg, .p75start, .p75contact';
+  var PAGE_HOSTS = '.p75edu, .p75debt, .p75ins, .p75pulse, .p75bonds, .p75ind, .p75cr, .p75hubpg, .p75start, .p75contact, .p75acc, .p75guide';
 
   // ---------- Page navigation: back / forward at the top of every page in a series ----------
   // One row at the top of the page: back (or previous) on the left, where you are in the middle, next on
@@ -1021,7 +1021,9 @@
   var NAV_FIX = {
     // Start here sits outside the menu sections, so it had no way back; it is reached from the homepage
     '/start-here': { prev: { href: '/', text: 'Journal', title: 'Back to the Journal' } },
-    '/contact': { prev: { href: '/', text: 'Journal', title: 'Back to the Journal' } }
+    '/contact': { prev: { href: '/', text: 'Journal', title: 'Back to the Journal' } },
+    '/access': { prev: { href: '/', text: 'Journal', title: 'Back to the Journal' } },
+    '/guide': { prev: { href: '/', text: 'Journal', title: 'Back to the Journal' } }
   };
   var navFrame = null;
   window.addEventListener('message', function (e) {
@@ -1615,6 +1617,30 @@
       }
       return;
     } else if (window.P75CONTACT) window.P75CONTACT.clear();
+
+    // Access & FAQ (/access) is drawn by access/access.js into a blank Hostinger page
+    if (path === '/access') {
+      if (window.P75ACCESS) window.P75ACCESS.render();
+      else if (!document.getElementById('p75access-js')) {
+        var ac = document.createElement('script'); ac.id = 'p75access-js';
+        ac.src = BASE + 'access/access.js?v=' + Math.floor(Date.now() / 36e5);
+        ac.onload = function () { update(); };
+        document.body.appendChild(ac);
+      }
+      return;
+    } else if (window.P75ACCESS) window.P75ACCESS.clear();
+
+    // How to use Point75 (/guide, "Read this first") is drawn by guide/guide.js into a blank Hostinger page
+    if (path === '/guide') {
+      if (window.P75GUIDE) window.P75GUIDE.render();
+      else if (!document.getElementById('p75guide-js')) {
+        var gd = document.createElement('script'); gd.id = 'p75guide-js';
+        gd.src = BASE + 'guide/guide.js?v=' + Math.floor(Date.now() / 36e5);
+        gd.onload = function () { update(); };
+        document.body.appendChild(gd);
+      }
+      return;
+    } else if (window.P75GUIDE) window.P75GUIDE.clear();
 
     // Start here (/start-here) is drawn by starthere/starthere.js
     if (path === '/start-here') {

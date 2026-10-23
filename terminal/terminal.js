@@ -43,6 +43,54 @@
     var s = S(c, HELP[c] || ''); if (!OPEN && (c === 'NVDA' || c === 'CMP MSFT GOOGL' || c === 'TOP STRAIN')) s.access = 'members'; return s;
   });
 
+  // How to use: point75-tools lib/terminal/guide.ts (GUIDE_*), copied: change both together
+  var GUIDE_WORDS = ['?', 'guide', 'how to use', 'manual', 'how', 'shortcuts', 'keys'];
+  var GUIDE_KEYS = [
+  ["/", "Open the terminal on any page of either site"],
+  ["Ctrl K · ⌘K", "Open it from anywhere, even while typing in a box"],
+  ["↵ Enter", "Run what you typed, or the highlighted suggestion"],
+  ["↑ ↓", "Move through the suggestions"],
+  ["Esc", "Clear the line; press again to close"],
+];
+  var GUIDE_GROUPS = [
+  {
+    title: "Markets today",
+    line: "Live readings with the date they’re from.",
+    examples: [["10Y", "10-year Treasury yield"], ["2S10S", "The curve: 2s against 10s"], ["LIQ", "Net liquidity"], ["PULSE", "The bond market’s vital signs"]],
+  },
+  {
+    title: "Outlook odds",
+    line: "Where things are likely in a year, with the odds.",
+    examples: [["RATES", "The 10-year in a year"], ["FED", "The Fed’s next moves"], ["OIL", "Brent and the odds of a spike"], ["INFL", "Inflation and stagflation"]],
+  },
+  {
+    title: "AI builders",
+    line: "Any of the 12 by ticker or name: “nvidia”, “google”.",
+    examples: [["NVDA", "Capex against cash, debt, strain"], ["CMP MSFT GOOGL", "Two or more side by side"], ["TOP STRAIN", "Ranked by financial strain"], ["AI SPEND", "All 12 at a glance"]],
+  },
+  {
+    title: "Find any page",
+    line: "Type a page’s name to go there.",
+    examples: [["DEBT TRAP", "Debt Trap"], ["EDUCATION", "Bond guides"], ["LEDGER", "Test your portfolio"], ["HELP", "Every command"]],
+  },
+];
+  var GUIDE_TIPS = [
+  "Plain words work: “compare microsoft and google”, “how strained is oracle”, “what is the 10 year”.",
+  "Tap any answer’s chips to follow on; your last few commands sit under Recent.",
+  "Share an answer: tools.point75.io/terminal?q=NVDA opens straight to it.",
+];
+  function guideHTML() {
+    return '<section class="p75t-guide" aria-label="How to use the Terminal"><p class="p75t-gh"><span class="p75t-k">How to use</span> Type a code or plain words and press ↵. Tap any example to try it.</p>' +
+      '<div class="p75t-gg">' + GUIDE_GROUPS.map(function (g) {
+        return '<div class="p75t-gc"><h3>' + esc(g.title) + '</h3><p>' + esc(g.line) + '</p><ul>' + g.examples.map(function (x) {
+          return '<li><button type="button" class="p75t-ge" data-run="' + esc(x[0]) + '"><b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span></button></li>';
+        }).join('') + '</ul></div>';
+      }).join('') + '</div>' +
+      '<div class="p75t-gk"><div><h3>Keys</h3><dl>' + GUIDE_KEYS.map(function (k) {
+        return '<div><dt><kbd>' + esc(k[0]) + '</kbd></dt><dd>' + esc(k[1]) + '</dd></div>';
+      }).join('') + '</dl></div><div><h3>Tips</h3><ul class="p75t-gtips">' + GUIDE_TIPS.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul></div></div></section>';
+  }
+
   /* ---------- small helpers ---------- */
   function esc(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; });
@@ -86,7 +134,13 @@
     "#p75T .p75t-bar{flex: none;display: flex;flex-wrap: wrap;align-items: center;gap: 4px 16px;min-height: 48px;padding: 4px 8px 4px 18px;border-bottom: 1px solid var(--t-line);background: var(--t-panel)}",
     "#p75T .p75t-brand{font: 500 12.5px var(--t-label);letter-spacing: 0.24em;text-transform: uppercase;color: var(--t-gold)}",
     "#p75T .p75t-asof{font: 400 13px var(--t-label);letter-spacing: 0.04em;color: var(--t-muted)}",
-    "#p75T .p75t-keys{margin-left: auto;font: 400 12.5px var(--t-mono);color: var(--t-muted);padding-right: 10px}",
+    "#p75T .p75t-keys{font: 400 12.5px var(--t-mono);color: var(--t-muted);padding-right: 10px}",
+    "#p75T .p75t-help{display: inline-flex;align-items: center;gap: 7px;min-height: 36px;margin-left: auto;padding: 0 12px 0 6px;border: 1px solid var(--t-line2);border-radius: 99px;background: none;font: 500 12px var(--t-label) !important;letter-spacing: 0.14em;text-transform: uppercase;color: var(--t-soft) !important}",
+    "#p75T .p75t-help span{display: grid;place-items: center;width: 22px;height: 22px;border-radius: 50%;background: var(--t-line2);color: var(--t-bright);font: 600 13px var(--t-mono);letter-spacing: 0}",
+    "#p75T .p75t-help:hover,#p75T .p75t-help.on{border-color: var(--t-gold);color: #fff !important}",
+    "#p75T .p75t-help.on span{background: var(--t-gold);color: #111214}",
+    "#p75T .p75t-help .p75t-hl{font-style: normal}",
+    "#p75T .p75t-help:focus-visible,#p75T .p75t-ge:focus-visible{outline: 3px solid var(--t-bright);outline-offset: 2px}",
     "#p75T .p75t-x{display: grid;place-items: center;width: 44px;height: 44px;border: 1px solid transparent;border-radius: 10px;background: none;color: var(--t-ink)}",
     "#p75T .p75t-x:hover{color: var(--t-bright);border-color: var(--t-line2)}",
     "#p75T .p75t-prompt{flex: none;display: flex;align-items: center;gap: 12px;margin: 0;padding: 10px 12px 10px 18px;border-bottom: 1px solid var(--t-line)}",
@@ -195,7 +249,9 @@
     "  #p75T .p75t-dlg{max-width: none;max-height: none;height: 100dvh;border: 0;border-radius: 0;box-shadow: none}",
     "  #p75T .p75t-bar{padding-left: 16px}",
     "  #p75T .p75t-asof{display: none}",
-    "  #p75T .p75t-x{margin-left: auto;border-color: var(--t-line2);border-radius: 12px}",
+    "  #p75T .p75t-x{border-color: var(--t-line2);border-radius: 12px}",
+    "  #p75T .p75t-help{min-height: 44px;min-width: 44px;justify-content: center;padding: 0;border-radius: 12px}",
+    "  #p75T .p75t-help .p75t-hl{display: none}",
     "  #p75T .p75t-prompt{margin: 10px 12px;padding: 0 6px 0 12px;border: 1.5px solid var(--t-gold);border-radius: 12px;background: #1b1c20}",
     "  #p75T .p75t-field:focus-within{box-shadow: none}",
     "  #p75T .p75t-field input,#p75T .p75t-mirror{font-size: 18px}",
@@ -214,6 +270,34 @@
     "  #p75T .p75t-lock-h{font-size: 17.5px}",
     "  #p75T .p75t-sugg li{min-height: 48px}",
     "}",
+    "#p75T .p75t-guide{color: var(--t-soft)}",
+    "#p75T .p75t-gh{font-size: 15px;line-height: 1.5;margin: 2px 0 12px !important;color: var(--t-ink)}",
+    "#p75T .p75t-gh .p75t-k{color: var(--t-gold);margin-right: 8px}",
+    "#p75T .p75t-guide h3{margin: 0 0 2px;font: 500 12.5px var(--t-label);letter-spacing: 0.16em;text-transform: uppercase;color: var(--t-gold)}",
+    "#p75T .p75t-gg{display: grid;grid-template-columns: repeat(4, minmax(0, 1fr));gap: 10px}",
+    "#p75T .p75t-gc{min-width: 0;padding: 12px 12px 8px;border: 1px solid var(--t-line);border-radius: 10px;background: var(--t-cell)}",
+    "#p75T .p75t-gc > p{margin: 0 0 8px;font-size: 13px;line-height: 1.45;color: var(--t-muted)}",
+    "#p75T .p75t-gc ul,#p75T .p75t-gtips{list-style: none;margin: 0;padding: 0}",
+    "#p75T .p75t-ge{display: flex;flex-direction: column;gap: 1px;width: 100%;min-height: 44px;padding: 6px 8px;margin: 0 -8px;border: 0;border-radius: 8px;background: none;text-align: left}",
+    "#p75T .p75t-ge b{font: 600 14.5px var(--t-mono);color: var(--t-bright)}",
+    "#p75T .p75t-ge span{font-size: 13px;line-height: 1.35;color: var(--t-soft)}",
+    "#p75T .p75t-ge:hover{background: rgba(201, 162, 39, 0.1)}",
+    "#p75T .p75t-gk{display: grid;grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);gap: 10px 24px;margin-top: 14px}",
+    "#p75T .p75t-gk dl{margin: 6px 0 0}",
+    "#p75T .p75t-gk dl > div{display: grid;grid-template-columns: 112px minmax(0, 1fr);gap: 10px;align-items: baseline;padding: 4px 0}",
+    "#p75T .p75t-gk dd{margin: 0;font-size: 14px;line-height: 1.45}",
+    "#p75T .p75t-guide kbd{display: inline-block;padding: 2px 7px;border: 1px solid var(--t-line2);border-bottom-width: 2px;border-radius: 6px;background: var(--t-panel);font: 600 12.5px var(--t-mono);color: var(--t-ink);white-space: nowrap}",
+    "#p75T .p75t-gtips{margin-top: 6px !important}",
+    "#p75T .p75t-gtips li{position: relative;padding: 4px 0 4px 14px;font-size: 14px;line-height: 1.45}",
+    "#p75T .p75t-gtips li::before{content: \"\";position: absolute;left: 0;top: 12px;width: 5px;height: 5px;border-radius: 50%;background: var(--t-gold)}",
+    "#p75T .p75t-hint b{color: var(--t-bright)}",
+    "@container (max-width: 860px){",
+    "  #p75T .p75t-gg{grid-template-columns: repeat(2, minmax(0, 1fr))}",
+    "}",
+    "@container (max-width: 560px){",
+    "  #p75T .p75t-gg,#p75T .p75t-gk{grid-template-columns: minmax(0, 1fr)}",
+    "  #p75T .p75t-gk dl > div{grid-template-columns: 96px minmax(0, 1fr)}",
+    "}",
     "@media (prefers-reduced-motion: reduce){",
     "  #p75T .p75t-caret{animation: none !important}",
     "}"
@@ -221,8 +305,9 @@
   // Under the scoped rules: the site builder's own element styles (h2, p, table, a, button, input) don't reach in
   var RESET = [
     '#p75T{position:relative;z-index:2147483000;text-align:left;line-height:normal;letter-spacing:normal;text-transform:none}',
-    '#p75T h2,#p75T p,#p75T ul,#p75T li,#p75T table,#p75T th,#p75T td,#p75T form,#p75T label{margin:0;padding:0;border:0;background:none;text-transform:none;letter-spacing:normal;line-height:inherit;font-weight:inherit;font-size:inherit;font-family:inherit;color:inherit;box-shadow:none}',
+    '#p75T h2,#p75T h3,#p75T p,#p75T ul,#p75T li,#p75T dl,#p75T dt,#p75T dd,#p75T table,#p75T th,#p75T td,#p75T form,#p75T label{margin:0;padding:0;border:0;background:none;text-transform:none;letter-spacing:normal;line-height:inherit;font-weight:inherit;font-size:inherit;font-family:inherit;color:inherit;box-shadow:none}',
     '#p75T li::before,#p75T li::after{content:none}',
+    '#p75T kbd{font:inherit;box-shadow:none}',
     '#p75T a{color:inherit;text-decoration:none;box-shadow:none;background-image:none}',
     '#p75T button,#p75T input{margin:0;box-shadow:none;text-shadow:none;width:auto;min-width:0;height:auto;line-height:normal;text-transform:none;letter-spacing:normal;transition:none}',
     '#p75T input{border-radius:0;outline:none}',
@@ -356,6 +441,7 @@
     return '<div class="p75t-scrim"><div class="p75t-dlg" role="dialog" aria-modal="true" aria-label="Point75 Terminal">' +
       '<div class="p75t p75t-overlay">' +
       '<div class="p75t-bar"><span class="p75t-brand">Point75 Terminal</span><span class="p75t-asof" hidden></span>' +
+      '<button type="button" class="p75t-help" aria-pressed="false" aria-label="How to use the Terminal"><span aria-hidden="true">?</span><i class="p75t-hl">How to use</i></button>' +
       '<span class="p75t-keys" aria-hidden="true">↵ run · ↑↓ pick · Esc close</span>' +
       '<button type="button" class="p75t-x" aria-label="Close the terminal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div>' +
       '<form class="p75t-prompt" role="search"><label for="p75T-in" class="p75t-gt"><span aria-hidden="true">›</span><span class="sr">Command</span></label>' +
@@ -372,7 +458,7 @@
   function typed() { return st.q.trim(); }
   function list() {
     if (typed()) return st.sugg && st.sugg.q === typed() ? st.sugg.list : (st.lastSugg || []);
-    return st.answer || st.status !== 'idle' ? [] : (st.starters || STARTERS);
+    return st.answer || st.guide || st.status !== 'idle' ? [] : (st.starters || STARTERS);
   }
 
   function drawList() {
@@ -403,8 +489,10 @@
     } else if (st.status === 'error') {
       h = '<div class="p75t-err"><p>The terminal couldn’t reach Point75 just now for <b>' + esc(st.lastRun) + '</b>.</p>' +
         '<button type="button" class="p75t-chip" data-run="' + esc(st.lastRun) + '">Try again</button></div>';
-    } else if (st.answer) h = answerHTML(st.answer);
+    } else if (st.guide) h = guideHTML();
+    else if (st.answer) h = answerHTML(st.answer);
     out.innerHTML = h;
+    var hb = $('.p75t-help'); hb.classList.toggle('on', !!st.guide); hb.setAttribute('aria-pressed', st.guide ? 'true' : 'false');
     out.parentNode.setAttribute('aria-busy', st.status === 'loading' ? 'true' : 'false');
     var asof = $('.p75t-asof'), d = dateLabel(st.answer && st.answer.asOf);
     asof.textContent = d ? 'Data through ' + d : ''; asof.hidden = !d;
@@ -416,7 +504,7 @@
     if (r.length) h += '<div class="p75t-recent"><span class="p75t-k">Recent</span>' + r.map(function (x) {
       return '<button type="button" class="p75t-rc" data-run="' + esc(x) + '">' + esc(x) + '</button>';
     }).join('') + '</div>';
-    if (r.length <= 3) h += '<span class="p75t-hint">Codes or plain words: “oracle”, “compare microsoft and google”, “debt trap”</span>';
+    if (r.length <= 3) h += '<span class="p75t-hint">Codes or plain words: “oracle”, “compare microsoft and google” · type <b>?</b> for how to use</span>';
     $('.p75t-foot').innerHTML = h;
     // Phones: the answer's follow-ups first, then the usual commands, six in all
     var fol = ((st.answer && st.answer.suggestions) || []).slice(0, 2).map(function (s) { return s.code; });
@@ -462,6 +550,11 @@
   function run(text) {
     var input = String(text || '').trim(); if (!input || !st) return;
     if (st.ctl) st.ctl.abort();
+    st.guide = false;
+    if (GUIDE_WORDS.indexOf(input.toLowerCase()) >= 0) {   // ? or GUIDE: the how-to, no request
+      st.seq++; st.q = ''; $('input').value = ''; st.active = -1; st.status = 'idle'; st.guide = true;
+      drawList(); drawOut(); $('.p75t-body').scrollTop = 0; caretSoon(); return;
+    }
     var ctl = window.AbortController ? new AbortController() : null; st.ctl = ctl;
     var my = ++st.seq;
     st.q = ''; $('input').value = ''; st.active = -1; st.lastRun = input; st.status = 'loading';
@@ -552,6 +645,11 @@
       input.focus();
     });
     $('.p75t-x').addEventListener('click', function () { close(); });
+    $('.p75t-help').addEventListener('click', function () {
+      st.guide = !st.guide; st.q = ''; input.value = ''; st.active = -1;
+      if (st.guide) { if (st.ctl) st.ctl.abort(); st.seq++; st.status = 'idle'; $('.p75t-body').scrollTop = 0; }
+      drawList(); drawOut(); input.focus();
+    });
     // Any command button (suggestion, chip, recent, table row, tap row) runs its command
     root.addEventListener('mousedown', function (e) { if (e.target.closest && e.target.closest('li[data-run]')) e.preventDefault(); });
     root.addEventListener('click', function (e) {
