@@ -327,7 +327,7 @@
       var g = (j && j.gauges) || {}, b = g.bull || {}, s = g.stress || {};
       if (typeof b.score !== 'number' && typeof s.score !== 'number') throw new Error('no reading');
       var cells = [];
-      if (typeof b.score === 'number') cells.push({ label: 'Bull / Bear', value: (b.score > 0 ? '+' : '') + Math.round(b.score),
+      if (typeof b.score === 'number') cells.push({ label: 'Bull / Bear', value: (b.score > 0 ? '+' : b.score < 0 ? '\u2212' : '') + Math.abs(Math.round(b.score)),
         tone: b.score >= 20 ? 'good' : b.score <= -20 ? 'bad' : 'neutral', sub: (b.label ? b.label + '. ' : '') + '−100 bearish to +100 bullish for bonds' });
       if (typeof s.score === 'number') {
         var sc = Math.round(s.score), word = sc < 30 ? 'Calm' : sc < 55 ? 'Moderate' : sc < 75 ? 'Elevated' : 'High';
