@@ -48,10 +48,13 @@
       'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box}' +
     '.p75guide *{box-sizing:border-box}' +
     '.p75guide .wrap{position:relative;max-width:1040px;margin:0 auto;padding:4px 20px 56px}' +
-    '.p75guide .x{position:absolute;top:0;right:20px;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid #4A4C52;background:var(--panel);color:var(--cream);cursor:pointer;transition:border-color .15s,color .15s}' +
+    '.p75guide .top{position:sticky;top:var(--p75gtop,85px);z-index:4;display:flex;align-items:center;gap:12px;margin:0 -20px;padding:6px 20px;background:var(--ink);border-bottom:1px solid transparent;transition:border-color .2s}' +
+    '.p75guide .top.stuck{border-bottom-color:var(--line);box-shadow:0 10px 18px -12px rgba(0,0,0,.7)}' +
+    '.p75guide .top .tt{flex:1;min-width:0}' +
+    '.p75guide .x{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid #4A4C52;background:var(--panel);color:var(--cream);cursor:pointer;transition:border-color .15s,color .15s}' +
     '.p75guide .x:hover{border-color:var(--gold);color:#F2D27A}' +
     '.p75guide .x:focus-visible{outline:3px solid #F2D27A;outline-offset:2px}' +
-    '.p75guide h1{padding-right:56px}' +
+    
     '.p75guide .eyebrow{color:var(--gold);letter-spacing:.12em;font-size:12.5px;font-weight:800;text-transform:uppercase}' +
     '.p75guide h1{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:28px;line-height:1.15;margin:4px 0 8px;color:#fff;letter-spacing:-.01em;display:inline-block;vertical-align:baseline;max-width:100%}' +
     '.p75guide .eyebrow:has(+ h1){display:inline-block;margin-right:14px;vertical-align:baseline}' +
@@ -88,18 +91,18 @@
     '.p75guide .end{margin-top:28px;padding-top:14px;border-top:1px solid var(--line);color:var(--soft);font-size:14.5px}' +
     '.p75guide .end a{color:var(--gold);font-weight:700}.p75guide .end a:hover{color:#F2D27A}' +
     '.p75guide a:focus-visible{outline:3px solid #F2D27A;outline-offset:2px;border-radius:8px}' +
-    '@media (prefers-reduced-motion:reduce){.p75guide .start,.p75guide .sec{transition:none}.p75guide .start:hover,.p75guide .sec:hover{transform:none}}' +
+    '@media (prefers-reduced-motion:reduce){.p75guide .top,.p75guide .start,.p75guide .sec{transition:none}.p75guide .start:hover,.p75guide .sec:hover{transform:none}}' +
     '@media (max-width:960px){.p75guide .map{grid-template-columns:repeat(2,minmax(0,1fr))}.p75guide .two{grid-template-columns:1fr;gap:0}}' +
     '@media (max-width:700px){.p75guide .g3{grid-template-columns:1fr;gap:10px}}' +
-    '@media (max-width:600px){.p75guide .wrap{padding:4px 16px 44px}.p75guide .x{right:16px}.p75guide h1{font-size:24px}.p75guide .lede{text-align:left}' +
+    '@media (max-width:600px){.p75guide .wrap{padding:4px 16px 44px}.p75guide .top{margin:0 -16px;padding:6px 16px}.p75guide h1{font-size:24px}.p75guide .lede{text-align:left}' +
       '.p75guide .map{grid-template-columns:1fr;gap:10px}.p75guide dl>div{grid-template-columns:1fr;gap:4px}}';
 
   var esc = function (s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
 
   function page() {
     return '<div class="wrap">' +
-      '<button type="button" class="x" aria-label="Close the guide and go back" title="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>' +
-      '<div class="eyebrow">Read this first</div><h1>How to Use Point75</h1>' +
+      '<div class="top"><div class="tt"><div class="eyebrow">Read this first</div><h1>How to Use Point75</h1></div>' +
+      '<button type="button" class="x" aria-label="Close the guide and go back" title="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div>' +
       '<p class="lede">Point75 explains what moves the bond market and what it could mean for your money: daily briefings, forward odds, essays, tools you can run on your own numbers, and a Terminal that answers with any figure. Everything here is free to explore. This page shows where to start, what each part is for and how to get around.</p>' +
 
       '<h2>Where to start</h2><p class="hint">Pick the one that sounds like you.</p><div class="g3">' +
@@ -134,6 +137,7 @@
     host.innerHTML = page();
     var blocks = main.querySelector('.page__blocks'); (blocks || main).appendChild(host);
     host.querySelector('.x').addEventListener('click', goBack);
+    pinTop(host);
     // The Hostinger page is blank; hide its empty sections so they don't show as a tall band above the page
     if (blocks) [].forEach.call(blocks.children, function (sec) {
       if (sec.tagName !== 'SECTION' || (sec.innerText || '').trim() || sec.querySelector('img, iframe, video, canvas, svg, form')) return;
@@ -149,7 +153,22 @@
     if (history.length > 1 && (!landedHere || fromSite)) history.back();
     else location.href = '/';
   }
+  // The title line stays in view under the site's sticky menu bar while the rest of the page scrolls up beneath it
+  var onPin = null;
+  function pinTop(host) {
+    var top = host.querySelector('.top');
+    onPin = function () {
+      var bar = document.querySelector('.top-blocks--sticky, #p75L.bar');
+      var h = bar && getComputedStyle(bar).position !== 'static' ? Math.round(bar.getBoundingClientRect().height) : 0;
+      host.style.setProperty('--p75gtop', h + 'px');
+      top.classList.toggle('stuck', top.getBoundingClientRect().top <= h + 1 && window.scrollY > 0);
+    };
+    onPin();
+    window.addEventListener('scroll', onPin, { passive: true });
+    window.addEventListener('resize', onPin);
+  }
   function clear() {
+    if (onPin) { window.removeEventListener('scroll', onPin); window.removeEventListener('resize', onPin); onPin = null; }
     var h = document.querySelector('.p75guide'); if (h) h.remove();
     document.querySelectorAll('[data-p75guide-hid]').forEach(function (s) { s.style.display = ''; s.removeAttribute('data-p75guide-hid'); });
   }
