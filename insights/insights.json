@@ -1,6 +1,6 @@
 {
-  "updated": "2026-10-22",
-  "window": "Sep 4 – Oct 21, 2026",
+  "updated": "2026-10-23",
+  "window": "Sep 16 – Oct 21, 2026",
   "hero": {
     "src": "https://rahulmsaxena.github.io/point75-site/insights/hero.jpg",
     "small": "https://rahulmsaxena.github.io/point75-site/insights/hero-sm.jpg",
@@ -10,9 +10,9 @@
   "headline": "What the biggest voices in bonds are saying",
   "mood": "Cautious vigilance",
   "bigPicture": [
-    "The shared view among the market’s leading voices is that the era of cheap money is over. The Federal Reserve raised rates in September because inflation has been above its 2% goal for more than five years, and minutes released Oct 7 show most officials expect another hike by year end. Consumer prices rose 3.7% in the year to September, a hotter reading than expected. The 10-year Treasury yield touched about 5.35% on Oct 7, its highest level since 2002, then eased to about 5.1% by Oct 16 as a stock selloff sent investors into Treasuries, and was still near 5.1% on Oct 20.",
+    "The shared view among the market’s leading voices is that the era of cheap money is over. The Federal Reserve raised rates in September because inflation has been above its 2% goal for more than five years, and minutes released Oct 7 show most officials expect another hike by year end. Consumer prices rose 3.7% in the year to September, a hotter reading than expected. The 10-year Treasury yield touched about 5.35% on Oct 7, its highest level since 2002, then eased as a selloff in tech stocks sent investors into Treasuries. On Oct 22 it closed at about 4.96%, its first close below 5% since Sep 22, even though inflation remains stubborn.",
     "The pressure comes from supply as much as inflation. Federal debt has passed $40 trillion, the government keeps borrowing heavily, and traditional foreign buyers such as Japan and China are buying fewer Treasuries. Turmoil in France’s bond market, where 10-year yields topped 5% on Oct 22, is a reminder that the pressure is global, though for now it is sending some safe-haven money into Treasuries. Ray Dalio says the U.S. is nearing the limit of how much debt it can carry and that the bond bear market probably has a long way to go, and several of these investors say that makes buy-and-hold in long-term bonds riskier than it used to be.",
-    "They are not all bearish on bonds. BlackRock’s Rick Rieder calls today’s yields on high-quality, shorter-term bonds a historic opportunity and names investment-grade corporate bonds his top pick, though PIMCO’s Dan Ivascyn warns the 10-year yield could still reach 6% and expects the Fed to hold this month, then probably raise rates once more this year. Treasury Secretary Scott Bessent blames September’s jump in inflation on an energy shock from the Iran conflict, says prices will come down once it is over, and does not expect France’s troubles to spill over to the U.S. Gundlach warns that long-term Treasuries may not protect investors the way they used to, Dalio is betting against bonds and holding gold instead, and Bill Gross now says not to own bonds at all, apart from one-year Treasury bills."
+    "They are not all bearish on bonds. BlackRock’s Rick Rieder calls today’s yields on high-quality, shorter-term bonds a historic opportunity and names investment-grade corporate bonds his top pick, though PIMCO’s Dan Ivascyn warns the 10-year yield could still reach 6% and expects the Fed to hold this month, then probably raise rates once more this year. Treasury Secretary Scott Bessent blames September’s jump in inflation on an energy shock from the Iran conflict, says prices will come down once it is over, and does not expect France’s troubles to spill over to the U.S. Gundlach warns that long-term Treasuries may not protect investors the way they used to, Dalio is betting against bonds and holding gold instead, and Bill Gross now says not to own bonds at all, apart from one-year Treasury bills. Mohamed El-Erian notes that yields have fallen despite hotter inflation data, which he ties to money rotating out of tech, and has said yields will stay elevated and volatile for the rest of the year."
   ],
   "agree": ["Rates will stay higher for longer", "Government debt is the core pressure on yields", "Quality matters more than chasing extra yield"],
   "differ": [
@@ -43,15 +43,15 @@
       "sources": [["BigGo Finance (2Way livestream), Oct 20", "https://finance.biggo.com/news/3259e04c-c2af-4a33-91c3-41007ecfc22c"], ["Benzinga, Oct 18", "https://www.benzinga.com/markets/economic-data/26/10/62430283/scott-bessent-blames-energy-shock-hot-inflation"], ["The Eastern Herald, Oct 18", "https://easternherald.com/2026/10/18/bessent-own-economy-energy-shock-inflation/"]]
     },
     {
-      "name": "Mohamed El-Erian", "role": "Economist; former PIMCO CEO", "initials": "ME", "theme": "Buyers are drifting away",
-      "when": "Sep 4 – Oct 1, 2026", "where": "CNBC; Benzinga; posts on X",
+      "name": "Mohamed El-Erian", "role": "Economist; former PIMCO CEO", "initials": "ME", "theme": "Calm bonds, jittery tech",
+      "when": "Sep 28 – Oct 17, 2026", "where": "CNBC; his weekly Substack bulletin",
       "points": [
-        "He expects the global government-bond selloff to run further, because traditional big buyers of Treasuries, notably Japan and China, have been buying less. On Oct 1 he said upward pressure on yields remains the dominant theme.",
-        "He sees the core problem as a fiscal imbalance with no political appetite to fix it, which keeps upward pressure on borrowing costs for households and businesses.",
-        "He also cautions that investors anchored to a decade of ultra-low yields may be reacting to today’s levels with more fear than the fundamentals justify."
+        "In his Oct 17 bulletin he noted that yields fell even though consumer, producer and import price inflation all came in hotter than expected, normally a recipe for higher yields, while market odds of an October rate hike dropped below 20%.",
+        "He linked the move to a rotation out of technology stocks, with credit stress at AI cloud firm CoreWeave a focal point, and cautioned that the shift away from tech may not be as straightforward as many suggest.",
+        "In a CNBC interview reported Sep 28 he said the 10-year yield is unlikely to return to 4.25%–4.5% even if oil falls, because the supply of bonds outstrips long-term demand, so volatility and elevated yields will be features for the rest of the year."
       ],
-      "quote": "It has much more to do with a fundamental imbalance…",
-      "sources": [["CNBC, Sep 4", "https://www.cnbc.com/2026/09/04/el-erian-government-bond-selloff.html"], ["Benzinga, Sep 24", "https://www.benzinga.com/markets/bonds/26/09/61968162/bond-market-alarm-bells-are-ringing-but-mohamed-el-erian-says-psychology-may-be-fueling-the-fear-more-than-fundamentals"], ["Summary of Oct 1 post", "https://gokhshtein.com/news/2026-10-01-mohamed-el-erian-says-upward-pressure-dominates-bond-yields"]]
+      "quote": "If the bond market was an oasis of relative calm…",
+      "sources": [["El-Erian’s Substack, Oct 17", "https://mohamedelerian.substack.com/p/the-weekly-look-at-the-global-economy-896"], ["Money.it, Oct 20", "https://en.money.it/US-inflation-runs-hot-Treasury-yields-fall-anyway-El-Erian-explains-the-paradox"], ["Stocktwits (CNBC interview), Sep 28", "https://stocktwits.com/news-articles/markets/equity/el-erian-warns-10-year-yield-could-stay-around-5-even-if-oil-falls-flags-too-much-of-an-imbalance-in-supply-and-demand-of-bonds/cZMSDHdRBQr"]]
     },
     {
       "name": "Jeffrey Gundlach", "role": "CEO, DoubleLine", "initials": "JG", "theme": "Safe haven at risk",
