@@ -238,7 +238,7 @@
   TERMS.sort(function (a, b) { return a[0].localeCompare(b[0]); });
 
   var CSS =
-    '.p75edu{--ink:#111214;--panel:#17181B;--line:#2A2B2F;--cream:#EDE8DC;--muted:#B8B2A5;--gold:#C9A227;' +
+    '.p75edu{--ink:#111214;--panel:#17181B;--line:#2A2B2F;--cream:#EDE8DC;--muted:#DCD6C9;--gold:#C9A227;' +
       'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box}' +
     '.p75edu *{box-sizing:border-box}' +
     '.p75edu .wrap{max-width:760px;margin:0 auto;padding:4px 20px 72px}' +
@@ -262,7 +262,7 @@
     '.p75edu .term .eg{margin-top:6px;color:var(--muted);font-size:14px}' +
     '.p75edu .term .eg b{color:var(--gold);font-weight:600}' +
     '.p75edu .empty{color:var(--muted);padding:30px 0;display:none}' +
-    '.p75edu .foot{margin-top:48px;color:#8d887e;font-size:13px;line-height:1.6;border-top:1px solid var(--line);padding-top:18px}' +
+    '.p75edu .foot{margin-top:48px;color:#C8C2B6;font-size:13px;line-height:1.6;border-top:1px solid var(--line);padding-top:18px}' +
     '.p75edu .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px;margin-top:10px}' +
     '.p75edu .card{display:block;text-decoration:none;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px;color:var(--cream);transition:border-color .2s}' +
     '.p75edu a.card:hover{border-color:var(--gold)}' +
@@ -314,7 +314,7 @@
     '.p75edu .legend .dt{grid-column:2 / 4;color:var(--muted);font-size:13px;line-height:1.5;display:none}' +
     '.p75edu .legend li.on .dt{display:block}' +
     '.p75edu .legend .who{display:block;color:#e8d9a8;margin-top:3px}' +
-    '.p75edu .src{color:#8d887e;font-size:12.5px;margin-top:8px;line-height:1.5}' +
+    '.p75edu .src{color:#C8C2B6;font-size:12.5px;margin-top:8px;line-height:1.5}' +
     '.p75edu .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:10px}' +
     '.p75edu .pcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}' +
     '.p75edu .pcard .n{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:19px;color:var(--cream)}' +
@@ -486,10 +486,10 @@
     return '<div class="fig"><svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Cash flows of a $1,000 ten-year bond paying 4 percent: twenty payments of $20 and $1,000 back at the end">' +
       '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + base + '" y2="' + base + '" stroke="#3a3b40"/>' + bars +
       '<text x="' + (L + 2) + '" y="' + (base - 62) + '" font-family="Manrope,sans-serif" font-size="20" font-weight="700" fill="#EDE8DC">$20 every six months</text>' +
-      '<text x="' + (L + 2) + '" y="' + (base - 40) + '" font-family="Manrope,sans-serif" font-size="15" fill="#B8B2A5">(4% a year on $1,000)</text>' +
+      '<text x="' + (L + 2) + '" y="' + (base - 40) + '" font-family="Manrope,sans-serif" font-size="15" fill="#DCD6C9">(4% a year on $1,000)</text>' +
       '<text x="' + (W - R - 44) + '" y="' + (base - 20 * s * 10 - 1000 * s - 12) + '" text-anchor="end" font-family="Manrope,sans-serif" font-size="20" font-weight="700" fill="#EDE8DC">$1,000 back at the end</text>' +
-      '<text x="' + L + '" y="' + (base + 28) + '" font-family="Manrope,sans-serif" font-size="17" fill="#B8B2A5">Year 1</text>' +
-      '<text x="' + (W - R) + '" y="' + (base + 28) + '" text-anchor="end" font-family="Manrope,sans-serif" font-size="17" fill="#B8B2A5">Year 10</text></svg>' +
+      '<text x="' + L + '" y="' + (base + 28) + '" font-family="Manrope,sans-serif" font-size="17" fill="#DCD6C9">Year 1</text>' +
+      '<text x="' + (W - R) + '" y="' + (base + 28) + '" text-anchor="end" font-family="Manrope,sans-serif" font-size="17" fill="#DCD6C9">Year 10</text></svg>' +
       '<div class="cap">You lend $1,000 and get 20 interest payments of $20, then your $1,000 back. Total received: $1,400.</div></div>';
   }
   function payoffFig() {   // option on 10-year futures, strike 111, premium 1 point ($1,000)
@@ -500,12 +500,12 @@
     var g = '';
     [-1000, 0, 1000, 2000, 3000].forEach(function (v) {
       g += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="' + (v === 0 ? '#6a665e' : '#2A2B2F') + '"' + (v === 0 ? ' stroke-dasharray="5 4"' : '') + '/>' +
-        '<text x="' + (L - 10) + '" y="' + (Y(v) + 6) + '" text-anchor="end" font-family="Manrope,sans-serif" font-size="16" fill="#B8B2A5">' + (v < 0 ? '−$' + (-v).toLocaleString('en-US') : '$' + v.toLocaleString('en-US')) + '</text>';
+        '<text x="' + (L - 10) + '" y="' + (Y(v) + 6) + '" text-anchor="end" font-family="Manrope,sans-serif" font-size="16" fill="#DCD6C9">' + (v < 0 ? '−$' + (-v).toLocaleString('en-US') : '$' + v.toLocaleString('en-US')) + '</text>';
     });
-    [107, 109, 111, 113, 115].forEach(function (v) { g += '<text x="' + X(v) + '" y="' + (H - 14) + '" text-anchor="middle" font-family="Manrope,sans-serif" font-size="16" fill="#B8B2A5">' + v + '</text>'; });
+    [107, 109, 111, 113, 115].forEach(function (v) { g += '<text x="' + X(v) + '" y="' + (H - 14) + '" text-anchor="middle" font-family="Manrope,sans-serif" font-size="16" fill="#DCD6C9">' + v + '</text>'; });
     return '<div class="fig"><svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Profit or loss at expiry for a call and a put with strike 111 and a $1,000 premium">' + g +
       '<line x1="' + X(111) + '" x2="' + X(111) + '" y1="' + T + '" y2="' + (H - B) + '" stroke="#3a3b40" stroke-dasharray="3 4"/>' +
-      '<text x="' + (X(111) + 6) + '" y="' + (T + 16) + '" font-family="Manrope,sans-serif" font-size="15" fill="#B8B2A5">strike 111</text>' +
+      '<text x="' + (X(111) + 6) + '" y="' + (T + 16) + '" font-family="Manrope,sans-serif" font-size="15" fill="#DCD6C9">strike 111</text>' +
       '<path d="' + path(call) + '" fill="none" stroke="#3987e5" stroke-width="3" stroke-linejoin="round"/>' +
       '<path d="' + path(put) + '" fill="none" stroke="#d95926" stroke-width="3" stroke-linejoin="round" stroke-dasharray="9 5"/>' +
       '<text x="' + (X(114.1) - 6) + '" y="' + (Y(2100) - 14) + '" text-anchor="end" font-family="Manrope,sans-serif" font-size="18" font-weight="700" fill="#EDE8DC">Call</text>' +
@@ -1194,7 +1194,7 @@
           '" font-weight="700" fill="#EDE8DC">' + esc(t) + '</text>';
       });
     });
-    if (kind === 'wide') g += '<text x="' + L[7][0] + '" y="' + L[7][1] + '" text-anchor="middle" font-family="Manrope,sans-serif" font-size="13" letter-spacing="1" fill="#8d887e">' + esc(m[1].toUpperCase()) + '</text>';
+    if (kind === 'wide') g += '<text x="' + L[7][0] + '" y="' + L[7][1] + '" text-anchor="middle" font-family="Manrope,sans-serif" font-size="13" letter-spacing="1" fill="#C8C2B6">' + esc(m[1].toUpperCase()) + '</text>';
     var cw = s[3].length * (kind === 'wide' ? 10 : 9) + 20, ch = kind === 'wide' ? 28 : 26, id = 'cl-p-' + kind;
     g += '<path id="' + id + '" d="' + L[6][s[2]] + '" fill="none" stroke="none"/>' +
       '<g class="cl-coin"><rect x="' + (-cw / 2) + '" y="' + (-ch / 2) + '" width="' + cw + '" height="' + ch + '" rx="' + (ch / 2) + '" fill="#C9A227"/>' +

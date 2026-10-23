@@ -7,7 +7,7 @@
   var API = 'https://news.point75.io/api/bonds';
 
   var CSS =
-    '.p75bonds{--ink:#111214;--panel:#17181B;--panel2:#1C1D21;--line:#2A2B2F;--cream:#EDE8DC;--soft:#E4DED1;--muted:#B8B2A5;--gold:#C9A227;--up:#2BD17E;--down:#E5484D;' +
+    '.p75bonds{--ink:#111214;--panel:#17181B;--panel2:#1C1D21;--line:#2A2B2F;--cream:#EDE8DC;--soft:#E4DED1;--muted:#DCD6C9;--gold:#C9A227;--up:#2BD17E;--down:#E5484D;' +
       'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box}' +
     '.p75bonds *{box-sizing:border-box}' +
     '.p75bonds .wrap{max-width:1040px;margin:0 auto;padding:4px 20px 72px}' +
@@ -191,10 +191,10 @@
     var x = function (i) { return L + i / (pts.length - 1) * (W - L - R); }, y = function (p) { return T + (mx - p) / (mx - mn) * (H - T - Bt); };
     var tk = [mn + (mx - mn) * .15, (mn + mx) / 2, mx - (mx - mn) * .15];
     return '<div class="chart"><svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Estimated value over the year so far">' +
-      tk.map(function (t) { return '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y(t).toFixed(1) + '" y2="' + y(t).toFixed(1) + '" stroke="#2A2B2F"/><text x="' + (L - 7) + '" y="' + (y(t) + 4).toFixed(1) + '" text-anchor="end" font-size="12" fill="#B8B2A5" font-family="Manrope,sans-serif">' + t.toFixed(1) + '</text>'; }).join('') +
+      tk.map(function (t) { return '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y(t).toFixed(1) + '" y2="' + y(t).toFixed(1) + '" stroke="#2A2B2F"/><text x="' + (L - 7) + '" y="' + (y(t) + 4).toFixed(1) + '" text-anchor="end" font-size="12" fill="#DCD6C9" font-family="Manrope,sans-serif">' + t.toFixed(1) + '</text>'; }).join('') +
       '<polyline fill="none" stroke="#C9A227" stroke-width="2.4" stroke-linejoin="round" points="' + pts.map(function (p, i) { return x(i).toFixed(1) + ',' + y(p[1]).toFixed(1); }).join(' ') + '"/>' +
       pts.map(function (p, i) { return '<circle cx="' + x(i).toFixed(1) + '" cy="' + y(p[1]).toFixed(1) + '" r="' + (i === pts.length - 1 ? 5 : 3.5) + '" fill="#C9A227" stroke="#17181B" stroke-width="2"/>'; }).join('') +
-      pts.map(function (p, i) { return '<text x="' + x(i).toFixed(1) + '" y="' + (H - 6) + '" text-anchor="' + (i === 0 ? 'start' : i === pts.length - 1 ? 'end' : 'middle') + '" font-size="12" fill="#B8B2A5" font-family="Manrope,sans-serif">' + shortD(p[0]) + '</text>'; }).join('') + '</svg></div>';
+      pts.map(function (p, i) { return '<text x="' + x(i).toFixed(1) + '" y="' + (H - 6) + '" text-anchor="' + (i === 0 ? 'start' : i === pts.length - 1 ? 'end' : 'middle') + '" font-size="12" fill="#DCD6C9" font-family="Manrope,sans-serif">' + shortD(p[0]) + '</text>'; }).join('') + '</svg></div>';
   }
   function calcOut(b) {
     if (b.k === 'F' || b.y == null) return '<p class="fine">Floating-rate notes reset their interest every week, so their value barely moves when rates change.</p>';

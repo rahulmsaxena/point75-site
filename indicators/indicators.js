@@ -11,7 +11,7 @@
   var CSS =
     // the site's one red is a bright warm red (#FF6640); short red words go bold so they read at a glance
     '.p75ind [style*="color:#FF6640"][style]:not(b):not(.tk-head *):not(.fi *){font-weight:800}' +
-    '.p75ind{--ink:#111214;--panel:#17181B;--panel2:#1C1D21;--line:#2A2B2F;--cream:#EDE8DC;--soft:#D9D3C6;--muted:#A9A396;--gold:' + GOLD + ';' +
+    '.p75ind{--ink:#111214;--panel:#17181B;--panel2:#1C1D21;--line:#2A2B2F;--cream:#EDE8DC;--soft:#D9D3C6;--muted:#DCD6C9;--gold:' + GOLD + ';' +
       'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box;min-height:calc(100vh - 90px)}' +
     '.p75ind *{box-sizing:border-box}.p75ind,.p75ind *{overflow-anchor:none}' +
     '.p75ind .wrap{max-width:1040px;margin:0 auto;padding:4px 20px 40px}' +
@@ -69,7 +69,7 @@
         'border:1px solid #2A2B30;border-bottom:1px solid #2A2B30;border-radius:14px;background:linear-gradient(180deg,#1B1C20,#141518)}' +
       '.p75ind .wrap > .view{grid-column:2;min-width:0;padding-top:12px}' +
       '.p75ind .tabs .tab{position:relative;flex:0 0 auto;justify-content:flex-start;gap:10px;padding:10px 12px 10px 14px;border:0;border-radius:10px;background:transparent;color:#D9D3C6;white-space:normal;text-align:left;line-height:1.25}' +
-      '.p75ind .tabs .tab:before{counter-increment:p75t;content:counter(p75t,decimal-leading-zero);font-size:10.5px;font-weight:800;letter-spacing:.06em;color:#6E6A61;font-variant-numeric:tabular-nums}' +
+      '.p75ind .tabs .tab:before{counter-increment:p75t;content:counter(p75t,decimal-leading-zero);font-size:10.5px;font-weight:800;letter-spacing:.06em;color:#C8C2B6;font-variant-numeric:tabular-nums}' +
       '.p75ind .tabs .tab:hover{background:#222328;color:#fff}' +
       '.p75ind .tabs .tab.on{background:linear-gradient(90deg,rgba(201,162,39,.22),rgba(201,162,39,.05));color:#FFE38A;box-shadow:inset 0 0 0 1px rgba(201,162,39,.45)}' +
       '.p75ind .tabs .tab.on:before{color:#C9A227}' +
@@ -221,13 +221,13 @@
     var id = ind.id + months; CH[id] = { ind: ind, ser: ser, x: x, y: y, W: W };
     return '<div class="chart" data-ch="' + id + '"><svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(ind.name) + ' over the last ' + (months / 12) + ' years">' + bands +
       ticks.map(function (t) { return '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y(t).toFixed(1) + '" y2="' + y(t).toFixed(1) + '" stroke="#2A2B2F"/>' +
-        '<text x="' + (L - 7) + '" y="' + (y(t) + 4).toFixed(1) + '" text-anchor="end" font-size="11.5" fill="#A9A396" font-family="Manrope,sans-serif">' + fmt(t, Math.abs(mx - mn) > 50 ? 0 : 1) + '</text>'; }).join('') + zero +
+        '<text x="' + (L - 7) + '" y="' + (y(t) + 4).toFixed(1) + '" text-anchor="end" font-size="11.5" fill="#C8C2B6" font-family="Manrope,sans-serif">' + fmt(t, Math.abs(mx - mn) > 50 ? 0 : 1) + '</text>'; }).join('') + zero +
       '<path d="M' + x(0) + ',' + (H - B) + ' L' + pts.join(' L') + ' L' + x(ser.length - 1) + ',' + (H - B) + ' Z" fill="' + GOLD + '" opacity=".09"/>' +
       '<polyline fill="none" stroke="' + GOLD + '" stroke-width="2" stroke-linejoin="round" points="' + pts.join(' ') + '"/>' +
       '<line class="hl" x1="0" x2="0" y1="' + T + '" y2="' + (H - B) + '" stroke="#5a5750" opacity="0"/>' +
       '<circle class="dot" cx="' + x(ser.length - 1).toFixed(1) + '" cy="' + y(v[v.length - 1]).toFixed(1) + '" r="4" fill="' + GOLD + '" stroke="#17181B" stroke-width="2"/>' +
-      '<text x="' + L + '" y="' + (H - 7) + '" font-size="11.5" fill="#A9A396" font-family="Manrope,sans-serif">' + period(ser[0][0], ind.freq) + '</text>' +
-      '<text x="' + (W - R) + '" y="' + (H - 7) + '" text-anchor="end" font-size="11.5" fill="#A9A396" font-family="Manrope,sans-serif">' + period(ser[ser.length - 1][0], ind.freq) + '</text>' +
+      '<text x="' + L + '" y="' + (H - 7) + '" font-size="11.5" fill="#C8C2B6" font-family="Manrope,sans-serif">' + period(ser[0][0], ind.freq) + '</text>' +
+      '<text x="' + (W - R) + '" y="' + (H - 7) + '" text-anchor="end" font-size="11.5" fill="#C8C2B6" font-family="Manrope,sans-serif">' + period(ser[ser.length - 1][0], ind.freq) + '</text>' +
       '</svg><div class="tip"></div></div>';
   }
   function wireChart(root) {
@@ -287,9 +287,9 @@
     }).join('');
     var grid = '', step = mx - mn > 4 ? 2 : 1;
     for (var g = mn; g <= mx; g += step) grid += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y(g).toFixed(1) + '" y2="' + y(g).toFixed(1) + '" stroke="' + (g === 0 ? '#6a665e' : '#2A2B2F') + '"' + (g === 0 ? ' stroke-dasharray="4 3"' : '') + '/>' +
-      '<text x="' + (L - 6) + '" y="' + (y(g) + 4).toFixed(1) + '" text-anchor="end" font-size="11.5" fill="#A9A396" font-family="Manrope,sans-serif">' + (g > 0 ? '+' : '') + g + '</text>';
+      '<text x="' + (L - 6) + '" y="' + (y(g) + 4).toFixed(1) + '" text-anchor="end" font-size="11.5" fill="#C8C2B6" font-family="Manrope,sans-serif">' + (g > 0 ? '+' : '') + g + '</text>';
     var years = '', every = W < 480 ? 10 : 5;
-    ser.forEach(function (p, i) { var yr = +p[0].slice(0, 4); if (p[0].slice(5) === '01' && yr % every === 0) years += '<text x="' + x(i).toFixed(1) + '" y="' + (H - 6) + '" text-anchor="middle" font-size="11.5" fill="#A9A396" font-family="Manrope,sans-serif">' + yr + '</text>'; });
+    ser.forEach(function (p, i) { var yr = +p[0].slice(0, 4); if (p[0].slice(5) === '01' && yr % every === 0) years += '<text x="' + x(i).toFixed(1) + '" y="' + (H - 6) + '" text-anchor="middle" font-size="11.5" fill="#C8C2B6" font-family="Manrope,sans-serif">' + yr + '</text>'; });
     var line = ser.map(function (p, i) { return (i ? 'L' : 'M') + x(i).toFixed(1) + ',' + y(p[1]).toFixed(1); }).join('');
     // shade the inverted stretches below zero
     var neg = ser.map(function (p, i) { return x(i).toFixed(1) + ',' + y(Math.min(0, p[1])).toFixed(1); }).join(' ');

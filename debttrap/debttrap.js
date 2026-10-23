@@ -10,7 +10,7 @@
   var CSS =
     // the site's one red is a bright warm red (#FF6640); short red words go bold so they read at a glance
     '.p75debt [style*="color:#FF6640"][style]:not(b):not(.tk-head *):not(.fi *){font-weight:800}' +
-    '.p75debt{--ink:#111214;--panel:#17181B;--line:#2A2B2F;--grid:#232428;--cream:#EDE8DC;--muted:#C2BCAF;--soft:#E4DED1;--faint:#8a8d93;--gold:#C9A227;' +
+    '.p75debt{--ink:#111214;--panel:#17181B;--line:#2A2B2F;--grid:#232428;--cream:#EDE8DC;--muted:#DCD6C9;--soft:#E4DED1;--faint:#C3C6CC;--gold:#C9A227;' +
       'background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box;min-height:calc(100vh - 90px)}' +
     '.p75debt *{box-sizing:border-box}' +
     '.p75debt .wrap{max-width:1040px;margin:0 auto;padding:4px 20px 48px}' +
@@ -175,7 +175,7 @@
     for (var v = Math.ceil(lo / step) * step; v <= hi + 1e-9; v += step) out.push(+v.toFixed(6));
     return out;
   }
-  var TXT = 'font-family="Manrope,sans-serif" font-size="12" fill="#8a8d93"';
+  var TXT = 'font-family="Manrope,sans-serif" font-size="12" fill="#C3C6CC"';
 
   // Stacked columns (the maturity wall). keys: [{k, name, color}]
   function stackChart(rows, keys, labelOf, H) {

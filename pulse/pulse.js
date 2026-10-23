@@ -18,7 +18,7 @@
   var CSS =
     // the site's one red is a bright warm red (#FF6640); short red words go bold so they read at a glance
     '.p75pulse [style*="color:#FF6640"][style]:not(b):not(.tk-head *):not(.fi *){font-weight:800}' +
-    '.p75pulse{--ink:#111214;--panel:#17181B;--panel2:#1C1D21;--line:#2A2B2F;--cream:#EDE8DC;--muted:#C2BCAF;--soft:#E4DED1;--gold:#C9A227;' +
+    '.p75pulse{--ink:#111214;--panel:#17181B;--panel2:#1C1D21;--line:#2A2B2F;--cream:#EDE8DC;--muted:#DCD6C9;--soft:#E4DED1;--gold:#C9A227;' +
       '--bull:' + BULL + ';--bear:' + BEAR + ';background:var(--ink);color:var(--cream);font-family:Manrope,system-ui,sans-serif;width:100%;box-sizing:border-box}' +
     '.p75pulse *{box-sizing:border-box}' +
     '.p75pulse .wrap{max-width:1040px;margin:0 auto;padding:4px 20px 72px}' +
@@ -93,7 +93,7 @@
     '.p75pulse .stat .v{font-family:"Hedvig Letters Serif",Georgia,serif;font-size:32px;margin:8px 0 2px}' +
     '.p75pulse .stat .c{font-size:13px;font-weight:700}' +
     '.p75pulse .stat .d{color:var(--soft);font-size:13px;line-height:1.5;margin-top:8px}' +
-    '.p75pulse .stat .src{color:#77736a;font-size:11.5px;margin-top:10px}' +
+    '.p75pulse .stat .src{color:#C8C2B6;font-size:11.5px;margin-top:10px}' +
     '.p75pulse .spark{position:relative;margin-top:12px}' +
     '.p75pulse .spark svg{display:block;width:100%;height:46px}' +
     '.p75pulse .tip{position:absolute;top:-30px;transform:translateX(-50%);background:#0b0c0e;border:1px solid var(--line);color:var(--cream);font-size:11.5px;padding:3px 8px;border-radius:6px;white-space:nowrap;pointer-events:none;opacity:0}' +
@@ -118,7 +118,7 @@
     '.p75pulse a.sec .now{margin-top:auto;font-size:13.5px;line-height:1.5;color:var(--cream);border-top:1px solid var(--line);padding-top:12px}' +
     '.p75pulse a.sec .now b{color:var(--gold);font-weight:800;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;margin-right:8px}' +
     '.p75pulse a.sec .go{font-size:14.5px;font-weight:700;color:var(--gold)}' +
-    '.p75pulse .crumb{font-size:13.5px;color:#8D887E;margin:0 0 18px}.p75pulse .crumb a{color:var(--gold);text-decoration:none;font-weight:700}' +
+    '.p75pulse .crumb{font-size:13.5px;color:#C8C2B6;margin:0 0 18px}.p75pulse .crumb a{color:var(--gold);text-decoration:none;font-weight:700}' +
     '.p75pulse .strip{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0 6px;font-size:14px;color:var(--soft)}' +
     '.p75pulse .strip b{font-family:"Hedvig Letters Serif",Georgia,serif;font-weight:400;font-size:20px;margin-right:6px}' +
     '.p75pulse .strip a{margin-left:auto;color:var(--gold);font-weight:700;text-decoration:none}' +
@@ -288,7 +288,7 @@
     // Phones and small tablets: the info screen opens as a bottom sheet over the panel (built by ckSheet below),
     // so the tapped gauge stays in view instead of the page scrolling away from it
     '@media (max-width:880px){.p75pulse .ck-mfdw{display:none}}' +
-    '.p75ck-sheet{--cream:#EDE8DC;--muted:#C2BCAF;--line:#2A2B2F;--gold:#C9A227;position:fixed;inset:0;z-index:2147483000;pointer-events:none;visibility:hidden;' +
+    '.p75ck-sheet{--cream:#EDE8DC;--muted:#DCD6C9;--line:#2A2B2F;--gold:#C9A227;position:fixed;inset:0;z-index:2147483000;pointer-events:none;visibility:hidden;' +
       'transition:visibility 0s .3s;font-family:Manrope,system-ui,sans-serif;color:var(--cream)}' +
     '.p75ck-sheet *{box-sizing:border-box}' +
     '.p75ck-sheet.open{pointer-events:auto;visibility:visible;transition:none}' +
@@ -317,7 +317,7 @@
     '@media (prefers-reduced-motion:reduce){.p75ck-sheet .sh,.p75ck-sheet .sh-bd{transition:none}}' +
     '@media (max-width:560px){.p75pulse .ck-main{padding:14px}.p75pulse .ck-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}' +
       '.p75pulse .ck-v{flex-wrap:wrap;row-gap:4px}.p75pulse .ck-chip{font-size:10px;padding:2px 6px}.p75pulse .ck-v b{font-size:26px}.p75pulse .ck-nm{font-size:12.5px}.p75pulse .ck-att{flex-basis:100%}}' +
-    '.p75pulse .foot{color:#77736a;font-size:12px;line-height:1.6;margin-top:48px;border-top:1px solid var(--line);padding-top:18px}' +
+    '.p75pulse .foot{color:#C8C2B6;font-size:12px;line-height:1.6;margin-top:48px;border-top:1px solid var(--line);padding-top:18px}' +
     '.p75pulse .load{color:var(--muted);padding:40px 0}' +
     '@media (max-width:980px){.p75pulse .grid{grid-template-columns:repeat(2,minmax(0,1fr))}}' +
     '@media (max-width:880px){.p75pulse .why{grid-template-columns:1fr}}' +
