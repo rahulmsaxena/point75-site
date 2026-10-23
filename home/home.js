@@ -1,8 +1,8 @@
 /* Point75 home page (/): the rope. A thick three-strand rope tied in a tight knot, both ends worn and slowly coming
    undone, almost imperceptibly drawn tight and eased over thirty seconds, seen through three frames side by side
    (thin page-coloured gaps cut it into a triptych; the middle one, 30%–70% of the width, holds the whole knot), under a quiet caption and today's Treasury readings (from intelsummary/editions.json).
-   Every nine seconds (five at rest, four dissolving) it trades places with a second picture under the same frames (a newborn's hand wrapped around a parent's
-   finger, "Some bonds are priceless."); see startSlides().
+   Every nine seconds (five at rest, four dissolving) it trades places with a second picture under the same frames (a weathered hand with a wedding ring holding a
+   baby's tiny hand, "Some bonds are priceless."); see startSlides().
    The header and the left menu come from shell/shell.js. Everything draws in a full-screen layer over the site
    builder's page. p75.js calls render() about once a second, so it is safe to run repeatedly.
    Built from the landing mock (Point75-BusinessPlan/landing/rope-hero.html). (c) Rahul Saxena. All rights reserved. */
@@ -167,7 +167,7 @@
   var HOLD = 5000, FADE = 4000; // each picture rests fully in view for HOLD ms, then dissolves over FADE ms
   var SLIDES = [
     { alt: 'A thick rope tied in a tight knot, both ends fraying' },
-    { alt: "A newborn's tiny hand wrapped around a parent's finger" }
+    { alt: "A weathered hand with a wedding ring holding a baby's tiny hand" }
   ];
   var ICON_PAUSE = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="2.5" width="3" height="11" rx="1" fill="currentColor"/><rect x="9.5" y="2.5" width="3" height="11" rx="1" fill="currentColor"/></svg>';
   var ICON_PLAY = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 2.8v10.4a.6.6 0 0 0 .9.5l8.2-5.2a.6.6 0 0 0 0-1L5.4 2.3a.6.6 0 0 0-.9.5z" fill="currentColor"/></svg>';
