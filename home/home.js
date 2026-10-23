@@ -1,8 +1,8 @@
 /* Point75 home page (/): the rope. A thick three-strand rope tied in a tight knot, both ends worn and slowly coming
    undone, almost imperceptibly drawn tight and eased over thirty seconds, seen through three frames side by side
    (thin page-coloured gaps cut it into a triptych; the middle one, 30%–70% of the width, holds the whole knot), under a quiet caption and today's Treasury readings (from intelsummary/editions.json).
-   Every two seconds it trades places with a second picture under the same frames (a child's hand gripping a parent's
-   little finger, "Some bonds are priceless."); see startSlides().
+   Every two seconds it trades places with a second picture under the same frames (a newborn's hand wrapped around a parent's
+   finger, "Some bonds are priceless."); see startSlides().
    The header and the left menu come from shell/shell.js. Everything draws in a full-screen layer over the site
    builder's page. p75.js calls render() about once a second, so it is safe to run repeatedly.
    Built from the landing mock (Point75-BusinessPlan/landing/rope-hero.html). (c) Rahul Saxena. All rights reserved. */
@@ -165,7 +165,7 @@
   // the round button pauses it; with reduced motion it starts paused on the rope.
   var SLIDES = [
     { kick: 'Data on what moves bonds', h1: 'Every bond has a <em>breaking point.</em>', alt: 'A thick rope tied in a tight knot, both ends fraying' },
-    { kick: 'The ones we hold onto', h1: 'Some bonds are <em>priceless.</em>', alt: "A child's small hand gripping a parent's little finger" }
+    { kick: 'The ones we hold onto', h1: 'Some <em>bonds</em> are <em>priceless.</em>', alt: "A newborn's tiny hand wrapped around a parent's finger" }
   ];
   var ICON_PAUSE = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="2.5" width="3" height="11" rx="1" fill="currentColor"/><rect x="9.5" y="2.5" width="3" height="11" rx="1" fill="currentColor"/></svg>';
   var ICON_PLAY = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 2.8v10.4a.6.6 0 0 0 .9.5l8.2-5.2a.6.6 0 0 0 0-1L5.4 2.3a.6.6 0 0 0-.9.5z" fill="currentColor"/></svg>';
