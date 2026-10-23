@@ -47,7 +47,8 @@
     '/sector-credit': 'https://tools.point75.io/market-intelligence/sector-credit',
     '/lenders': 'https://tools.point75.io/market-intelligence/lenders',
     '/credit-stress': 'https://tools.point75.io/market-intelligence/credit-stress',
-    '/outlook': 'https://tools.point75.io/outlook',  // short addresses for essays and newsletters (add /sectors and /terminal when they open)
+    '/outlook': 'https://tools.point75.io/outlook',  // short addresses for essays and newsletters (add /sectors when it opens)
+    '/terminal': 'https://tools.point75.io/terminal', // needs the empty, hidden /terminal page in the site builder
     '/tools': 'https://tools.point75.io/'
   };
   (function () {

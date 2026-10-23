@@ -117,6 +117,7 @@
     "#p75T .p75t-meant{color: var(--t-muted)}",
     "#p75T .p75t-head{display: flex;flex-wrap: wrap;align-items: baseline;gap: 4px 14px}",
     "#p75T .p75t-title{font: 400 28px/1.15 var(--t-serif);color: #fff;overflow-wrap: anywhere}",
+    "#p75T .p75t-pill{align-self: center;padding: 3px 11px;border-radius: 99px;color: #111214;font: 600 11.5px/1.3 var(--t-label);letter-spacing: .12em;text-transform: uppercase;white-space: nowrap}",
     "#p75T .p75t-code{font: 600 15px var(--t-mono);letter-spacing: 0.02em;color: var(--t-bright)}",
     "#p75T .p75t-sub{font-size: 15px;line-height: 1.55;color: var(--t-soft)}",
     "#p75T .p75t-cells{display: grid;grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));gap: 10px}",
@@ -269,7 +270,8 @@
     var h = '<div class="p75t-ans">';
     if (echo) h += '<p class="p75t-echo"><span class="p75t-pr" aria-hidden="true">›</span><span class="p75t-said">' + esc(em[0]) + '</span>' +
       (em[1] ? '<span class="p75t-meant">→ ' + esc(em[1]) + '</span>' : '') + '</p>';
-    h += '<div class="p75t-head"><h2 class="p75t-title">' + esc(name) + '</h2>' + (rest ? '<span class="p75t-code">' + esc(rest) + '</span>' : '') + '</div>';
+    h += '<div class="p75t-head"><h2 class="p75t-title">' + esc(name) + '</h2>' + (rest ? '<span class="p75t-code">' + esc(rest) + '</span>' : '') +
+      (a.badge && TONE[a.badge.tone] ? '<span class="p75t-pill" style="background:' + TONE[a.badge.tone] + '">' + esc(a.badge.value) + '</span>' : '') + '</div>';
     if (a.sub && !isPage) h += '<p class="p75t-sub">' + esc(a.sub) + '</p>';
     if (cells.length) {
       var n3 = cells.length === 3 && cells.every(function (c) { return String(c.value).length <= 6; });
