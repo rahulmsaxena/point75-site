@@ -5,7 +5,8 @@
    (c) Rahul Saxena. All rights reserved. */
 (function () {
   if (window.P75HUBS) return;
-  var EDITIONS = 'https://rahulmsaxena.github.io/point75-site/intelsummary/editions.json?v=' + Math.floor(Date.now() / 36e5);
+  // The Intelligent Summary archive as a light list (headline, regime, dates), from the tools server
+  var EDITIONS = 'https://tools.point75.io/api/v1/intelsummary';
 
   // What each card says. Keys are page paths; anything missing falls back to the page's name only.
   var CARD = {
@@ -145,7 +146,7 @@
     waiting.push(cb);
     if (loading) return; loading = true;
     fetch(EDITIONS).then(function (r) { return r.json(); }).then(function (j) {
-      var all = (j && j.summaries || []).filter(function (e) { return e && e.title; })
+      var all = (j && j.data && j.data.editions || []).filter(function (e) { return e && e.title; })
         .sort(function (a, b) { return String(b.generated_at || b.key).localeCompare(String(a.generated_at || a.key)); });
       var day = function (e) { var d = new Date((e.market_date || e.key) + 'T12:00:00Z'); return isNaN(d) ? '' : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }); };
       var s = all[0];

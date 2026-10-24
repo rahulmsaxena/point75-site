@@ -1,7 +1,7 @@
 /* Point75 Terminal on point75.io: the same overlay as tools.point75.io (point75-tools components/terminal), in
    vanilla JS. Loaded by shell/shell.js on every page. Opens with "/" (not while typing in a field), Ctrl+K or ⌘K,
    and from Terminal in the left menu (window.P75TERM.open()). Answers come from tools.point75.io/api/v1/terminal,
-   called without credentials; 10Y, 2Y, 2s10s and PULSE are answered here from intelsummary/editions.json and
+   called without credentials; 10Y, 2Y, 2s10s and PULSE are answered here from the newest Intelligent Summary edition (tools.point75.io/api/v1/intelsummary) and
    news.point75.io/api/pulse. Every string from the network is escaped before it goes into HTML.
    The CSS is the tools terminal's terminal.css with every selector under #p75T: change the two together.
    (c) Rahul Saxena. All rights reserved. */
@@ -389,10 +389,10 @@
   function moveTone(n) { return n < 0 ? 'good' : n > 0 ? 'bad' : 'neutral'; }
   function localSugg(codes) { return codes.map(function (c) { return S(c, HELP[c] || ''); }); }
   function yieldAnswer(code, input, echo) {
-    var url = BASE + 'intelsummary/editions.json?v=' + Math.floor(Date.now() / 36e5);
+    var url = 'https://tools.point75.io/api/v1/intelsummary';
     var p = editions || (editions = getJSON(url).catch(function (e) { editions = null; throw e; }));
     return p.then(function (j) {
-      var e = ((j && j.summaries) || j || [])[0];
+      var e = j && j.data && j.data.latest;
       var key = code === '2S10S' ? '2s10s' : code;
       var t = e && Array.isArray(e.tape) && e.tape.filter(function (x) { return x && String(x.k).toUpperCase() === key.toUpperCase(); })[0];
       if (!t || typeof t.level !== 'number') throw new Error('no reading');

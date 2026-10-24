@@ -1,11 +1,11 @@
 /* Point75 - Insights page (/insights): what leading bond investors and the Fed are saying, with dated
-   sources, and what households can do. Content lives in insights/insights.json so it can be refreshed
+   sources, and what households can do. Content comes from tools.point75.io/api/v1/insights so it can be refreshed
    without touching code. Loaded by p75.js. (c) Rahul Saxena. All rights reserved.
    One Shot layout (see ONE-SHOT.md): a Takeaway tab first, then one tab per idea; picking a tab folds the
    title away into a one-line strip. */
 (function () {
   if (window.P75INS) return;
-  var DATA = 'https://rahulmsaxena.github.io/point75-site/insights/insights.json?v=' + Math.floor(Date.now() / 36e5);
+  var DATA = 'https://tools.point75.io/api/v1/insights';   // served from the private data branch, point75.io pages only
   var FW_API = 'https://news.point75.io/api/fedspeak';
   var GOLD = '#FFE03A', BLU = '#00E8FF', RED = '#FF6640', NEU = '#C4CAD1';   // bright and crisp on the dark page
 
@@ -419,7 +419,7 @@
     // Queue every caller: the site can rebuild the page while data is loading, and the redrawn page must hear back too
     if (D) return cb(D);
     waiting.push(cb); if (loading) return; loading = true;
-    fetch(DATA).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { D = j; })
+    fetch(DATA).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { D = j && j.data || null; })
       .catch(function () { D = null; }).then(function () { loading = false; var w = waiting; waiting = []; w.forEach(function (f) { f(D); }); });
   }
   var fwAsked = false;

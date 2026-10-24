@@ -1745,7 +1745,7 @@
     // Sector Credit, Lenders and Credit Stress moved to tools.point75.io (Intelligence); old links land there
     if (MOVED[path]) { location.replace(MOVED[path] + location.search + location.hash); return; }
 
-    // Insights (/insights) is drawn by insights/insights.js from insights/insights.json
+    // Insights (/insights) is drawn by insights/insights.js from tools.point75.io/api/v1/insights
     if (path === '/insights') {
       if (window.P75INS) window.P75INS.render();
       else if (!document.getElementById('p75ins-js')) {
